@@ -4,7 +4,7 @@ Donate link:
 Tags: review, rating, schema, structured data, schema.org
 Requires at least: 4.5
 Tested up to: 6.6
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -271,7 +271,11 @@ If you like The Post Grid Plugin, then consider checking out our other WordPress
 
 == Changelog ==
 
-= 2.2.2 ( 03 July, 2024 ) =
+= 2.2.3 ( 26 Sept 2024 ) =
+* Added: Address Country field added for LobPosting
+* Fixed: Product MerchantReturnPolicy Warning
+
+= 2.2.2 ( 03 July 2024 ) =
 * Added: New Shortcode For Display stars ratings anywhere [rtrs-average-rating-stars]
 * Added: New Shortcode For Display average ratings count anywhere [rtrs-average-rating-count]
 * Added: Added Shipping Details, MerchantReturnPolicy For Product Schema

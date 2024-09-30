@@ -978,6 +978,12 @@ class SingleMetaOptions {
 						'label' => esc_html__( 'Hiring Organization', 'review-schema' ),
 					],
 					[
+						'name'  => 'addressCountry',
+						'label' => __( 'Country', 'review-schema' ),
+						'type'  => 'text',
+						'desc'  => __( 'Ex: US ', 'review-schema' ),
+					],
+					[
 						'name'  => 'addressLocality',
 						'type'  => 'text',
 						'label' => esc_html__( 'Job location address', 'review-schema' ),

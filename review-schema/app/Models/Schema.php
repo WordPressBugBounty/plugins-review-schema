@@ -2473,6 +2473,7 @@ class Schema {
 							'@type'   => 'Place',
 							'address' => [
 								'@type'           => 'PostalAddress',
+								'addressCountry'  => $helper->sanitizeOutPut( $metaData['addressCountry'] ?? '' ),
 								'addressLocality' => $helper->sanitizeOutPut( $metaData['addressLocality'] ),
 								'addressRegion'   => $helper->sanitizeOutPut( $metaData['addressRegion'] ),
 								'postalCode'      => $helper->sanitizeOutPut( $metaData['postalCode'] ),
@@ -3724,7 +3725,15 @@ class Schema {
 
 				default:
 			}
-			$html .= do_action( 'rtseo_snippet_others_schema_output', $schemaCat, $metaData, $without_script, $this );
+			if ( $without_script ) {
+				ob_start();
+				do_action( 'rtseo_snippet_others_schema_output', $schemaCat, $metaData, $without_script, $this );
+				$html = ob_get_clean();
+			} else {
+				ob_start();
+				do_action( 'rtseo_snippet_others_schema_output', $schemaCat, $metaData, $without_script, $this );
+				$html .= ob_get_clean();
+			}
 		}
 
 		return $html;
