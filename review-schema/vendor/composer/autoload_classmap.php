@@ -35,6 +35,7 @@ return array(
     'Rtrs\\Models\\Review' => $baseDir . '/app/Models/Review.php',
     'Rtrs\\Models\\Schema' => $baseDir . '/app/Models/Schema.php',
     'Rtrs\\Models\\SettingsAPI' => $baseDir . '/app/Models/SettingsAPI.php',
+    'Rtrs\\Shortcodes\\ReviewAvgRating' => $baseDir . '/app/Shortcodes/ReviewAvgRating.php',
     'Rtrs\\Shortcodes\\ReviewSchema' => $baseDir . '/app/Shortcodes/ReviewSchema.php',
     'Rtrs\\Traits\\SingletonTrait' => $baseDir . '/app/Traits/SingletonTrait.php',
     'Rtrs\\Widgets\\ReviewSchema' => $baseDir . '/app/Widgets/ReviewSchema.php',

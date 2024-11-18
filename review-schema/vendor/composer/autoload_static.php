@@ -50,6 +50,7 @@ class ComposerStaticInitc74062b0af66d24d8cf90c55497955eb
         'Rtrs\\Models\\Review' => __DIR__ . '/../..' . '/app/Models/Review.php',
         'Rtrs\\Models\\Schema' => __DIR__ . '/../..' . '/app/Models/Schema.php',
         'Rtrs\\Models\\SettingsAPI' => __DIR__ . '/../..' . '/app/Models/SettingsAPI.php',
+        'Rtrs\\Shortcodes\\ReviewAvgRating' => __DIR__ . '/../..' . '/app/Shortcodes/ReviewAvgRating.php',
         'Rtrs\\Shortcodes\\ReviewSchema' => __DIR__ . '/../..' . '/app/Shortcodes/ReviewSchema.php',
         'Rtrs\\Traits\\SingletonTrait' => __DIR__ . '/../..' . '/app/Traits/SingletonTrait.php',
         'Rtrs\\Widgets\\ReviewSchema' => __DIR__ . '/../..' . '/app/Widgets/ReviewSchema.php',

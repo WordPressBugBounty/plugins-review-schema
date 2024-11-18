@@ -1041,7 +1041,7 @@ msgstr ""
 msgid "Upload a Video"
 msgstr ""
 
-#: ../app/Controllers/Marketing/Offer.php:64, ../dist/review-schema/app/Controllers/Marketing/Offer.php:64
+#: ../app/Controllers/Marketing/Offer.php:63, ../dist/review-schema/app/Controllers/Marketing/Offer.php:64
 msgid "Don't miss out on our biggest sale of the year! Get your."
 msgstr ""
 
