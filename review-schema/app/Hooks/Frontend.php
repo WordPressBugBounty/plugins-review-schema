@@ -17,18 +17,136 @@ class Frontend {
 		// throw this into your plugin or your functions.php file to define the custom comments template.
 		add_filter( 'comments_template', [ $this, 'comment_template' ], 99 );
 
-		// adds the captcha to the WordPress form
+		// adds the captcha to the WordPress form.
 		add_action( 'pre_comment_on_post', [ $this, 'verify_google_recaptcha' ] );
 
 		remove_action( 'pre_comment_on_post', [ WC_Comments::class, 'validate_product_review_verified_owners' ] );
 		add_action( 'pre_comment_on_post', [ $this, 'validate_product_review_verified_owners' ] );
-		// filter comment avater type
+		// filter comment avater type.
 		add_filter( 'get_avatar_comment_types', [ $this, 'comment_avater_types' ] );
 		add_filter( 'rtrs_review_form_string_list', [ $this, 'review_form_string_list' ] );
 		// Comment cookies.
 		add_action( 'set_comment_cookies', [ $this, 'rtrs_set_comment_cookies' ] );
 		add_action( 'init', [ $this, 'display_comment_cookies' ] );
 
+		// Shopbuilder Plugin Support.
+		add_filter( 'rtsb/elements/elementor/reviews_settings_selecotor', [ $this, 'reviews_settings_selecotor' ], 20 );
+		add_filter( 'rtsb/elements/elementor/widgets/controls/rtsb-product-tabs', [ $this, 'reviews_rtsb_product_tabs_control' ], 20 );
+	}
+
+	/**
+	 * @param array $controls controls.
+	 * @return array
+	 */
+	public function reviews_rtsb_product_tabs_control( $controls ) {
+		if ( ! empty( $controls['review_star_icon_specing'] ) ) {
+			$controls['review_star_icon_specing']['selectors']['{{WRAPPER}} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-review-rating i:not(:last-child)'] = 'margin-right: {{SIZE}}{{UNIT}}';
+		}
+		if ( ! empty( $controls['form_heading_typography'] ) ) {
+			 $controls['form_heading_typography']['selector'] = $controls['form_heading_typography']['selector'] . ', {{WRAPPER}} .rtrs-review-form .rtrs-form-title';
+		}
+		if ( ! empty( $controls['form_heading_color'] ) ) {
+			$controls['form_heading_color']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-title'] = 'color: {{VALUE}} !important;';
+		}
+		if ( ! empty( $controls['form_title_margin'] ) ) {
+			$controls['form_title_margin']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-title'] = 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; padding: 0;';
+		}
+		if ( ! empty( $controls['label_input_text_typography'] ) ) {
+			$controls['label_input_text_typography']['selector'] = $controls['label_input_text_typography']['selector'] . ', {{WRAPPER}}  .rtrs-review-form .rtrs-form-group .rtrs-form-control';
+		}
+
+		if ( ! empty( $controls['review_input_color'] ) ) {
+			$controls['review_input_color']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'color: {{VALUE}} !important;';
+		}
+		if ( ! empty( $controls['review_input_border_color'] ) ) {
+			$controls['review_input_border_color']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'border-color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['review_input_border_color_focus'] ) ) {
+			$controls['review_input_border_color_focus']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control:focus'] = 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important;';
+		}
+		if ( ! empty( $controls['review_comment_field_height'] ) ) {
+			$controls['review_comment_field_height']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group textarea.rtrs-form-control'] = 'height: {{SIZE}}{{UNIT}} !important;';
+		}
+		if ( ! empty( $controls['review_form_rating_size'] ) ) {
+			$controls['review_form_rating_size']['selectors']['{{WRAPPER}} .rtrs-rating-container > label'] = 'font-size: {{SIZE}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['review_field_spacing'] ) ) {
+			$controls['review_field_spacing']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'margin-bottom: {{SIZE}}{{UNIT}}!important;';
+		}
+		if ( ! empty( $controls['review_field_spacing'] ) ) {
+			$controls['review_field_spacing']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'margin-bottom: {{SIZE}}{{UNIT}}!important;';
+		}
+		if ( ! empty( $controls['review_input_border_radius'] ) ) {
+			$controls['review_input_border_radius']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'border-radius: {{SIZE}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['review_input_padding'] ) ) {
+			$controls['review_input_padding']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['review_input_padding'] ) ) {
+			$controls['review_input_padding']['selectors']['{{WRAPPER}} .rtrs-review-form .rtrs-form-group .rtrs-form-control'] = 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['button_typography'] ) ) {
+			$controls['button_typography']['selector'] = $controls['button_typography']['selector'] . ',{{WRAPPER}} #respond .rtrs-form-group input#submit';
+		}
+		if ( ! empty( $controls['submit_button_alignment'] ) ) {
+			$controls['submit_button_alignment']['selectors']['{{WRAPPER}} #respond .rtrs-form-group.rtrs-review-submit-wrapper'] = 'text-align: {{VALUE}} !important;';
+		}
+		if ( ! empty( $controls['button_text_color_normal'] ) ) {
+			$controls['button_text_color_normal']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit'] = 'color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['button_bg_color_normal'] ) ) {
+			$controls['button_bg_color_normal']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit'] = 'background-color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['button_border'] ) ) {
+			$controls['button_border']['selector'] = $controls['button_typography']['selector'] . ',{{WRAPPER}} #respond .rtrs-form-group input#submit';
+		}
+		if ( ! empty( $controls['button_text_color_hover'] ) ) {
+			$controls['button_text_color_hover']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit:hover'] = 'color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['button_bg_color_hover'] ) ) {
+			$controls['button_bg_color_hover']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit:hover'] = 'background-color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['button_bg_color_hover'] ) ) {
+			$controls['button_bg_color_hover']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit:hover'] = 'background-color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['button_border_hover_color'] ) ) {
+			$controls['button_border_hover_color']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit:hover'] = 'border-color: {{VALUE}};';
+		}
+		if ( ! empty( $controls['button_border_radius'] ) ) {
+			$controls['button_border_radius']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit'] = 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['button_padding'] ) ) {
+			$controls['button_padding']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit'] = 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['button_margin'] ) ) {
+			$controls['button_margin']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit'] = 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};';
+		}
+		if ( ! empty( $controls['submit_button_height'] ) ) {
+			$controls['submit_button_height']['selectors']['{{WRAPPER}} #respond .rtrs-form-group input#submit'] = 'height: {{SIZE}}{{UNIT}}!important;';
+		}
+
+		return $controls;
+	}
+	/**
+	 * @param array $controls selectors.
+	 *
+	 * @return void
+	 */
+	public function reviews_settings_selecotor( $selector ) {
+		$selector['review_meta_color']      = $selector['review_meta_color'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-meta li:not(.rtrs-review-rating)';
+		$selector['description_color']      = $selector['description_color'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-body p';
+		$selector['review_border']          = $selector['review_border'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-each-review';
+		$selector['review_meta_typography'] = $selector['review_meta_typography'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-meta li:not(.rtrs-review-rating)';
+		$selector['review_desc_typography'] = $selector['review_desc_typography'] . ', {{WRAPPER}} .rtrs-review-box  .rtrs-review-body p';
+		$selector['review_padding']         = $selector['review_padding'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-each-review';
+		$selector['review_single_spacing']  = $selector['review_single_spacing'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-main-review';
+		// Star Icon.
+		$selector['review_star_icon_default_color'] = $selector['review_star_icon_default_color'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-rating .rtrs-star-empty';
+		$selector['review_star_icon_color']         = $selector['review_star_icon_color'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-rating';
+		$selector['review_star_icon_size']          = $selector['review_star_icon_size'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-rating';
+		$selector['review_star_icon_margin']        = $selector['review_star_icon_margin'] . ', {{WRAPPER}} .rtrs-review-box .rtrs-review-rating';
+
+		return $selector;
 	}
 
 	/**
@@ -54,7 +172,7 @@ class Frontend {
 			add_action(
 				'comment_form_before',
 				function () { ?>
-                    <p id='wait_approval' style='padding-top: 40px;'><strong><?php echo esc_html( apply_filters( 'rtrs_review_form_submited_notice', __( 'Your review has been submitted.', 'review-schema' ) ) ); ?></strong></p>
+					<p id='wait_approval' style='padding-top: 40px;'><strong><?php echo esc_html( apply_filters( 'rtrs_review_form_submited_notice', __( 'Your review has been submitted.', 'review-schema' ) ) ); ?></strong></p>
 					<?php
 				}
 			);
@@ -116,7 +234,7 @@ class Frontend {
 			return $comment_template;
 		}
 		if ( Functions::isEnableByPostType( $post->post_type ) ) {
-			// extra arg will pass in array
+			// extra arg will pass in array.
 			$comment_template = Functions::get_template_part( 'reviews', [], false );
 		}
 
@@ -131,7 +249,6 @@ class Frontend {
 			return;
 		}
 
-
 		$comment_id = absint( $_POST['comment_ID'] );
 		// not isset means not enable criteria
 		$post_id = absint( $_POST['comment_post_ID'] ?? 0 );
@@ -145,8 +262,8 @@ class Frontend {
 					$slug = 'rt_rating_' . Functions::slugify( $value );
 					if ( isset( $_POST[ $slug ] ) && ( '' !== $_POST[ $slug ] ) ) {
 						$rating = absint( $_POST[ $slug ] );
-						$i ++;
-						$total             += $rating;
+						$i++;
+						$total            += $rating;
 						$criteria_rating[] = $rating;
 					}
 				}
@@ -253,8 +370,8 @@ class Frontend {
 					$slug = 'rt_rating_' . Functions::slugify( $value );
 					if ( ( isset( $_POST[ $slug ] ) ) && ( '' !== $_POST[ $slug ] ) ) {
 						$rating = absint( $_POST[ $slug ] );
-						$i ++;
-						$total             += $rating;
+						$i++;
+						$total            += $rating;
 						$criteria_rating[] = $rating;
 					}
 				}
@@ -376,44 +493,46 @@ class Frontend {
 				$slug = 'rt_rating_' . Functions::slugify( $value );
 				?>
 
-                <li>
-                    <div class="rtrs-category-text"><?php echo esc_html( $value ); ?></div>
-                    <div class="rtrs-rating-container">
+				<li>
+					<div class="rtrs-category-text"><?php echo esc_html( $value ); ?></div>
+					<div class="rtrs-rating-container">
 						<?php
 						$default_selected = absint( apply_filters( 'rtrs_set_default_review_value', 5 ) );
-						for ( $i = 5; $i >= 1; $i -- ) : ?>
-                            <input
+						for ( $i = 5; $i >= 1; $i-- ) :
+							?>
+							<input
 								<?php
 								if ( $i == $default_selected ) {
 									echo 'checked';
 								}
 								?>
-                                    type="radio" id="<?php echo esc_attr( $criteria_count ); ?>-rating-<?php echo esc_attr( $i ); ?>" name="<?php echo esc_attr( $slug ); ?>" value="<?php echo esc_attr( $i ); ?>"/><label for="<?php echo esc_attr( $criteria_count ); ?>-rating-<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></label>
+									type="radio" id="<?php echo esc_attr( $criteria_count ); ?>-rating-<?php echo esc_attr( $i ); ?>" name="<?php echo esc_attr( $slug ); ?>" value="<?php echo esc_attr( $i ); ?>"/><label for="<?php echo esc_attr( $criteria_count ); ?>-rating-<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></label>
 						<?php endfor; ?>
-                    </div>
-                </li>
+					</div>
+				</li>
 				<?php
-				$criteria_count ++;
+				$criteria_count++;
 			endforeach;
 		} else {
 			?>
 
-            <li>
-                <div class="rtrs-category-text"><?php esc_html_e( 'Rating', 'review-schema' ); ?></div>
-                <div class="rtrs-rating-container">
+			<li>
+				<div class="rtrs-category-text"><?php esc_html_e( 'Rating', 'review-schema' ); ?></div>
+				<div class="rtrs-rating-container">
 					<?php
 					$default_selected = absint( apply_filters( 'rtrs_set_default_review_value', 5 ) );
-					for ( $i = 5; $i >= 1; $i -- ) : ?>
-                        <input
+					for ( $i = 5; $i >= 1; $i-- ) :
+						?>
+						<input
 							<?php
 							if ( $i == $default_selected ) {
 								echo 'checked';
 							}
 							?>
-                                type="radio" id="rt-rating-<?php echo esc_attr( $i ); ?>" name="rt_rating" value="<?php echo esc_attr( $i ); ?>"/><label for="rt-rating-<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></label>
+								type="radio" id="rt-rating-<?php echo esc_attr( $i ); ?>" name="rt_rating" value="<?php echo esc_attr( $i ); ?>"/><label for="rt-rating-<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></label>
 					<?php endfor; ?>
-                </div>
-            </li>
+				</div>
+			</li>
 			<?php
 		}
 		echo '</ul></div>';
@@ -421,63 +540,63 @@ class Frontend {
 		$pros_cons = ( isset( $p_meta['pros_cons'] ) && $p_meta['pros_cons'][0] == '1' );
 		if ( $pros_cons ) {
 			?>
-            <div class="rtrs-form-group rtrs-hide-reply">
-                <div class="rtrs-feedback-input">
-                    <div class="rtrs-input-item rtrs-pros">
-                        <h3 class="rtrs-input-title">
-                            <span class="item-icon"><i class="rtrs-thumbs-up"></i></span>
-                            <span class="item-text"><?php esc_html_e( 'PROS', 'review-schema' ); ?></span>
-                        </h3>
-                        <div class="rtrs-input-filed">
-                            <span class="rtrs-remove-btn">+</span>
-                            <input type="text" class="form-control" name="rt_pros[]" placeholder="<?php esc_attr_e( 'Write here!', 'review-schema' ); ?>">
-                        </div>
-                        <div class="rtrs-field-add"><i class="rtrs-plus"></i><?php esc_html_e( 'Add Field', 'review-schema' ); ?></div>
-                    </div>
+			<div class="rtrs-form-group rtrs-hide-reply">
+				<div class="rtrs-feedback-input">
+					<div class="rtrs-input-item rtrs-pros">
+						<h3 class="rtrs-input-title">
+							<span class="item-icon"><i class="rtrs-thumbs-up"></i></span>
+							<span class="item-text"><?php esc_html_e( 'PROS', 'review-schema' ); ?></span>
+						</h3>
+						<div class="rtrs-input-filed">
+							<span class="rtrs-remove-btn">+</span>
+							<input type="text" class="form-control" name="rt_pros[]" placeholder="<?php esc_attr_e( 'Write here!', 'review-schema' ); ?>">
+						</div>
+						<div class="rtrs-field-add"><i class="rtrs-plus"></i><?php esc_html_e( 'Add Field', 'review-schema' ); ?></div>
+					</div>
 
-                    <div class="rtrs-input-item rtrs-cons">
-                        <h3 class="rtrs-input-title">
-                            <span class="item-icon unlike-icon"><i class="rtrs-thumbs-down"></i></span>
-                            <span class="item-text"><?php esc_html_e( 'CONS', 'review-schema' ); ?></span>
-                        </h3>
-                        <div class="rtrs-input-filed">
-                            <span class="rtrs-remove-btn">+</span>
-                            <input type="text" class="form-control" name="rt_cons[]" placeholder="<?php esc_attr_e( 'Write here!', 'review-schema' ); ?>">
-                        </div>
-                        <div class="rtrs-field-add"><i class="rtrs-plus"></i><?php esc_html_e( 'Add Field', 'review-schema' ); ?></div>
-                    </div>
-                </div>
-            </div>
+					<div class="rtrs-input-item rtrs-cons">
+						<h3 class="rtrs-input-title">
+							<span class="item-icon unlike-icon"><i class="rtrs-thumbs-down"></i></span>
+							<span class="item-text"><?php esc_html_e( 'CONS', 'review-schema' ); ?></span>
+						</h3>
+						<div class="rtrs-input-filed">
+							<span class="rtrs-remove-btn">+</span>
+							<input type="text" class="form-control" name="rt_cons[]" placeholder="<?php esc_attr_e( 'Write here!', 'review-schema' ); ?>">
+						</div>
+						<div class="rtrs-field-add"><i class="rtrs-plus"></i><?php esc_html_e( 'Add Field', 'review-schema' ); ?></div>
+					</div>
+				</div>
+			</div>
 			<?php
 		}
 		?>
 
 
-        <div class="rtrs-media-buttons">
+		<div class="rtrs-media-buttons">
 			<?php
 
 			if ( isset( $p_meta['image_review'] ) && $p_meta['image_review'][0] == '1' ) {
 				?>
-                <div class="rtrs-image-media-groups">
-                    <div class="rtrs-form-group rtrs-hide-reply">
-                        <div class="rtrs-preview-imgs"></div>
-                    </div>
-                    <div class="rtrs-form-group rtrs-media-form-group rtrs-hide-reply">
-                        <div class="rtrs-button-label">
-                            <label class="rtrs-input-image-label"><?php esc_html_e( 'Upload Image', 'review-schema' ); ?></label>
-                        </div>
+				<div class="rtrs-image-media-groups">
+					<div class="rtrs-form-group rtrs-hide-reply">
+						<div class="rtrs-preview-imgs"></div>
+					</div>
+					<div class="rtrs-form-group rtrs-media-form-group rtrs-hide-reply">
+						<div class="rtrs-button-label">
+							<label class="rtrs-input-image-label"><?php esc_html_e( 'Upload Image', 'review-schema' ); ?></label>
+						</div>
 
-                        <div class="rtrs-image-button">
-                            <div class="rtrs-multimedia-upload">
-                                <div class="rtrs-upload-box" id="rtrs-upload-box-image">
-                                    <span><?php esc_html_e( 'Choose Image', 'review-schema' ); ?></span>
-                                </div>
-                            </div>
-                            <input type="file" id="rtrs-image" accept="image/*" style="display:none">
-                            <div class="rtrs-image-error"></div>
-                        </div>
-                    </div>
-                </div>
+						<div class="rtrs-image-button">
+							<div class="rtrs-multimedia-upload">
+								<div class="rtrs-upload-box" id="rtrs-upload-box-image">
+									<span><?php esc_html_e( 'Choose Image', 'review-schema' ); ?></span>
+								</div>
+							</div>
+							<input type="file" id="rtrs-image" accept="image/*" style="display:none">
+							<div class="rtrs-image-error"></div>
+						</div>
+					</div>
+				</div>
 
 				<?php
 			}
@@ -485,69 +604,69 @@ class Frontend {
 			$video_review = ( isset( $p_meta['video_review'] ) && $p_meta['video_review'][0] == '1' );
 			if ( $video_review && function_exists( 'rtrsp' ) ) {
 				?>
-                <div class="rtrs-video-media-groups">
-                    <div class="rtrs-form-group rtrs-hide-reply">
-                        <div class="rtrs-preview-videos"></div>
-                    </div>
+				<div class="rtrs-video-media-groups">
+					<div class="rtrs-form-group rtrs-hide-reply">
+						<div class="rtrs-preview-videos"></div>
+					</div>
 
-                    <div class="rtrs-form-group rtrs-media-form-group rtrs-hide-reply">
-                        <div class="rtrs-button-label">
-                            <label class="rtrs-input-video-label"><?php esc_html_e( 'Upload Video', 'review-schema' ); ?></label>
-                        </div>
+					<div class="rtrs-form-group rtrs-media-form-group rtrs-hide-reply">
+						<div class="rtrs-button-label">
+							<label class="rtrs-input-video-label"><?php esc_html_e( 'Upload Video', 'review-schema' ); ?></label>
+						</div>
 
-                        <div class="rtrs-video-source-selector">
-                            <select name="rt_video_source" id="rtrs-video-source" class="rtrs-form-control">
-                                <option value="self"><?php esc_html_e( 'Hosted Video', 'review-schema' ); ?></option>
-                                <option value="external"><?php esc_html_e( 'External Video', 'review-schema' ); ?></option>
-                            </select>
-                        </div>
+						<div class="rtrs-video-source-selector">
+							<select name="rt_video_source" id="rtrs-video-source" class="rtrs-form-control">
+								<option value="self"><?php esc_html_e( 'Hosted Video', 'review-schema' ); ?></option>
+								<option value="external"><?php esc_html_e( 'External Video', 'review-schema' ); ?></option>
+							</select>
+						</div>
 
-                        <div class="rtrs-source-video">
-                            <div class="rtrs-multimedia-upload">
-                                <div class="rtrs-upload-box" id="rtrs-upload-box-video">
-                                    <span><?php esc_html_e( 'Choose Video', 'review-schema' ); ?></span>
-                                </div>
-                            </div>
-                            <input type="file" id="rtrs-video" accept="video/*" style="display:none">
-                            <div class="rtrs-video-error"></div>
-                        </div>
-                    </div>
+						<div class="rtrs-source-video">
+							<div class="rtrs-multimedia-upload">
+								<div class="rtrs-upload-box" id="rtrs-upload-box-video">
+									<span><?php esc_html_e( 'Choose Video', 'review-schema' ); ?></span>
+								</div>
+							</div>
+							<input type="file" id="rtrs-video" accept="video/*" style="display:none">
+							<div class="rtrs-video-error"></div>
+						</div>
+					</div>
 
-                    <div class="rtrs-form-group rtrs-source-external rtrs-hide-reply">
-                        <label class="rtrs-input-label" for="rt_external_video"><?php esc_html_e( 'External Video Link', 'review-schema' ); ?></label>
-                        <input id="rt_external_video" class="rtrs-form-control" placeholder="<?php esc_attr_e( 'https://www.youtube.com/watch?v=668nUCeBHyY', 'review-schema' ); ?>" name="rt_external_video" type="text">
-                    </div>
-                </div>
+					<div class="rtrs-form-group rtrs-source-external rtrs-hide-reply">
+						<label class="rtrs-input-label" for="rt_external_video"><?php esc_html_e( 'External Video Link', 'review-schema' ); ?></label>
+						<input id="rt_external_video" class="rtrs-form-control" placeholder="https://www.youtube.com/watch?v=668nUCeBHyY" name="rt_external_video" type="text">
+					</div>
+				</div>
 				<?php
 			} //video_review
 			?>
-        </div>
+		</div>
 
 
 		<?php
 		$recommendation = ( isset( $p_meta['recommendation'] ) && $p_meta['recommendation'][0] == '1' );
 		if ( $recommendation && function_exists( 'rtrsp' ) ) {
 			?>
-            <div class="rtrs-form-group rtrs-hide-reply">
-                <label class="rtrs-input-label"><?php esc_html_e( 'Recommendation', 'review-schema' ); ?></label>
-                <div class="rtrs-recomnd-check">
-                    <div class="rtrs-form-check rtrs-tooltip">
-                        <input type="radio" class="rtrs-form-checkbox" name="rt_recommended" value="1">
-                        <label class="rtrs-checkbox-label check-excelent"></label>
-                        <span class="rtrs-tooltiptext"><?php esc_html_e( 'Happy', 'review-schema' ); ?></span>
-                    </div>
-                    <div class="rtrs-form-check rtrs-tooltip">
-                        <input type="radio" class="rtrs-form-checkbox" name="rt_recommended" value="-1">
-                        <label class="rtrs-checkbox-label check-good"></label>
-                        <span class="rtrs-tooltiptext"><?php esc_html_e( 'Sad', 'review-schema' ); ?></span>
-                    </div>
-                    <div class="rtrs-form-check rtrs-tooltip">
-                        <input type="radio" class="rtrs-form-checkbox" name="rt_recommended" value="0">
-                        <label class="rtrs-checkbox-label check-bad"></label>
-                        <span class="rtrs-tooltiptext"><?php esc_html_e( 'Nothing', 'review-schema' ); ?></span>
-                    </div>
-                </div>
-            </div>
+			<div class="rtrs-form-group rtrs-hide-reply">
+				<label class="rtrs-input-label"><?php esc_html_e( 'Recommendation', 'review-schema' ); ?></label>
+				<div class="rtrs-recomnd-check">
+					<div class="rtrs-form-check rtrs-tooltip">
+						<input type="radio" class="rtrs-form-checkbox" name="rt_recommended" value="1">
+						<label class="rtrs-checkbox-label check-excelent"></label>
+						<span class="rtrs-tooltiptext"><?php esc_html_e( 'Happy', 'review-schema' ); ?></span>
+					</div>
+					<div class="rtrs-form-check rtrs-tooltip">
+						<input type="radio" class="rtrs-form-checkbox" name="rt_recommended" value="-1">
+						<label class="rtrs-checkbox-label check-good"></label>
+						<span class="rtrs-tooltiptext"><?php esc_html_e( 'Sad', 'review-schema' ); ?></span>
+					</div>
+					<div class="rtrs-form-check rtrs-tooltip">
+						<input type="radio" class="rtrs-form-checkbox" name="rt_recommended" value="0">
+						<label class="rtrs-checkbox-label check-bad"></label>
+						<span class="rtrs-tooltiptext"><?php esc_html_e( 'Nothing', 'review-schema' ); ?></span>
+					</div>
+				</div>
+			</div>
 			<?php
 		}
 
@@ -555,15 +674,15 @@ class Frontend {
 		if ( $anonymous_review && function_exists( 'rtrsp' ) ) {
 			?>
 
-            <div class="rtrs-form-group rtrs-hide-reply">
-                <div class="rtrs-form-check">
-                    <input type="checkbox" class="rtrs-form-checkbox" name="rt_anonymous" id="rtrs-anonymous">
-                    <label for="rtrs-anonymous" class="rtrs-checkbox-label"><?php esc_html_e( 'Review anonymously', 'review-schema' ); ?></label>
-                </div>
-            </div>
+			<div class="rtrs-form-group rtrs-hide-reply">
+				<div class="rtrs-form-check">
+					<input type="checkbox" class="rtrs-form-checkbox" name="rt_anonymous" id="rtrs-anonymous">
+					<label for="rtrs-anonymous" class="rtrs-checkbox-label"><?php esc_html_e( 'Review anonymously', 'review-schema' ); ?></label>
+				</div>
+			</div>
 			<?php
 		}
-		wp_nonce_field(rtrs()->getNonceId(), rtrs()->getNonceId());
+		wp_nonce_field( rtrs()->getNonceId(), rtrs()->getNonceId() );
 		do_action( 'rtrs_after_review_form' );
 
 		return ob_get_clean();
@@ -597,7 +716,7 @@ class Frontend {
 				'email_field_placeholder'   => esc_html__( 'Email', 'review-schema' ),
 				'website_field_placeholder' => esc_html__( 'Website', 'review-schema' ),
 				'title_field_placeholder'   => esc_html__( 'Title', 'review-schema' ),
-				'comment_field_placeholder' => esc_html__( 'Write your review', 'review-schema' ),
+				'comment_field_placeholder' => esc_html__( 'Write your review *', 'review-schema' ),
 
 			]
 		);
@@ -622,7 +741,7 @@ class Frontend {
 		$args['id_submit']          = 'submit';
 		$args['class_submit']       = 'rtrs-submit-btn rtrs-review-submit';
 		$args['class_container']    = 'comment-respond rtrs-review-form';
-		$args['submit_field']       = '<div class="rtrs-form-group">%1$s %2$s</div>';
+		$args['submit_field']       = '<div class="rtrs-form-group rtrs-review-submit-wrapper ">%1$s %2$s</div>';
 		$args['name_submit']        = 'submit';
 		$args['title_reply']        = ! empty( $string_text['title_reply'] ) ? $string_text['title_reply'] : '';
 		$args['title_reply_before'] = '<h2 id="reply-title" class="rtrs-form-title">';
@@ -642,7 +761,7 @@ class Frontend {
 
 		$comment_field_placeholder = ! empty( $string_text['comment_field_placeholder'] ) ? $string_text['comment_field_placeholder'] : '';
 
-		$args['comment_field'] .= '<div class="rtrs-form-group"><textarea id="message" class="rtrs-form-control" placeholder="' . $comment_field_placeholder . '* "  name="comment" required="required"  aria-required="true" rows="6" cols="45"></textarea></div>';
+		$args['comment_field'] .= '<div class="rtrs-form-group"><textarea id="message" class="rtrs-form-control" placeholder="' . $comment_field_placeholder . '"  name="comment" required="required"  aria-required="true" rows="6" cols="45"></textarea></div>';
 		$args['comment_field'] .= '<input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse" value="">';
 
 		if ( is_user_logged_in() ) {
@@ -717,10 +836,9 @@ class Frontend {
 		wp_die(
 			esc_html__( 'Only logged in customers who have purchased this product may leave a review.', 'woocommerce' ),
 			esc_html__( 'Reviews can only be left by "verified owners"', 'woocommerce' ),
-			array(
+			[
 				'code' => 403,
-			)
+			]
 		);
 	}
-
 }

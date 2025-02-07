@@ -51,10 +51,14 @@ class ScriptLoader {
 		if ( is_singular() ) {  
 
 			$p_meta = Functions::getMetaByPostType( get_post_type() );
-			
+			// Shopbuilder Support.
 			if( defined( 'RTSB_VERSION' ) && in_array( get_post_type(), ['rtsb_builder'] ) ){
 				$p_meta = Functions::getMetaByPostType( 'product' );
 			}
+            // RTCL Listing Builder.
+            if( defined( 'RTCL_ELB_VERSION' ) && in_array( get_post_type(), ['rtcl_builder'] ) ){
+                $p_meta = Functions::getMetaByPostType( 'rtcl_listing' );
+            }
 
 			if ( !$p_meta ) return;
 			

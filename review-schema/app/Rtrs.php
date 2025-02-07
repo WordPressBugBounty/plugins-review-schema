@@ -42,14 +42,14 @@ final class Rtrs {
 	}
 
 	private function init_hooks() {
-		add_action('plugins_loaded', [$this, 'on_plugins_loaded'], -1);
+		add_action( 'plugins_loaded', [ $this, 'on_plugins_loaded' ], -1 );
 
-		add_action('init', [$this, 'init'], 1);
-		add_action('init', [Shortcodes::class, 'init_short_code']); // Init ShortCode
+		add_action( 'init', [ $this, 'init' ], 1 );
+		add_action( 'init', [ Shortcodes::class, 'init_short_code' ] ); // Init ShortCode
 	}
 
 	public function init() {
-		do_action('rtrs_before_init');
+		do_action( 'rtrs_before_init' );
 
 		$this->load_plugin_textdomain();
 
@@ -59,28 +59,29 @@ final class Rtrs {
 		new Offer();
 		new Backend();
 		new Frontend();
-		do_action('rtrs_init');
+		do_action( 'rtrs_init' );
 	}
 
 	public function on_plugins_loaded() {
 		new SeoHooks();
-		do_action('rtrs_loaded');
+		do_action( 'rtrs_loaded' );
 	}
 
 	/**
 	 * Load Localisation files.
 	 */
 	public function load_plugin_textdomain() {
-		if( ! function_exists('determine_locale') ){
-			require_once ABSPATH.WPINC.'/l10n.php';
-		}
-		$locale = function_exists('determine_locale') ? determine_locale() : 'en_US'; // Forums Support: Undefine Function fixed. 
-		$locale = apply_filters('rtrs_plugin_locale', $locale);
-		unload_textdomain('review-schema');
-		load_textdomain('review-schema', WP_LANG_DIR . '/review-schema/review-schema-' . $locale . '.mo');
-		load_plugin_textdomain('review-schema', false, plugin_basename(dirname(RTRS_PLUGIN_FILE)) . '/languages');
+		/*
+		// if ( ! function_exists( 'determine_locale' ) ) {
+		// require_once ABSPATH . WPINC . '/l10n.php';
+		// }
+		// $locale = function_exists( 'determine_locale' ) ? determine_locale() : 'en_US'; // Forums Support: Undefine Function fixed.
+		// $locale = apply_filters( 'rtrs_plugin_locale', $locale );
+		// unload_textdomain( 'review-schema' );
+		// load_textdomain( 'review-schema', WP_LANG_DIR . '/review-schema/review-schema-' . $locale . '.mo' );
+		*/
+		load_plugin_textdomain( 'review-schema', false, plugin_basename( dirname( RTRS_PLUGIN_FILE ) ) . '/languages' );
 	}
-
 	/**
 	 * What type of request is this?
 	 *
@@ -88,23 +89,23 @@ final class Rtrs {
 	 *
 	 * @return bool
 	 */
-	public function is_request($type) {
-		switch ($type) {
+	public function is_request( $type ) {
+		switch ( $type ) {
 			case 'admin':
 				return is_admin();
 			case 'ajax':
-				return defined('DOING_AJAX');
+				return defined( 'DOING_AJAX' );
 			case 'cron':
-				return defined('DOING_CRON');
+				return defined( 'DOING_CRON' );
 			case 'frontend':
-				return (! is_admin() || defined('DOING_AJAX')) && ! defined('DOING_CRON');
+				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
 		}
 	}
 
 	private function define_constants() {
-		$this->define('RTRS_URL', plugins_url('', RTRS_PLUGIN_FILE));
-		$this->define('RTRS_SLUG', basename(dirname(RTRS_PLUGIN_FILE)));
-		$this->define('RTRS_TEMPLATE_DEBUG_MODE', false);
+		$this->define( 'RTRS_URL', plugins_url( '', RTRS_PLUGIN_FILE ) );
+		$this->define( 'RTRS_SLUG', basename( dirname( RTRS_PLUGIN_FILE ) ) );
+		$this->define( 'RTRS_TEMPLATE_DEBUG_MODE', false );
 	}
 
 	/**
@@ -113,9 +114,9 @@ final class Rtrs {
 	 * @param string      $name  Constant name.
 	 * @param string|bool $value Constant value.
 	 */
-	public function define($name, $value) {
-		if (! defined($name)) {
-			define($name, $value);
+	public function define( $name, $value ) {
+		if ( ! defined( $name ) ) {
+			define( $name, $value );
 		}
 	}
 
@@ -125,7 +126,7 @@ final class Rtrs {
 	 * @return string
 	 */
 	public function plugin_path() {
-		return untrailingslashit(plugin_dir_path(RTRS_PLUGIN_FILE));
+		return untrailingslashit( plugin_dir_path( RTRS_PLUGIN_FILE ) );
 	}
 
 	/**
@@ -169,7 +170,7 @@ final class Rtrs {
 	 * @return string
 	 */
 	public function get_template_path() {
-		return apply_filters('rtrs_template_path', 'review-schema/');
+		return apply_filters( 'rtrs_template_path', 'review-schema/' );
 	}
 
 	/**
@@ -177,8 +178,8 @@ final class Rtrs {
 	 *
 	 * @return string
 	 */
-	public function get_partial_path($path = null, $args = []) {
-		Functions::get_template_part('partials/' . $path, $args);
+	public function get_partial_path( $path = null, $args = [] ) {
+		Functions::get_template_part( 'partials/' . $path, $args );
 	}
 
 	/**
@@ -186,10 +187,10 @@ final class Rtrs {
 	 *
 	 * @return string
 	 */
-	public function get_assets_uri($file) {
-		$file = ltrim($file, '/');
+	public function get_assets_uri( $file ) {
+		$file = ltrim( $file, '/' );
 
-		return trailingslashit(RTRS_URL . '/assets') . $file;
+		return trailingslashit( RTRS_URL . '/assets' ) . $file;
 	}
 
 	/**
@@ -197,18 +198,18 @@ final class Rtrs {
 	 *
 	 * @return string
 	 */
-	public function render($viewName, $args = [], $return = false) {
-		$path     = str_replace('.', '/', $viewName);
+	public function render( $viewName, $args = [], $return = false ) {
+		$path     = str_replace( '.', '/', $viewName );
 		$viewPath = RTRS_PATH . '/views/' . $path . '.php';
-		if (! file_exists($viewPath)) {
+		if ( ! file_exists( $viewPath ) ) {
 			return;
 		}
 
-		if ($args) {
-			extract($args);
+		if ( $args ) {
+			extract( $args );
 		}
 
-		if ($return) {
+		if ( $return ) {
 			ob_start();
 			include $viewPath;
 
@@ -225,20 +226,20 @@ final class Rtrs {
 	 */
 	public function get_options() {
 		$option_field = func_get_args()[0];
-		$result       = get_option($option_field);
+		$result       = get_option( $option_field );
 		$func_args    = func_get_args();
-		array_shift($func_args);
+		array_shift( $func_args );
 
-		foreach ($func_args as $arg) {
-			if (is_array($arg)) {
-				if (! empty($result[$arg[0]])) {
-					$result = $result[$arg[0]];
+		foreach ( $func_args as $arg ) {
+			if ( is_array( $arg ) ) {
+				if ( ! empty( $result[ $arg[0] ] ) ) {
+					$result = $result[ $arg[0] ];
 				} else {
 					$result = $arg[1];
 				}
 			} else {
-				if (! empty($result[$arg])) {
-					$result = $result[$arg];
+				if ( ! empty( $result[ $arg ] ) ) {
+					$result = $result[ $arg ];
 				} else {
 					$result = null;
 				}

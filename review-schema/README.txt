@@ -4,7 +4,7 @@ Donate link:
 Tags: review, rating, schema, structured data, schema.org
 Requires at least: 4.5
 Tested up to: 6.7
-Stable tag: 2.2.3.1
+Stable tag: 2.2.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -270,6 +270,9 @@ If you like The Post Grid Plugin, then consider checking out our other WordPress
 09. Affiliate Data
 
 == Changelog ==
+
+= 2.2.4 ( 07 Feb, 2024 ) =
+* Fixed: Translation Issue
 
 = 2.2.3.1 ( 18 Nov 2024 ) =
 * Fixed: Make Compatible With Wordpress Latest version

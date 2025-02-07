@@ -1,4 +1,4 @@
-# Copyright (C) 2024 Review Schema
+# Copyright (C) 2025 Review Schema
 # This file is distributed under the same license as the Review Schema package.
 msgid ""
 msgstr ""
@@ -215,128 +215,124 @@ msgstr ""
 msgid "Themes And Plugins ( Pro )"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:57, ../dist/review-schema/app/Hooks/Frontend.php:57
+#: ../app/Hooks/Frontend.php:175, ../dist/review-schema/app/Hooks/Frontend.php:175
 msgid "Your review has been submitted."
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:109, ../dist/review-schema/app/Hooks/Frontend.php:109
+#: ../app/Hooks/Frontend.php:227, ../dist/review-schema/app/Hooks/Frontend.php:227
 msgid "<b>Go away SPAMMER!</b>"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:107, ../dist/review-schema/app/Hooks/Frontend.php:107
+#: ../app/Hooks/Frontend.php:225, ../dist/review-schema/app/Hooks/Frontend.php:225
 msgid "<b>ERROR:</b> please select <b>I'm not a robot!</b>"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:107, ../app/Controllers/Admin/Meta/AddMetaBox.php:646, ../app/Controllers/Admin/Meta/AddMetaBox.php:625, ../dist/review-schema/app/Hooks/Frontend.php:107, ../dist/review-schema/app/Controllers/Admin/Meta/AddMetaBox.php:646, ../dist/review-schema/app/Controllers/Admin/Meta/AddMetaBox.php:625
+#: ../app/Hooks/Frontend.php:225, ../app/Controllers/Admin/Meta/AddMetaBox.php:646, ../app/Controllers/Admin/Meta/AddMetaBox.php:625, ../dist/review-schema/app/Hooks/Frontend.php:225, ../dist/review-schema/app/Controllers/Admin/Meta/AddMetaBox.php:646, ../dist/review-schema/app/Controllers/Admin/Meta/AddMetaBox.php:625
 msgid "« Back"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:402, ../app/Controllers/Admin/ReviewSettings.php:296, ../app/Controllers/Admin/ReviewTable.php:234, ../app/Controllers/Ajax/Review.php:676, ../dist/review-schema/app/Hooks/Frontend.php:402, ../dist/review-schema/views/settings/review-settings.php:58, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:296, ../dist/review-schema/app/Controllers/Admin/ReviewTable.php:234, ../dist/review-schema/app/Controllers/Ajax/Review.php:676, ../views/settings/review-settings.php:58
+#: ../app/Hooks/Frontend.php:520, ../app/Controllers/Admin/ReviewSettings.php:296, ../app/Controllers/Admin/ReviewTable.php:234, ../app/Controllers/Ajax/Review.php:676, ../dist/review-schema/app/Hooks/Frontend.php:520, ../dist/review-schema/views/settings/review-settings.php:58, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:296, ../dist/review-schema/app/Controllers/Admin/ReviewTable.php:234, ../dist/review-schema/app/Controllers/Ajax/Review.php:676, ../views/settings/review-settings.php:58
 msgid "Rating"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:429, ../app/Controllers/Ajax/Review.php:699, ../dist/review-schema/app/Hooks/Frontend.php:429, ../dist/review-schema/templates/partials/pros-cons.php:23, ../dist/review-schema/app/Controllers/Ajax/Review.php:699, ../templates/partials/pros-cons.php:23
+#: ../app/Hooks/Frontend.php:548, ../app/Controllers/Ajax/Review.php:699, ../dist/review-schema/app/Hooks/Frontend.php:548, ../dist/review-schema/templates/partials/pros-cons.php:23, ../dist/review-schema/app/Controllers/Ajax/Review.php:699, ../templates/partials/pros-cons.php:23
 msgid "PROS"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:433, ../app/Hooks/Frontend.php:445, ../app/Controllers/Admin/ScriptLoader.php:91, ../app/Controllers/Admin/ScriptLoader.php:138, ../app/Controllers/Ajax/Review.php:714, ../app/Controllers/Ajax/Review.php:707, ../app/Controllers/Ajax/Review.php:738, ../app/Controllers/Ajax/Review.php:731, ../dist/review-schema/app/Hooks/Frontend.php:433, ../dist/review-schema/app/Hooks/Frontend.php:445, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:91, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:138, ../dist/review-schema/app/Controllers/Ajax/Review.php:714, ../dist/review-schema/app/Controllers/Ajax/Review.php:707, ../dist/review-schema/app/Controllers/Ajax/Review.php:738, ../dist/review-schema/app/Controllers/Ajax/Review.php:731
+#: ../app/Hooks/Frontend.php:552, ../app/Hooks/Frontend.php:564, ../app/Controllers/Admin/ScriptLoader.php:95, ../app/Controllers/Admin/ScriptLoader.php:142, ../app/Controllers/Ajax/Review.php:714, ../app/Controllers/Ajax/Review.php:707, ../app/Controllers/Ajax/Review.php:738, ../app/Controllers/Ajax/Review.php:731, ../dist/review-schema/app/Hooks/Frontend.php:552, ../dist/review-schema/app/Hooks/Frontend.php:564, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:95, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:142, ../dist/review-schema/app/Controllers/Ajax/Review.php:714, ../dist/review-schema/app/Controllers/Ajax/Review.php:707, ../dist/review-schema/app/Controllers/Ajax/Review.php:738, ../dist/review-schema/app/Controllers/Ajax/Review.php:731
 msgid "Write here!"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:435, ../app/Hooks/Frontend.php:447, ../app/Controllers/Ajax/Review.php:717, ../app/Controllers/Ajax/Review.php:742, ../dist/review-schema/app/Hooks/Frontend.php:435, ../dist/review-schema/app/Hooks/Frontend.php:447, ../dist/review-schema/app/Controllers/Ajax/Review.php:717, ../dist/review-schema/app/Controllers/Ajax/Review.php:742
+#: ../app/Hooks/Frontend.php:554, ../app/Hooks/Frontend.php:566, ../app/Controllers/Ajax/Review.php:717, ../app/Controllers/Ajax/Review.php:742, ../dist/review-schema/app/Hooks/Frontend.php:554, ../dist/review-schema/app/Hooks/Frontend.php:566, ../dist/review-schema/app/Controllers/Ajax/Review.php:717, ../dist/review-schema/app/Controllers/Ajax/Review.php:742
 msgid "Add Field"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:441, ../app/Controllers/Ajax/Review.php:723, ../dist/review-schema/app/Hooks/Frontend.php:441, ../dist/review-schema/templates/partials/pros-cons.php:37, ../dist/review-schema/app/Controllers/Ajax/Review.php:723, ../templates/partials/pros-cons.php:37
+#: ../app/Hooks/Frontend.php:560, ../app/Controllers/Ajax/Review.php:723, ../dist/review-schema/app/Hooks/Frontend.php:560, ../dist/review-schema/templates/partials/pros-cons.php:37, ../dist/review-schema/app/Controllers/Ajax/Review.php:723, ../templates/partials/pros-cons.php:37
 msgid "CONS"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:467, ../app/Models/Field.php:583, ../app/Models/Field.php:623, ../app/Controllers/Admin/ReviewSettings.php:452, ../app/Controllers/Admin/ScriptLoader.php:84, ../app/Controllers/Ajax/Review.php:757, ../app/Controllers/Ajax/Review.php:763, ../dist/review-schema/app/Hooks/Frontend.php:467, ../dist/review-schema/app/Models/Field.php:583, ../dist/review-schema/app/Models/Field.php:623, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:452, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:84, ../dist/review-schema/app/Controllers/Ajax/Review.php:757, ../dist/review-schema/app/Controllers/Ajax/Review.php:763
+#: ../app/Hooks/Frontend.php:586, ../app/Models/Field.php:583, ../app/Models/Field.php:623, ../app/Controllers/Admin/ReviewSettings.php:452, ../app/Controllers/Admin/ScriptLoader.php:88, ../app/Controllers/Ajax/Review.php:757, ../app/Controllers/Ajax/Review.php:763, ../dist/review-schema/app/Hooks/Frontend.php:586, ../dist/review-schema/app/Models/Field.php:583, ../dist/review-schema/app/Models/Field.php:623, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:452, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:88, ../dist/review-schema/app/Controllers/Ajax/Review.php:757, ../dist/review-schema/app/Controllers/Ajax/Review.php:763
 msgid "Upload Image"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:473, ../dist/review-schema/app/Hooks/Frontend.php:473
+#: ../app/Hooks/Frontend.php:592, ../dist/review-schema/app/Hooks/Frontend.php:592
 msgid "Choose Image"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:495, ../app/Controllers/Admin/ScriptLoader.php:85, ../app/Controllers/Ajax/Review.php:780, ../dist/review-schema/app/Hooks/Frontend.php:495, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:85, ../dist/review-schema/app/Controllers/Ajax/Review.php:780
+#: ../app/Hooks/Frontend.php:614, ../app/Controllers/Admin/ScriptLoader.php:89, ../app/Controllers/Ajax/Review.php:780, ../dist/review-schema/app/Hooks/Frontend.php:614, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:89, ../dist/review-schema/app/Controllers/Ajax/Review.php:780
 msgid "Upload Video"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:500, ../app/Controllers/Ajax/Review.php:785, ../dist/review-schema/app/Hooks/Frontend.php:500, ../dist/review-schema/app/Controllers/Ajax/Review.php:785
+#: ../app/Hooks/Frontend.php:619, ../app/Controllers/Ajax/Review.php:785, ../dist/review-schema/app/Hooks/Frontend.php:619, ../dist/review-schema/app/Controllers/Ajax/Review.php:785
 msgid "Hosted Video"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:501, ../app/Controllers/Ajax/Review.php:786, ../dist/review-schema/app/Hooks/Frontend.php:501, ../dist/review-schema/app/Controllers/Ajax/Review.php:786
+#: ../app/Hooks/Frontend.php:620, ../app/Controllers/Ajax/Review.php:786, ../dist/review-schema/app/Hooks/Frontend.php:620, ../dist/review-schema/app/Controllers/Ajax/Review.php:786
 msgid "External Video"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:508, ../dist/review-schema/app/Hooks/Frontend.php:508
+#: ../app/Hooks/Frontend.php:627, ../dist/review-schema/app/Hooks/Frontend.php:627
 msgid "Choose Video"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:517, ../app/Controllers/Ajax/Review.php:802, ../dist/review-schema/app/Hooks/Frontend.php:517, ../dist/review-schema/app/Controllers/Ajax/Review.php:802
+#: ../app/Hooks/Frontend.php:636, ../app/Controllers/Ajax/Review.php:802, ../dist/review-schema/app/Hooks/Frontend.php:636, ../dist/review-schema/app/Controllers/Ajax/Review.php:802
 msgid "External Video Link"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:518, ../app/Controllers/Ajax/Review.php:803, ../dist/review-schema/app/Hooks/Frontend.php:518, ../dist/review-schema/app/Controllers/Ajax/Review.php:803
-msgid "https://www.youtube.com/watch?v=668nUCeBHyY"
-msgstr ""
-
-#: ../app/Hooks/Frontend.php:532, ../app/Controllers/Admin/ReviewSettings.php:356, ../app/Controllers/Ajax/Review.php:810, ../dist/review-schema/app/Hooks/Frontend.php:532, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:356, ../dist/review-schema/app/Controllers/Ajax/Review.php:810
+#: ../app/Hooks/Frontend.php:651, ../app/Controllers/Admin/ReviewSettings.php:356, ../app/Controllers/Ajax/Review.php:810, ../dist/review-schema/app/Hooks/Frontend.php:651, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:356, ../dist/review-schema/app/Controllers/Ajax/Review.php:810
 msgid "Recommendation"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:537, ../app/Controllers/Admin/ReviewSettings.php:360, ../app/Controllers/Ajax/Review.php:817, ../dist/review-schema/app/Hooks/Frontend.php:537, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:360, ../dist/review-schema/app/Controllers/Ajax/Review.php:817
+#: ../app/Hooks/Frontend.php:656, ../app/Controllers/Admin/ReviewSettings.php:360, ../app/Controllers/Ajax/Review.php:817, ../dist/review-schema/app/Hooks/Frontend.php:656, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:360, ../dist/review-schema/app/Controllers/Ajax/Review.php:817
 msgid "Happy"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:542, ../app/Controllers/Admin/ReviewSettings.php:361, ../app/Controllers/Ajax/Review.php:825, ../dist/review-schema/app/Hooks/Frontend.php:542, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:361, ../dist/review-schema/app/Controllers/Ajax/Review.php:825
+#: ../app/Hooks/Frontend.php:661, ../app/Controllers/Admin/ReviewSettings.php:361, ../app/Controllers/Ajax/Review.php:825, ../dist/review-schema/app/Hooks/Frontend.php:661, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:361, ../dist/review-schema/app/Controllers/Ajax/Review.php:825
 msgid "Sad"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:547, ../app/Controllers/Ajax/Review.php:832, ../dist/review-schema/app/Hooks/Frontend.php:547, ../dist/review-schema/app/Controllers/Ajax/Review.php:832
+#: ../app/Hooks/Frontend.php:666, ../app/Controllers/Ajax/Review.php:832, ../dist/review-schema/app/Hooks/Frontend.php:666, ../dist/review-schema/app/Controllers/Ajax/Review.php:832
 msgid "Nothing"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:561, ../app/Controllers/Ajax/Review.php:846, ../dist/review-schema/app/Hooks/Frontend.php:561, ../dist/review-schema/app/Controllers/Ajax/Review.php:846
+#: ../app/Hooks/Frontend.php:680, ../app/Controllers/Ajax/Review.php:846, ../dist/review-schema/app/Hooks/Frontend.php:680, ../dist/review-schema/app/Controllers/Ajax/Review.php:846
 msgid "Review anonymously"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:590, ../dist/review-schema/app/Hooks/Frontend.php:590
+#: ../app/Hooks/Frontend.php:709, ../dist/review-schema/app/Hooks/Frontend.php:709
 msgid "Leave feedback about this"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:591, ../dist/review-schema/app/Hooks/Frontend.php:591
+#: ../app/Hooks/Frontend.php:710, ../dist/review-schema/app/Hooks/Frontend.php:710
 msgid "Leave feedback about this to %s"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:592, ../dist/review-schema/app/Hooks/Frontend.php:592
+#: ../app/Hooks/Frontend.php:711, ../dist/review-schema/app/Hooks/Frontend.php:711
 msgid "Cancel Reply"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:593, ../app/Controllers/Ajax/Review.php:866, ../dist/review-schema/app/Hooks/Frontend.php:593, ../dist/review-schema/app/Controllers/Ajax/Review.php:866
+#: ../app/Hooks/Frontend.php:712, ../app/Controllers/Ajax/Review.php:866, ../dist/review-schema/app/Hooks/Frontend.php:712, ../dist/review-schema/app/Controllers/Ajax/Review.php:866
 msgid "Submit Review"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:596, ../app/Controllers/Admin/ReviewSettings.php:102, ../app/Controllers/Admin/Meta/AffiliateOptions.php:200, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:204, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:251, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:392, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:439, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:580, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:627, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:686, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1093, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1235, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1268, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1415, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1569, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1866, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1913, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1973, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2201, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2495, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2561, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2574, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2651, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2824, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2931, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2963, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2976, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2989, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3041, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3091, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3147, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3201, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3262, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3492, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3564, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3723, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3784, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3915, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3964, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4339, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4436, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4533, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4629, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4875, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4966, ../dist/review-schema/app/Hooks/Frontend.php:596, ../dist/review-schema/views/settings/schema-settings.php:65, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:102, ../dist/review-schema/app/Controllers/Admin/Meta/AffiliateOptions.php:200, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:204, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:251, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:392, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:439, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:580, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:627, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:686, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1093, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1235, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1268, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1415, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1569, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1866, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1913, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1973, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2201, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2495, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2561, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2574, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2651, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2824, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2931, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2963, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2976, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2989, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3041, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3091, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3147, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3201, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3262, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3492, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3564, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3723, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3784, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3915, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3964, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4339, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4436, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4533, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4629, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4875, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4966, ../views/settings/schema-settings.php:65
+#: ../app/Hooks/Frontend.php:715, ../app/Controllers/Admin/ReviewSettings.php:102, ../app/Controllers/Admin/Meta/AffiliateOptions.php:200, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:204, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:251, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:392, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:439, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:580, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:627, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:686, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1093, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1235, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1268, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1415, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1569, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1866, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1913, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1973, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2201, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2495, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2561, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2574, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2651, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2824, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2931, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2963, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2976, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:2989, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3041, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3091, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3147, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3201, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3262, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3492, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3564, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3723, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3784, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3915, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3964, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4339, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4436, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4533, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4629, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4875, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4966, ../dist/review-schema/app/Hooks/Frontend.php:715, ../dist/review-schema/views/settings/schema-settings.php:65, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:102, ../dist/review-schema/app/Controllers/Admin/Meta/AffiliateOptions.php:200, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:204, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:251, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:392, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:439, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:580, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:627, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:686, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1093, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1235, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1268, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1415, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1569, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1866, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1913, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1973, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2201, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2495, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2561, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2574, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2651, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2824, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2931, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2963, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2976, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:2989, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3041, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3091, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3147, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3201, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3262, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3492, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3564, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3723, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3784, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3915, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3964, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4339, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4436, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4533, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4629, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4875, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4966, ../views/settings/schema-settings.php:65
 msgid "Name"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:597, ../app/Controllers/Admin/ReviewSettings.php:106, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3278, ../dist/review-schema/app/Hooks/Frontend.php:597, ../dist/review-schema/views/settings/schema-corporate_contacts-settings.php:46, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:106, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3278, ../views/settings/schema-corporate_contacts-settings.php:46
+#: ../app/Hooks/Frontend.php:716, ../app/Controllers/Admin/ReviewSettings.php:106, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:3278, ../dist/review-schema/app/Hooks/Frontend.php:716, ../dist/review-schema/views/settings/schema-corporate_contacts-settings.php:46, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:106, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:3278, ../views/settings/schema-corporate_contacts-settings.php:46
 msgid "Email"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:598, ../dist/review-schema/app/Hooks/Frontend.php:598
+#: ../app/Hooks/Frontend.php:717, ../dist/review-schema/app/Hooks/Frontend.php:717
 msgid "Website"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:599, ../app/Controllers/Admin/ReviewSettings.php:349, ../app/Controllers/Ajax/Review.php:853, ../app/Controllers/Admin/Meta/AffiliateOptions.php:62, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:912, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1759, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4222, ../dist/review-schema/app/Hooks/Frontend.php:599, ../dist/review-schema/views/settings/review-settings.php:60, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:349, ../dist/review-schema/app/Controllers/Ajax/Review.php:853, ../dist/review-schema/app/Controllers/Admin/Meta/AffiliateOptions.php:62, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:912, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1759, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4222, ../views/settings/review-settings.php:60
+#: ../app/Hooks/Frontend.php:718, ../app/Controllers/Admin/ReviewSettings.php:349, ../app/Controllers/Ajax/Review.php:853, ../app/Controllers/Admin/Meta/AffiliateOptions.php:62, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:912, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1759, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4222, ../dist/review-schema/app/Hooks/Frontend.php:718, ../dist/review-schema/views/settings/review-settings.php:60, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:349, ../dist/review-schema/app/Controllers/Ajax/Review.php:853, ../dist/review-schema/app/Controllers/Admin/Meta/AffiliateOptions.php:62, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:912, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1759, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4222, ../views/settings/review-settings.php:60
 msgid "Title"
 msgstr ""
 
-#: ../app/Hooks/Frontend.php:600, ../app/Controllers/Ajax/Review.php:859, ../dist/review-schema/app/Hooks/Frontend.php:600, ../dist/review-schema/app/Controllers/Ajax/Review.php:859
-msgid "Write your review"
+#: ../app/Hooks/Frontend.php:719, ../dist/review-schema/app/Hooks/Frontend.php:719
+msgid "Write your review *"
 msgstr ""
 
 #: ../app/Models/Field.php:131, ../app/Models/Field.php:547, ../app/Models/Field.php:685, ../app/Models/SettingsAPI.php:520, ../dist/review-schema/app/Models/Field.php:131, ../dist/review-schema/app/Models/Field.php:547, ../dist/review-schema/app/Models/Field.php:685, ../dist/review-schema/app/Models/SettingsAPI.php:520
@@ -463,7 +459,7 @@ msgstr ""
 msgid "Add Image"
 msgstr ""
 
-#: ../app/Models/SettingsAPI.php:789, ../app/Controllers/Admin/ScriptLoader.php:141, ../dist/review-schema/app/Models/SettingsAPI.php:789, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:141
+#: ../app/Models/SettingsAPI.php:789, ../app/Controllers/Admin/ScriptLoader.php:145, ../dist/review-schema/app/Models/SettingsAPI.php:789, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:145
 msgid "Remove Image"
 msgstr ""
 
@@ -756,7 +752,7 @@ msgstr ""
 msgid "Submitted on: %s"
 msgstr ""
 
-#: ../app/Controllers/Admin/ReviewSettings.php:195, ../app/Controllers/Admin/ReviewTable.php:412, ../app/Controllers/Admin/ScriptLoader.php:83, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:195, ../dist/review-schema/app/Controllers/Admin/ReviewTable.php:412, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:83
+#: ../app/Controllers/Admin/ReviewSettings.php:195, ../app/Controllers/Admin/ReviewTable.php:412, ../app/Controllers/Admin/ScriptLoader.php:87, ../dist/review-schema/app/Controllers/Admin/ReviewSettings.php:195, ../dist/review-schema/app/Controllers/Admin/ReviewTable.php:412, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:87
 msgid "Edit"
 msgstr ""
 
@@ -965,59 +961,59 @@ msgctxt "comment"
 msgid "Mark as Spam"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:73, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:73
+#: ../app/Controllers/Admin/ScriptLoader.php:77, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:77
 msgid " for free version."
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:80, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:80
+#: ../app/Controllers/Admin/ScriptLoader.php:84, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:84
 msgid "Highlight?"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:81, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:81
+#: ../app/Controllers/Admin/ScriptLoader.php:85, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:85
 msgid "Remove Highlight?"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:82, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:82
+#: ../app/Controllers/Admin/ScriptLoader.php:86, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:86
 msgid "Loading..."
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:86, ../app/Controllers/Admin/ScriptLoader.php:133, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:86, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:133
+#: ../app/Controllers/Admin/ScriptLoader.php:90, ../app/Controllers/Admin/ScriptLoader.php:137, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:90, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:137
 msgid "Are you sure to delete?"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:87, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:87
+#: ../app/Controllers/Admin/ScriptLoader.php:91, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:91
 msgid "[PRO]"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:89, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:89
+#: ../app/Controllers/Admin/ScriptLoader.php:93, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:93
 msgid " pros field are allowed"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:90, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:90
+#: ../app/Controllers/Admin/ScriptLoader.php:94, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:94
 msgid " cons field are allowed"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:134, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:134
+#: ../app/Controllers/Admin/ScriptLoader.php:138, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:138
 msgid "3 criteria field are allowed for free version."
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:135, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:135
+#: ../app/Controllers/Admin/ScriptLoader.php:139, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:139
 msgid "3 pros field are allowed for free version."
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:136, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:136
+#: ../app/Controllers/Admin/ScriptLoader.php:140, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:140
 msgid "3 cons field are allowed for free version."
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:137, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:137
+#: ../app/Controllers/Admin/ScriptLoader.php:141, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:141
 msgid "Multiple schema are not allowed in free version."
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:139, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:139
+#: ../app/Controllers/Admin/ScriptLoader.php:143, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:143
 msgid "At least one field require"
 msgstr ""
 
-#: ../app/Controllers/Admin/ScriptLoader.php:140, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:140
+#: ../app/Controllers/Admin/ScriptLoader.php:144, ../dist/review-schema/app/Controllers/Admin/ScriptLoader.php:144
 msgid "3 criteria rating field are allowed for free version."
 msgstr ""
 
@@ -1041,7 +1037,15 @@ msgstr ""
 msgid "Upload a Video"
 msgstr ""
 
-#: ../app/Controllers/Marketing/Offer.php:63, ../dist/review-schema/app/Controllers/Marketing/Offer.php:64
+#: ../app/Controllers/Ajax/Review.php:803, ../dist/review-schema/app/Controllers/Ajax/Review.php:803
+msgid "https://www.youtube.com/watch?v=668nUCeBHyY"
+msgstr ""
+
+#: ../app/Controllers/Ajax/Review.php:859, ../dist/review-schema/app/Controllers/Ajax/Review.php:859
+msgid "Write your review"
+msgstr ""
+
+#: ../app/Controllers/Marketing/Offer.php:63, ../dist/review-schema/app/Controllers/Marketing/Offer.php:63
 msgid "Don't miss out on our biggest sale of the year! Get your."
 msgstr ""
 
