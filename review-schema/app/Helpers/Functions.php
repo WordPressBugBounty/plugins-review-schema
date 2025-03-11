@@ -7,15 +7,15 @@ use WP_Roles;
 
 class Functions {
 
-        //public static function verify_nonce() {
-        //    $nonce     = self::get_nonce();
-        //    $nonceText = rtrs()->getNonceText();
-        //    if ( wp_verify_nonce( $nonce, $nonceText ) ) {
-        //        return true;
-        //    }
-        //
-        //    return false;
-        //}
+		// public static function verify_nonce() {
+		// $nonce     = self::get_nonce();
+		// $nonceText = rtrs()->getNonceText();
+		// if ( wp_verify_nonce( $nonce, $nonceText ) ) {
+		// return true;
+		// }
+		//
+		// return false;
+		// }
 	/**
 	 * Has Role.
 	 *
@@ -48,7 +48,7 @@ class Functions {
 	 * @return void
 	 */
 	public static function has_reply_permition() {
-		$reply_permition = rtrs()->get_options( 'rtrs_review_settings',  ['comment_reply_permition', [ 'administrator', 'shop_manager' ] ]  );
+		$reply_permition = rtrs()->get_options( 'rtrs_review_settings', [ 'comment_reply_permition', [ 'administrator', 'shop_manager' ] ] );
 		return is_array( $reply_permition ) && count( array_intersect( $reply_permition, self::get_current_user_roles() ) ) ? true : false;
 	}
 
@@ -61,7 +61,7 @@ class Functions {
 		if ( is_singular( 'product' ) ) {
 			if ( self::has_reply_permition() || 'no' === get_option( 'woocommerce_review_rating_verification_required' ) || wc_customer_bought_product( '', get_current_user_id(), get_the_ID() ) ) {
 				comment_form();
-				wp_enqueue_script('comment-reply');
+				wp_enqueue_script( 'comment-reply' );
 			} else { ?>
 				<p class="woocommerce-verification-required">
 					<?php esc_html_e( 'Only logged in customers who have purchased this product may leave a review.', 'review-schema' ); ?>
@@ -92,6 +92,23 @@ class Functions {
 	}
 
 	/**
+	 * Remove any character that is not alphanumeric, /, _, or -.
+	 *
+	 * @param string $name Name to sanitize.
+	 *
+	 * @return array|string|string[]|null
+	 */
+	private static function sanitize_file_name( $name ) {
+		// Remove anything that is not alphanumeric, _, -, or /.
+		$name = preg_replace( '/[^a-zA-Z0-9\/_\-]/', '', $name );
+		// Prevent directory traversal.
+		$name = str_replace( [ '../', '..' ], '', $name );
+		// Replace multiple slashes with a single slash.
+		$name = preg_replace( '/\/+/', '/', $name );
+		return trim( $name, '/' ); // Trim leading and trailing slashes.
+	}
+
+	/**
 	 * Get template part (for templates like the shop-loop).
 	 *
 	 * RTRS_TEMPLATE_DEBUG_MODE will prevent overrides in themes from taking priority.
@@ -100,6 +117,7 @@ class Functions {
 	 * @param string $name Template name (default: '').
 	 */
 	public static function get_template_part( $slug, $args = null, $include = true ) {
+		$slug = self::sanitize_file_name( $slug );
 		// load template from theme if exist
 		$template = RTRS_TEMPLATE_DEBUG_MODE ? '' : locate_template(
 			[
@@ -426,11 +444,11 @@ class Functions {
 							break 2; // break parent loop also
 						}
 					}
-				} else {
+					} else {
 					self::$enable_post_type_schema = true;
 					$enable                        = true;
 					break;
-				}
+					}
 		} else {
 				self::$enable_post_type_schema = true;
 				$enable                        = true;

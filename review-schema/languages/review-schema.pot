@@ -19,195 +19,195 @@ msgstr ""
 
 #. translators: %s template
 #. translators: %s template
-#: ../app/Helpers/Functions.php:159, ../dist/review-schema/app/Helpers/Functions.php:159
+#: ../app/Helpers/Functions.php:177, ../dist/review-schema/app/Helpers/Functions.php:173
 msgid "%s does not exist."
 msgstr ""
 
-#: ../app/Helpers/Functions.php:201, ../dist/review-schema/app/Helpers/Functions.php:201
+#: ../app/Helpers/Functions.php:219, ../dist/review-schema/app/Helpers/Functions.php:215
 msgid "Month"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:211, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1182, ../dist/review-schema/app/Helpers/Functions.php:211, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1182
+#: ../app/Helpers/Functions.php:229, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:1182, ../dist/review-schema/app/Helpers/Functions.php:225, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:1182
 msgid "Day"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:212, ../dist/review-schema/app/Helpers/Functions.php:212
+#: ../app/Helpers/Functions.php:230, ../dist/review-schema/app/Helpers/Functions.php:226
 msgid "Year"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:213, ../dist/review-schema/app/Helpers/Functions.php:213
+#: ../app/Helpers/Functions.php:231, ../dist/review-schema/app/Helpers/Functions.php:227
 msgid "Hour"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:214, ../dist/review-schema/app/Helpers/Functions.php:214
+#: ../app/Helpers/Functions.php:232, ../dist/review-schema/app/Helpers/Functions.php:228
 msgid "Minute"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:244, ../dist/review-schema/app/Helpers/Functions.php:244
+#: ../app/Helpers/Functions.php:262, ../dist/review-schema/app/Helpers/Functions.php:258
 msgid "OK"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:245, ../dist/review-schema/app/Helpers/Functions.php:245
+#: ../app/Helpers/Functions.php:263, ../dist/review-schema/app/Helpers/Functions.php:259
 msgid "Cancel"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:260, ../dist/review-schema/app/Helpers/Functions.php:260
+#: ../app/Helpers/Functions.php:278, ../dist/review-schema/app/Helpers/Functions.php:274
 msgid "ago"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:820, ../app/Helpers/Functions.php:900, ../app/Models/SettingsAPI.php:625, ../app/Controllers/Admin/Meta/MetaOptions.php:537, ../dist/review-schema/app/Helpers/Functions.php:820, ../dist/review-schema/app/Helpers/Functions.php:900, ../dist/review-schema/app/Models/SettingsAPI.php:625, ../dist/review-schema/views/widgets/review-schema.php:9, ../dist/review-schema/app/Controllers/Admin/Meta/MetaOptions.php:537, ../views/widgets/review-schema.php:9
+#: ../app/Helpers/Functions.php:838, ../app/Helpers/Functions.php:918, ../app/Models/SettingsAPI.php:625, ../app/Controllers/Admin/Meta/MetaOptions.php:537, ../dist/review-schema/app/Helpers/Functions.php:834, ../dist/review-schema/app/Helpers/Functions.php:914, ../dist/review-schema/app/Models/SettingsAPI.php:625, ../dist/review-schema/views/widgets/review-schema.php:9, ../dist/review-schema/app/Controllers/Admin/Meta/MetaOptions.php:537, ../views/widgets/review-schema.php:9
 msgid "Select"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:821, ../app/Helpers/Functions.php:848, ../dist/review-schema/app/Helpers/Functions.php:821, ../dist/review-schema/app/Helpers/Functions.php:848
+#: ../app/Helpers/Functions.php:839, ../app/Helpers/Functions.php:866, ../dist/review-schema/app/Helpers/Functions.php:835, ../dist/review-schema/app/Helpers/Functions.php:862
 msgid "Article"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:822, ../app/Helpers/Functions.php:850, ../dist/review-schema/app/Helpers/Functions.php:822, ../dist/review-schema/app/Helpers/Functions.php:850
+#: ../app/Helpers/Functions.php:840, ../app/Helpers/Functions.php:868, ../dist/review-schema/app/Helpers/Functions.php:836, ../dist/review-schema/app/Helpers/Functions.php:864
 msgid "News article"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:823, ../app/Helpers/Functions.php:851, ../dist/review-schema/app/Helpers/Functions.php:823, ../dist/review-schema/app/Helpers/Functions.php:851
+#: ../app/Helpers/Functions.php:841, ../app/Helpers/Functions.php:869, ../dist/review-schema/app/Helpers/Functions.php:837, ../dist/review-schema/app/Helpers/Functions.php:865
 msgid "Blog posting"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:824, ../app/Helpers/Functions.php:867, ../dist/review-schema/app/Helpers/Functions.php:824, ../dist/review-schema/app/Helpers/Functions.php:867
+#: ../app/Helpers/Functions.php:842, ../app/Helpers/Functions.php:885, ../dist/review-schema/app/Helpers/Functions.php:838, ../dist/review-schema/app/Helpers/Functions.php:881
 msgid "Product"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:828, ../app/Helpers/Functions.php:870, ../dist/review-schema/app/Helpers/Functions.php:828, ../dist/review-schema/app/Helpers/Functions.php:870
+#: ../app/Helpers/Functions.php:846, ../app/Helpers/Functions.php:888, ../dist/review-schema/app/Helpers/Functions.php:842, ../dist/review-schema/app/Helpers/Functions.php:884
 msgid "Course"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:849, ../dist/review-schema/app/Helpers/Functions.php:849
+#: ../app/Helpers/Functions.php:867, ../dist/review-schema/app/Helpers/Functions.php:863
 msgid "Tech Article"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:852, ../dist/review-schema/app/Helpers/Functions.php:852
+#: ../app/Helpers/Functions.php:870, ../dist/review-schema/app/Helpers/Functions.php:866
 msgid "Web page"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:853, ../dist/review-schema/app/Helpers/Functions.php:853
+#: ../app/Helpers/Functions.php:871, ../dist/review-schema/app/Helpers/Functions.php:867
 msgid "Event"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:854, ../dist/review-schema/app/Helpers/Functions.php:854
+#: ../app/Helpers/Functions.php:872, ../dist/review-schema/app/Helpers/Functions.php:868
 msgid "Local business"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:855, ../dist/review-schema/app/Helpers/Functions.php:855
+#: ../app/Helpers/Functions.php:873, ../dist/review-schema/app/Helpers/Functions.php:869
 msgid "Faq"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:856, ../app/Controllers/Admin/Meta/MetaOptions.php:552, ../dist/review-schema/app/Helpers/Functions.php:856, ../dist/review-schema/app/Controllers/Admin/Meta/MetaOptions.php:552
+#: ../app/Helpers/Functions.php:874, ../app/Controllers/Admin/Meta/MetaOptions.php:552, ../dist/review-schema/app/Helpers/Functions.php:870, ../dist/review-schema/app/Controllers/Admin/Meta/MetaOptions.php:552
 msgid "Service"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:857, ../dist/review-schema/app/Helpers/Functions.php:857
+#: ../app/Helpers/Functions.php:875, ../dist/review-schema/app/Helpers/Functions.php:871
 msgid "Q&A"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:858, ../dist/review-schema/app/Helpers/Functions.php:858
+#: ../app/Helpers/Functions.php:876, ../dist/review-schema/app/Helpers/Functions.php:872
 msgid "How to"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:859, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4287, ../dist/review-schema/app/Helpers/Functions.php:859, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4287
+#: ../app/Helpers/Functions.php:877, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4287, ../dist/review-schema/app/Helpers/Functions.php:873, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4287
 msgid "About"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:860, ../dist/review-schema/app/Helpers/Functions.php:860
+#: ../app/Helpers/Functions.php:878, ../dist/review-schema/app/Helpers/Functions.php:874
 msgid "Contact"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:861, ../dist/review-schema/app/Helpers/Functions.php:861
+#: ../app/Helpers/Functions.php:879, ../dist/review-schema/app/Helpers/Functions.php:875
 msgid "Person"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:862, ../dist/review-schema/app/Helpers/Functions.php:862
+#: ../app/Helpers/Functions.php:880, ../dist/review-schema/app/Helpers/Functions.php:876
 msgid "Movie"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:863, ../dist/review-schema/app/Helpers/Functions.php:863
+#: ../app/Helpers/Functions.php:881, ../dist/review-schema/app/Helpers/Functions.php:877
 msgid "Audio"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:864, ../dist/review-schema/app/Helpers/Functions.php:864, ../dist/review-schema/views/settings/review-settings.php:63, ../views/settings/review-settings.php:63
+#: ../app/Helpers/Functions.php:882, ../dist/review-schema/app/Helpers/Functions.php:878, ../dist/review-schema/views/settings/review-settings.php:63, ../views/settings/review-settings.php:63
 msgid "Video"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:865, ../dist/review-schema/app/Helpers/Functions.php:865
+#: ../app/Helpers/Functions.php:883, ../dist/review-schema/app/Helpers/Functions.php:879
 msgid "Breadcrumb"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:866, ../dist/review-schema/app/Helpers/Functions.php:866
+#: ../app/Helpers/Functions.php:884, ../dist/review-schema/app/Helpers/Functions.php:880
 msgid "ItemList"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:868, ../dist/review-schema/app/Helpers/Functions.php:868
+#: ../app/Helpers/Functions.php:886, ../dist/review-schema/app/Helpers/Functions.php:882
 msgid "Book"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:869, ../dist/review-schema/app/Helpers/Functions.php:869
+#: ../app/Helpers/Functions.php:887, ../dist/review-schema/app/Helpers/Functions.php:883
 msgid "Real Estate Listing"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:871, ../dist/review-schema/app/Helpers/Functions.php:871
+#: ../app/Helpers/Functions.php:889, ../dist/review-schema/app/Helpers/Functions.php:885
 msgid "Job posting"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:872, ../dist/review-schema/app/Helpers/Functions.php:872
+#: ../app/Helpers/Functions.php:890, ../dist/review-schema/app/Helpers/Functions.php:886
 msgid "Recipe"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:873, ../dist/review-schema/app/Helpers/Functions.php:873
+#: ../app/Helpers/Functions.php:891, ../dist/review-schema/app/Helpers/Functions.php:887
 msgid "Software App"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:874, ../dist/review-schema/app/Helpers/Functions.php:874
+#: ../app/Helpers/Functions.php:892, ../dist/review-schema/app/Helpers/Functions.php:888
 msgid "Image License"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:875, ../dist/review-schema/app/Helpers/Functions.php:875
+#: ../app/Helpers/Functions.php:893, ../dist/review-schema/app/Helpers/Functions.php:889
 msgid "Special announcement"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:876, ../dist/review-schema/app/Helpers/Functions.php:876
+#: ../app/Helpers/Functions.php:894, ../dist/review-schema/app/Helpers/Functions.php:890
 msgid "Mosque"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:877, ../dist/review-schema/app/Helpers/Functions.php:877
+#: ../app/Helpers/Functions.php:895, ../dist/review-schema/app/Helpers/Functions.php:891
 msgid "Church"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:878, ../dist/review-schema/app/Helpers/Functions.php:878
+#: ../app/Helpers/Functions.php:896, ../dist/review-schema/app/Helpers/Functions.php:892
 msgid "Profile Page"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:879, ../dist/review-schema/app/Helpers/Functions.php:879
+#: ../app/Helpers/Functions.php:897, ../dist/review-schema/app/Helpers/Functions.php:893
 msgid "Vacation Rental"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:880, ../dist/review-schema/app/Helpers/Functions.php:880
+#: ../app/Helpers/Functions.php:898, ../dist/review-schema/app/Helpers/Functions.php:894
 msgid "Vehicle listing"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:881, ../dist/review-schema/app/Helpers/Functions.php:881
+#: ../app/Helpers/Functions.php:899, ../dist/review-schema/app/Helpers/Functions.php:895
 msgid "Hindu Temple"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:882, ../dist/review-schema/app/Helpers/Functions.php:882
+#: ../app/Helpers/Functions.php:900, ../dist/review-schema/app/Helpers/Functions.php:896
 msgid "Buddhist Temple"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:883, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4200, ../dist/review-schema/app/Helpers/Functions.php:883, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4200
+#: ../app/Helpers/Functions.php:901, ../app/Controllers/Admin/Meta/SingleMetaOptions.php:4200, ../dist/review-schema/app/Helpers/Functions.php:897, ../dist/review-schema/app/Controllers/Admin/Meta/SingleMetaOptions.php:4200
 msgid "Medical Webpage"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:884, ../dist/review-schema/app/Helpers/Functions.php:884
+#: ../app/Helpers/Functions.php:902, ../dist/review-schema/app/Helpers/Functions.php:898
 msgid "Collection Page"
 msgstr ""
 
-#: ../app/Helpers/Functions.php:1075, ../dist/review-schema/app/Helpers/Functions.php:1075
+#: ../app/Helpers/Functions.php:1093, ../dist/review-schema/app/Helpers/Functions.php:1089
 msgid "This function should not be called before rtrs_init."
 msgstr ""
 
