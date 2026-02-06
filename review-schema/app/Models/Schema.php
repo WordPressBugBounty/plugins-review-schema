@@ -8,7 +8,7 @@ class Schema {
 	public function __construct() {
 		add_action( 'wp_footer', [ $this, 'footer' ], 999 );
 	}
-
+    
 	/**
 	 * Get social links array.
 	 *
@@ -148,7 +148,7 @@ class Schema {
 			if ( ! empty( $metaData['sameAs'] ) ) {
 				$aType = explode( "\r\n", $metaData['sameAs'] );
 
-				if ( $local_business['sameAs'] ) {
+				if ( ! empty( $local_business['sameAs'] ) ) {
 					$aType = array_merge( $aType, $local_business['sameAs'] );
 				}
 
@@ -2621,6 +2621,7 @@ class Schema {
 					if ( ! empty( $metaData['author'] ) ) {
 						$question['author'] = [
 							'@type' => 'Person',
+							'url'   => $helper->sanitizeOutPut( ( $metaData['question_author_url'] ?? '#' ), 'url' ),
 							'name'  => $helper->sanitizeOutPut( $metaData['author'] ),
 						];
 					}
@@ -2639,8 +2640,9 @@ class Schema {
 								'url'         => $answer_item['url'] ? $helper->sanitizeOutPut( $answer_item['url'], 'url' ) : null,
 
 								'author'      => [
-									'@type'  => 'Person',
-									'author' => isset( $answer_item['author'] ) ? $helper->sanitizeOutPut( $answer_item['author'] ) : null,
+									'@type' => 'Person',
+									'url'   => $helper->sanitizeOutPut( ( $answer_item['author_url'] ?? '#' ), 'url' ),
+									'name'  => isset( $answer_item['author'] ) ? $helper->sanitizeOutPut( $answer_item['author'] ) : null,
 								],
 							];
 
@@ -3044,12 +3046,24 @@ class Schema {
 					if ( isset( $metaData['items'] ) && is_array( $metaData['items'] ) ) {
 						$itemlists_schema = [];
 						foreach ( $metaData['items'] as $position => $itemlist_item ) {
+							$items = [];
+							if ( ! empty( $itemlist_item['name'] ) ) {
+								$items['name'] = $helper->sanitizeOutPut( $itemlist_item['name'] );
+							}
+							if ( ! empty( $itemlist_item['url'] ) ) {
+								$items['url'] = $helper->sanitizeOutPut( $itemlist_item['url'] );
+							}
+							if ( ! empty( $itemlist_item['description'] ) ) {
+								$items['description'] = $helper->sanitizeOutPut( $itemlist_item['description'] );
+							}
+							if ( ! empty( $itemlist_item['image'] ) ) {
+								$img            = $helper->imageInfo( absint( $itemlist_item['image'] ) );
+								$items['image'] = $helper->sanitizeOutPut( $img['url'], 'url' );
+							}
 							$itemlist_item_schema = [
 								'@type'    => 'ListItem',
 								'position' => $position + 1,
-								'url'      => $itemlist_item['url'] ? $helper->sanitizeOutPut( $itemlist_item['url'] ) : '',
-
-							];
+							] + $items;
 							array_push( $itemlists_schema, $itemlist_item_schema );
 						}
 
@@ -3193,9 +3207,9 @@ class Schema {
 					}
 
 					if ( $without_script ) {
-						$html = apply_filters( 'rtseo_snippet_tv_series', $output, $metaData );
+						$html = apply_filters( 'rtseo_snippet_mosque', $output, $metaData );
 					} else {
-						$html .= $this->getJsonEncode( apply_filters( 'rtseo_snippet_tv_series', $output, $metaData ) );
+						$html .= $this->getJsonEncode( apply_filters( 'rtseo_snippet_mosque', $output, $metaData ) );
 					}
 					break;
 

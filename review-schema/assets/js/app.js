@@ -404,16 +404,18 @@
         //Ajax load more review
         // we will remove the button and load its new copy with AJAX, that's why $('body').on()
         $('body').on('click', '#rtrs-load-more', function () {
-            let max_page = $('#rtrs-load-more').attr('data-max');
             let btn = $('#rtrs-load-more');
-            let sort_by = url.searchParams.get('sort_by');
+            let max_page = btn.attr('data-max');
+            let current_page = parseInt(btn.attr('data-current_page')) + 1;
 
+            let sort_by = url.searchParams.get('sort_by');
             $.ajax({
                 url: rtrs.ajaxurl,
                 data: {
                     action: 'rtrs_pagination',
                     post_id: rtrs.post_id,
-                    current_page: rtrs.current_page,
+                    current_page: current_page,
+                    max_page: max_page,
                     __rtrs_wpnonce: rtrs.nonce,
                     sort_by,
                 },
@@ -426,13 +428,11 @@
                     btn.text('Load More');
                     if (resp.success) {
                         $('.rtrs-review-list').append(resp.data.review);
+                        btn.attr('data-current_page', current_page )
                     }
-
-                    rtrs.current_page++;
-                    if (rtrs.current_page == max_page) {
+                    if ( current_page >= max_page) {
                         btn.remove();
                     }
-
                     rtrs_featherlight_popup();
                 }
             });
@@ -460,7 +460,6 @@
                     post_id: rtrs.post_id,
                     current_page: current_page,
                     max_page: max_page,
-                    pagi_num: true,
                     __rtrs_wpnonce: rtrs.nonce,
                     sort_by,
                 },
@@ -473,9 +472,7 @@
                     if (resp.success) {
                         $('.rtrs-review-list').html(resp.data.review);
                         $('.rtrs-paginate-ajax').html(resp.data.pagination);
-                        // console.log(resp.data.number);
                     }
-
                     rtrs_featherlight_popup();
                 }
             });
@@ -490,11 +487,12 @@
                 if (!onScrollPagi) return;
 
                 let bottomOffset = 2900; // the distance (in px) from the page bottom when you want to load more posts
-
-                let max_page = $('.rtrs-paginate-onscroll').attr('data-max');
+                let btn = $('.rtrs-paginate-onscroll');
+                let max_page = btn.attr('data-max');
+                let current_page = parseInt( btn.attr('data-current_page')) + 1;
                 let sort_by = url.searchParams.get('sort_by');
 
-                if (rtrs.current_page >= max_page) {
+                if (current_page > max_page) {
                     onScrollPagi = false;
                     return;
                 }
@@ -505,21 +503,22 @@
                         data: {
                             action: 'rtrs_pagination',
                             post_id: rtrs.post_id,
-                            current_page: rtrs.current_page,
+                            current_page: current_page,
                             sort_by: sort_by,
+                            max_page: max_page,
                             __rtrs_wpnonce: rtrs.nonce,
                         },
                         type: 'POST',
                         dataType: "json",
                         beforeSend: function () {
-                            $('.rtrs-paginate-onscroll').html(rtrs.loading);
+                            btn.html(rtrs.loading);
                             onScrollPagi = false;
                         },
                         success: function (resp) {
                             if (resp.success) {
                                 $('.rtrs-review-list').append(resp.data.review);
-                                $('.rtrs-paginate-onscroll').html('');
-                                rtrs.current_page++;
+                                btn.html('');
+                                btn.attr('data-current_page', current_page )
                                 onScrollPagi = true;
 
                                 rtrs_featherlight_popup();

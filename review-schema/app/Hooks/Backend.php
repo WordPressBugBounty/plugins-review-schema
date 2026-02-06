@@ -5,7 +5,7 @@ namespace Rtrs\Hooks;
 class Backend {
 	public function __construct() {
 		add_filter( 'ajax_query_attachments_args', [ $this, 'wpse_hide_cv_media_overlay_view' ] );
-		add_filter( 'rtrs_register_settings_tabs', [ $this, 'register_settings_tabs' ], 11 );
+		// add_filter( 'rtrs_register_settings_tabs', [ $this, 'register_settings_tabs' ], 11 );
 	}
 
 	/**
@@ -17,7 +17,7 @@ class Backend {
 	public function wpse_hide_cv_media_overlay_view( $args ) {
 		// Bail if this is not the admin area.
 		if ( ! is_admin() ) {
-			return;
+            return $args;
 		}
 
 		// Modify the query.

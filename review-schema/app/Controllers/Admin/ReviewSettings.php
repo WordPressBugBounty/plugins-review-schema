@@ -305,7 +305,7 @@ class ReviewSettings {
 															$criteria_count = 1;
 															if ( $criteria && $multi_criteria ) {
 																foreach( $multi_criteria as $key => $value ):
-																	$slug = "rt_rating_" . Functions::slugify($value);
+																	$slug = "rt_rating_" . md5($value);
 																?> 
 																<label for="rating"><?php echo esc_html( $value ); ?></label>
 																<fieldset class="rtrs-comments-rating">

@@ -2,6 +2,7 @@
 
 require_once RTRS_PATH . 'vendor/autoload.php';
 
+use Rtrs\Controllers\Marketing\BlackFridayV2;
 use Rtrs\Hooks\Backend;
 use Rtrs\Hooks\Frontend;
 use Rtrs\Hooks\SeoHooks;
@@ -50,13 +51,11 @@ final class Rtrs {
 
 	public function init() {
 		do_action( 'rtrs_before_init' );
-
-		$this->load_plugin_textdomain();
-
 		new AdminController();
 		new AjaxController();
 		// Review::init();
-		new Offer();
+		// new Offer();
+        new BlackFridayV2();
 		new Backend();
 		new Frontend();
 		do_action( 'rtrs_init' );
@@ -67,21 +66,6 @@ final class Rtrs {
 		do_action( 'rtrs_loaded' );
 	}
 
-	/**
-	 * Load Localisation files.
-	 */
-	public function load_plugin_textdomain() {
-		/*
-		// if ( ! function_exists( 'determine_locale' ) ) {
-		// require_once ABSPATH . WPINC . '/l10n.php';
-		// }
-		// $locale = function_exists( 'determine_locale' ) ? determine_locale() : 'en_US'; // Forums Support: Undefine Function fixed.
-		// $locale = apply_filters( 'rtrs_plugin_locale', $locale );
-		// unload_textdomain( 'review-schema' );
-		// load_textdomain( 'review-schema', WP_LANG_DIR . '/review-schema/review-schema-' . $locale . '.mo' );
-		*/
-		load_plugin_textdomain( 'review-schema', false, plugin_basename( dirname( RTRS_PLUGIN_FILE ) ) . '/languages' );
-	}
 	/**
 	 * What type of request is this?
 	 *

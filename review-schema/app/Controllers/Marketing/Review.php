@@ -62,7 +62,7 @@ class Review {
             $dont_disturb = esc_url( add_query_arg( $args + ['rtrs_spare_me' => '1'], self::rtrs_current_admin_url() ) );
             $remind_me    = esc_url( add_query_arg( $args + ['rtrs_remind_me' => '1'], self::rtrs_current_admin_url() ) );
             $rated        = esc_url( add_query_arg( $args + ['rtrs_rated' => '1'], self::rtrs_current_admin_url() ) );
-            $reviewurl    = esc_url( 'https://wordpress.org/support/plugin/review-schema/reviews/?filter=5#new-post' );
+            $reviewurl    = esc_url( 'https://wordpress.org/support/plugin/review-schema/reviews/' );
 
             printf( __( '<div class="notice rtrs-review-notice rtrs-review-notice--extended"> 
                 <div class="rtrs-review-notice_content">

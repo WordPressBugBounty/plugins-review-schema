@@ -4,9 +4,10 @@ namespace Rtrs\Controllers\Ajax;
 
 class AjaxController {
 
-    public function __construct() { 
-        new Shortcode(); 
-        new Review(); 
-        new Migration(); 
-    }
+	public function __construct() {
+		new Shortcode();
+		new Review();
+		new Migration();
+		new OurPluginsController();
+	}
 }

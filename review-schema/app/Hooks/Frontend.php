@@ -7,8 +7,10 @@ use Rtrs\Models\Review;
 use Rtrs\Helpers\Functions;
 use WC_Comments;
 
+
 class Frontend {
 	public function __construct() {
+
 		add_filter( 'comment_form_defaults', [ $this, 'comment_form' ] );
 
 		add_action( 'comment_post', [ $this, 'comment_review_meta_save' ] );
@@ -259,7 +261,7 @@ class Frontend {
 				$i               = $total = $avg_rating = 0;
 				$criteria_rating = [];
 				foreach ( $multi_criteria as $key => $value ) {
-					$slug = 'rt_rating_' . Functions::slugify( $value );
+					$slug = 'rt_rating_' . md5( $value );
 					if ( isset( $_POST[ $slug ] ) && ( '' !== $_POST[ $slug ] ) ) {
 						$rating = absint( $_POST[ $slug ] );
 						$i++;
@@ -346,7 +348,7 @@ class Frontend {
 	}
 
 	public function comment_review_meta_save( $comment_id ) {
-
+        // error_log(print_r('Hello', true) . "\n\n", 3, __DIR__ . '/log.txt');
 		if ( ! wp_verify_nonce( Functions::get_nonce(), rtrs()->getNonceId() ) ) {
 			return;
 		}
@@ -367,7 +369,7 @@ class Frontend {
 				$i               = $total = $avg_rating = 0;
 				$criteria_rating = [];
 				foreach ( $multi_criteria as $key => $value ) {
-					$slug = 'rt_rating_' . Functions::slugify( $value );
+					$slug = 'rt_rating_' . md5( $value );
 					if ( ( isset( $_POST[ $slug ] ) ) && ( '' !== $_POST[ $slug ] ) ) {
 						$rating = absint( $_POST[ $slug ] );
 						$i++;
@@ -490,7 +492,7 @@ class Frontend {
 		if ( $criteria && $multi_criteria ) {
 			$criteria_count = 1;
 			foreach ( $multi_criteria as $key => $value ) :
-				$slug = 'rt_rating_' . Functions::slugify( $value );
+				$slug = 'rt_rating_' . md5( $value );
 				?>
 
 				<li>

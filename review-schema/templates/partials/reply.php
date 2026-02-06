@@ -30,15 +30,15 @@ $comment_reply_link = get_comment_reply_link(
 		]
 	)
 );
-if( empty( $comment_reply_link )){
+if ( empty( $comment_reply_link ) ) {
 	return;
 }
 ?>   
-<div class="rtrs-reply-btn"> 
+<div class="rtrs-reply-btn comment-reply">
 	<?php
 		echo preg_replace(
 			'/comment-reply-link/',
-			'comment-reply-link rtrs-item-btn',
+			apply_filters( 'rtrs_review_comment_reply_link', 'comment-reply-link rtrs-item-btn' ),
 			$comment_reply_link,
 			1
 		);

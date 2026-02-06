@@ -1,5 +1,6 @@
-<div class="wrap">
-	<div id="rtrs-get-help-wrapper">
+<div class="wpwrap">
+	<?php require_once RTRS_PATH . 'views/setting-sections/settings-header.php'; ?>
+		<div id="rtrs-get-help-wrapper">
 		<div class="rtrs-setting-container">
 			
 			<div id="support" class="rt-document-box">
@@ -75,13 +76,12 @@
 					<div class="rt-box-content">
 						<h3 class="rt-box-title">Happy Our Work?</h3>
 						<p>If you happy with <strong>Team</strong> plugin, please add a rating. It would be glad to us.</p>
-						<a href="https://wordpress.org/support/plugin/review-schema/reviews/?filter=5#new-post" class="rt-admin-btn" target="_blank">Post Review</a>
+						<a href="https://wordpress.org/support/plugin/review-schema/reviews/" class="rt-admin-btn" target="_blank">Post Review</a>
 					</div>
 				</div>
 			</div> 
 
 		</div>
-
 	</div>
 	<style>
 				

@@ -7,15 +7,22 @@ use WP_Roles;
 
 class Functions {
 
-		// public static function verify_nonce() {
-		// $nonce     = self::get_nonce();
-		// $nonceText = rtrs()->getNonceText();
-		// if ( wp_verify_nonce( $nonce, $nonceText ) ) {
-		// return true;
-		// }
-		//
-		// return false;
-		// }
+	/**
+	 * Check if the stored license is valid.
+	 *
+	 * @return bool
+	 */
+	public static function has_valid_license() {
+		static $cached_result = null;
+		// Return cached result if already calculated in this request.
+		if ( null !== $cached_result ) {
+			return $cached_result;
+		}
+		$settings      = self::get_option( 'rtrs_tools_settings' );
+		$cached_result = ( ! empty( $settings['license_status'] ) && 'valid' === $settings['license_status'] );
+		return $cached_result;
+	}
+
 	/**
 	 * Has Role.
 	 *
@@ -61,7 +68,6 @@ class Functions {
 		if ( is_singular( 'product' ) ) {
 			if ( self::has_reply_permition() || 'no' === get_option( 'woocommerce_review_rating_verification_required' ) || wc_customer_bought_product( '', get_current_user_id(), get_the_ID() ) ) {
 				comment_form();
-				wp_enqueue_script( 'comment-reply' );
 			} else { ?>
 				<p class="woocommerce-verification-required">
 					<?php esc_html_e( 'Only logged in customers who have purchased this product may leave a review.', 'review-schema' ); ?>
@@ -71,6 +77,7 @@ class Functions {
 		} else {
 			comment_form();
 		}
+		wp_enqueue_script( 'comment-reply' );
 	}
 
 	public static function get_nonce() {
@@ -771,6 +778,10 @@ class Functions {
 	 * @return boolean
 	 */
 	public static function is_english( $str ) {
+        if ( ! function_exists( 'mb_convert_encoding' ) ) {
+            // Fallback: assume string is English or just return true
+            return ( preg_match( '/^[\x00-\x7F]*$/', $str ?? '' ) === 1 );
+        }
 		$strUtf8 = mb_convert_encoding($str ?? '', 'UTF-8', 'ISO-8859-1');
 
 		if (strlen($str) != strlen($strUtf8)) {
@@ -864,16 +875,16 @@ class Functions {
 
 		return apply_filters('rtrs_rich_snippet_cats', [
             'article'              => esc_html__('Article', 'review-schema'),
-            'tech_article'         => esc_html__('Tech Article', 'review-schema'),
-            'news_article'         => esc_html__('News article', 'review-schema'),
-            'blog_posting'         => esc_html__('Blog posting', 'review-schema'),
-            'web_page'             => esc_html__('Web page', 'review-schema'),
+            'tech_article'         => esc_html__('TechArticle', 'review-schema'),
+            'news_article'         => esc_html__('NewsArticle', 'review-schema'),
+            'blog_posting'         => esc_html__('BlogPosting', 'review-schema'),
+            'web_page'             => esc_html__('WebPage', 'review-schema'),
             'event'                => esc_html__('Event', 'review-schema'),
-			'local_business'       => esc_html__('Local business', 'review-schema'),
-			'faq'                  => esc_html__('Faq', 'review-schema'),
+			'local_business'       => esc_html__('LocalBusiness', 'review-schema'),
+			'faq'                  => esc_html__('FAQPage', 'review-schema'),
 			'service'              => esc_html__('Service', 'review-schema'),
-			'question_answer'      => esc_html__('Q&A', 'review-schema'),
-			'how_to'               => esc_html__('How to', 'review-schema'),
+			'question_answer'      => esc_html__('QAPage (formerly Q&A) ', 'review-schema'),
+			'how_to'               => esc_html__('HowTo', 'review-schema'),
 			'about'                => esc_html__('About', 'review-schema'),
 			'contact'              => esc_html__('Contact', 'review-schema'),
 			'person'               => esc_html__('Person', 'review-schema'),
@@ -884,23 +895,28 @@ class Functions {
 			'itemlist'             => esc_html__('ItemList', 'review-schema'),
 			'product'              => esc_html__('Product', 'review-schema') . $pro_label,
 			'book'                 => esc_html__('Book', 'review-schema') . $pro_label,
-			'real_state_listing'   => esc_html__('Real Estate Listing', 'review-schema') . $pro_label,
+			'real_state_listing'   => esc_html__('RealEstateListing', 'review-schema') . $pro_label,
 			'course'               => esc_html__('Course', 'review-schema') . $pro_label,
-			'job_posting'          => esc_html__('Job posting', 'review-schema') . $pro_label,
+			'job_posting'          => esc_html__('JobPosting', 'review-schema') . $pro_label,
 			'recipe'               => esc_html__('Recipe', 'review-schema') . $pro_label,
-			'software_app'         => esc_html__('Software App', 'review-schema') . $pro_label,
-			'image_license'        => esc_html__('Image License', 'review-schema') . $pro_label,
-			'special_announcement' => esc_html__('Special announcement', 'review-schema') . $pro_label,
+			'software_app'         => esc_html__('SoftwareApplication', 'review-schema') . $pro_label,
+			'image_license'        => esc_html__('Image License (ImageObject)', 'review-schema') . $pro_label,
+			'special_announcement' => esc_html__('SpecialAnnouncement', 'review-schema') . $pro_label,
 			'mosque'  			   => esc_html__('Mosque', 'review-schema'),
 			'church'  			   => esc_html__('Church', 'review-schema'),
-            'profile_page'  	   => esc_html__('Profile Page', 'review-schema'),
-            'vacation_rental'  	   => esc_html__('Vacation Rental', 'review-schema') . $pro_label,
+            'profile_page'  	   => esc_html__('ProfilePage', 'review-schema'),
+            'vacation_rental'  	   => esc_html__('VacationRental', 'review-schema') . $pro_label,
             'vehicle_listing'  	   => esc_html__('Vehicle listing', 'review-schema') . $pro_label,
-			'hindutemple'  		   => esc_html__('Hindu Temple', 'review-schema'),
-			'buddhisttemple'  	   => esc_html__('Buddhist Temple', 'review-schema'),
-			'medical_webpage'  	   => esc_html__('Medical Webpage', 'review-schema'),
-			'collection_page'  	   => esc_html__('Collection Page', 'review-schema') . $pro_label,
-		]);
+			'hindutemple'  		   => esc_html__('HinduTemple', 'review-schema'),
+			'buddhisttemple'  	   => esc_html__('BuddhistTemple', 'review-schema'),
+			'medical_webpage'  	   => esc_html__('MedicalWebPage', 'review-schema'),
+			'collection_page'  	   => esc_html__('CollectionPage', 'review-schema') . $pro_label,
+            'tv_series'            => esc_html__( 'TVSeries', 'review-schema' ) . $pro_label,
+            'PodcastEpisode'       => esc_html__( 'PodcastEpisode', 'review-schema' ) . $pro_label,
+            'DiscussionForumPosting' => esc_html__( 'DiscussionForumPosting', 'review-schema' ) . $pro_label,
+            'Dataset'               => esc_html__( 'Dataset', 'review-schema' ) . $pro_label,
+            'Restaurant'               => esc_html__( 'Restaurant', 'review-schema' ) . $pro_label,
+        ]);
 	}
 
 	/**
@@ -1731,4 +1747,33 @@ class Functions {
 
 		return apply_filters('rtseo_language_list', $language_with_key);
 	}
+
+    /* Get plugin install button
+     *
+     * @param $slug
+     */
+    public static function get_plugin_install_button( $slug ) {
+        $plugin_file = $slug . '/' . $slug . '.php';
+        $plugin_path = WP_PLUGIN_DIR . '/' . $plugin_file;
+
+        if ( is_plugin_active( $plugin_file ) ) {
+            $label = 'Activated';
+            $class = 'success-class';
+        } elseif ( file_exists( $plugin_path ) ) {
+            $label = 'Activate Now';
+            $class = 'not-activated';
+        } else {
+            $label = 'Install Now';
+            $class = 'install-plugins';
+        }
+        ?>
+        <a data-slug="<?php echo esc_attr( $slug ); ?>"
+           href="https://wordpress.org/plugins/<?php echo esc_attr( $slug ); ?>/"
+           target="_blank"
+           class="rtrs-admin-btn <?php echo esc_attr( $class ) ?>">
+            <?php echo esc_html( $label ) ?>
+        </a>
+        <?php
+    }
+
 }

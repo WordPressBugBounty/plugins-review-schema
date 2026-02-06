@@ -66,6 +66,20 @@ class AdminSettings extends SettingsAPI {
 			[ $this, 'get_help_page' ],
 			30
 		);
+		add_submenu_page(
+            'review-schema',
+			esc_html__( 'Our Plugins', 'the-post-grid' ),
+			esc_html__( 'Our Plugins', 'the-post-grid' ),
+			'manage_options',
+			'rtrs-our-plugins',
+			[ $this, 'our_plugins' ]
+		);
+	}
+	/**
+	 * get Help
+	 */
+	public function our_plugins() {
+		require_once RTRS_PATH . 'views/pages/our-plugins.php';
 	}
 
 	/**
@@ -153,12 +167,12 @@ class AdminSettings extends SettingsAPI {
 			'schema'      => esc_html__( 'Schema', 'review-schema' ),
 			'woocommerce' => esc_html__( 'WooCommerce', 'review-schema' ),
 			'media'       => esc_html__( 'Media', 'review-schema' ),
-			'misc'       => esc_html__( 'Misc', 'review-schema' ),
+			'misc'        => esc_html__( 'Misc', 'review-schema' ),
 			// 'support'     => esc_html__('Support', 'review-schema'),
 		];
 		// Hook to register custom tabs
 		$this->tabs = apply_filters( 'rtrs_register_settings_tabs', $this->tabs );
-		
+
 		// Find the active tab.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$this->option = $this->active_tab = ! empty( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $this->tabs ) ? trim( $_GET['tab'] ) : 'review';

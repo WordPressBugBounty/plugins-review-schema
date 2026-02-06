@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInitc74062b0af66d24d8cf90c55497955eb
 {
     public static $prefixLengthsPsr4 = array (
-        'R' => 
+        'R' =>
         array (
             'Rtrs\\' => 5,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Rtrs\\' => 
+        'Rtrs\\' =>
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
@@ -37,8 +37,10 @@ class ComposerStaticInitc74062b0af66d24d8cf90c55497955eb
         'Rtrs\\Controllers\\Admin\\ScriptLoader' => __DIR__ . '/../..' . '/app/Controllers/Admin/ScriptLoader.php',
         'Rtrs\\Controllers\\Ajax\\AjaxController' => __DIR__ . '/../..' . '/app/Controllers/Ajax/AjaxController.php',
         'Rtrs\\Controllers\\Ajax\\Migration' => __DIR__ . '/../..' . '/app/Controllers/Ajax/Migration.php',
+        'Rtrs\\Controllers\\Ajax\\OurPluginsController' => __DIR__ . '/../..' . '/app/Controllers/Ajax/OurPluginsController.php',
         'Rtrs\\Controllers\\Ajax\\Review' => __DIR__ . '/../..' . '/app/Controllers/Ajax/Review.php',
         'Rtrs\\Controllers\\Ajax\\Shortcode' => __DIR__ . '/../..' . '/app/Controllers/Ajax/Shortcode.php',
+        'Rtrs\\Controllers\\Marketing\\BlackFridayV2' => __DIR__ . '/../..' . '/app/Controllers/Marketing/BlackFridayV2.php',
         'Rtrs\\Controllers\\Marketing\\Offer' => __DIR__ . '/../..' . '/app/Controllers/Marketing/Offer.php',
         'Rtrs\\Controllers\\Marketing\\Review' => __DIR__ . '/../..' . '/app/Controllers/Marketing/Review.php',
         'Rtrs\\Controllers\\Shortcodes' => __DIR__ . '/../..' . '/app/Controllers/Shortcodes.php',

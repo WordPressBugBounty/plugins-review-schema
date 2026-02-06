@@ -3,8 +3,8 @@ Contributors: techlabpro1
 Donate link:
 Tags: review, rating, schema, structured data, schema.org
 Requires at least: 4.5
-Tested up to: 6.7
-Stable tag: 2.2.5
+Tested up to: 6.8
+Stable tag: 2.2.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,7 +14,7 @@ WordPress Review Plugin with Schema adds Google Rich Snippets markup according t
 
 WordPress Review Plugin with [JSON-LD](https://json-ld.org/) based [Structure Data Schema](https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data) solution for your website. Add [Schema.org](https://schema.org/docs/schemas.html) Structured Data to enhance your website in Google Search Results. This Review Schema WordPress plugin will generate auto schema markup for page, post, custom post type and [WooCommerce](https://wordpress.org/plugins/woocommerce/). You can also manually edit the schema data.
 
-👉 [Demo](https://www.radiustheme.com/demo/plugins/review-schema) | [Documentation](https://www.radiustheme.com/docs/review-schema/review-schema) | [Support](https://www.radiustheme.com/ticket-support/) | [Get Pro](https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click) 👈
+👉 [Demo](https://www.radiustheme.com/demo/plugins/review-schema) | [Documentation](https://www.radiustheme.com/docs/review-schema/) | [Support](https://www.radiustheme.com/ticket-support/) | [Get Pro](https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click) 👈
 
 This WordPress review plugin offer single or multi-criteria base review and rating for page, post, custom post type and WooCommerce.
 
@@ -29,7 +29,7 @@ https://www.youtube.com/watch?v=P1dYzMcerNs
 == 🏆 Generate Review and Schema ==
 With this review schema WordPress plugin , you can generate new review and schema from dashboard easily. From there, you can complete the necessary settings for all the for tabs to generate the Review and Schema. These tabs include Review, Settings, Schema, and Style. All you have to do is go to your sidebar menu and follow a few steps outline.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/generate-review-schema/select-post-type-support-type/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/select-post-type-support-type/)
 
 == 🚀 Review and Rating ==
 
@@ -39,7 +39,7 @@ Having instant customer ratings and multiple criteria reviews on your website ad
 == 🏆 Single or Multi-criteria Review ==
 This best review plugin for WordPress have the choice to enable single or multiple criteria for review. A single criterion ensures quick and easy views for your customers. However, multicriteria reviews allow your customers to view detailed feedback that makes you appear more transparent and convincing. This review WordPress plugin gives you multiple options so you can choose what works for you.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/generate-review-schema/review/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/review/)
 
 == 🏆 Customer Review & Rating ==
 This WordPress review plugin enables you to manage your customer reviews and ratings to make them as effective as possible. You can sort them based on various criteria, such as top-rated reviews, recent reviews, reviews with images, and text reviews.
@@ -47,7 +47,7 @@ This WordPress review plugin enables you to manage your customer reviews and rat
 == 🏆 Review with Image ==
 The [WordPress review plugin](https://www.radiustheme.com/best-wordpress-review-plugins/) allows your customers to upload the actual product images with this feature. This feature makes it easy for your products to gain the trust of potential customers by increasing their credibility.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/generate-review-schema/settings/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/settings/)
 
 == 🏆 Review with Video (Pro) ==
 Review & Schema PRO allows you to make your products even more trustworthy by supporting the display of reviews with videos. This function lets you upload videos or just embed links from YouTube, Vimeo, or elsewhere. The versatility of this WP customer reviews plugin justifies its quality and class.
@@ -58,7 +58,7 @@ Our WordPress rating plugin lets you display your products with multiple rating 
 == 🏆 Review & Rating for Page/ Post and Custom Post Type ==
 The Review & Schema plugin functions aren’t restricted to WooCommerce. You can use the review WordPress plugin to collect reviews on your pages, posts, and custom post types.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/generate-review-schema/review/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/review/)
 
 == 🏆 Review & Rating for WooCommerce ==
 This WordPress product review plugin offers an excellent panel for the management of all your WooCommerce reviews and ratings from one place. It supports various advanced options, including sorting, searching, and filtering, for an easy management experience.
@@ -97,7 +97,7 @@ Schema enables search engines to interpret the information they receive and disp
 == 🏆 Auto-Generated Schema ==
 This WordPress schema plugin enables you to automatically generate Google schema [JSON-LD](https://json-ld.org/) for pages, posts, and products. The straightforward steps of doing this are outlined.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/generate-review-schema/schema/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/schema/)
 
 == 🏆 Auto-Generated Schema for WooCommerce ==
 This WordPress schema plugin generated auto schema for WooCommerce. We have default settings for WooCommerce that help to generate auto schema value like product brand, identifier & Identifier value.
@@ -105,7 +105,7 @@ This WordPress schema plugin generated auto schema for WooCommerce. We have defa
 == 🏆 Manual Schema Generate ==
 Alternatively, you can generate schema for your pages, posts, and products manually. With this schema plugin, you only have to configure some settings from the schema tab as shown on the steps check the following documentation.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/schema-json-ld/set-schema-json-ld/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/set-schema-json-ld/)
 
 == 🏆 Custom rich snippet? (Manual) ==
 You must enable this option to set your custom Schema JSON Data. It will override auto-generated settings of this rich snippets WordPress plugin.
@@ -152,7 +152,7 @@ With this rich snippets WordPress plugin, you can choose whichever snippet categ
 == 🏆 Affiliate Marketing ==
 You can conduct affiliate marketing efficiently on your website with this structured data WordPress plugin. All you need to do to add an affiliate shortcode is to follow the steps outlined
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/generate-review-schema/select-post-type-support-type/)
+👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/select-post-type-support-type/)
 
 = Need Any Help? =
 * For any bug, support or suggestion please submit your ticket [here](https://www.radiustheme.com/ticket-support/).
@@ -271,10 +271,17 @@ If you like The Post Grid Plugin, then consider checking out our other WordPress
 
 == Changelog ==
 
-= 2.2.5 ( Mar 11, 2024 ) =
+= 2.2.7 ( Feb 02, 2026 ) =
+* Fix: Auto Fill Vulnerability Resolved
+
+= 2.2.6 ( Nov 14, 2025 ) =
+* Added: Banner Added
+* Fixed: Mb String Make Compatible.
+
+= 2.2.5 ( Mar 11, 2025 ) =
 * Fixed: Security has been enhanced.
 
-= 2.2.4 ( 07 Feb, 2024 ) =
+= 2.2.4 ( 07 Feb, 2025 ) =
 * Fixed: Translation Issue
 
 = 2.2.3.1 ( 18 Nov 2024 ) =

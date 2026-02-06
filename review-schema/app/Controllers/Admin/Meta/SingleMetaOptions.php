@@ -3407,12 +3407,17 @@ class SingleMetaOptions {
 						'type'  => 'text',
 						'label' => esc_html__( 'Question created Date', 'review-schema' ),
 						'class' => 'rtrs-date',
-						'desc'  => esc_html__( 'Like this: 2021-08-25 14:20:00', 'review-schema' ),
+						'desc'  => esc_html__( 'ISO 8601 format. Ex: 2025-02-05T09:00:00+06:00', 'review-schema' ),
 					],
 					[
 						'name'  => 'author',
 						'type'  => 'text',
 						'label' => esc_html__( 'Question author', 'review-schema' ),
+					],
+					[
+						'name'  => 'question_author_url',
+						'type'  => 'url',
+						'label' => esc_html__( 'Author URL', 'review-schema-pro' ),
 					],
 					[
 						'type'   => 'group',
@@ -3430,7 +3435,7 @@ class SingleMetaOptions {
 								'type'  => 'text',
 								'label' => esc_html__( 'Created Date', 'review-schema' ),
 								'class' => 'rtrs-date',
-								'desc'  => esc_html__( 'Like this: 2021-08-25 14:20:00', 'review-schema' ),
+								'desc'  => esc_html__( 'ISO 8601 format. Ex: 2025-02-05T09:00:00+06:00', 'review-schema' ),
 							],
 							[
 								'name'  => 'upvoteCount',
@@ -3445,7 +3450,12 @@ class SingleMetaOptions {
 							[
 								'name'  => 'author',
 								'type'  => 'text',
-								'label' => esc_html__( 'Author', 'review-schema' ),
+								'label' => esc_html__( 'Author Name', 'review-schema' ),
+							],
+							[
+								'name'  => 'author_url',
+								'type'  => 'url',
+								'label' => esc_html__( 'Author URL', 'review-schema-pro' ),
 							],
 							[
 								'name'    => 'answerType',
@@ -3525,9 +3535,26 @@ class SingleMetaOptions {
 						'label'  => esc_html__( 'Items', 'review-schema' ),
 						'fields' => [
 							[
+								'name'  => 'name',
+								'type'  => 'text',
+								'label' => esc_html__( 'Title/Name', 'review-schema' ),
+							],
+							[
 								'name'  => 'url',
 								'type'  => 'url',
 								'label' => esc_html__( 'URL', 'review-schema' ),
+							],
+							[
+								'name'     => 'description',
+								'type'     => 'textarea',
+								'label'    => esc_html__( 'Description', 'review-schema' ),
+								'required' => true,
+							],
+							[
+								'name'     => 'image',
+								'type'     => 'image',
+								'label'    => esc_html__( 'Image', 'review-schema' ),
+								'required' => true,
 							],
 						],
 					],
