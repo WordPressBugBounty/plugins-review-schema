@@ -2,22 +2,19 @@
 
 namespace Rtrs\Controllers\Marketing; 
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Review {
 
     public static function init() {
         $current      = time();
 		$black_friday = mktime(0, 0, 0, 11, 17, 2022) <= $current && $current <= mktime(0, 0, 0, 12, 02, 2022);
 		if (! $black_friday) {
-            register_activation_hook( RTRS_PLUGIN_FILE, [__CLASS__, 'rtrs_activation_time'] );
             add_action( 'admin_init', [__CLASS__, 'rtrs_check_installation_time'] );
             add_action( 'admin_init', [__CLASS__, 'rtrs_spare_me'], 5 );
         }
-    }
-
-    // add plugin activation time
-    public static function rtrs_activation_time() {
-        $get_activation_time = strtotime( "now" );
-        add_option( 'rtrs_plugin_activation_time', $get_activation_time ); // replace your_plugin with Your plugin name
     }
 
     //check if review notice should be shown or not
@@ -64,18 +61,39 @@ class Review {
             $rated        = esc_url( add_query_arg( $args + ['rtrs_rated' => '1'], self::rtrs_current_admin_url() ) );
             $reviewurl    = esc_url( 'https://wordpress.org/support/plugin/review-schema/reviews/' );
 
-            printf( __( '<div class="notice rtrs-review-notice rtrs-review-notice--extended"> 
+            $heading      = esc_html__( 'Enjoying SchemaEngine AI?', 'review-schema' );
+            $message      = esc_html__( 'Thank you for choosing SchemaEngine AI. If you have found our plugin useful and makes you smile, please consider giving us a 5-star rating on WordPress.org. It will help us to grow.', 'review-schema' );
+            $btn_rate     = esc_html__( '⭐ Yes, You Deserve It!', 'review-schema' );
+            $btn_rated    = esc_html__( '😀 Already Rated!', 'review-schema' );
+            $btn_remind   = esc_html__( '🔔 Remind Me Later', 'review-schema' );
+            $btn_dismiss  = esc_html__( '😐 No Thanks', 'review-schema' );
+
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- All values are pre-escaped above via esc_html__() / esc_url() before being interpolated.
+            printf(
+                '<div class="notice rtrs-review-notice rtrs-review-notice--extended">
                 <div class="rtrs-review-notice_content">
-                    <h3>Enjoying Review Schema?</h3>
-                    <p>Thank you for choosing Review Schema. If you have found our plugin useful and makes you smile, please consider giving us a 5-star rating on WordPress.org. It will help us to grow.</p>
+                    <h3>%1$s</h3>
+                    <p>%2$s</p>
                     <div class="rtrs-review-notice_actions">
-                        <a href="%s" class="rtrs-review-button rtrs-review-button--cta" target="_blank"><span>⭐ Yes, You Deserve It!</span></a>
-                        <a href="%s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--outline"><span>😀 Already Rated!</span></a>
-                        <a href="%s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--outline"><span>🔔 Remind Me Later</span></a>
-                        <a href="%s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--error rtrs-review-button--outline"><span>😐 No Thanks</span></a>
+                        <a href="%3$s" class="rtrs-review-button rtrs-review-button--cta" target="_blank"><span>%4$s</span></a>
+                        <a href="%5$s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--outline"><span>%6$s</span></a>
+                        <a href="%7$s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--outline"><span>%8$s</span></a>
+                        <a href="%9$s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--error rtrs-review-button--outline"><span>%10$s</span></a>
                     </div>
-                </div> 
-            </div>' ), $reviewurl, $rated, $remind_me, $dont_disturb );
+                </div>
+            </div>',
+                $heading,
+                $message,
+                $reviewurl,
+                $btn_rate,
+                $rated,
+                $btn_rated,
+                $remind_me,
+                $btn_remind,
+                $dont_disturb,
+                $btn_dismiss
+            );
+            // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
             echo '<style> 
             .rtrs-review-button--cta {
@@ -190,11 +208,13 @@ class Review {
     // remove the notice for the user if review already done or if the user does not want to
     public static function rtrs_spare_me() {
         
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce value verified via wp_verify_nonce() immediately after.
         if ( ! isset( $_REQUEST['_wpnonce'] ) || !wp_verify_nonce( $_REQUEST['_wpnonce'], 'rtrs_notice_nonce' ) ) {
 			return;
 		}
 
         if ( isset( $_GET['rtrs_spare_me'] ) && ! empty( $_GET['rtrs_spare_me'] ) ) {
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only flag query parameter; only existence checked.
             $spare_me = $_GET['rtrs_spare_me'];
             if ( 1 == $spare_me ) {
                 update_option( 'rtrs_spare_me', "1" );
@@ -202,6 +222,7 @@ class Review {
         }
 
         if ( isset( $_GET['rtrs_remind_me'] ) && ! empty( $_GET['rtrs_remind_me'] ) ) {
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only flag query parameter; only existence checked.
             $remind_me = $_GET['rtrs_remind_me'];
             if ( 1 == $remind_me ) {
                 $get_activation_time = strtotime( "now" );
@@ -211,6 +232,7 @@ class Review {
         }
 
         if ( isset( $_GET['rtrs_rated'] ) && ! empty( $_GET['rtrs_rated'] ) ) {
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Read-only flag query parameter; only existence checked.
             $rtrs_rated = $_GET['rtrs_rated'];
             if ( 1 == $rtrs_rated ) {
                 update_option( 'rtrs_rated', 'yes' );

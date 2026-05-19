@@ -2,6 +2,10 @@
 
 namespace Rtrs\Controllers\Marketing;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Offer {
 	public function __construct() {
 		add_action(
@@ -50,23 +54,23 @@ class Offer {
 		add_action(
 			'admin_notices',
 			function () {
-				$plugin_name   = 'Review Schema - WordPress Review & Structure Data Schema Plugin Pro';
+				$plugin_name   = 'SchemaEngine AI - WordPress Review & Structure Data Schema Plugin Pro';
 				$download_link = 'https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click'; ?>
 				<div class="notice notice-info is-dismissible" data-rtrsdismissable="rtrs_ny_offer_2024"
 					style="display:grid;grid-template-columns: 100px auto;padding-top: 25px; padding-bottom: 22px;">
 					<img alt="<?php echo esc_attr( $plugin_name ); ?>"
-						src="<?php echo rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ); ?>" width="74px"
+						src="<?php echo esc_url( rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ) ); ?>" width="74px"
 						height="74px" style="grid-row: 1 / 4; align-self: center;justify-self: center"/>
-					<h3 style="margin:0;"><?php echo sprintf( '%s Lifetime Deal!!', $plugin_name ); ?></h3>
+					<h3 style="margin:0;"><?php echo esc_html( sprintf( '%s Lifetime Deal!!', $plugin_name ) ); ?></h3>
 
 					<p style="margin:0 0 2px;">
-						<?php echo esc_html__( "Don't miss out on our biggest sale of the year! Get your.", 'review-schema' ); ?>
-						<b>Review Schema Pro plan</b> with <b>UP TO 80% OFF</b>
+						<?php esc_html_e( "Don't miss out on our biggest sale of the year! Get your.", 'review-schema' ); ?>
+						<b>SchemaEngine AI Pro plan</b> with <b>UP TO 80% OFF</b>
 					</p>
 
 					<p style="margin:0;">
-						<a class="button button-primary" href="<?php echo esc_url( $download_link ); ?>" target="_blank">Buy Now</a>
-						<a class="button button-dismiss" href="#">Dismiss</a>
+						<a class="button button-primary" href="<?php echo esc_url( $download_link ); ?>" target="_blank"><?php esc_html_e( 'Buy Now', 'review-schema' ); ?></a>
+						<a class="button button-dismiss" href="#"><?php esc_html_e( 'Dismiss', 'review-schema' ); ?></a>
 					</p>
 				</div>
 					<?php
@@ -128,24 +132,24 @@ class Offer {
 		add_action(
 			'admin_notices',
 			function () {
-				$plugin_name   = 'Review Schema Pro';
+				$plugin_name   = 'SchemaEngine AI Pro';
 				$download_link = 'https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/';
 				?>
 				<div class="notice notice-info is-dismissible" data-rtrsbfdismissable="rtrs_black_friday_offer_2024"
 					 style="display:grid;grid-template-columns: 100px auto;padding-top: 25px; padding-bottom: 22px;">
 					<img alt="<?php echo esc_attr( $plugin_name ); ?>"
-						 src="<?php echo rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ); ?>" width="74px"
+						 src="<?php echo esc_url( rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ) ); ?>" width="74px"
 						 height="74px" style="grid-row: 1 / 4; align-self: center;justify-self: center"/>
-					<h3 style="margin:0;display: flex; align-items: center;"> <?php echo esc_html( $plugin_name ); ?> [Black Friday <img style="width: 40px;position: relative;" src="<?php echo rtrs()->get_assets_uri( 'imgs/deal.gif' ); ?>">]</h3>
+					<h3 style="margin:0;display: flex; align-items: center;"> <?php echo esc_html( $plugin_name ); ?> [Black Friday <img style="width: 40px;position: relative;" src="<?php echo esc_url( rtrs()->get_assets_uri( 'imgs/deal.gif' ) ); ?>">]</h3>
 
 					<p style="margin:0 0 2px;padding: 5px 0;">
-						Exciting News: <b><?php echo $plugin_name; ?></b> Black Friday sale is now live! Get the plugin today and enjoy discounts up to 50%.
+						Exciting News: <b><?php echo esc_html( $plugin_name ); ?></b> Black Friday sale is now live! Get the plugin today and enjoy discounts up to 50%.
 					</p>
-						
+
 
 					<p style="margin:0;">
-						<a class="button button-primary" href="<?php echo esc_url( $download_link ); ?>" target="_blank">Buy Now</a>
-						<a class="button button-dismiss" href="#">Dismiss</a>
+						<a class="button button-primary" href="<?php echo esc_url( $download_link ); ?>" target="_blank"><?php esc_html_e( 'Buy Now', 'review-schema' ); ?></a>
+						<a class="button button-dismiss" href="#"><?php esc_html_e( 'Dismiss', 'review-schema' ); ?></a>
 					</p>
 				</div>
 				<?php

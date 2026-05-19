@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Settings for social profiles Info
  */
-$options = array( 
+$rtrs_options = array( 
     'social_profile' => array(
 		'title'       => esc_html__( 'Social Profiles', 'review-schema' ),
         'description'   => esc_html__('Provide your social profile information to a Google Knowledge panel', 'review-schema'),
@@ -28,4 +28,4 @@ $options = array(
     )
 );
 
-return apply_filters( 'rtrs_schema_social_profiles_settings_options', $options );
+return apply_filters( 'rtrs_schema_social_profiles_settings_options', $rtrs_options );

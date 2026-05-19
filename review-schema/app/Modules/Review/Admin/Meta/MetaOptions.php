@@ -1,0 +1,523 @@
+<?php
+
+namespace Rtrs\Modules\Review\Admin\Meta;
+
+use Rtrs\Helpers\Functions;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class MetaOptions {
+	/**
+	 * Marge all meta field.
+	 *
+	 * @return array
+	 */
+	public function allMetaFields() {
+		$fields  = [];
+		$fieldsA = array_merge(
+			$this->sectionConditionalFields(),
+			$this->sectionReviewFields(),
+			$this->sectionSettingFields(),
+			$this->sectionStyleFields()
+		);
+		foreach ( $fieldsA as $field ) {
+			$fields[] = $field;
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Filters and returns the business information options.
+	 *
+	 * @return array The array of business information options with their corresponding labels.
+	 */
+	public function filterOptions() {
+		$business_info_field = [
+			'top_rated'    => esc_html__( 'Top Rated', 'review-schema' ),
+			'low_rated'    => esc_html__( 'Lowest Rating', 'review-schema' ),
+			'latest_first' => esc_html__( 'Latest First', 'review-schema' ),
+			'oldest_first' => esc_html__( 'Oldest First', 'review-schema' ),
+		];
+
+		return apply_filters( 'rtrs_business_info_field', $business_info_field );
+	}
+
+	public function sectionConditionalFields() {
+		$section_conditional = [
+			[
+				'type'     => 'select2',
+				'name'     => 'rtrs_post_type',
+				'label'    => esc_html__( 'Select post type', 'review-schema' ),
+				'default'  => '',
+				'required' => true,
+				'id'       => 'rtrs-post-type',
+				'options'  => $this->postType(),
+			],
+			[
+				'type'        => 'select2',
+				'name'        => 'rtrs_page_id',
+				'holderClass' => 'rtrs-hidden',
+				'label'       => esc_html__( 'Choose pages', 'review-schema' ),
+				'desc'        => '<span style="color: #b70000; font-weight: 500;">' . esc_html__( 'You can choose individual pages otherwise it will applied for all pages', 'review-schema' ) . '</span>',
+				'id'          => 'rtrs-page-id',
+				'multiple'    => true,
+				'options'     => $this->allPages(),
+			],
+			[
+				'type'    => 'switch',
+				'name'    => 'rtrs_support',
+				'id'      => 'rtrs-rtrs_support',
+				'label'   => esc_html__( 'Enable Review', 'review-schema' ),
+				'option'  => esc_html__( 'Enable Review', 'review-schema' ),
+				'default' => '',
+				'desc'    => esc_html__( 'Turn on review functionality.', 'review-schema' ),
+			],
+		];
+
+		return apply_filters( 'rtrs_section_conditional_fields', $section_conditional );
+	}
+
+	public function sectionReviewFields() {
+		$section_layout = [
+			[
+				'type'    => 'radio-image',
+				'name'    => 'criteria',
+				'label'   => esc_html__( 'Criteria?', 'review-schema' ),
+				'doc'     => esc_html__( 'If you want you can enable or disable single or criteria based rating from here', 'review-schema' ),
+				'id'      => 'rtrs-criteria',
+				'default' => 'single',
+				'options' => [
+					[
+						'value' => 'single',
+						'img'   => RTRS_URL . '/assets/imgs/single-criteria.jpg',
+					],
+					[
+						'value' => 'multi',
+						'img'   => RTRS_URL . '/assets/imgs/multi-criteria.jpg',
+					],
+				],
+			],
+			[
+				'type'      => 'repeater',
+				'name'      => 'multi_criteria',
+				'label'     => esc_html__( 'Multi criteria', 'review-schema' ),
+				'id'        => 'rtrs-multi-criteria',
+				'alignment' => 'vertical',
+				'default'   => $this->multiCriteria(),
+				'options'   => $this->multiCriteria(),
+			],
+			[
+				'type'    => 'radio-image',
+				'name'    => 'summary_layout',
+				'label'   => esc_html__( 'Review summary layout', 'review-schema' ),
+				'default' => 'one',
+				'id'      => 'rtrs-summary_layout',
+				'options' => [
+					[
+						'value' => 'one',
+						'img'   => RTRS_URL . '/assets/imgs/summary-one.jpg',
+					],
+					[
+						'value' => 'two',
+						'img'   => RTRS_URL . '/assets/imgs/summary-two.jpg',
+					],
+					[
+						'value'  => 'three',
+						'img'    => RTRS_URL . '/assets/imgs/summary-three.jpg',
+						'is_pro' => true,
+					],
+					[
+						'value'  => 'four',
+						'img'    => RTRS_URL . '/assets/imgs/summary-four.jpg',
+						'is_pro' => true,
+					],
+				],
+			],
+			[
+				'type'    => 'radio-image',
+				'name'    => 'review_layout',
+				'label'   => esc_html__( 'Review layout', 'review-schema' ),
+				'default' => 'one',
+				'id'      => 'rtrs-review_layout',
+				'options' => [
+					[
+						'value' => 'one',
+						'img'   => RTRS_URL . '/assets/imgs/review-one.jpeg',
+					],
+					[
+						'value' => 'two',
+						'img'   => RTRS_URL . '/assets/imgs/review-two.jpeg',
+					],
+					[
+						'value'  => 'three',
+						'img'    => RTRS_URL . '/assets/imgs/review-three.jpeg',
+						'is_pro' => true,
+					],
+					[
+						'value'  => 'four',
+						'img'    => RTRS_URL . '/assets/imgs/review-four.jpeg',
+						'is_pro' => true,
+					],
+				],
+			],
+			[
+				'type'    => 'select2',
+				'name'    => 'pagination_type',
+				'label'   => esc_html__( 'Pagination type', 'review-schema' ),
+				'id'      => 'rtrs-pagination_type',
+				'default' => 'normal',
+				'options' => $this->pagination_type(),
+			],
+		];
+
+		return apply_filters( 'rtrs_section_layout_fields', $section_layout );
+	}
+
+	public function sectionSettingFields() {
+		$settings_fields = [
+			[
+				'type'   => 'switch',
+				'name'   => 'review-summary-hide',
+				'id'     => 'rtrs-summary-hide',
+				'label'  => esc_html__( 'Hide Review Summary?', 'review-schema' ),
+				'option' => esc_html__( 'Hide', 'review-schema' ),
+				'desc'   => sprintf(
+					/* translators: %s: shortcode tag */
+					esc_html__( 'When enabled, the review summary will be hidden, but you can still display it using the %s shortcode.', 'review-schema' ),
+					'<strong>[rtrs-review-summary]</strong>'
+				),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'review-list-hide',
+				'id'     => 'rtrs-list-hide',
+				'label'  => esc_html__( 'Hide Review List?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+				'desc'   => sprintf(
+					/* translators: %s: shortcode tag */
+					esc_html__( 'When enabled, the review list will be hidden, but you can still display it using the %s shortcode.', 'review-schema' ),
+					'<strong>[rtrs-review-list]</strong>'
+				),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'review-form-hide',
+				'id'     => 'rtrs-form-hide',
+				'label'  => esc_html__( 'Hide Review Form?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+				'desc'   => sprintf(
+					/* translators: %s: shortcode tag */
+					esc_html__( 'When enabled, the review form will be hidden, but you can still display it using the %s shortcode.', 'review-schema' ),
+					'<strong>[rtrs-review-form]</strong>'
+				),
+			],
+
+			[
+				'type'   => 'switch',
+				'name'   => 'title',
+				'id'     => 'rtrs-title',
+				'label'  => esc_html__( 'Review title disable?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'human-time-diff',
+				'id'     => 'rtrs-human-time-diff',
+				'label'  => esc_html__( 'Disable human readable time format ?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+				'desc'   => esc_html__( 'By default review time is human readable format such as "1 hour ago", "5 mins ago", "2 days ago " Or ', 'review-schema' ) . ' <a href=' . admin_url( 'options-general.php' ) . '>' . esc_html__( 'Go to General Settings for change date formate', 'review-schema' ) . '</a>',
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'website',
+				'id'     => 'rtrs-website',
+				'label'  => esc_html__( 'Review website url disable?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'image_review',
+				'id'     => 'rtrs-image-review',
+				'label'  => esc_html__( 'Allow image review?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'video_review',
+				'is_pro' => true,
+				'id'     => 'rtrs-video-review',
+				'label'  => esc_html__( 'Allow video review?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'pros_cons',
+				'id'     => 'rtrs-pros_cons',
+				'label'  => esc_html__( 'Allow pros cons?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'name'    => 'pros_cons_limit',
+				'type'    => 'number',
+				'default' => 3,
+				'is_pro'  => true,
+				'label'   => esc_html__( 'Pros cons limit', 'review-schema' ),
+				'desc'    => esc_html__( 'How many field field you want to allow', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'recommendation',
+				'is_pro' => true,
+				'id'     => 'rtrs-recommendation',
+				'class'  => 'rtrs-hidden',
+				'label'  => esc_html__( 'Allow recommendation?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'highlight_review',
+				'is_pro' => true,
+				'id'     => 'rtrs-highlight_review',
+				'class'  => 'rtrs-hidden',
+				'label'  => esc_html__( 'Highlight review?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'sticky_review',
+				'is_pro' => true,
+				'id'     => 'rtrs-sticky_review',
+				'class'  => 'rtrs-hidden',
+				'label'  => esc_html__( 'Sticky review?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'social_share',
+				'is_pro' => true,
+				'id'     => 'rtrs-social-share',
+				'label'  => esc_html__( 'Social share?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'like',
+				'is_pro' => true,
+				'id'     => 'rtrs-like',
+				'label'  => esc_html__( 'Allow review like?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'dislike',
+				'is_pro' => true,
+				'id'     => 'rtrs-dislike',
+				'label'  => esc_html__( 'Allow review dislike?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'anonymous_review',
+				'is_pro' => true,
+				'id'     => 'rtrs-anonymous_review',
+				'label'  => esc_html__( 'Allow anonymous review?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'email',
+				'is_pro' => true,
+				'id'     => 'rtrs-email',
+				'label'  => esc_html__( 'Email field disable?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+				'desc'   => ' <a href=' . admin_url( 'options-discussion.php' ) . '>' . esc_html__( 'Go To Discussion', 'review-schema' ) . '</a>' . sprintf( ' %s <strong> %s </strong>', esc_html__( '. You have to uncheck the settings.', 'review-schema' ), esc_html__( 'Comment author must fill out name and email', 'review-schema' ) ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'author',
+				'id'     => 'rtrs-author',
+				'is_pro' => true,
+				'label'  => esc_html__( 'Author field disable?', 'review-schema' ),
+				'option' => esc_html__( 'Disable', 'review-schema' ),
+				'desc'   => ' <a href=' . admin_url( 'options-discussion.php' ) . '>' . esc_html__( 'Go To Discussion', 'review-schema' ) . '</a>' . sprintf( ' %s <strong> %s </strong>', esc_html__( '. You have to uncheck the settings.', 'review-schema' ), esc_html__( 'Comment author must fill out name and email', 'review-schema' ) ),
+			],
+			[
+				'type'   => 'switch',
+				'name'   => 'purchased_badge',
+				'is_pro' => true,
+				'id'     => 'rtrs-purchased_badge',
+				'label'  => esc_html__( 'Show purchase badge?', 'review-schema' ),
+				'option' => esc_html__( 'Enable', 'review-schema' ),
+				'desc'   => esc_html__( 'It will show WC, EDD purchased badge', 'review-schema' ),
+			],
+			[
+				'type'  => 'switch',
+				'name'  => 'recaptcha',
+				'id'    => 'rtrs-recaptcha',
+				'label' => esc_html__( 'Allow google recaptcha?', 'review-schema' ),
+				'desc'  => esc_html__( 'When you enable google captcha, you must need to fill up Google captcha v3 credential from', 'review-schema' ) . ' <a href=' . admin_url( 'admin.php?page=review-schema#/review' ) . '>' . esc_html__( 'Settings', 'review-schema' ) . '</a>',
+			],
+			[
+				'type'        => 'switch',
+				'name'        => 'filter',
+				'label'       => esc_html__( 'Filter?', 'review-schema' ),
+				'holderClass' => 'rtrs-filter',
+				'id'          => 'rtrs-filter',
+				'option'      => esc_html__( 'Enable', 'review-schema' ),
+			],
+			[
+				'type'      => 'checkbox',
+				'name'      => 'filter_option',
+				'label'     => esc_html__( 'Filter Options', 'review-schema' ),
+				'id'        => 'rtrs-filter-options',
+				'multiple'  => true,
+				'alignment' => 'vertical',
+				'default'   => array_keys( $this->filterOptions() ),
+				'options'   => $this->filterOptions(),
+			],
+		];
+
+		return apply_filters( 'rtrs_section_setting_fields', $settings_fields );
+	}
+
+	public function sectionStyleFields() {
+		$style_fields = [
+			[
+				'name'  => 'parent_class',
+				'type'  => 'text',
+				'label' => 'Parent class',
+				'id'    => 'rtrs-parent-class',
+				'class' => 'medium-text',
+				'desc'  => esc_html__( 'Parent class for adding custom css', 'review-schema' ),
+			],
+			[
+				'name'        => 'width',
+				'id'          => 'rtrs-width',
+				'type'        => 'text',
+				'class'       => 'small-width',
+				'placeholder' => '400px',
+				'label'       => esc_html__( 'Width', 'review-schema' ),
+				'desc'        => esc_html__( 'Layout width, Like: 400px or 50% etc', 'review-schema' ),
+			],
+			[
+				'name'        => 'margin',
+				'id'          => 'rtrs-margin',
+				'type'        => 'text',
+				'class'       => 'small-width',
+				'placeholder' => '40px',
+				'label'       => esc_html__( 'Margin', 'review-schema' ),
+				'desc'        => esc_html__( 'Layout margin, Like: 50px', 'review-schema' ),
+			],
+			[
+				'name'        => 'padding',
+				'id'          => 'rtrs-padding',
+				'type'        => 'text',
+				'class'       => 'small-width',
+				'placeholder' => '40px',
+				'label'       => esc_html__( 'Padding', 'review-schema' ),
+				'desc'        => esc_html__( 'Layout padding, Like: 50px', 'review-schema' ),
+			],
+			[
+				'name'  => 'review_title',
+				'type'  => 'style',
+				'label' => esc_html__( 'Review title', 'review-schema' ),
+			],
+			[
+				'name'  => 'review_text',
+				'type'  => 'style',
+				'label' => esc_html__( 'Review text', 'review-schema' ),
+			],
+			[
+				'name'    => 'date_text',
+				'type'    => 'style',
+				'label'   => esc_html__( 'Date text', 'review-schema' ),
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- 'exclude' here is a field-config option key, not a get_posts() parameter.
+				'exclude' => [ 'align' ],
+			],
+			[
+				'name'    => 'author_name',
+				'type'    => 'style',
+				'label'   => esc_html__( 'Author name', 'review-schema' ),
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- 'exclude' here is a field-config option key, not a get_posts() parameter.
+				'exclude' => [ 'align' ],
+			],
+			[
+				'name'    => 'author_name_hover',
+				'type'    => 'style',
+				'label'   => esc_html__( 'Author name hover', 'review-schema' ),
+				// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- 'exclude' here is a field-config option key, not a get_posts() parameter.
+				'exclude' => [ 'align' ],
+			],
+			/*
+			 array(
+				"name"        => "reply_btn_color",
+				'type'        => 'style',
+				'label'       => esc_html__( 'Reply button', 'review-schema' ),
+			), */
+			[
+				'type'    => 'color',
+				'name'    => 'star_color',
+				'id'      => 'rtrs-star-color',
+				'default' => '#ffb300',
+				'label'   => esc_html__( 'Star color', 'review-schema' ),
+			],
+			[
+				'type'    => 'color',
+				'name'    => 'meta_icon_color',
+				'id'      => 'rtrs-meta_icon_color',
+				'default' => '#646464',
+				'label'   => esc_html__( 'Meta icon color', 'review-schema' ),
+			],
+		];
+
+		return apply_filters( 'rtrs_review_section_style_fields', $style_fields );
+	}
+
+	public function pagination_type() {
+		$pro_label = '';
+		if ( ! function_exists( 'rtrsp' ) ) {
+			$pro_label = ' [Pro]'; // don't need to translate
+		}
+
+		return apply_filters(
+			'rtrs_pagination_type',
+			[
+				'number'      => esc_html__( 'Number', 'review-schema' ),
+				'number-ajax' => esc_html__( 'Number Ajax', 'review-schema' ) . $pro_label,
+				'load-more'   => esc_html__( 'Load More', 'review-schema' ) . $pro_label,
+				'auto-scroll' => esc_html__( 'Auto Scroll', 'review-schema' ) . $pro_label,
+			]
+		);
+	}
+
+	public function postType() {
+		$post_type = Functions::getPostTypes();
+
+		return apply_filters( 'rtrs_post_type', $post_type );
+	}
+
+	public function allPages() {
+		$page_array    = [];
+		$page_array[0] = esc_html__( 'Select', 'review-schema' );
+		$all_pages     = get_pages();
+		foreach ( $all_pages as $page ) {
+			$page_array[ $page->ID ] = $page->post_title;
+		}
+
+		return apply_filters( 'rtrs_pages', $page_array );
+	}
+
+	public function multiCriteria() {
+		return apply_filters(
+			'rtrs_multi_criteria',
+			[
+				esc_html__( 'Quality', 'review-schema' ),
+				esc_html__( 'Price', 'review-schema' ),
+				esc_html__( 'Service', 'review-schema' ),
+			]
+		);
+	}
+}

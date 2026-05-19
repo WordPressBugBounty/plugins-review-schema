@@ -1,173 +1,203 @@
-=== Review Schema - Review & Structure Data Schema Plugin ===
-Contributors: techlabpro1
+=== Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO ===
+Contributors: techlabpro1, mamunnu
 Donate link:
-Tags: review, rating, schema, structured data, schema.org
+Tags: schema, rich snippets, review, structured data, seo
 Requires at least: 4.5
-Tested up to: 6.8
-Stable tag: 2.2.7
+Requires PHP: 7.4
+Tested up to: 7.0
+Stable tag: 3.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-WordPress Review Plugin with Schema adds Google Rich Snippets markup according to Schema.org guidelines to structure your website for SEO.
+AI-Powered schema markup plugin for WordPress. Generate JSON-LD schema and FAQs, validate Rich Results, and audit your structured data.
 
 == Description ==
 
-WordPress Review Plugin with [JSON-LD](https://json-ld.org/) based [Structure Data Schema](https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data) solution for your website. Add [Schema.org](https://schema.org/docs/schemas.html) Structured Data to enhance your website in Google Search Results. This Review Schema WordPress plugin will generate auto schema markup for page, post, custom post type and [WooCommerce](https://wordpress.org/plugins/woocommerce/). You can also manually edit the schema data.
+[Schema Engine AI](https://schemaengineai.com/) is an AI-powered schema markup plugin for WordPress that generates valid JSON-LD based [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data), generate FAQ content from your existing pages, validates output against Google Rich Results requirements, and produces a site-wide schema audit. It is designed for editors and site owners who want clean, accurate structured data without writing JSON-LD by hand, and for SEO professionals who need a validator and a report alongside their existing workflow.
 
-👉 [Demo](https://www.radiustheme.com/demo/plugins/review-schema) | [Documentation](https://www.radiustheme.com/docs/review-schema/) | [Support](https://www.radiustheme.com/ticket-support/) | [Get Pro](https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click) 👈
+== 📢 Important: Review Schema is now Schema Engine AI ==
 
-This WordPress review plugin offer single or multi-criteria base review and rating for page, post, custom post type and WooCommerce.
+Same plugin, same review and rating features, plus AI-powered schema generation for articles, FAQs, products, and more. Your existing reviews and settings are preserved automatically.
 
-It comes with 3 main features
+👉 [Demo](https://schemaengineai.com/demo/) | [Documentation](https://schemaengineai.com/docs/docs/general/) | [Support](https://www.radiustheme.com/ticket-support/) | [Get Pro](https://schemaengineai.com/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click) 👈
 
-* **Single or Multi-criteria Review & Rating for Page/ Post and WooCommerce**
-* **Auto or Manual Generated Structured Data Schema JSON-LD**
-* **Affiliate Marketing or Product Review Shortcode**
+==The plugin supports three ways to work:==
 
-https://www.youtube.com/watch?v=P1dYzMcerNs
+* ** Manual Mode:** Build or edit JSON-LD for any schema type with complete control over properties and nesting. Ideal for technical SEOs.
+* ** Auto Mode:** Applies rule-based schema generation across post types, adapting to your content type and site structure without manual configuration.
+* ** AI Mode:** Proposes a schema type and pre-fills properties from your content. Every output is checked against [Schema.org](https://schema.org/docs/schemas.html) and the public Google Rich Results documentation, and editors review the result before it is saved.
 
-== 🏆 Generate Review and Schema ==
-With this review schema WordPress plugin , you can generate new review and schema from dashboard easily. From there, you can complete the necessary settings for all the for tabs to generate the Review and Schema. These tabs include Review, Settings, Schema, and Style. All you have to do is go to your sidebar menu and follow a few steps outline.
+== Why Schema Engine AI (Formerly Review Schema) ==
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/select-post-type-support-type/)
+Most schema plugins ask you to fill in long forms or apply one-size-fits-all templates. Schema Engine AI lets you choose the level of automation that fits the page in front of you. A blog post can use Auto mode and a template. A complex landing page can use AI mode to draft a starting point, which you then edit. A product or local business page can use Manual mode for full control. The validator runs in the background in all three modes, so you see what is missing before you publish, not after.
 
-== 🚀 Review and Rating ==
+* **AI as a drafting tool, not an autonomous publisher.** Suggestions are reviewed and edited by a human before they are saved.
+* **Rich results validator built in.** Required and recommended properties are flagged in real time, so you see what is missing before you publish.
+* **Site-wide audit.** One screen shows which content has valid markup, which has warnings, and which has none.
+* **Graph relation output.** A connected @graph links Organization, WebSite, WebPage, Author, and content schemas so search engines understand entity relationships.
+* **SERP Preview.** See how your structured data will appear as a Google search result card directly in the post editor.
+* **Editor-friendly.** The default FAQ block renders on the front end and outputs FAQPage schema in the same step.
 
-== 🏆 Why Is Review Rating Important? ==
-Having instant customer ratings and multiple criteria reviews on your website adds to the credibility of your website. When potential customers are browsing your content or WooCommerce website, they may not be sure about whether or not to trust you. Seeing what other people who’ve interacted with your product or services have to say makes it easy for them to spend money on them. This WordPress review plugin gives you the best interface for all that.
+== AI-powered Schema Markup Generator ==
+Schema Engine AI reads your page content and generates valid JSON-LD structured data in seconds. It detects the content type — article, event, local business, FAQ, and more — then pre-fills every required and recommended property. Review, edit, and save: clean, Google-ready rich results without writing a line of JSON-LD.
 
-== 🏆 Single or Multi-criteria Review ==
-This best review plugin for WordPress have the choice to enable single or multiple criteria for review. A single criterion ensures quick and easy views for your customers. However, multicriteria reviews allow your customers to view detailed feedback that makes you appear more transparent and convincing. This review WordPress plugin gives you multiple options so you can choose what works for you.
+Bring your own API key from OpenAI, Anthropic Claude, or Google Gemini to power the AI features — use the provider that fits your workflow and budget.
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/review/)
+== WordPress Review Plugin ==
+Schema Engine AI is a complete WordPress review plugin for posts, pages, custom post types, and WooCommerce products. Collect single-criterion or multi-criteria ratings (quality, value, support, and more) with star or numerical scoring, pros and cons, image attachments, and GDPR consent. Aggregate ratings are output as valid structured data, so review scores can appear as star snippets in Google rich results.
 
-== 🏆 Customer Review & Rating ==
-This WordPress review plugin enables you to manage your customer reviews and ratings to make them as effective as possible. You can sort them based on various criteria, such as top-rated reviews, recent reviews, reviews with images, and text reviews.
+== Core features ==
 
-== 🏆 Review with Image ==
-The [WordPress review plugin](https://www.radiustheme.com/best-wordpress-review-plugins/) allows your customers to upload the actual product images with this feature. This feature makes it easy for your products to gain the trust of potential customers by increasing their credibility.
-
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/settings/)
-
-== 🏆 Review with Video (Pro) ==
-Review & Schema PRO allows you to make your products even more trustworthy by supporting the display of reviews with videos. This function lets you upload videos or just embed links from YouTube, Vimeo, or elsewhere. The versatility of this WP customer reviews plugin justifies its quality and class.
-
-== 🏆 Multiple Rating Type ==
-Our WordPress rating plugin lets you display your products with multiple rating types, such as numerical and star ratings. This feature enables your potential customers to absorb positive info on your products fast!
-
-== 🏆 Review & Rating for Page/ Post and Custom Post Type ==
-The Review & Schema plugin functions aren’t restricted to WooCommerce. You can use the review WordPress plugin to collect reviews on your pages, posts, and custom post types.
-
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/review/)
-
-== 🏆 Review & Rating for WooCommerce ==
-This WordPress product review plugin offers an excellent panel for the management of all your WooCommerce reviews and ratings from one place. It supports various advanced options, including sorting, searching, and filtering, for an easy management experience.
-
-== 🏆 Review & Rating for Easy Digital Downloads ==
-Our Product review plugin lets your customers leave reviews and ratings that are easy to display for easy digital downloads. This makes it easy for potential customers to compare the quality and ratings of different downloadable products. This WordPress product review plugin supports this function for better user interfaces.
-
-== 🏆 Google ReCAPTCHA ==
-Review Schema WordPress plugin lets you enable ReCAPTCHA so you can be sure that all your customers who leave ratings are real humans. The WordPress review plugin comes with the reCAPTCHA v3, which flags abusive traffic without user interaction. When you enable the function, your users won’t be presented with a CAPTCHA challenge. Instead, this review WordPress will only present you with a score that helps you chart the best course of action for your site.
-
-== 🏆 Multiple Pagination ==
-Review & Schema allows you to enable multiple pagination, which come in handy when you have long or/and many reviews and ratings to display.
-
-== 🏆 Allows Pros & Cons ==
-As this review WordPress plugin lets your customers leave their reviews and ratings, it also lets them list the pros and cons of the products they’ve received. Displaying the pros and cons of products gives your potential customers more insight and gets them closer to buying. With this WordPress product review plugin, you get to gain your customers’ trust easily.
-
-== 🏆 Purchase badge (Pro) ==
-This WooCommerce review plugin displays purchase badges to users who want to leave reviews and ratings. This way, potential customers trust the reviews they read because they know that the reviewer has actually experienced the product.
-
-== 🏆 Style Customization ==
-Review Schema plugin allows you to customize the style in which you display your reviews. This is in keeping with the colors, typography, and other style aspects in which your pages are showcased.
-
-== 🚀 Schema & Structured Data JSON-LD ==
-
-== 🏆 What is Schema Markup ==
-[Schema](https://schema.org/) is the shared language (words and tags) associated with various niches that search engines, such as Google can decipher and understand your content. In turn, the search engines give your potential customers clear, detailed, and accurate information in rich snippets that appear beneath page titles.
-
-You may have come across various schema upon entering various search queries in Google. Such schema include ratings, products, services, and news articles that appear directly on the search results’ page.
-
-Although different content management systems have various ways of implementing schema on websites, WordPress allows you to install schema WordPress plugins, such as Review & Schema. Once your site has this review schema WordPress plugin, the schema markup will cater for relevant searches on all search engines, including Bing, Yahoo, and Google.
+* **AI Schema Generator.** Reads the page content, suggests an appropriate schema type, and pre-fills properties from WordPress fields. Editor reviews and approves before saving. Supports OpenAI, Anthropic Claude, and Google Gemini as AI providers. Also support bulk schema markup generation.
+* **AI FAQ Generation.** Drafts question-and-answer pairs from existing page content. Outputs valid FAQPage JSON-LD and renders a matching front-end FAQ block with accordion or tab layouts.
+* **Real-time rich results validator.** Checks required and recommended properties against Google rich results documentation as you edit the structured data.
+* **Graph relation output.** Builds a connected @graph so Organization, WebSite, WebPage, BreadcrumbList, Author, and content schemas reference each other with proper @id linking.
+* **Schema Preview Panel.** Preview the complete generated JSON-LD schema markup before publishing.
+* **Three generation modes.** Manual, Auto, and AI — switch per page or set a default per post type.
+* **30+ schema types.** Article, NewsArticle, BlogPosting, TechArticle, FAQPage, HowTo, Event, LocalBusiness, Person and more..
+* **E-commerce ready.** Product schema for WooCommerce and Easy Digital Downloads with name, image, SKU, price, currency, availability, aggregate rating, and review count. Integrations for SureCart, FluentCart, and six LMS platforms.
+* **Review and rating system.** Single-criterion or multi-criteria ratings with stars, pros and cons, and image uploads. GDPR consent support included.
+* **FAQ Gutenberg Block.** Native block with accordion and tab layouts, search, animations, responsive controls, typography and spacing customization, and JSON import/export.
+* **Elementor widgets.** Six review widgets (Affiliate Review, Average Rating Stars, Average Rating Count, Review List, Review Form, Review Summary) plus Elementor FAQ schema support.
+* **Data Migration.** Import structured data from WP SEO Structured Data Schema with background processing and progress tracking.
+* **Compatible with Yoast SEO and Rank Math.** Detects existing schema and avoids duplicate JSON-LD output.
+* **Third-party conflict prevention.** Toggles to disable default schema from WooCommerce, Easy Digital Downloads, SureCart, Rank Math, and Yoast SEO.
+* **Google ReCAPTCHA v3.** Protect review submissions from spam without user-facing challenges.
+* **Fully translatable.** POT files included in /languages/.
 
 
-== 🏆 Why Is Schema Important? ==
-Schema enables search engines to interpret the information they receive and display the information on your website ideally. Schema lets Google showcase your products and content in the best possible way with relevance to the search queries.
+==Free version includes:==
 
-== 🏆 Auto-Generated Schema ==
-This WordPress schema plugin enables you to automatically generate Google schema [JSON-LD](https://json-ld.org/) for pages, posts, and products. The straightforward steps of doing this are outlined.
+* Manual, Auto, and AI schema generation modes
+* AI Schema Generator and AI FAQ Generation (your own API key — OpenAI, Claude, or Gemini)
+* Real-time rich results validator
+* Schema Preview Panel and SERP Preview
+* Graph relation output with @graph entity linking
+* Setup Wizard with third-party conflict prevention
+* GDPR consent for review submissions
+* Data migration from WP SEO Structured Data Schema
+* Single or multi-criteria review with star rating, pros and cons, and images
+* FAQ Gutenberg Block with accordion/tab layouts, search, animations, and import/export
+* Google ReCAPTCHA v3 for review forms
+* Yoast SEO and Rank Math duplicate detection
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/schema/)
+==Supported Schema Types==
 
-== 🏆 Auto-Generated Schema for WooCommerce ==
-This WordPress schema plugin generated auto schema for WooCommerce. We have default settings for WooCommerce that help to generate auto schema value like product brand, identifier & Identifier value.
-
-== 🏆 Manual Schema Generate ==
-Alternatively, you can generate schema for your pages, posts, and products manually. With this schema plugin, you only have to configure some settings from the schema tab as shown on the steps check the following documentation.
-
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/set-schema-json-ld/)
-
-== 🏆 Custom rich snippet? (Manual) ==
-You must enable this option to set your custom Schema JSON Data. It will override auto-generated settings of this rich snippets WordPress plugin.
-
-== 🏆 Rich snippet category ==
-With this rich snippets WordPress plugin, you can choose whichever snippet category you want to show and even select one from here:
-
+* WebPage
+* ItemPage
+* WebSite
+* BreadcrumbList
+* Organization/ Person (entity)
 * Article
-* News Article
-* Blog Posting
+* TechArticle
+* NewsArticle
+* BlogPosting
+* FAQPage
+* AboutPage
+* ContactPage
+* ProfilePage
+* MedicalWebPage
+* HowTo
 * Event
-* Local Business
 * Person
-* About
-* Contact
-* FAQ
-* Q & A
-* How To
 * Service
 * Movie
-* Audio
-* Video
-* Breadcrumb
-* ItemLists
+* VideoObject
+* AudioObject
 * Mosque
 * Church
-* Hindutemple
-* Buddhisttemple
-* Buddhisttemple
-* Buddhisttemple
-* Buddhisttemple
-* TechArticle,
-* MedicalWebPage,
-* CollectionPage,
-* **Product [Pro]**
-* **Course [Pro]**
-* **Job Posting [Pro]**
-* **Recipe [Pro]**
-* **Software App [Pro]**
-* **Image License [Pro]**
-* **Special Announcement [Pro]**
-* **Custom Snipet [Pro]**
+* HinduTemple
+* BuddhistTemple
+* Product(Pro)
+* SoftwareApplication(Pro)
+* VehicleListing(Pro)
+* Book(Pro)
+* Recipe(Pro)
+* RealEstateListing(Pro)
+* VacationRental(Pro)
+* Restaurant(Pro)
+* Course(Pro)
+* JobPosting(Pro)
+* TVSeries(Pro)
+* PodcastEpisode(Pro)
+* ImageObject(Pro)
+* DiscussionForumPosting(Pro)
+* TaxiService(Pro)
 
-== 🏆 Affiliate Marketing ==
-You can conduct affiliate marketing efficiently on your website with this structured data WordPress plugin. All you need to do to add an affiliate shortcode is to follow the steps outlined
+==Pro version adds:==
 
-👉 [Check Documentation](https://www.radiustheme.com/docs/review-schema/docs/select-post-type-support-type/)
+* Auto-Generate — background AI schema generation with WordPress cron scheduling
+* AI Schema Auto-Classification with confidence scoring
+* Schema Quality Evaluation — multi-criteria quality scoring (0-100) across six dimensions
+* AI Product and Course Data Extraction for WooCommerce, EDD, FluentCart, SureCart, Tutor LMS, and LearnPress
+* ProductGroup schema for WooCommerce variable products with hasVariant and variesBy
+* WooCommerce Shipping Details and Merchant Return Policy auto-generation
+* Review with video upload
+* Purchase badge (Verified Buyer) for WooCommerce
+* Sticky and highlighted reviews with custom styling
 
-= Need Any Help? =
+
+
+== Why schema markup matters for SEO, AEO, and GEO ==
+
+Structured data is how search engines and AI systems read the entities, facts, and relationships on a page. It is not a direct ranking factor, but it is a prerequisite for many features that improve visibility and click-through rate.
+
+* SEO. Pages with valid schema are eligible for Google Rich Results: review stars, FAQ dropdowns, product cards, recipe cards, breadcrumbs, and similar features. These features tend to increase click-through rate from organic search.
+* AEO (Answer Engine Optimization). Featured snippets, voice assistant answers, and direct answer boxes select content that is structured, specific, and easy to extract. FAQPage and HowTo schema map directly to these surfaces.
+* GEO (Generative Engine Optimization). AI search experiences such as Google AI Overviews and answer engines synthesize answers from sources they trust. Clear structured data helps these systems understand what your page is about and which claim came from where.
+
+== Data Migration ==
+
+Migrate your existing structured data from the [WP SEO Structured Data Schema plugin](https://wordpress.org/plugins/wp-seo-structured-data-schema/) without losing a single entry. Schema Engine AI maps each schema type to its Schema Engine AI equivalent, and transfers all properties — including nested objects and custom fields — into the new format.
+
+== External services and data handling ==
+
+AI Schema Generator and AI FAQ Generation send the post content you choose to process to a third-party large language model provider. The provider is the one whose API key you enter in plugin settings (OpenAI, Anthropic, or Google). No content is sent to any AI provider until you connect a key and trigger a generation. The plugin does not transmit content to RadiusTheme servers.
+
+* **OpenAI API.** [Terms of Use](https://openai.com/policies/terms-of-use) | [Privacy Policy](https://openai.com/policies/privacy-policy)
+* **Anthropic (Claude) API.** [Terms of Service](https://www.anthropic.com/legal/consumer-terms) | [Privacy Policy](https://www.anthropic.com/legal/privacy)
+* **Google (Gemini) API.** [Terms of Service](https://ai.google.dev/terms) | [Privacy Policy](https://policies.google.com/privacy)
+
+Manual and Auto modes do not contact any external service.
+
+== How AI is used in this plugin ==
+
+In line with Google’s public guidance on AI-generated content, AI in Schema Engine AI is a drafting tool. The model suggests a schema type and property values; an editor reviews and edits the output; the rich results validator checks the result against Google requirements before it is written to the page. AI mode can be disabled entirely — Manual and Auto modes work without any AI provider configured.
+
+
+== Need Any Help? ==
 * For any bug, support or suggestion please submit your ticket [here](https://www.radiustheme.com/ticket-support/).
 
-== Fully translatable ==
-* POT files included (/languages/)
+== Liked RadiusTheme ==
+* Join our [Facebook Group](https://www.facebook.com/groups/radiustheme).
+* Learn from our tutorials on [YouTube Channel](https://www.youtube.com/@RadiusTheme).
+
+== 🔥 WHAT’S NEXT ==
+
+If you like Schema Engine AI Plugin, then consider checking out our other WordPress Plugins:
+
+* [The Post Grid](https://wordpress.org/plugins/the-post-grid/) – Shortcode, Gutenberg Blocks and Elementor Addon for Post Grid.
+
+* [Classified Listing](https://wordpress.org/plugins/classified-listing/) - Classified ads and Business Directory Plugin
+
+* [ShopBuilder](https://wordpress.org/plugins/shopbuilder/) - Elementor WooCommerce Builder Addons with 100+ widgets and 20+ modules.
+
+* [Radius Booking](https://wordpress.org/plugins/radius-booking/) - WordPress Booking plugin with ChatBot.
+
+* [Team](https://wordpress.org/plugins/tlp-team/) - WordPress Team members slider and showcase plugin.
+
+* [Food Menu](https://wordpress.org/plugins/tlp-food-menu/) – Restaurant Menu & Online Ordering using WooCommerce.
+
 
 == Installation ==
 
 = Using The WordPress Dashboard =
 
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Search for 'Review & Schema'
-3. Click 'Install Now'
-4. Activate the plugin on the Plugin dashboard
+1. From your WordPress admin, go to **Plugins > Add New**, search for **Schema Engine AI**, and click **Install Now**, then **Activate**.
+2. Or upload the plugin folder to `/wp-content/plugins/review-schema/` and activate it from the Plugins screen.
+3. Open **Schema Engine AI** in the admin sidebar to run the setup wizard. Select which post types to enable, which schema types to map by default, and whether to enable AI mode.
+4. To use AI mode, paste an API key from a supported provider (OpenAI, Anthropic, or Google). Without a key, Manual and Auto modes work fully.
+5. Open any post or page and use the Schema Engine AI panel to generate, validate, or edit structured data for that page.
 
 = Uploading in WordPress Dashboard =
 
@@ -188,266 +218,116 @@ You can conduct affiliate marketing efficiently on your website with this struct
 * **WordPress version:** >= 4.5
 * **PHP version:** >= 7.4
 
-== Need Any Help? ==
-* For any bug, support or suggestion please submit your ticket [here](https://www.radiustheme.com/ticket-support/).
-
-== Liked RadiusTheme ==
-* Join our [Facebook Group](https://www.facebook.com/groups/radiustheme).
-* Learn from our tutorials on [YouTube Channel](https://www.youtube.com/@RadiusTheme).
-
-== 🔥 WHAT’S NEXT ==
-
-If you like The Post Grid Plugin, then consider checking out our other WordPress Plugins:
-
-* [The Post Grid](https://wordpress.org/plugins/the-post-grid/) – Shortcode, Gutenberg Blocks and Elementor Addon for Post Grid.
-
-* [Classified Lisitng](https://wordpress.org/plugins/classified-listing/) - Classified ads and Business Directory Plugin
-
-* [ShopBuilder](https://wordpress.org/plugins/shopbuilder/) - Elementor WooCommerce Builder Addons with 84+ widgets and 10+ modules.
-
-* [Team](https://wordpress.org/plugins/tlp-team/) - WordPress Team members slider and showcase plugin.
-
-* [Testimonial](https://wordpress.org/plugins/testimonial-slider-and-showcase/) - Testimonials Slider and Showcase Plugin
-
-* [Food Menu](https://wordpress.org/plugins/tlp-food-menu/) – Restaurant Menu & Online Ordering using WooCommerce.
 
 == Frequently Asked Questions ==
 
-= How to Support Advacne Review or Schema JSON-LD =
+= What is Schema Engine AI (formerly Review Schema)? =
 
-* Go to `Reviews Review > All Review Schema > New Review Schema`
-* From `Post Type` option, Select which post type you want to support
-* From `Support` option, Select Adance Review or Google Schema JSON-LD
-* From tab configure your all settings.
-* Publish
+Schema Engine AI is a WordPress schema plugin that generates JSON-LD structured data, drafts FAQ content with AI FAQ generation, validates output against Google rich results requirements, and builds graph relations across your site. It supports Manual, Auto, and AI generation modes with 35+ schema types.
 
-= Is this Review Schema WordPress plugin support both review and schema? =
+= Does the plugin work without an AI API key? =
 
-* Yes this plugin support both review and schema
+Yes. Manual mode and Auto mode run entirely on your own server with no external calls. Only AI Schema and AI FAQ generation require an API key from a supported provider.
 
-= Is this plugin support multi critria review? =
+= Does adding structured data directly improve Google rankings? =
 
-* Yes this plugin support both single and multi critria review & rating
+No. Google has stated that structured data is not a direct ranking factor. What JSON-LD schema does is make pages eligible for rich results and help search and AI systems understand the content, which can improve click-through rate and the chance of being cited in AI Overviews and answer engines.
 
-= Is this plugin support multi critria rating for WooCommerce? =
+= How does AI FAQ generation work? =
 
-* Yes this plugin support both multi critria rating for WooCommerce
+You select a page and click Generate FAQs. The plugin sends the page content to the AI provider you have configured, returns suggested questions and answers, and lets you review and edit them. When you save, the plugin writes a valid FAQPage JSON-LD block and renders the matching FAQ block on the front end.
 
-= Is this Schema WordPress plugin support auto generated schema? =
+= What are graph relations and why do they matter? =
 
-* Yes this plugin support auto generated schema
+Graph relations connect your structured data entities using a shared @graph array with @id references. This means your Organization, WebSite, WebPage, BreadcrumbList, and content schemas are linked together instead of being isolated. Search engines and AI systems use these connections to understand the full context of your content and entity relationships.
 
-= Can I manual edit schema data? =
+= Will it conflict with Yoast SEO or Rank Math? =
 
-* Yes this schema plugin allow you to edit schema data manually
+No. Schema Engine AI detects structured data produced by Yoast SEO and Rank Math, including their FAQ blocks, and skips duplicates so you do not output two competing JSON-LD blocks for the same content. You can keep using your existing SEO plugin for titles, meta descriptions, and sitemaps.
 
-= Is this review plugin support WooCommerce review and schema? =
+= Does it work with WooCommerce and Easy Digital Downloads? =
 
-* Yes this plugin support Woocommerce review and auto or manual generate schema markup data
+Yes. The WordPress schema plugin maps WooCommerce and EDD product fields to Product schema: name, description, image, SKU, price, currency, availability, aggregate rating, and review count. The Pro version adds Merchant Return Policy and Shipping Details, which are required for some Google Merchant features.
 
-= Can I use this plugin only for review and rating? =
+= Does the plugin support Gutenberg and Elementor? =
 
-* Yes, you can use this plugin only for review and rating or only for schema markup.
+Yes. The Free version ships a native Gutenberg FAQ block with accordion and tab layouts, plus six Elementor review widgets. The Pro version adds Elementor FAQ widgets.
 
-= Can I create affitiate marketing or product review shortcode =
+= What schema types are supported? =
 
-* Yes you can generate product review shortcode with affiliate link
+The Free version covers Article, TechArticle, NewsArticle, BlogPosting, FAQPage, HowTo, Event, Person, Service, AboutPage, ContactPage, ProfilePage, MedicalWebPage, Movie, VideoObject, AudioObject, and place types (Mosque, Church, HinduTemple, BuddhistTemple). The Pro version adds Product, SoftwareApplication, Book, Recipe, RealEstateListing, VacationRental, Restaurant, Course, JobPosting, VehicleListing, TVSeries, PodcastEpisode, ImageObject, DiscussionForumPosting, and TaxiService.
 
-= Need Any Help or suggestions? =
+= What data does the plugin send to third parties? =
 
-* Please create ticket [https://www.radiustheme.com/ticket-support/](https://www.radiustheme.com/ticket-support/)
+Only when you trigger AI Schema or AI FAQ generation. The plugin sends the post content you selected, plus a short instruction prompt, to the AI provider whose API key you supplied. It does not send admin emails, user accounts, or settings. No data is sent on plugin activation, on every page load, or in the background.
+
+= Where is plugin data stored? =
+
+Schema configuration and per-post overrides are stored in your WordPress database in post meta and plugin options. The plugin does not store generated content on third-party servers.
+
+= Is the JSON-LD output editable? =
+
+Yes. Every property is editable in Manual mode and editable after generation in Auto and AI modes. You can also disable any field you do not want to publish.
+
 
 == Screenshots ==
 
-01. Review Layout With Summary
-02. Review & Schema Settings Panel
-03. Review Advance Form
-04. Review & Schema Generator
-05. Review Layout Two With Summary Two
-06. Custom Schema JSON-LD Generator
-07. Schema JSON-LD Checked with Google Schema Validator
-08. Affiliate Shortcode Generator
-09. Affiliate Data
+01. Real-Time Rich Results Validation
+02. Ai Panel Schema Generation & Validation
+03. JSON-LD Generated Schema Preview
+04. Rich Results Test
+05. Post-Types Schema Mapping
+06. Site Info Schema
+07. AI Implementation
+08. Submitted Multi-Criteria Review Form
+09. Multi-Criteria Review Form
+10. Multi-Criteria Review Implementation
+
 
 == Changelog ==
+
+= 3.0.0 ( May 19, 2026 ) =
+* Added: AI-Powered Schema Generation - Automatically generate, classify, and validate structured data schemas using AI with multi-provider support for OpenAI, Anthropic Claude, and Google Gemini.
+* Added: AI Content Extraction - Intelligently extract schema-relevant content from posts and pages to auto-populate structured data fields.
+* Added: AI FAQ Generation - Generate FAQ schema content using AI directly from post content.
+* Added: AI Schema Validation & Quality Scoring - Validate generated schemas against Google Rich Results requirements with confidence scoring.
+* Added: AI REST API - Dedicated REST API endpoints for schema generation, preview, save, and delete operations.
+* Added: Modern Admin Settings UI - Completely rebuilt settings panel using React, TypeScript, and Tailwind CSS with dynamic form rendering and instant search.
+* Added: Setup Wizard - Multi-step guided configuration wizard for Review, Schema, AI settings, post type selection, and third-party plugin conflict prevention. Re-runnable from settings.
+* Added: FAQ Gutenberg Block - Full-featured FAQ block with accordion/tab layouts, search, animations, responsive controls, typography/spacing customization, and JSON import/export of FAQ items.
+* Added: Elementor FAQ Schema Support - Automatically generate FAQPage schema from Elementor FAQ widgets.
+* Added: SERP Preview - Google search result card preview in the post editor that dynamically renders from JSON-LD schema data.
+* Added: Schema Preview Panel - Preview the complete generated JSON-LD schema markup before publishing.
+* Added: GDPR Consent Support - GDPR consent checkbox for review submissions with forbidden review count tracking.
+* Added: Data Migration from WP SEO Structured Data Schema - Import schema data from competing plugins with background processing and progress tracking.
+* Added: SureCart Integration - Review and rating support with product schema and dynamic pricing for SureCart stores.
+* Added: FluentCart Integration - Review support and dynamic pricing provider for FluentCart.
+* Added: Academy LMS Integration - Review and rating support with pricing provider for Academy LMS courses.
+* Added: Tutor LMS Integration - Review support and dynamic pricing provider for Tutor LMS.
+* Added: LearnPress Integration - Review support and dynamic pricing provider for LearnPress courses.
+* Added: LifterLMS Integration - Review support and dynamic pricing provider for LifterLMS.
+* Added: Dynamic Pricing Provider System - Extensible pricing architecture supporting WooCommerce, EDD, SureCart, FluentCart, Academy LMS, Tutor LMS, LearnPress, LifterLMS, Classified Listing, and Download Manager.
+* Added: TaxiService Schema type.
+* Added: AboutPage and ContactPage Schema types.
+* Added: Organization Schema Settings for corporate contacts and sub-organization configuration.
+* Added: LocalBusiness Sub-Category Selection in the setup wizard.
+* Added: Third-Party Plugin Conflict Prevention - Toggles to disable default schema from WooCommerce, EDD, SureCart, Rank Math, and Yoast SEO.
+* Improvement: Implement Graph-Based Schema architecture with @graph wrapper.
+* Improvement: Modular code architecture separating Review and Schema modules.
+* Improvement: Refactored schema builder into dedicated methods.
+* Improvement: Breadcrumb schema generation improvements.
+* Improvement: Opening hours field improvements.
+* Improvement: Added articleBody field to article schemas.
+* Improvement: Internal data migration handler for v3 settings upgrade.
+* Deprecated: SpecialAnnouncement, Dataset, and QAPage (Q&A) schema types.
+* Remove: Site Links Search Box Schema.
 
 = 2.2.7 ( Feb 02, 2026 ) =
 * Fix: Auto Fill Vulnerability Resolved
 
-= 2.2.6 ( Nov 14, 2025 ) =
-* Added: Banner Added
-* Fixed: Mb String Make Compatible.
+[See changelog for all versions.](https://raw.githubusercontent.com/radiustheme/changelog/refs/heads/main/review-schema.txt)
 
-= 2.2.5 ( Mar 11, 2025 ) =
-* Fixed: Security has been enhanced.
+== Upgrade Notice ==
 
-= 2.2.4 ( 07 Feb, 2025 ) =
-* Fixed: Translation Issue
-
-= 2.2.3.1 ( 18 Nov 2024 ) =
-* Fixed: Make Compatible With Wordpress Latest version
-
-= 2.2.3 ( 26 Sept 2024 ) =
-* Added: Address Country field added for LobPosting
-* Fixed: Product MerchantReturnPolicy Warning
-
-= 2.2.2 ( 03 July 2024 ) =
-* Added: New Shortcode For Display stars ratings anywhere [rtrs-average-rating-stars]
-* Added: New Shortcode For Display average ratings count anywhere [rtrs-average-rating-count]
-* Added: Added Shipping Details, MerchantReturnPolicy For Product Schema
-* Fixed: Course Schema Notice and error
-
-= 2.2.1 ( 08 March, 2024 ) =
-* Fixed: Custom Schema Data save issue fixed.
-* Fixed: Comment Reply Deprecated issue.
-
-= 2.2.0 ( 30 January, 2024 ) =
-* Updated: Proper sanitization and escaping for all files.
-* Updated: Sanitization handling of $_GET/$_POST/$_REQUEST stack.
-* Fixed: Missing Authorization to Arbitrary Review Update.
-
-= 2.1.14 ( 12 December, 2023 ) =
-* Fixed: Spelling mistake.
-* Fixed: Affiliate layout fixed.
-
-= 2.1.13 ( 20 November, 2023 ) =
-* Fixed: PHP error.
-
-= 2.1.12 ( 14 November, 2023  ) =
-
-* Fixed: PHP error.
-
-= 2.1.11 ( 24 August, 2023  ) =
-* Fixed: Support Added For RTCL.
-
-= 2.1.10 ( 23 August, 2023  ) =
-* Fixed: Reply Ratting Issue.
-* Fixed: PHP 8.2.8 Issue Fixed
-
-= 2.1.9 ( 16 August, 2023  ) =
-* Fixed: PHP 8.2.8 Issue
-* Fixed: Remove Unexpected text
-
-= 2.1.8 ( 11 August, 2023  ) =
-* Fixed: Rating Issue.
-* Fixed: PHP 8.2.8 Issue
-
-= 2.1.7  ( 11 July, 2023 ) =
-* Fixed: Fix Custom Schema.
-
-= 2.1.6  ( 06 June, 2023 ) =
-* Fixed: Fix Product Schema Issue.
-
-= 2.1.5  ( 17 April, 2023 ) =
-* Fixed: Woocommerce Schema Price issue.
-* Fixed: Product Review reply issue fix
-
-= 2.1.4  ( 20 February, 2023 ) =
-* Fixed: Comment reply Issue Fixed.
-
-= 2.1.3  ( 8 February, 2023 ) =
-* Fixed: Autoload Issue Fixed.
-
-= 2.1.2  ( 15 December, 2022 ) =
-* Fixed: Issue Fixed.
-
-= 2.1.1  ( 21 November, 2022 ) =
-* Fixed: Schema field type issue.
-
-= 2.1.0  ( 23 Oct, 2022 ) =
-* Fixed: Woo Commerce Comment Issue.
-* Added: Feature Highlight, Sticky Review
-
-= 2.0.3  ( 23 September, 2022 ) =
-* Fixed: Woo Commerce Comment Issue.
-
-= 2.0.2  ( 23 September, 2022 ) =
-* Fixed: Schema Issue Fixed.
-
-= 2.0.1  ( 16 September, 2022 ) =
-* Added: New Schema Type TechArticle, MedicalWebPage, CollectionPage;
-
-= 2.0.0  ( 30 August, 2022 ) =
-* Fixed: Review for Others Language issue fixed.
-* Fixed: Review Update Issue Fixed.
-* Fixed: Review Enable By Post Type fixed.
-
-= 1.2.1  ( 16 August, 2022 ) =
-* Fixed: Review Edit Permission issue fixed.
-
-= 1.2.0  ( 26-July-2022 ) =
-* Added: New schema for Mosque, Church, Hindutemple, Buddhisttemple.
-* Added: Comment submit issue.
-* Added: New Hooks Added.
-* Fixed: Unused Assets Loading.
-* Fixed: Rating Value Validate.
-
-= 1.1.14  ( 06-July-2022 ) =
-* Fixed: Misc Settings Added.
-
-= 1.1.13  ( 06-Apr-2022 ) =
-* Fixed: Existings user support.
-
-= 1.1.12  ( 05-Apr-2022 ) =
-* Added: Forums support issue fixed.
-
-= 1.1.11  ( 04-Apr-2022 ) =
-* Added: New Settings Tab Added.
-
-= 1.1.10  ( 02-Feb-2022 ) =
-* Added: New Settings added for human redable time.
-
-= 1.1.9 ( 01-Feb-2022 ) =
-* Added: New Settings added.
-* Fixed: Review From Frontend validation.
-
-= 1.1.8 ( 27-Jan-2022 ) =
-* Fixed: Review Client side validation
-* Added: Get help page added.
-
-= 1.1.7 (12-Jan-2022) =
-* Fixed: Css file missed for Affiliate Review & Schema
-
-= 1.1.6 (30-Dec-2021) =
-* Added: Book schema in pro version.
-* Added: RealStateListing schema in pro version.
-* Fixed: Some functional issue
-
-= 1.1.5 (22-Dec-2021) =
-* Fixed: Percentage circle firefox issue
-* Fixed: Some CSS issue
-* Fixed: Some functional issue
-
-= 1.1.4 (24-Nov-2021) =
-* Added: Global Schema Settings
-* Added: Auto fill schema for pro
-
-= 1.1.3 (10-Nov-2021) =
-* Fixed: Restaurant schema menu items issue
-* Fixed: Minor CSS issues
-
-= 1.1.2 (06-Oct-2021) =
-* Fixed: Some functional issue
-
-= 1.1.1 (30-Sep-2021) =
-* Fixed: Some functional issue
-
-= 1.1.0 (21-Sep-2021) =
-* Added: Person Schema
-* Added: About Schema
-* Added: Contact Schema
-* Added: Service Schema
-
-= 1.0.3 (31-Aug-2021) =
-* Fixed: Schema featured image auto fill
-
-= 1.0.2 (27-Aug-2021) =
-* Fixed: Schema Author URL
-
-= 1.0.1 (19-Aug-2021) =
-* Fixed: Only schema settings bug
-* Improved: Some settings
-* Added: Audio Schema
-
-= 1.0.0 (18-Aug-2021) =
-* Initial load of the plugin.
+= 3.0.0 =
+Review Schema is now Schema Engine AI. Same plugin, expanded with AI-powered schema generation. Your reviews and settings are preserved automatically.

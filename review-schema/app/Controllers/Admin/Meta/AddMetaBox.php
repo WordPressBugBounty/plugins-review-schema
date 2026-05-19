@@ -3,171 +3,31 @@
 namespace Rtrs\Controllers\Admin\Meta;
 
 use Rtrs\Helpers\Functions;
+use Rtrs\Modules\Schema\Admin\Meta\FaqPageMeta;
+use Rtrs\Modules\Schema\Helpers\SerpPreviewHelper;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class AddMetaBox {
 	public function __construct() {
-		// actions
-		add_action( 'admin_notices', [ $this, 'render_notices' ] );
+		// Actions.
 		add_action( 'admin_head', [ $this, 'add_meta_boxes' ] );
 		add_action( 'save_post', [ $this, 'save_meta_data' ], 10, 2 );
-		add_action( 'pre_post_update', [ $this, 'before_update_post' ] );
-		add_action( 'before_delete_post', [ $this, 'before_delete_post' ], 10, 2 );
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( Functions::is_edit_page() || ( isset( $_GET['page'] ) && $_GET['page'] == 'rtrs-settings' ) ) {
-			add_action( 'admin_footer', [ $this, 'pro_alert_html' ] );
-		}
-
-		// rtrs post type.
-		add_filter( 'manage_edit-rtrs_columns', [ $this, 'rtrs_columns_title_arrange' ] );
-		add_action( 'manage_rtrs_posts_custom_column', [ $this, 'rtrs_columns_data_arrange' ], 10, 2 );
-
-		// rtrs affiliate post type.
-		add_action( 'edit_form_after_title', [ $this, 'rtrs_sc_after_title' ] );
-		add_filter( 'manage_edit-rtrs_affiliate_columns', [ $this, 'rtrs_affiliate_columns_title_arrange' ] );
-		add_action( 'manage_rtrs_affiliate_posts_custom_column', [ $this, 'rtrs_affiliate_columns_data_arrange' ], 10, 2 );
-
-		add_filter( 'preprocess_comment', [ $this, 'modify_comment_type' ] );
-	}
-	/**
-	 * Add admin error notice.
-	 *
-	 * @param string $message Error message.
-	 */
-	private function add_admin_error( $message ) {
-		set_transient( 'rtrs_admin_notice', $message, 30 ); // expire in 30 seconds.
-	}
-	/**
-	 * Redirect back to the previous page safely.
-	 *
-	 * @return void
-	 */
-	private function redirect_back() {
-		$redirect = wp_get_referer() ? wp_get_referer() : admin_url();
-		wp_safe_redirect( $redirect );
-		exit;
-	}
-
-	/**
-	 * @return void
-	 */
-	public function render_notices() {
-		$message = get_transient( 'rtrs_admin_notice' );
-		if ( $message ) {
-			echo '<div class="notice notice-error is-dismissible"><p>' . esc_html( $message ) . '</p></div>';
-			delete_transient( 'rtrs_admin_notice' );
-		}
-	}
-
-	/**
-	 * Comment type review
-	 * when post any comment, add comment type as review.
-	 *
-	 * @package Review Schema
-	 *
-	 * @since 1.0
-	 */
-	public function modify_comment_type( $commentdata ) {
-		$post_type = get_post_type( $commentdata['comment_post_ID'] );
-		if ( Functions::isEnableByPostType( $post_type ) ) {
-			$commentdata['comment_type'] = 'review';
-		}
-
-		return $commentdata;
-	}
-
-	public function rtrs_columns_title_arrange( $columns ) {
-		$shortcode = [
-			'post_type' => esc_html__( 'Post Type', 'review-schema' ),
-			'support'   => esc_html__( 'Support', 'review-schema' ),
-		];
-
-		return array_slice( $columns, 0, 2, true ) + $shortcode + array_slice( $columns, 1, null, true );
-	}
-
-	public function rtrs_columns_data_arrange( $column ) {
-		switch ( $column ) {
-			case 'post_type':
-				if ( $post_type = get_post_meta( get_the_ID(), 'rtrs_post_type', true ) ) {
-					echo ucfirst( esc_html( $post_type ) );
-				}
-				break;
-
-			case 'support':
-				$support = get_post_meta( get_the_ID(), 'rtrs_support', true );
-				switch ( $support ) {
-					case 'review-schema':
-						esc_html_e( 'Review with Schema JSON-LD', 'review-schema' );
-						break;
-
-					case 'review':
-						esc_html_e( 'Only Review', 'review-schema' );
-						break;
-
-					case 'schema':
-						esc_html_e( 'Only Schema JSON-LD', 'review-schema' );
-						break;
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	public function rtrs_affiliate_columns_title_arrange( $columns ) {
-		$shortcode = [
-			'shortcode' => esc_html__( 'Shortcode', 'review-schema' ),
-		];
-
-		return array_slice( $columns, 0, 2, true ) + $shortcode + array_slice( $columns, 1, null, true );
-	}
-
-	public function rtrs_affiliate_columns_data_arrange( $column ) {
-		switch ( $column ) {
-			case 'shortcode':
-				echo '<input type="text" onfocus="this.select();" readonly="readonly" value="[rtrs-affiliate id=&quot;' . get_the_ID() . '&quot; title=&quot;' . get_the_title() . '&quot;]" class="large-text code rt-code-sc">';
-				break;
-
-			default:
-				break;
-		}
 	}
 
 	public function add_meta_boxes() {
-		add_meta_box(
-			'rtrs_meta',
-			esc_html__( 'Review Schema Generator', 'review-schema' ),
-			[ $this, 'rtrs_meta_settings' ],
-			rtrs()->getPostType(),
-			'normal',
-			'high'
-		);
-
-		add_meta_box(
-			'rt_plugin_sc_pro_information',
-			esc_html__( 'Documentation', 'review-schema' ),
-			[ $this, 'rt_plugin_sc_pro_information' ],
-			rtrs()->getPostType(),
-			'side',
-			'low'
-		);
-
-		add_meta_box(
-			'rtrs_meta',
-			esc_html__( 'Affiliate Shortcode Generator', 'review-schema' ),
-			[ $this, 'rtrs_affiliate_settings' ],
-			'rtrs_affiliate',
-			'normal',
-			'high'
-		);
-
 		if ( Functions::is_edit_page() ) {
 			global $post;
 			$post_type = $post->post_type;
-			if ( Functions::isEnableByPostTypeReview( $post_type ) ) {
+			if ( rtrs()->getPostType() === $post_type || 'rtrs_affiliate' === $post_type ) {
+				return;
+			}
+			if ( Functions::isEnableReviewByPostType( $post_type ) || Functions::schema_enabled() ) {
 				add_meta_box(
 					'rtrs_meta',
-					esc_html__( 'Review & Schema Settings', 'review-schema' ),
+					esc_html__( 'SchemaEngine AI Settings', 'review-schema' ),
 					[ $this, 'rtrs_single_meta_settings' ],
 					[ $post_type ],
 					'normal',
@@ -177,250 +37,127 @@ class AddMetaBox {
 		}
 	}
 
-	public function rt_plugin_sc_pro_information( $post ) {
-		$html = '';
-
-		$html .= sprintf(
-			'<div class="rt-document-box">
-				<div class="rt-box-icon"><i class="dashicons dashicons-media-document"></i></div>
-				<div class="rt-box-content">
-					<h3 class="rt-box-title">%1$s</h3>
-						<p>%2$s</p>
-						<a href="https://www.radiustheme.com/docs/review-schema/review-schema/" target="_blank" class="rt-admin-btn">%1$s</a>
-				</div>
-			</div>',
-			esc_html__( 'Documentation', 'review-schema' ),
-			esc_html__( 'Get started by spending some time with the documentation we included step by step process with screenshots with video.', 'review-schema' )
-		);
-
-		$html .= '<div class="rt-document-box">
-                        <div class="rt-box-icon"><i class="dashicons dashicons-sos"></i></div>
-                        <div class="rt-box-content">
-                            <h3 class="rt-box-title">' . esc_html__( 'Need Help?', 'review-schema' ) . '</h3>
-                                <p>' . esc_html__( 'Stuck with something? Please create a', 'review-schema' ) . ' 
-                    <a href="https://www.radiustheme.com/contact/">' . esc_html__( 'ticket here', 'review-schema' ) . '</a> ' . esc_html__( 'or post on ', 'review-schema' ) . '<a href="https://www.facebook.com/groups/234799147426640/">facebook group</a>. ' . esc_html__( 'For emergency case join our', 'review-schema' ) . ' <a href="https://www.radiustheme.com/">' . esc_html__( 'live chat', 'review-schema' ) . '</a>.</p>
-                                <a href="https://www.radiustheme.com/contact/" target="_blank" class="rt-admin-btn">' . esc_html__( 'Get Support', 'review-schema' ) . '</a>
-                        </div>
-                    </div>';
-
-		$html .= '<div class="rt-document-box">
-                <div class="rt-box-icon"><i class="dashicons dashicons-smiley"></i></div>
-                <div class="rt-box-content">
-                    <h3 class="rt-box-title">Happy Our Work?</h3>
-                    <p>Thank you for choosing Review Schema. If you have found our plugin useful and makes you smile, please consider giving us a 5-star rating on WordPress.org. It will help us to grow.</p>
-                    <a target="_blank" href="https://wordpress.org/support/plugin/review-schema/reviews/" class="rt-admin-btn">Yes, You Deserve It</a>
-                </div>
-            </div>';
-
-		echo $html;
-	}
-
-	public function pro_alert_html() {
-		$html = '';
-		if ( ! function_exists( 'rtrsp' ) ) {
-			$html .= '<div class="rt-document-box rt-alert rtrs-pro-alert">
-                    <div class="rt-box-icon"><i class="dashicons dashicons-lock"></i></div>
-                    <div class="rt-box-content">
-                        <h3 class="rt-box-title">' . esc_html__( 'Pro field alert!', 'review-schema' ) . '</h3>
-                        <p><span></span>' . esc_html__( 'Sorry! this is a pro field. To use this field, you need to use pro plugin.', 'review-schema' ) . '</p>
-                        <a href="https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click" target="_blank" class="rt-admin-btn">' . esc_html__( 'Upgrade to pro', 'review-schema' ) . '</a>
-                        <a href="#" target="_blank" class="rt-alert-close rtrs-pro-alert-close">x</a>
-                    </div>
-                </div>';
-		}
-
-		$html .= '<div class="rt-document-box rt-alert rtrs-post-type">
-            <div class="rt-box-icon"><i class="dashicons dashicons-lock"></i></div>
-            <div class="rt-box-content">
-                <h3 class="rt-box-title">' . esc_html__( 'Already exist alert!', 'review-schema' ) . '</h3>
-                <p>' . esc_html__( 'Sorry! this post type already exist, you need to choose new one.', 'review-schema' ) . '</p> 
-                <a href="#" target="_blank" class="rt-alert-close rtrs-post-type-close">x</a>
-            </div>
-        </div>';
-
-		echo $html;
-	}
-
-	public function rtrs_sc_after_title( $post ) {
-		if ( rtrs()->getPostTypeAffiliate() !== $post->post_type ) {
-			return;
-		}
-		$html  = null;
-		$html .= '<div class="postbox rt-after-title" style="margin-bottom: 0;"><div class="inside">';
-		$html .= '<p><input type="text" onfocus="this.select();" readonly="readonly" value="[rtrs-affiliate id=&quot;' . esc_attr( $post->ID ) . '&quot; title=&quot;' . esc_attr( $post->post_title ) . '&quot;]" class="large-text code rt-code-sc">
-        <input type="text" onfocus="this.select();" readonly="readonly" value="&#60;&#63;php echo do_shortcode( &#39;[rtrs-affiliate id=&quot;' . esc_attr( $post->ID ) . '&quot; title=&quot;' . esc_attr( $post->post_title ) . '&quot;]&#39; ); &#63;&#62;" class="large-text code rt-code-sc">
-        </p>';
-		$html .= '</div></div>';
-		echo $html;
-	}
-
 	public function postType() {
 		return apply_filters( 'rtrs_post_type', Functions::getPostTypes() );
 	}
 
-	public function rtrs_meta_settings( $post ) {
-		$post = [
-			'post' => $post,
-		];
-		wp_nonce_field( rtrs()->getNonceId(), rtrs()->getNonceId() );
-
-		// auto select tab
-		$tab = get_post_meta( get_the_ID(), '_rtrs_sc_tab', true );
-		if ( ! $tab ) {
-			$tab = 'review';
-		}
-		$review_tab  = ( $tab == 'review' ) ? 'active' : '';
-		$schema_tab  = ( $tab == 'schema' ) ? 'active' : '';
-		$setting_tab = ( $tab == 'setting' ) ? 'active' : '';
-		$style_tab   = ( $tab == 'style' ) ? 'active' : '';
-		$preview_tab = ( $tab == 'preview' ) ? 'active' : '';
-
-		$html = null;
-
-		$html .= '<div id="rt-conditional-wrap" class="rtrs-tab-content" style="display: block;">';
-		$html .= rtrs()->render( 'metas.sc.conditional', $post, true );
-		$html .= '</div>';
-
-		// meta tab
-		$html .= '<div id="sc-tabs" class="rtrs-tab-container">';
-		$html .= '<ul class="rtrs-tab-nav rt-back">
-                <li class="review-tab ' . esc_attr( $review_tab ) . '"><a href="#sc-review"><i class="dashicons dashicons-star-filled"></i>' . esc_html__( 'Review', 'review-schema' ) . '</a></li> 
-                <li class="' . esc_attr( $setting_tab ) . '"><a href="#sc-settings"><i class="dashicons dashicons-admin-tools"></i>' . esc_html__( 'Settings', 'review-schema' ) . '</a></li>
-                <li class="schema-tab ' . esc_attr( $schema_tab ) . '"><a href="#sc-schema"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema', 'review-schema' ) . '</a></li>
-                <li class="' . esc_attr( $style_tab ) . '"><a href="#sc-style"><i class="dashicons dashicons-admin-customizer"></i>' . esc_html__( 'Style', 'review-schema' ) . '</a></li></ul>';
-
-		$review_tab  = ( $tab == 'review' ) ? 'display: block' : '';
-		$schema_tab  = ( $tab == 'schema' ) ? 'display: block' : '';
-		$setting_tab = ( $tab == 'setting' ) ? 'display: block' : '';
-		$style_tab   = ( $tab == 'style' ) ? 'display: block' : '';
-		$preview_tab = ( $tab == 'preview' ) ? 'display: block' : '';
-
-		$html .= '<input type="hidden" id="_rtrs_sc_tab" name="_rtrs_sc_tab" value="' . esc_attr( $tab ) . '" />';
-
-		$html .= '<div id="sc-review" class="rtrs-tab-content" style="' . esc_attr( $review_tab ) . '">';
-		$html .= rtrs()->render( 'metas.sc.review', $post, true );
-		$html .= '</div>';
-
-		$html .= '<div id="sc-schema" class="rtrs-tab-content" style="' . esc_attr( $schema_tab ) . '">';
-		$html .= rtrs()->render( 'metas.sc.schema', $post, true );
-		$html .= '</div>';
-
-		$html .= '<div id="sc-settings" class="rtrs-tab-content" style="' . esc_attr( $setting_tab ) . '">';
-		$html .= rtrs()->render( 'metas.sc.settings', $post, true );
-		$html .= '</div>';
-
-		$html .= '<div id="sc-style" class="rtrs-tab-content" style="' . esc_attr( $style_tab ) . '">';
-		$html .= rtrs()->render( 'metas.sc.style', $post, true );
-		$html .= '</div>';
-		echo $html;
-
-		echo '</div>'; // wrap div
-	}
-
-	public function rtrs_affiliate_settings( $post ) {
-		$post = [
-			'post' => $post,
-		];
-		wp_nonce_field( rtrs()->getNonceId(), rtrs()->getNonceId() );
-
-		// auto select tab
-		$tab = get_post_meta( get_the_ID(), '_rtrs_sc_tab', true );
-		if ( ! $tab ) {
-			$tab = 'affiliate';
-		}
-
-		$affiliate_tab = ( $tab == 'affiliate' ) ? 'active' : '';
-		$schema_tab    = ( $tab == 'schema' ) ? 'active' : '';
-		$style_tab     = ( $tab == 'style' ) ? 'active' : '';
-		$preview_tab   = ( $tab == 'preview' ) ? 'active' : '';
-
-		$html = null;
-
-		$html .= '<div id="sc-tabs" class="rtrs-tab-container">';
-		$html .= '<ul class="rtrs-tab-nav">
-                <li class="' . esc_attr( $affiliate_tab ) . '"><a href="#sc-affiliate"><i class="dashicons dashicons-megaphone"></i>' . esc_html__( 'Affiliate', 'review-schema' ) . '</a></li>
-                <li class="' . esc_attr( $schema_tab ) . '"><a href="#sc-schema"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema', 'review-schema' ) . '</a></li>
-                <li class="' . esc_attr( $style_tab ) . '"><a href="#sc-style"><i class="dashicons dashicons-admin-customizer"></i>' . esc_html__( 'Style', 'review-schema' ) . '</a></li></ul>';
-
-		$affiliate_tab = ( $tab == 'affiliate' ) ? 'display: block' : '';
-		$schema_tab    = ( $tab == 'schema' ) ? 'display: block' : '';
-		$style_tab     = ( $tab == 'style' ) ? 'display: block' : '';
-		$preview_tab   = ( $tab == 'preview' ) ? 'display: block' : '';
-
-		$html .= '<input type="hidden" id="_rtrs_sc_tab" name="_rtrs_sc_tab" value="' . esc_attr( $tab ) . '" />';
-
-		$html .= '<div id="sc-affiliate" class="rtrs-tab-content" style="' . esc_attr( $affiliate_tab ) . '">';
-		$html .= rtrs()->render( 'metas.affiliate.affiliate', $post, true );
-		$html .= '</div>';
-
-		$html .= '<div id="sc-schema" class="rtrs-tab-content" style="' . esc_attr( $schema_tab ) . '">';
-		$html .= rtrs()->render( 'metas.affiliate.schema', $post, true );
-		$html .= '</div>';
-
-		$html .= '<div id="sc-style" class="rtrs-tab-content" style="' . esc_attr( $style_tab ) . '">';
-		$html .= rtrs()->render( 'metas.affiliate.style', $post, true );
-		$html .= '</div>';
-		echo $html;
-
-		echo '</div>'; // wrap div
-	}
-
 	public function rtrs_single_meta_settings( $post ) {
+
 		$post = [
 			'post' => $post,
 		];
 		wp_nonce_field( rtrs()->getNonceId(), rtrs()->getNonceId() );
 		$post_type = $post['post']->post_type;
 
-		// auto select tab
+		// auto select tab.
 		$tab = get_post_meta( get_the_ID(), '_rtrs_sc_tab', true );
 
 		if ( ! $tab ) {
-			$tab = ( Functions::isEnableByPostType( $post_type ) ) ? 'review' : 'schema';
+			$tab = ( Functions::isEnableReviewByPostType( $post_type ) ) ? 'review' : 'schema';
 		} else {
-			if ( Functions::isEnableByPostTypeSchema( $post_type ) && $tab == 'review' ) {
+			if ( Functions::schema_enabled() && $tab == 'review' ) {
 				$tab = 'schema';
 			}
 		}
 
+		$is_classic_editor = ! use_block_editor_for_post( $post['post'] );
+
 		$review_tab  = ( $tab == 'review' ) ? 'active' : '';
 		$schema_tab  = ( $tab == 'schema' ) ? 'active' : '';
 		$preview_tab = ( $tab == 'preview' ) ? 'active' : '';
+		$serp_tab    = ( $tab == 'serp' ) ? 'active' : '';
+		$faqpage_tab = ( $tab == 'faqpage' ) ? 'active' : '';
 
 		$html  = null;
 		$html .= '<div id="sc-tabs" class="rtrs-tab-container">';
 		$html .= '<ul class="rtrs-tab-nav">';
-		if ( Functions::isEnableByPostType( $post_type ) ) {
+		if ( Functions::isEnableReviewByPostType( $post_type ) ) {
 			$html .= '<li class="' . esc_attr( $review_tab ) . '"><a href="#sc-review"><i class="dashicons dashicons-star-filled"></i>' . esc_html__( 'Review', 'review-schema' ) . '</a></li>';
 		}
-
-		if ( Functions::isEnableByPostTypeSchema( $post_type ) ) {
-			$html .= '<li class="' . esc_attr( $schema_tab ) . '"><a href="#sc-schema"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema', 'review-schema' ) . '</a></li>';
+		if ( $is_classic_editor ) {
+			$html .= '<li class="' . esc_attr( $faqpage_tab ) . '"><a href="#sc-faqpage"><i class="dashicons dashicons-format-chat"></i>' . esc_html__( 'FAQ Content', 'review-schema' ) . '</a></li>';
+		}
+		$html .= '<li class="' . esc_attr( $schema_tab ) . '"><a href="#sc-schema"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema', 'review-schema' ) . '</a></li>';
+		if ( Functions::schema_enabled() ) {
+			$html .= '<li class="' . esc_attr( $preview_tab ) . '"><a href="#sc-schema-preview"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema Preview', 'review-schema' ) . '</a></li>';
+			$html .= '<li class="' . esc_attr( $serp_tab ) . '"><a href="#sc-serp"><i class="dashicons dashicons-search"></i>' . esc_html__( 'SERP', 'review-schema' ) . '</a></li>';
+		}
+		if ( Functions::schema_enabled() && 'yes' === \Rtrs\AI\AIInit::getSetting( 'ai_enabled', 'no' ) ) {
+			$html .= '<li><a href="#sc-generate-ai"><svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.37822 4.38293L6.95178 5.97575C7.5889 7.74356 8.98101 9.13566 10.7488 9.77279L12.3416 10.3463C12.4852 10.3985 12.4852 10.6021 12.3416 10.6535L10.7488 11.227C8.98101 11.8642 7.5889 13.2563 6.95178 15.0241L6.37822 16.6169C6.32608 16.7605 6.12252 16.7605 6.07109 16.6169L5.49753 15.0241C4.86041 13.2563 3.4683 11.8642 1.70049 11.227L0.107676 10.6535C-0.0358919 10.6013 -0.0358919 10.3978 0.107676 10.3463L1.70049 9.77279C3.4683 9.13566 4.86041 7.74356 5.49753 5.97575L6.07109 4.38293C6.12252 4.23865 6.32608 4.23865 6.37822 4.38293Z" fill="currentColor"></path><path d="M13.548 0.555177L13.8387 1.36158C14.1616 2.25656 14.8666 2.96154 15.7615 3.28439L16.568 3.5751C16.6408 3.60152 16.6408 3.70438 16.568 3.73081L15.7615 4.02151C14.8666 4.34436 14.1616 5.04934 13.8387 5.94432L13.548 6.75073C13.5216 6.82358 13.4187 6.82358 13.3923 6.75073L13.1016 5.94432C12.7788 5.04934 12.0738 4.34436 11.1788 4.02151L10.3724 3.73081C10.2995 3.70438 10.2995 3.60152 10.3724 3.5751L11.1788 3.28439C12.0738 2.96154 12.7788 2.25656 13.1016 1.36158L13.3923 0.555177C13.4187 0.481608 13.5223 0.481608 13.548 0.555177Z" fill="currentColor"></path><path d="M13.548 14.2498L13.8387 15.0562C14.1616 15.9512 14.8666 16.6562 15.7615 16.979L16.568 17.2697C16.6408 17.2962 16.6408 17.399 16.568 17.4254L15.7615 17.7161C14.8666 18.039 14.1616 18.744 13.8387 19.639L13.548 20.4454C13.5216 20.5182 13.4187 20.5182 13.3923 20.4454L13.1016 19.639C12.7788 18.744 12.0738 18.039 11.1788 17.7161L10.3724 17.4254C10.2995 17.399 10.2995 17.2962 10.3724 17.2697L11.1788 16.979C12.0738 16.6562 12.7788 15.9512 13.1016 15.0562L13.3923 14.2498C13.4187 14.177 13.5223 14.177 13.548 14.2498Z" fill="currentColor"></path></svg>' . esc_html__( 'Generate with AI', 'review-schema' ) . '</a></li>';
 		}
 		$html .= '</ul>';
 
-		$review_tab  = ( $tab == 'review' ) ? 'display: block' : '';
-		$schema_tab  = ( $tab == 'schema' ) ? 'display: block' : '';
-		$preview_tab = ( $tab == 'preview' ) ? 'display: block' : '';
+		$review_tab    = ( 'review' === $tab ) ? 'display: block' : '';
+		$schema_tab    = ( 'schema' === $tab ) ? 'display: block' : '';
+		$preview_tab   = ( 'preview' === $tab ) ? 'display: block' : '';
+		$serp_style    = ( 'serp' === $tab ) ? 'display: block' : '';
+		$faqpage_style = ( 'faqpage' === $tab ) ? 'display: block' : '';
 
 		$html .= '<input type="hidden" id="_rtrs_sc_tab" name="_rtrs_sc_tab" value="' . esc_attr( $tab ) . '" />';
-		if ( Functions::isEnableByPostType( $post_type ) ) {
-			$html .= '<div id="sc-review" class="rtrs-tab-content" style="' . esc_attr( $review_tab ) . '">';
+
+		$html .= '<div id="sc-review" class="rtrs-tab-content" style="' . esc_attr( $review_tab ) . '">';
+		if ( Functions::isEnableReviewByPostType( $post_type ) ) {
 			$html .= rtrs()->render( 'metas.single.review', $post, true );
 			$html .= rtrs()->render( 'metas.single.review-graph', $post, true );
-			$html .= '</div>';
+		} else {
+			$html .= '<div class="rtrs-preview-message"><p> <span class="dashicons dashicons-info"></span>' . esc_html__( 'Review Is Not Enabled.', 'review-schema' ) . '</p></div>';
 		}
+		$html .= '</div>';
 
-		if ( Functions::isEnableByPostTypeSchema( $post_type ) ) {
-			$html .= '<div id="sc-schema" class="rtrs-tab-content" style="' . esc_attr( $schema_tab ) . '">';
+		$html          .= '<div id="sc-schema" class="rtrs-tab-content" style="' . esc_attr( $schema_tab ) . '">';
+		$has_ai_schema  = ! empty( get_post_meta( $post['post']->ID, \Rtrs\AI\AIInit::META_KEY, true ) );
+		if ( ! Functions::schema_enabled() ) {
+			$html .= '<div class="rtrs-preview-message"><p><span class="dashicons dashicons-info"></span>' . esc_html__( 'Schema Is Not Enabled.', 'review-schema' ) . '</p></div>';
+		} else {
+			if ( $has_ai_schema ) {
+				$html .= '<div class="rtrs-ai-schema-notice">';
+				$html .= '<span class="dashicons dashicons-info"></span>';
+				$html .= '<div>';
+				$html .= '<p>' . esc_html__( 'Schema is generated by AI. Please check the AI panel to view or edit.', 'review-schema' ) . '</p>';
+				$html .= '<p>' . esc_html__( 'After deleting AI data, manual generation fields will be visible.', 'review-schema' ) . '</p>';
+				$html .= '</div>';
+				$html .= '</div>';
+			}
+			// Schema Report section.
+			$html .= '<div id="rtrs-schema-report" class="rtrs-schema-report' . ( $has_ai_schema ? ' rtrs-hidden' : '' ) . '">';
+			$html .= '<div class="rtrs-schema-report__inner"></div>';
+			$html .= '</div>';
+
+			$html .= '<div class="rtrs-schema-fields' . ( $has_ai_schema ? ' rtrs-hidden' : '' ) . '">';
 			$html .= rtrs()->render( 'metas.single.schema', $post, true );
 			$html .= '</div>';
 		}
-
-		$html .= '<div id="sc-preview" class="rtrs-tab-content" style="' . esc_attr( $preview_tab ) . '">';
 		$html .= '</div>';
 
+		if ( Functions::schema_enabled() ) {
+			$html .= '<div id="sc-schema-preview" class="rtrs-tab-content" style="' . esc_attr( $preview_tab ) . '">';
+			$html .= rtrs()->render( 'metas.single.schema-preview', $post, true );
+			$html .= '</div>';
+		}
+		if ( Functions::schema_enabled() ) {
+			if ( $is_classic_editor ) {
+				$html .= '<div id="sc-faqpage" class="rtrs-tab-content" style="' . esc_attr( $faqpage_style ) . '">';
+				$html .= rtrs()->render( 'metas.single.faqpage', $post, true );
+				$html .= '</div>';
+			}
+		}
+		if ( Functions::schema_enabled() ) {
+			$html    .= '<div id="sc-serp" class="rtrs-tab-content" style="' . esc_attr( $serp_style ) . '">';
+			$serpData = SerpPreviewHelper::extract( $post['post']->ID );
+			$html    .= rtrs()->render( 'metas.single.serp-preview', compact( 'serpData' ), true );
+			$html    .= '</div>';
+		}
+		if ( Functions::schema_enabled() && 'yes' === \Rtrs\AI\AIInit::getSetting( 'ai_enabled', 'no' ) ) {
+			$html .= '<div id="sc-generate-ai" class="rtrs-tab-content">';
+			$html .= '<div class="rtrs-ai-tab-message">';
+			$html .= '<span class="dashicons dashicons-arrow-right-alt"></span>';
+			$html .= '<p>' . esc_html__( 'Use the SchemaEngine AI panel in the right sidebar to auto-generate structured data for this post.', 'review-schema' ) . '</p>';
+			$html .= '</div>';
+			$html .= '</div>';
+		}
+
 		$html .= '</div>'; // wrap div
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $html is built with esc_attr/esc_html/wp_kses on dynamic parts.
 		echo $html;
 	}
 
@@ -497,33 +234,21 @@ class AddMetaBox {
 
 		$meta_options = null;
 		if ( rtrs()->getPostType() == $post->post_type ) {
-			$meta_options = new MetaOptions();
-			$meta_options = $meta_options->allMetaFields();
+			$meta_options = Functions::post_type_rtrs_meta();
 		} elseif ( 'rtrs_affiliate' == $post->post_type ) {
-			$meta_options = new AffiliateOptions();
-			$meta_options = $meta_options->allMetaFields();
+			$meta_options = Functions::affiliate_meta();
 		} else {
-			$meta_options    = new SingleMetaOptions();
-			$meta_options    = $meta_options->allMetaFields();
+			$meta_options    = Functions::single_page_meta_for_review_and_schema();
 			$selected_schema = [];
-			// $selected_schema = [
-			// $meta_options[0],
-			// $meta_options[1],
-			// $meta_options[2],
-			// $meta_options[3],
-			// ];
-
 			foreach ( $meta_options as $value ) {
 				if ( in_array( ( $value['type'] ?? '' ), [ 'group', 'info' ], true ) ) {
 					continue;
 				}
 				$selected_schema[] = $value;
 			}
-
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( isset( $_POST['_rtrs_rich_snippet_cat'] ) && is_array( $_POST['_rtrs_rich_snippet_cat'] ) ) {
-				// phpcs:ignore WordPress.Security.NonceVerification.Missing
-				foreach ( $_POST['_rtrs_rich_snippet_cat'] as $value ) {
+				$rtrs_cats = array_map( 'sanitize_text_field', wp_unslash( $_POST['_rtrs_rich_snippet_cat'] ) );
+				foreach ( $rtrs_cats as $value ) {
 					$index = $this->searchArray( 'rtrs_' . $value . '_schema', 'name', $meta_options );
 					if ( $index != null ) {
 						$selected_schema[] = $meta_options[ $index ];
@@ -531,14 +256,19 @@ class AddMetaBox {
 				}
 			}
 
-			$meta_options = $selected_schema;
-		}
-
-		foreach ( $meta_options as $field ) {
-			if ( $field['type'] == 'heading' || $field['type'] == 'auto-fill' ) {
-				continue;
+			// Re-add FAQPage dedicated group (not part of rich snippet dropdown).
+			$faqpage_index = $this->searchArray( FaqPageMeta::META_KEY, 'name', $meta_options );
+			if ( $faqpage_index !== null ) {
+				$selected_schema[] = $meta_options[ $faqpage_index ];
 			}
 
+			$meta_options = $selected_schema;
+		}
+		$skip_field_types = [ 'heading', 'auto-fill' ];
+		foreach ( $meta_options as $field ) {
+			if ( in_array( ( $field['type'] ?? '' ), $skip_field_types, true ) ) {
+				continue;
+			}
 			if ( $field['type'] == 'group' ) {
 				// escape pro field
 				if ( $field['name'] != 'rating_criteria' ) {
@@ -546,24 +276,20 @@ class AddMetaBox {
 						continue;
 					}
 				}
-
 				// save group field
 				$groupValue = [];
-
-				// remove heading type from groups field
+				// remove heading type from groups field.
 				foreach ( $field['fields'] as $key => $single_meta ) {
-					if ( $single_meta['type'] == 'heading' || $single_meta['type'] == 'auto-fill' ) {
+					if ( in_array( ( $single_meta['type'] ?? '' ), $skip_field_types, true ) ) {
 						unset( $field['fields'][ $key ] );
 					}
 				}
-
-				// after remove heading type sort again
+				// after remove heading type sort again.
 				$field['fields'] = array_values( $field['fields'] );
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				if ( isset( $_REQUEST[ $field['name'] ] ) ) {
-
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					foreach ( $_REQUEST[ $field['name'] ] as $key => $group_fields ) {
+				if ( isset( $_REQUEST[ $field['name'] ] ) && is_array( $_REQUEST[ $field['name'] ] ) ) {
+					// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nested group values are sanitized per-field below via $this->sanitize_field().
+					$rtrs_group_input = wp_unslash( $_REQUEST[ $field['name'] ] );
+					foreach ( $rtrs_group_input as $key => $group_fields ) {
 						$i = 0;
 						foreach ( $group_fields as $group_key => $group_field ) {
 							// if 1st nested group
@@ -592,13 +318,23 @@ class AddMetaBox {
 					}
 				}
 
+				// Filter out FAQ entries with empty question or answer.
+				if ( $field['name'] === FaqPageMeta::META_KEY ) {
+					$groupValue = array_filter(
+						$groupValue,
+						function ( $entry ) {
+							return ! empty( trim( $entry['question'] ?? '' ) ) && ! empty( trim( $entry['answer'] ?? '' ) );
+						}
+					);
+					$groupValue = array_values( $groupValue );
+				}
+
 				update_post_meta( $post_id, $field['name'], $groupValue );
 			} else {
 				if ( isset( $field['multiple'] ) ) {
 					if ( $field['multiple'] ) {
 						delete_post_meta( $post_id, $field['name'] );
-						// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						$mValueA = isset( $_REQUEST[ $field['name'] ] ) ? array_map( 'sanitize_text_field', $_REQUEST[ $field['name'] ] ) : [];
+						$mValueA = isset( $_REQUEST[ $field['name'] ] ) && is_array( $_REQUEST[ $field['name'] ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST[ $field['name'] ] ) ) : [];
 						if ( is_array( $mValueA ) && ! empty( $mValueA ) ) {
 							foreach ( $mValueA as $item ) {
 								add_post_meta( $post_id, $field['name'], trim( $item ) );
@@ -606,14 +342,14 @@ class AddMetaBox {
 						}
 					}
 				} else {
-					// escape pro field
+					// escape pro field.
 					if ( isset( $field['is_pro'] ) && ! function_exists( 'rtrsp' ) ) {
 						continue;
 					}
-					// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					if ( isset( $_REQUEST[ $field['name'] ] ) ) {
-						// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-						$fValue = $this->sanitize_field( $field['type'], $_REQUEST[ $field['name'] ] );
+						// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via $this->sanitize_field() per-type below.
+						$rtrs_field_input = is_array( $_REQUEST[ $field['name'] ] ) ? wp_unslash( $_REQUEST[ $field['name'] ] ) : wp_unslash( $_REQUEST[ $field['name'] ] );
+						$fValue           = $this->sanitize_field( $field['type'], $rtrs_field_input );
 						update_post_meta( $post_id, $field['name'], $fValue );
 					} elseif ( $field['type'] == 'switch' || $field['type'] == 'checkbox' ) {
 						update_post_meta( $post_id, $field['name'], null );
@@ -623,69 +359,29 @@ class AddMetaBox {
 		}
 
 		// Save current tab.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$sc_tab = isset( $_REQUEST['_rtrs_sc_tab'] ) ? sanitize_text_field( $_REQUEST['_rtrs_sc_tab'] ) : '';
+		$sc_tab = isset( $_REQUEST['_rtrs_sc_tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_rtrs_sc_tab'] ) ) : '';
 		update_post_meta( $post_id, '_rtrs_sc_tab', $sc_tab );
 
-		// generate shortcode
+		// Validate affiliate pricing: regular_price must be >= offer_price.
+		if ( 'rtrs_affiliate' === $post->post_type ) {
+			$regular_price = get_post_meta( $post_id, 'regular_price', true );
+			$offer_price   = get_post_meta( $post_id, 'offer_price', true );
+
+			if ( '' !== $regular_price && '' !== $offer_price && is_numeric( $regular_price ) && is_numeric( $offer_price ) ) {
+				if ( floatval( $regular_price ) < floatval( $offer_price ) ) {
+					// Swap the prices so regular is always >= offer.
+					update_post_meta( $post_id, 'regular_price', $offer_price );
+					update_post_meta( $post_id, 'offer_price', $regular_price );
+					set_transient( 'rtrs_admin_notice', esc_html__( 'Regular Price cannot be less than Offer Price. The values have been swapped automatically.', 'review-schema' ), 30 );
+				}
+			}
+		}
+
+		// generate shortcode.
 		if ( rtrs()->getPostType() == $post->post_type ) {
 			Functions::generatorShortCodeCss( $post_id, 'review' );
 		} elseif ( 'rtrs_affiliate' == $post->post_type ) {
 			Functions::generatorShortCodeCss( $post_id, 'affiliate' );
 		}
 	} // end function
-
-	/**
-	 * Check if post type already exists before save.
-	 *
-	 * @param int $post_id
-	 * @return void
-	 */
-	public function before_update_post( $post_id ) {
-		if ( rtrs()->getPostType() !== get_post_type( $post_id ) ) {
-			return;
-		}
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$post_type         = isset( $_POST['rtrs_post_type'] ) ? sanitize_text_field( $_POST['rtrs_post_type'] ) : '';
-		$scPostIds         = get_posts(
-			[
-				'post_type'      => rtrs()->getPostType(),
-				'posts_per_page' => -1,
-				'post_status'    => [ 'publish', 'draft' ],
-				'fields'         => 'ids',
-				'meta_query'     => [
-					[
-						'key'     => 'rtrs_post_type',
-						'value'   => $post_type,
-						'compare' => '=',
-					],
-				],
-			]
-		);
-		$current_post_type = get_post_meta( $post_id, 'rtrs_post_type', true );
-		if ( ! post_type_exists( $post_type ) ) {
-			$this->add_admin_error( __( 'Please choose a valid post type.', 'review-schema' ) );
-			$this->redirect_back();
-			return;
-		}
-		if ( ( $current_post_type !== $post_type ) && ! empty( $scPostIds ) ) {
-			$this->add_admin_error( __( 'This post type already exists. Please choose a new one.', 'review-schema' ) );
-			$this->redirect_back();
-			return;
-		}
-	}
-
-	/**
-	 * @param $post_id
-	 * @param $post
-	 *
-	 * @return void
-	 */
-	public function before_delete_post( $post_id, $post ) {
-		if ( rtrs()->getPostType() == $post->post_type ) {
-			Functions::removeGeneratorShortCodeCss( $post_id, 'review' );
-		} elseif ( 'rtrs_affiliate' == $post->post_type ) {
-			Functions::removeGeneratorShortCodeCss( $post_id, 'affiliate' );
-		}
-	}
 }

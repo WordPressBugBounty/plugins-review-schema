@@ -9,21 +9,26 @@
  * @var use Rtrs\Helpers\Functions
  */
 
-use Rtrs\Helpers\Functions;
+use Rtrs\Modules\Review\Helpers\ReviewFns;
+
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 ?>    
 <div class="<?php echo esc_attr( $comment_classes ); ?>"> 
 	<?php if ( get_option( 'show_avatars' ) ) { ?>
 	<div class="rtrs-review-imgholder">
 		<?php
-			$avatar = '';
+			$rtrs_avatar = '';
 		if ( get_comment_meta( get_comment_ID(), 'rt_anonymous', true ) ) {
-			$avatar = RTRS_URL . '/assets/imgs/avatar.jpg';
+			$rtrs_avatar = RTRS_URL . '/assets/imgs/avatar.jpg';
 		} else {
-			$avatar = get_avatar_url( $comment->comment_author_email, array( 'size' => '70' ) );
+			$rtrs_avatar = get_avatar_url( $comment->comment_author_email, array( 'size' => '70' ) );
 		}
 		?>
-		<img src="<?php echo esc_url( $avatar ); ?>" alt="">
+		<img src="<?php echo esc_url( $rtrs_avatar ); ?>" alt="">
 	</div>
 	<?php } ?>
 	
@@ -32,14 +37,16 @@ use Rtrs\Helpers\Functions;
 			<h4 class="rtrs-review-title"><?php echo esc_html( $title ); ?></h4>
 		<?php } ?>
 		<ul class="rtrs-review-meta">
-			<?php if ( $avg = get_comment_meta( get_comment_ID(), 'rating', true ) ) { ?>
-				<li class="rtrs-review-rating"><?php echo Functions::review_stars( $avg ); ?></li>
-			<?php } ?> 
+			<?php if ( $rtrs_avg = get_comment_meta( get_comment_ID(), 'rating', true ) ) { ?>
+				<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ReviewFns::review_stars() returns plugin-controlled <i> star icon HTML. ?>
+				<li class="rtrs-review-rating"><?php echo ReviewFns::review_stars( $rtrs_avg ); ?></li>
+			<?php } ?>
  
 			<?php rtrs()->get_partial_path( 'author', array( 'p_meta' => $p_meta ) ); ?> 
 			
-			<li class="rtrs-review-date"><i class="rtrs-calendar"></i> 
-			<?php echo Functions::comment_review_time( $comment ); ?>
+			<li class="rtrs-review-date"><i class="rtrs-calendar"></i>
+			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ReviewFns::comment_review_time() returns plugin-formatted date HTML. ?>
+			<?php echo ReviewFns::comment_review_time( $comment ); ?>
 			<?php
 			if (  $review_edit == 'yes' &&  get_current_user_id() &&  $comment->user_id == get_current_user_id() ) {
 				?>
@@ -61,10 +68,16 @@ use Rtrs\Helpers\Functions;
 
 		<?php rtrs()->get_partial_path( 'pros-cons', array( 'p_meta' => $p_meta ) ); ?> 
 		
-		<div class="rtrs-action-area">
-			<?php rtrs()->get_partial_path( 'highlight', array( 'p_meta' => $p_meta ) ); ?> 
-			<?php rtrs()->get_partial_path( 'helpful', array( 'p_meta' => $p_meta ) ); ?> 
-		</div> 
+		<?php
+		ob_start();
+		rtrs()->get_partial_path( 'highlight', [ 'p_meta' => $p_meta ] );
+		rtrs()->get_partial_path( 'helpful', [ 'p_meta' => $p_meta ] );
+		$rtrs_action_area = ob_get_clean();
+		if ( trim( $rtrs_action_area ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $rtrs_action_area is HTML captured from plugin partials (highlight/helpful) that escape their own dynamic values.
+			echo '<div class="rtrs-action-area">' . $rtrs_action_area . '</div>';
+		}
+		?>
 		
 		<?php
 		rtrs()->get_partial_path(

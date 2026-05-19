@@ -1,0 +1,16 @@
+{
+  "name": "mahbubur001/review-schema",
+  "description": "A review schema plugin for WordPress",
+  "authors": [
+    {
+      "name": "Radius Theme",
+      "email": "mahbubur001@gmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Rtrs\\": "app"
+    }
+  }
+}

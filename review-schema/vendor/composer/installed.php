@@ -3,7 +3,7 @@
         'name' => 'mahbubur001/review-schema',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2d12a6ffc3b84bf030eaa41817ce11e62dfa4234',
+        'reference' => 'c387d738b590bc59a1e8b3e3a22b7eef4c7c5041',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'mahbubur001/review-schema' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2d12a6ffc3b84bf030eaa41817ce11e62dfa4234',
+            'reference' => 'c387d738b590bc59a1e8b3e3a22b7eef4c7c5041',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

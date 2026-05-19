@@ -1,27 +1,30 @@
-<div class="rtrs-settings">
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
+<!--<div class="rtrs-settings">-->
 	<?php
 	use Rtrs\Controllers\Admin\AdminSettings;
 	settings_errors();
 	if ( class_exists( AdminSettings::class ) ) {
 		AdminSettings::show_messages();
 	}
-	$settings_url = admin_url( 'admin.php?page=rtrs-settings' );
-	$get_help     = admin_url( 'admin.php?page=rtrs-reviews-get-help' );
+	$rtrs_settings_url = admin_url( 'admin.php?page=review-schema' );
+	$rtrs_get_help     = admin_url( 'admin.php?page=rtrs-reviews-get-help' );
 	?>
 	<div class="rtrs-settings-header">
 		<div class="rtrs-settings-container">
 			<div class="rtrs-settings-header-inner">
 				<div class="rtrs-settings-logo">
-					<div class="rtrs-logo">
-						<img alt="Review Schema" src="<?php echo esc_url( rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ) ); ?>" width="50px" height="50px" style="grid-row: 1 / 4; align-self: center;justify-self: center"/>
-					</div>
+					<?php \Rtrs\Helpers\Functions::get_logo_html(); ?>
 					<div class="rtrs-content">
-						<div class="h2">Review Schema</div>
+						<div class="h2">SchemaEngine AI</div>
 						<span>Plugin Settings</span>
 					</div>
 				</div>
 				<div class="settings-menu">
-					<a href="<?php echo esc_url( $settings_url ); ?>">
+					<a href="<?php echo esc_url( $rtrs_settings_url ); ?>">
 						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0" y="0" viewBox="0 0 682.667 682.667" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
 							<g>
 								<defs>
@@ -46,7 +49,7 @@
 						</svg>
 						Support
 					</a>
-					<a href="<?php echo esc_url( $get_help ); ?>">
+					<a href="<?php echo esc_url( $rtrs_get_help ); ?>">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
 							<g>
 								<path d="M256 0C114.509 0 0 114.496 0 256c0 141.489 114.496 256 256 256 141.491 0 256-114.496 256-256C512 114.509 397.504 0 256 0zm0 476.279c-121.462 0-220.279-98.816-220.279-220.279S134.538 35.721 256 35.721c121.463 0 220.279 98.816 220.279 220.279S377.463 476.279 256 476.279z" fill="currentColor"></path>
@@ -62,4 +65,4 @@
 			</div><!-- .rt-settings-header-inner -->
 		</div><!-- .settings-container -->
 	</div><!-- .rt-settings-header -->
-</div>
+<!--</div>-->

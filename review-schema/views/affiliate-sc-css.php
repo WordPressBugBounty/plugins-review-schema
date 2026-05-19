@@ -3,258 +3,262 @@
 /**
  * @var integer $scID
  * @var bool    $old
- * @var array   $metaData 
+ * @var array   $rtrs_meta_data
  */
 use Rtrs\Controllers\Admin\Meta\AddMetaBox;
- 
-$filter = new AddMetaBox();
 
-$sc_id = $scID;
-$sc_meta = []; 
-$metaData = get_post_meta($sc_id);
-
-$sc_meta['layout'] = isset( $metaData['layout'][0] ) ? $filter->sanitize_field('text', $metaData['layout'][0] ) : null;
-$sc_meta['width'] = isset( $metaData['width'][0] ) ? $filter->sanitize_field( 'text', $metaData['width'][0] ) : null; 
-$sc_meta['product_title'] = isset( $metaData['product_title'][0] ) ? $filter->sanitize_field('style', unserialize($metaData['product_title'][0]) ) : null;  
-$sc_meta['product_desc'] = isset( $metaData['product_desc'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['product_desc'][0]) ) : null; 
-$sc_meta['style_regular_price'] = isset( $metaData['style_regular_price'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['style_regular_price'][0]) ) : null; 
-$sc_meta['style_offer_price'] = isset( $metaData['style_offer_price'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['style_offer_price'][0]) ) : null; 
-
-$sc_meta['border_color'] = isset( $metaData['border_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['border_color'][0] ) : null; 
-$sc_meta['border_size'] = isset( $metaData['border_size'][0] ) ? $filter->sanitize_field( 'text', $metaData['border_size'][0] ) : null; 
-$sc_meta['border_radius'] = isset( $metaData['border_radius'][0] ) ? $filter->sanitize_field( 'text', $metaData['border_radius'][0] ) : null; 
-
-$sc_meta['circle_fill_color'] = isset( $metaData['circle_fill_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['circle_fill_color'][0] ) : null; 
-$sc_meta['circle_empty_color'] = isset( $metaData['circle_empty_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['circle_empty_color'][0] ) : null; 
-$sc_meta['circle_border_width'] = isset( $metaData['circle_border_width'][0] ) ? $filter->sanitize_field( 'text', $metaData['circle_border_width'][0] ) : null;  
-
-$sc_meta['btn'] = isset( $metaData['btn'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['btn'][0]) ) : null; 
-$sc_meta['btn_bg'] = isset( $metaData['btn_bg'][0] ) ? $filter->sanitize_field( 'color', $metaData['btn_bg'][0] ) : null; 
-$sc_meta['btn_border_color'] = isset( $metaData['btn_border_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['btn_border_color'][0] ) : null; 
-$sc_meta['btn_hover'] = isset( $metaData['btn_hover'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['btn_hover'][0]) ) : null; 
-$sc_meta['btn_hover_bg'] = isset( $metaData['btn_hover_bg'][0] ) ? $filter->sanitize_field( 'color', $metaData['btn_hover_bg'][0] ) : null; 
-$sc_meta['btn_border_hover_color'] = isset( $metaData['btn_border_hover_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['btn_border_hover_color'][0] ) : null; 
-
-$css  = null;
-
-if ( $value = $sc_meta['width'] ) { 
-    $css  .= ".rtrs-affiliate-sc-{$sc_id}{";
-    $css .= "width:" . $value . ";";
-    $css .= "}";
-} 
-
-$typo = ( ! empty( $sc_meta['product_title'] ) ? $sc_meta['product_title'] : array() );  
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-title h3{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
-        }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
-        }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
-        }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
-        }
-        $css .= "}";  
-    }
-} 
-
-$typo = ( ! empty( $sc_meta['product_desc'] ) ? $sc_meta['product_desc'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-text p{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
-        }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
-        }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
-        }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
-        }
-        $css .= "}"; 
-    } 
-}    
-
-$typo = ( ! empty( $sc_meta['style_regular_price'] ) ? $sc_meta['style_regular_price'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-price-area .rtrs-regular-price{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
-        }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
-        }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
-        }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
-        }
-        $css .= "}"; 
-    } 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-$typo = ( ! empty( $sc_meta['style_offer_price'] ) ? $sc_meta['style_offer_price'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-price-area .rtrs-offer-price{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
-        }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
-        }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
-        }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
-        }
-        $css .= "}"; 
-    } 
+$rtrs_filter = new AddMetaBox();
+
+$rtrs_sc_id    = $scID;
+$rtrs_sc_meta  = [];
+$rtrs_meta_data = get_post_meta( $rtrs_sc_id );
+
+$rtrs_sc_meta['layout']              = isset( $rtrs_meta_data['layout'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['layout'][0] ) : null;
+$rtrs_sc_meta['width']               = isset( $rtrs_meta_data['width'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['width'][0] ) : null;
+$rtrs_sc_meta['product_title']       = isset( $rtrs_meta_data['product_title'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize( $rtrs_meta_data['product_title'][0] ) ) : null;
+$rtrs_sc_meta['product_desc']        = isset( $rtrs_meta_data['product_desc'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize( $rtrs_meta_data['product_desc'][0] ) ) : null;
+$rtrs_sc_meta['style_regular_price'] = isset( $rtrs_meta_data['style_regular_price'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize( $rtrs_meta_data['style_regular_price'][0] ) ) : null;
+$rtrs_sc_meta['style_offer_price']   = isset( $rtrs_meta_data['style_offer_price'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize( $rtrs_meta_data['style_offer_price'][0] ) ) : null;
+
+$rtrs_sc_meta['border_color']  = isset( $rtrs_meta_data['border_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['border_color'][0] ) : null;
+$rtrs_sc_meta['border_size']   = isset( $rtrs_meta_data['border_size'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['border_size'][0] ) : null;
+$rtrs_sc_meta['border_radius'] = isset( $rtrs_meta_data['border_radius'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['border_radius'][0] ) : null;
+
+$rtrs_sc_meta['circle_fill_color']   = isset( $rtrs_meta_data['circle_fill_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['circle_fill_color'][0] ) : null;
+$rtrs_sc_meta['circle_empty_color']  = isset( $rtrs_meta_data['circle_empty_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['circle_empty_color'][0] ) : null;
+$rtrs_sc_meta['circle_border_width'] = isset( $rtrs_meta_data['circle_border_width'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['circle_border_width'][0] ) : null;
+
+$rtrs_sc_meta['btn']                    = isset( $rtrs_meta_data['btn'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize( $rtrs_meta_data['btn'][0] ) ) : null;
+$rtrs_sc_meta['btn_bg']                 = isset( $rtrs_meta_data['btn_bg'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['btn_bg'][0] ) : null;
+$rtrs_sc_meta['btn_border_color']       = isset( $rtrs_meta_data['btn_border_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['btn_border_color'][0] ) : null;
+$rtrs_sc_meta['btn_hover']              = isset( $rtrs_meta_data['btn_hover'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize( $rtrs_meta_data['btn_hover'][0] ) ) : null;
+$rtrs_sc_meta['btn_hover_bg']           = isset( $rtrs_meta_data['btn_hover_bg'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['btn_hover_bg'][0] ) : null;
+$rtrs_sc_meta['btn_border_hover_color'] = isset( $rtrs_meta_data['btn_border_hover_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['btn_border_hover_color'][0] ) : null;
+
+$rtrs_css = null;
+
+if ( $rtrs_value = $rtrs_sc_meta['width'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id}{";
+	$rtrs_css .= 'width:' . $rtrs_value . ';';
+	$rtrs_css .= '}';
 }
-//.rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary .rtrs-feedback-box
-//border
 
-if ( $value = $sc_meta['border_radius'] ) {
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary{";
-    $css .= "border-radius:" . $value . " !important;";
-    $css .= "}";
-} 
-if ( $value = $sc_meta['border_size'] ) {
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary{";
-    $css .= "border:" . $value . " solid !important;";
-    $css .= "}";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['product_title'] ) ? $rtrs_sc_meta['product_title'] : [] );
+if ( ! empty( $rtrs_typo ) ) {
+	$rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+	$rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+	$rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+	$rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null );
+	if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+		$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-title h3{";
+		if ( $rtrs_typo_color ) {
+			$rtrs_css .= 'color:' . $rtrs_typo_color . ';';
+		}
+		if ( $rtrs_typo_size ) {
+			$rtrs_css .= 'font-size:' . $rtrs_typo_size . 'px;';
+		}
+		if ( $rtrs_typo_weight ) {
+			$rtrs_css .= 'font-weight:' . $rtrs_typo_weight . ';';
+		}
+		if ( $rtrs_typo_alignment ) {
+			$rtrs_css .= 'text-align:' . $rtrs_typo_alignment . ';';
+		}
+		$rtrs_css .= '}';
+	}
+}
 
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-summary-2 .rtrs-rating-item, .rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary .rtrs-feedback-box{";
-    $css .= "border-right:" . $value . " solid !important;";
-    $css .= "}";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['product_desc'] ) ? $rtrs_sc_meta['product_desc'] : [] );
+if ( ! empty( $rtrs_typo ) ) {
+	$rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+	$rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+	$rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+	$rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null );
+	if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+		$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-text p{";
+		if ( $rtrs_typo_color ) {
+			$rtrs_css .= 'color:' . $rtrs_typo_color . ';';
+		}
+		if ( $rtrs_typo_size ) {
+			$rtrs_css .= 'font-size:' . $rtrs_typo_size . 'px;';
+		}
+		if ( $rtrs_typo_weight ) {
+			$rtrs_css .= 'font-weight:' . $rtrs_typo_weight . ';';
+		}
+		if ( $rtrs_typo_alignment ) {
+			$rtrs_css .= 'text-align:' . $rtrs_typo_alignment . ';';
+		}
+		$rtrs_css .= '}';
+	}
+}
 
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-summary-2 .rtrs-rating-item:last-child, .rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary .rtrs-feedback-box:last-child{";
-    $css .= "border-right: none !important;";
-    $css .= "}";
-} 
-if ( $value = $sc_meta['border_color'] ) {
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-summary-2 .rtrs-rating-item, .rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary, .rtrs-affiliate-sc-{$sc_id} .rtrs-feedback-summary .rtrs-feedback-box{";
-    $css .= "border-color:" . $value . " !important;";
-    $css .= "}";
-} 
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['style_regular_price'] ) ? $rtrs_sc_meta['style_regular_price'] : [] );
+if ( ! empty( $rtrs_typo ) ) {
+	$rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+	$rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+	$rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+	$rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null );
+	if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+		$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-price-area .rtrs-regular-price{";
+		if ( $rtrs_typo_color ) {
+			$rtrs_css .= 'color:' . $rtrs_typo_color . ';';
+		}
+		if ( $rtrs_typo_size ) {
+			$rtrs_css .= 'font-size:' . $rtrs_typo_size . 'px;';
+		}
+		if ( $rtrs_typo_weight ) {
+			$rtrs_css .= 'font-weight:' . $rtrs_typo_weight . ';';
+		}
+		if ( $rtrs_typo_alignment ) {
+			$rtrs_css .= 'text-align:' . $rtrs_typo_alignment . ';';
+		}
+		$rtrs_css .= '}';
+	}
+}
 
-//circle
-if ( $value = $sc_meta['circle_border_width'] ) {
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-summary-2 .rtrs-circle-bar svg circle{";
-    $css .= "stroke-width:" . $value . " !important;";
-    $css .= "}";
-} 
-if ( $value = $sc_meta['circle_empty_color'] ) {
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-summary-2 .rtrs-circle-bar svg circle{";
-    $css .= "stroke:" . $value . " !important;";
-    $css .= "}";
-} 
-if ( $value = $sc_meta['circle_fill_color'] ) {
-    $css .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-summary-2 .rtrs-circle-bar svg circle:nth-child(2n){";
-    $css .= "stroke:" . $value . " !important;";
-    $css .= "}";
-} 
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['style_offer_price'] ) ? $rtrs_sc_meta['style_offer_price'] : [] );
+if ( ! empty( $rtrs_typo ) ) {
+	$rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+	$rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+	$rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+	$rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null );
+	if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+		$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-price-area .rtrs-offer-price{";
+		if ( $rtrs_typo_color ) {
+			$rtrs_css .= 'color:' . $rtrs_typo_color . ';';
+		}
+		if ( $rtrs_typo_size ) {
+			$rtrs_css .= 'font-size:' . $rtrs_typo_size . 'px;';
+		}
+		if ( $rtrs_typo_weight ) {
+			$rtrs_css .= 'font-weight:' . $rtrs_typo_weight . ';';
+		}
+		if ( $rtrs_typo_alignment ) {
+			$rtrs_css .= 'text-align:' . $rtrs_typo_alignment . ';';
+		}
+		$rtrs_css .= '}';
+	}
+}
+// .rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary .rtrs-feedback-box
+// border
+
+if ( $rtrs_value = $rtrs_sc_meta['border_radius'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary{";
+	$rtrs_css .= 'border-radius:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+if ( $rtrs_value = $rtrs_sc_meta['border_size'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary{";
+	$rtrs_css .= 'border:' . $rtrs_value . ' solid !important;';
+	$rtrs_css .= '}';
+
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-summary-2 .rtrs-rating-item, .rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary .rtrs-feedback-box{";
+	$rtrs_css .= 'border-right:' . $rtrs_value . ' solid !important;';
+	$rtrs_css .= '}';
+
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-summary-2 .rtrs-rating-item:last-child, .rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary .rtrs-feedback-box:last-child{";
+	$rtrs_css .= 'border-right: none !important;';
+	$rtrs_css .= '}';
+}
+if ( $rtrs_value = $rtrs_sc_meta['border_color'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-summary-2 .rtrs-rating-item, .rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary, .rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-feedback-summary .rtrs-feedback-box{";
+	$rtrs_css .= 'border-color:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+
+// circle
+if ( $rtrs_value = $rtrs_sc_meta['circle_border_width'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-summary-2 .rtrs-circle-bar svg circle{";
+	$rtrs_css .= 'stroke-width:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+if ( $rtrs_value = $rtrs_sc_meta['circle_empty_color'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-summary-2 .rtrs-circle-bar svg circle{";
+	$rtrs_css .= 'stroke:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+if ( $rtrs_value = $rtrs_sc_meta['circle_fill_color'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-summary-2 .rtrs-circle-bar svg circle:nth-child(2n){";
+	$rtrs_css .= 'stroke:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
 
 // button
-$typo = ( ! empty( $sc_meta['btn'] ) ? $sc_meta['btn'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css  .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-buy-btn{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . " !important;";
-        }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px !important;";
-        }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . " !important;";
-        }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . "!important;";
-        }
-        $css .= "}";  
-    }
-}  
- 
-if ( $value = $sc_meta['btn_bg'] ) {
-    $css  .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-buy-btn{";
-    $css .= "background:" . $value . " !important;";
-    $css .= "}";
-} 
-if ( $value = $sc_meta['btn_border_color'] ) {
-    $css  .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-buy-btn{";
-    $css .= "border-color:" . $value . " !important;";
-    $css .= "}";
-} 
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['btn'] ) ? $rtrs_sc_meta['btn'] : [] );
+if ( ! empty( $rtrs_typo ) ) {
+	$rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+	$rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+	$rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+	$rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null );
+	if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+		$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-buy-btn{";
+		if ( $rtrs_typo_color ) {
+			$rtrs_css .= 'color:' . $rtrs_typo_color . ' !important;';
+		}
+		if ( $rtrs_typo_size ) {
+			$rtrs_css .= 'font-size:' . $rtrs_typo_size . 'px !important;';
+		}
+		if ( $rtrs_typo_weight ) {
+			$rtrs_css .= 'font-weight:' . $rtrs_typo_weight . ' !important;';
+		}
+		if ( $rtrs_typo_alignment ) {
+			$rtrs_css .= 'text-align:' . $rtrs_typo_alignment . '!important;';
+		}
+		$rtrs_css .= '}';
+	}
+}
 
-$typo = ( ! empty( $sc_meta['btn_hover'] ) ? $sc_meta['btn_hover'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css  .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-buy-btn:hover{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . " !important;";
-        }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px !important;";
-        }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . " !important;";
-        }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . "!important;";
-        }
-        $css .= "}";  
-    }
-}  
- 
-if ( $value = $sc_meta['btn_hover_bg'] ) {
-    $css  .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-buy-btn:hover{";
-    $css .= "background:" . $value . " !important;";
-    $css .= "}";
-} 
-if ( $value = $sc_meta['btn_border_hover_color'] ) {
-    $css  .= ".rtrs-affiliate-sc-{$sc_id} .rtrs-buy-btn:hover{";
-    $css .= "border-color:" . $value . " !important;";
-    $css .= "}";
-} 
+if ( $rtrs_value = $rtrs_sc_meta['btn_bg'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-buy-btn{";
+	$rtrs_css .= 'background:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+if ( $rtrs_value = $rtrs_sc_meta['btn_border_color'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-buy-btn{";
+	$rtrs_css .= 'border-color:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
 
-$css = apply_filters( 'rtrs_affiliate_sc_css', $css, $metaData, $sc_id, $filter );
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['btn_hover'] ) ? $rtrs_sc_meta['btn_hover'] : [] );
+if ( ! empty( $rtrs_typo ) ) {
+	$rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+	$rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+	$rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+	$rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null );
+	if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+		$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-buy-btn:hover{";
+		if ( $rtrs_typo_color ) {
+			$rtrs_css .= 'color:' . $rtrs_typo_color . ' !important;';
+		}
+		if ( $rtrs_typo_size ) {
+			$rtrs_css .= 'font-size:' . $rtrs_typo_size . 'px !important;';
+		}
+		if ( $rtrs_typo_weight ) {
+			$rtrs_css .= 'font-weight:' . $rtrs_typo_weight . ' !important;';
+		}
+		if ( $rtrs_typo_alignment ) {
+			$rtrs_css .= 'text-align:' . $rtrs_typo_alignment . '!important;';
+		}
+		$rtrs_css .= '}';
+	}
+}
 
-if ( $css ) {
-    echo esc_html( $css );
-} 
+if ( $rtrs_value = $rtrs_sc_meta['btn_hover_bg'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-buy-btn:hover{";
+	$rtrs_css .= 'background:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+if ( $rtrs_value = $rtrs_sc_meta['btn_border_hover_color'] ) {
+	$rtrs_css .= ".rtrs-affiliate-sc-{$rtrs_sc_id} .rtrs-buy-btn:hover{";
+	$rtrs_css .= 'border-color:' . $rtrs_value . ' !important;';
+	$rtrs_css .= '}';
+}
+
+$rtrs_css = apply_filters( 'rtrs_affiliate_sc_css', $rtrs_css, $rtrs_meta_data, $rtrs_sc_id, $rtrs_filter );
+
+if ( $rtrs_css ) {
+	echo esc_html( wp_strip_all_tags( $rtrs_css ) );
+}

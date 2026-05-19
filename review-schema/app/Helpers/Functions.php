@@ -3,10 +3,107 @@
 namespace Rtrs\Helpers;
 
 use Rtrs\Models\Field;
+use Rtrs\Modules\Review\Admin\Meta\AffiliateOptions;
+use Rtrs\Modules\Review\Admin\Meta\MetaOptions;
+use Rtrs\Modules\Review\Admin\Meta\ReviewMeta;
+use Rtrs\Modules\Schema\Admin\Meta\FaqPageMeta;
+use Rtrs\Modules\Schema\Admin\Meta\SchemaMeta;
+use Rtrs\Modules\Schema\Helpers\SchemaFns;
 use WP_Roles;
 
-class Functions {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+class Functions {
+	/*
+	 * Review Enabled
+	 */
+	public static function review_enabled() {
+		$general_options = get_option(
+			'rtrs_general_settings',
+			[
+				'review_enabled' => '',
+				'schema_enabled' => 'yes',
+			]
+		);
+		return 'yes' === ( $general_options['review_enabled'] ?? '' );
+	}
+	/*
+	 * Schema Enabled
+	 */
+	public static function schema_enabled() {
+		$general_options = get_option(
+			'rtrs_general_settings',
+			[
+				'review_enabled' => '',
+				'schema_enabled' => 'yes',
+			]
+		);
+		return 'yes' === ( $general_options['schema_enabled'] ?? '' );
+	}
+	/*
+	* Review Enabled
+	*/
+	public static function affiliate_enabled() {
+		$general_options = get_option( 'rtrs_general_settings' );
+		return 'yes' === ( $general_options['affiliate_enabled'] ?? '' );
+	}
+	/**
+	 * Get single page meta options.
+	 *
+	 * Collects review and schema meta fields based on enabled modules.
+	 *
+	 * @return array
+	 */
+	public static function single_page_meta_for_review_and_schema() {
+		$fields = [];
+		if ( self::review_enabled() ) {
+			$review_meta = ReviewMeta::getInstance();
+			$fields      = array_merge( $fields, $review_meta->sectionReviewFields() );
+		}
+		if ( self::schema_enabled() ) {
+			$schema_meta = SchemaMeta::getInstance();
+			$fields      = array_merge( $fields, $schema_meta->sectionSchemaFields() );
+
+			$faqpage_meta = FaqPageMeta::getInstance();
+			$fields       = array_merge( $fields, $faqpage_meta->faqPageFields() );
+		}
+		return $fields;
+	}
+
+	/**
+	 * Get single page meta options.
+	 *
+	 * Collects review and schema meta fields based on enabled modules.
+	 *
+	 * @return array
+	 */
+	public static function affiliate_meta() {
+		$fields = [];
+		if ( self::review_enabled() ) {
+			$meta_options = AffiliateOptions::getInstance();
+			$meta_options = $meta_options->allMetaFields();
+			$fields       = array_merge( $fields, $meta_options );
+		}
+
+		return $fields;
+	}
+	/**
+	 * Get single page meta options.
+	 *
+	 * Collects review and schema meta fields based on enabled modules.
+	 *
+	 * @return array
+	 */
+	public static function post_type_rtrs_meta() {
+		$fields = [];
+		if ( self::review_enabled() ) {
+			$meta_options = new MetaOptions();
+			$fields       = $meta_options->allMetaFields();
+		}
+		return $fields;
+	}
 	/**
 	 * Check if the stored license is valid.
 	 *
@@ -40,7 +137,7 @@ class Functions {
 	/**
 	 * Undocumented function
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public static function get_available_roles() {
 		global $wp_roles;
@@ -49,40 +146,11 @@ class Functions {
 		}
 		return $wp_roles->get_names();
 	}
-	/**
-	 * Undocumented function
-	 *
-	 * @return void
-	 */
-	public static function has_reply_permition() {
-		$reply_permition = rtrs()->get_options( 'rtrs_review_settings', [ 'comment_reply_permition', [ 'administrator', 'shop_manager' ] ] );
-		return is_array( $reply_permition ) && count( array_intersect( $reply_permition, self::get_current_user_roles() ) ) ? true : false;
-	}
 
-	/**
-	 * Undocumented function
-	 *
-	 * @return void
-	 */
-	public static function the_comment_form() {
-		if ( is_singular( 'product' ) ) {
-			if ( self::has_reply_permition() || 'no' === get_option( 'woocommerce_review_rating_verification_required' ) || wc_customer_bought_product( '', get_current_user_id(), get_the_ID() ) ) {
-				comment_form();
-			} else { ?>
-				<p class="woocommerce-verification-required">
-					<?php esc_html_e( 'Only logged in customers who have purchased this product may leave a review.', 'review-schema' ); ?>
-				</p>
-				<?php
-			}
-		} else {
-			comment_form();
-		}
-		wp_enqueue_script( 'comment-reply' );
-	}
 
 	public static function get_nonce() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return isset( $_REQUEST[ rtrs()->getNonceId() ] ) ? sanitize_text_field( $_REQUEST[ rtrs()->getNonceId() ] ) : null;
+		return isset( $_REQUEST[ rtrs()->getNonceId() ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ rtrs()->getNonceId() ] ) ) : null;
 	}
 
 	public static function locate_template( $name ) {
@@ -150,7 +218,7 @@ class Functions {
 
 		if ( $template ) {
 			if ( ! empty( $args ) && is_array( $args ) ) {
-				extract($args); // @codingStandardsIgnoreLine
+				extract( $args, EXTR_SKIP ); // @codingStandardsIgnoreLine
 			}
 
 			// load_template($template, false, $args);
@@ -174,14 +242,21 @@ class Functions {
 
 	public static function get_template($fileName, $args = null) {
 		if (! empty($args) && is_array($args)) {
-			extract($args); // @codingStandardsIgnoreLine
+			extract( $args, EXTR_SKIP ); // @codingStandardsIgnoreLine
 		}
 
 		$located = self::locate_template($fileName);
 
 		if (! file_exists($located)) {
-			/* translators: %s template */
-			self::doing_it_wrong(__FUNCTION__, sprintf(__('%s does not exist.', 'review-schema'), '<code>' . $located . '</code>'), '1.0');
+			self::doing_it_wrong(
+				__FUNCTION__,
+				sprintf(
+					/* translators: %s: template file name */
+					__( '%s does not exist.', 'review-schema' ),
+					'<code>' . $located . '</code>'
+				),
+				'1.0'
+			);
 
 			return;
 		}
@@ -194,99 +269,6 @@ class Functions {
 		include $located;
 
 		do_action('rtrs_after_template_part', $fileName, $located, $args);
-	}
-
-	public static function touch_time($edit, $for_post, $tab_index, $multi, $comment_date) {
-		global $wp_locale;
-		$post = get_post();
-
-		if ($for_post) {
-			$edit = ! (in_array($post->post_status, ['draft', 'pending'], true) && (! $post->post_date_gmt || '0000-00-00 00:00:00' === $post->post_date_gmt));
-		}
-
-		$tab_index_attribute = '';
-		if ((int) $tab_index > 0) {
-			$tab_index_attribute = " tabindex=\"$tab_index\"";
-		}
-
-		$post_date = ($for_post) ? $post->post_date : $comment_date;
-		$jj        = ($edit) ? mysql2date('d', $post_date, false) : current_time('d');
-		$mm        = ($edit) ? mysql2date('m', $post_date, false) : current_time('m');
-		$aa        = ($edit) ? mysql2date('Y', $post_date, false) : current_time('Y');
-		$hh        = ($edit) ? mysql2date('H', $post_date, false) : current_time('H');
-		$mn        = ($edit) ? mysql2date('i', $post_date, false) : current_time('i');
-		$ss        = ($edit) ? mysql2date('s', $post_date, false) : current_time('s');
-
-		$cur_jj = current_time('d');
-		$cur_mm = current_time('m');
-		$cur_aa = current_time('Y');
-		$cur_hh = current_time('H');
-		$cur_mn = current_time('i');
-		//sanitize text
-		$month = '<label><span class="screen-reader-text">' . esc_html__('Month', 'review-schema') . '</span><select class="form-required" ' . ($multi ? '' : 'id="mm" ') . 'name="mm"' . $tab_index_attribute . ">\n";
-		for ($i = 1; $i < 13; $i = $i + 1) {
-			$monthnum  = zeroise($i, 2);
-			$monthtext = $wp_locale->get_month_abbrev($wp_locale->get_month($i));
-			$month .= "\t\t\t" . '<option value="' . esc_attr($monthnum) . '" data-text="' . esc_attr($monthtext) . '" ' . selected($monthnum, $mm, false) . '>';
-			/* translators: 1: Month number (01, 02, etc.), 2: Month abbreviation. */
-			$month .= sprintf('%1$s-%2$s', $monthnum, $monthtext) . "</option>\n";
-		}
-		$month .= '</select></label>';
-
-		$day    = '<label><span class="screen-reader-text">' . esc_html__('Day', 'review-schema') . '</span><input type="text" ' . ($multi ? '' : 'id="jj" ') . 'name="jj" value="' . esc_attr($jj) . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
-		$year   = '<label><span class="screen-reader-text">' . esc_html__('Year', 'review-schema') . '</span><input type="text" ' . ($multi ? '' : 'id="aa" ') . 'name="aa" value="' . esc_attr($aa) . '" size="4" maxlength="4"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
-		$hour   = '<label><span class="screen-reader-text">' . esc_html__('Hour', 'review-schema') . '</span><input type="text" ' . ($multi ? '' : 'id="hh" ') . 'name="hh" value="' . esc_attr($hh) . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
-		$minute = '<label><span class="screen-reader-text">' . esc_html__('Minute', 'review-schema') . '</span><input type="text" ' . ($multi ? '' : 'id="mn" ') . 'name="mn" value="' . esc_attr($mn) . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
-
-		echo '<div class="timestamp-wrap">';
-		/* translators: 1: Month, 2: Day, 3: Year, 4: Hour, 5: Minute. */
-		printf('%1$s %2$s, %3$s at %4$s:%5$s', $month, $day, $year, $hour, $minute);
-
-		echo '</div><input type="hidden" id="ss" name="ss" value="' . esc_attr($ss) . '" />';
-
-		if ($multi) {
-			return;
-		}
-
-		echo "\n\n";
-
-		$map = [
-			'mm' => [$mm, $cur_mm],
-			'jj' => [$jj, $cur_jj],
-			'aa' => [$aa, $cur_aa],
-			'hh' => [$hh, $cur_hh],
-			'mn' => [$mn, $cur_mn],
-		];
-
-		foreach ($map as $timeunit => $value) {
-			list($unit, $curr) = $value;
-
-			echo '<input type="hidden" id="hidden_' . esc_attr($timeunit) . '" name="hidden_' . esc_attr($timeunit) . '" value="' . esc_attr($unit) . '" />' . "\n";
-			$cur_timeunit = 'cur_' . $timeunit;
-			echo '<input type="hidden" id="' . esc_attr($cur_timeunit) . '" name="' . esc_attr($cur_timeunit) . '" value="' . esc_attr($curr) . '" />' . "\n";
-		} ?>
-        <p>
-            <a href="#edit_timestamp" class="save-timestamp hide-if-no-js button"><?php esc_html_e('OK', 'review-schema'); ?></a>
-            <a href="#edit_timestamp" class="cancel-timestamp hide-if-no-js button-cancel"><?php esc_html_e('Cancel', 'review-schema'); ?></a>
-        </p>
-        <?php
-	}
-
-	/**
-	 * Review time display with time formate
-	 *
-	 * @return string
-	 */
-	public static function comment_review_time( $comment ){
-		$p_meta = self::getMetaByPostType( get_post_type() );
-		$human_readable_time  = isset($p_meta['human-time-diff']) && $p_meta['human-time-diff'][0] == '1' ? false : true;
-		
-		if( $human_readable_time ){
-			$time =  human_time_diff( strtotime( $comment->comment_date ), current_time( 'timestamp') ) . ' ' . esc_html__('ago', 'review-schema'); 
-		}else{
-			$time =  date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) , strtotime( $comment->comment_date )  );  ;
-		}
-		return $time ;
 	}
 
 	/**
@@ -378,7 +360,7 @@ class Functions {
 	/**
 	 *  Check review enable.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -401,243 +383,118 @@ class Functions {
 	/**
 	 *  Check review enable.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
 	private static $enable_post_type_schema = null;
 
-	public static function isEnableByPostTypeSchema($p_type = null) {
-		if (self::$enable_post_type_schema != null) {
-			return self::$enable_post_type_schema;
-		}
+    /**
+     * Get the default schema type for a given post type.
+     *
+     * @param string|null $p_type The post type slug.
+     *
+     * @return string|false Schema type string or false if not configured.
+     */
+    private static $get_default_schema_by_post_type = null;
 
-		global $post;
-		$originalpost = $post; // to fix override post data
+    public static function getDefaultSchemaByPostType( $p_type = null ) {
+        if ( null !== self::$get_default_schema_by_post_type ) {
+            return self::$get_default_schema_by_post_type;
+        }
 
-		$args = [
-			'posts_per_page' => -1,
-			'post_type'      => rtrs()->getPostType(),
-			'post_status'    => 'publish',
-			'meta_query'     => [
-				'relation' => 'AND',
-				[
-					'key'     => 'rtrs_post_type',
-					'value'   => $p_type,
-					'compare' => '=',
-				],
-				[
-					'key'     => 'rtrs_support',
-					'value'   => 'review',
-					'compare' => '!=',
-				],
-			],
-		];
-		$query = new \WP_Query($args);
+        $config = SchemaFns::getPostTypeAutoSchemaConfig( $p_type );
 
-		$enable  = false;
-		$post_id = $post->ID;
+        if ( ! empty( $config['schema_type'] ) ) {
+            self::$get_default_schema_by_post_type = $config['schema_type'];
+        } else {
+            self::$get_default_schema_by_post_type = false;
+        }
 
-		while ($query->have_posts()): $query->the_post();
-
-		if ($p_type == 'page') {
-				$page_id = get_post_meta(get_the_ID(), 'rtrs_page_id', false);
-
-				if ($page_id) {
-					foreach ($page_id as $page) {
-						if ($post_id == $page) {
-							self::$enable_post_type_schema = true;
-							$enable                        = true;
-							break 2; // break parent loop also
-						}
-					}
-					} else {
-					self::$enable_post_type_schema = true;
-					$enable                        = true;
-					break;
-					}
-		} else {
-				self::$enable_post_type_schema = true;
-				$enable                        = true;
-		}
-		endwhile;
-		wp_reset_postdata();
-		$post = $originalpost; // to fix override post data
-
-		//enable schema from settings
-		if (! $enable) {
-			$post_type            = self::getPostTypes(true, false);
-			$rtrs_schema_settings = get_option('rtrs_schema_settings');
-
-			$setting_post_type = isset($rtrs_schema_settings['post_type']) ? array_column($rtrs_schema_settings['post_type'], 'post_type') : [];
-
-			if ( $setting_post_type ) {
-				$post_type = $setting_post_type;
-			}
-
-			if (in_array($p_type, $post_type)) {
-				self::$enable_post_type_schema = true;
-				$enable                        = true;
-			}
-		}
-
-		return $enable;
-	}
+        return self::$get_default_schema_by_post_type;
+    }
 
 	/**
 	 *  Check review enable.
 	 *
-	 * @package Review Review
-	 *
-	 * @since 1.0
-	 */
-	private static $enable_post_type_review = null;
-
-	public static function isEnableByPostTypeReview($p_type = null) {
-		if (self::$enable_post_type_review != null) {
-			return self::$enable_post_type_review;
-		}
-
-		global $post;
-		$originalpost = $post; // to fix override post data
-
-		$args = [
-			'posts_per_page' => -1,
-			'post_type'      => rtrs()->getPostType(),
-			'post_status'    => 'publish',
-			'meta_query'     => [
-				'relation' => 'AND',
-				[
-					'key'     => 'rtrs_post_type',
-					'value'   => $p_type,
-					'compare' => '=',
-				],
-			],
-		];
-		$query = new \WP_Query($args);
-
-		$enable  = false;
-		$post_id = $post->ID;
-
-		while ($query->have_posts()): $query->the_post();
-
-		if ($p_type == 'page') {
-				$page_id = get_post_meta(get_the_ID(), 'rtrs_page_id', false);
-
-				if ($page_id) {
-					foreach ($page_id as $page) {
-						if ($post_id == $page) {
-							self::$enable_post_type_review = true;
-							$enable                        = true;
-							break 2; // break parent loop also
-						}
-					}
-					} else {
-					self::$enable_post_type_review = true;
-					$enable                        = true;
-					break;
-					}
-		} else {
-				self::$enable_post_type_review = true;
-				$enable                        = true;
-		}
-		endwhile;
-		wp_reset_postdata();
-		$post = $originalpost; // to fix override post data
-
-		//enable schema from settings
-		if (! $enable) {
-			$post_type            = self::getPostTypes(true, false);
-			$rtrs_schema_settings = get_option('rtrs_schema_settings');
-
-			$setting_post_type = isset($rtrs_schema_settings['post_type']) ? array_column($rtrs_schema_settings['post_type'], 'post_type') : [];
-
-			if ($setting_post_type) {
-				$post_type = $setting_post_type;
-			}
-
-			if (in_array($p_type, $post_type)) {
-				self::$enable_post_type_review = true;
-				$enable                        = true;
-			}
-		}
-
-		return $enable;
-	}
-
-	/**
-	 *  Check review enable.
-	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
 	private static $enable_post_type = null;
 
-	public static function isEnableByPostType($p_type = null) {
-		if (self::$enable_post_type !== null) {
-			return self::$enable_post_type;
-		}
+    /**
+     * Check if review is enabled for the given post type.
+     *
+     * @param string|null $p_type Target post type (e.g., 'page').
+     * @return bool True if enabled, false otherwise.
+     */
+    public static function isEnableReviewByPostType( $p_type = null ) {
 
-		global $post;
-		//$originalpost = $post; // to fix overridden post data
-
-		$args = [
-			'posts_per_page' => -1,
-			'post_type'      => rtrs()->getPostType(),
-			'post_status'    => 'publish',
-			'meta_query'     => [
-				'relation' => 'AND',
-				[
-					'key'     => 'rtrs_post_type',
-					'value'   => $p_type,
-					'compare' => '=',
-				],
-				[
-					'key'     => 'rtrs_support',
-					'value'   => 'schema',
-					'compare' => '!=',
-				],
-			],
-		];
-
-		$posts = get_posts($args);
-		$enable = false;
-		$post_id = is_object($post) && isset($post->ID) ? $post->ID : null;
-
-		foreach ($posts as $_post) {
-			if ($p_type == 'page') {
-				$page_id = get_post_meta($_post->ID, 'rtrs_page_id', false);
-
-				if ($page_id) {
-					foreach ($page_id as $page) {
-						if ($post_id == $page) {
-							self::$enable_post_type = true;
-							$enable = true;
-							break 2; // break parent loop also
-						}
-					}
-				} else {
-					self::$enable_post_type = true;
-					$enable = true;
-					break;
-				}
-			} else {
-				self::$enable_post_type = true;
-				$enable = true;
-			}
-		}
-
-		//wp_reset_postdata();
-		/// $post = $originalpost; // to fix overridden post data
-
-		return $enable;
-	}
+        // Return cached result if available.
+        if ( self::$enable_post_type !== null ) {
+            return self::$enable_post_type;
+        }
+        if ( ! Functions::review_enabled() ){
+            self::$enable_post_type = false;
+            return self::$enable_post_type;
+        }
+        global $post;
+        $current_post_id = is_object( $post ) && isset( $post->ID ) ? $post->ID : 0;
+        // Query only IDs to reduce memory usage.
+        $args = [
+            'posts_per_page' => -1,
+            'post_type'      => rtrs()->getPostType(),
+            'post_status'    => 'publish',
+            'fields'         => 'ids',
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary meta query for plugin feature.
+            'meta_query'     => [
+                [
+                    'key'     => 'rtrs_post_type',
+                    'value'   => $p_type,
+                    'compare' => '=',
+                ],
+                [
+                    'key'     => 'rtrs_support',
+                    'value'   => 1,
+                    'compare' => '=',
+                ],
+            ],
+        ];
+        // rtrs_support
+        $post_ids = get_posts( $args );
+        // No matched review-config posts.
+        if ( empty( $post_ids ) ) { // Empty for not match post type.
+            self::$enable_post_type = false;
+            return self::$enable_post_type ;
+        }
+        // For pages → check if the specific page is allowed.
+        if ( 'page' === $p_type ) {
+            foreach ( $post_ids as $id ) {
+                $page_ids = get_post_meta( $id, 'rtrs_page_id', false );
+                // If empty → global enable
+                if ( empty( $page_ids ) ) {
+                    self::$enable_post_type = true;
+                    break;
+                }
+                // If current page is in allowed list
+                if ( in_array( $current_post_id, array_map( 'absint', $page_ids ), true ) ) {
+                    self::$enable_post_type = true;
+                    break;
+                }
+                // No match
+                self::$enable_post_type = false;
+            }
+            return self::$enable_post_type;
+        }
+        self::$enable_post_type = true;
+        return self::$enable_post_type ;
+    }
 
 	/**
 	 *  Get all post meta.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -651,6 +508,7 @@ class Functions {
 		$args = [
 			'posts_per_page' => 1,
 			'post_type'      => rtrs()->getPostType(),
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary meta query for plugin feature.
 			'meta_query'     => [
 				[
 					'key'     => 'rtrs_post_type',
@@ -674,7 +532,7 @@ class Functions {
 	/**
 	 *  Get Criteria.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -686,6 +544,7 @@ class Functions {
 		$args = [
 			'posts_per_page' => 1,
 			'post_type'      => rtrs()->getPostType(),
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Necessary meta query for plugin feature.
 			'meta_query'     => [
 				[
 					'key'     => 'rtrs_post_type',
@@ -708,7 +567,7 @@ class Functions {
 	/**
 	 *  Default settings schema
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -738,6 +597,9 @@ class Functions {
 
 				case 'product':
 				case 'download':
+				case 'fluent-products':
+				case 'sc_product':
+				case 'wpdmpro':
 					$new_default[] = [
 						'post_type'   => $value,
 						'schema_type' => 'product',
@@ -760,7 +622,7 @@ class Functions {
 	/**
 	 *  String to slug convert.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -784,7 +646,7 @@ class Functions {
         }
 		$strUtf8 = mb_convert_encoding($str ?? '', 'UTF-8', 'ISO-8859-1');
 
-		if (strlen($str) != strlen($strUtf8)) {
+		if (strlen( $str ?? '' ) !== strlen( $strUtf8 )) {
 			return false;
 		} else {
 			return true;
@@ -793,7 +655,7 @@ class Functions {
 	/**
 	 * Sanitize out put.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -801,13 +663,15 @@ class Functions {
 		$newValue = null;
 		if ($value) {
 			if ($type == 'text') {
-				$newValue = esc_html(stripslashes($value));
-			} elseif ($type == 'url') {
-				$newValue = esc_url(stripslashes($value));
+				$newValue = wp_strip_all_tags(stripslashes($value));
+            } elseif ($type == 'url') {
+                $newValue = esc_url(stripslashes($value));
+            } elseif ($type == 'number') {
+                $newValue = (float) $value; // returns float automatically
 			} elseif ($type == 'textarea') {
 				$newValue = esc_textarea(stripslashes($value));
 			} else {
-				$newValue = esc_html(stripslashes($value));
+				$newValue = wp_strip_all_tags(stripslashes($value));
 			}
 		}
 
@@ -817,25 +681,34 @@ class Functions {
 	/**
 	 * Image information.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
-	public function imageInfo($attachment_id) {
-		$data           = [];
-		$imgData        = wp_get_attachment_metadata($attachment_id);
-		$data['id']     = $attachment_id;
-		$data['url']    = wp_get_attachment_url($attachment_id);
-		$data['width']  = ! empty($imgData['width']) ? absint($imgData['width']) : 0;
-		$data['height'] = ! empty($imgData['height']) ? absint($imgData['height']) : 0;
+    public function imageInfo( $attachment_id ) {
+        $data = [];
+        $post = get_post( $attachment_id );
+        $data['id']          = $attachment_id;
+        $data['url']         = wp_get_attachment_url( $attachment_id );
+        $data['title']       = wp_strip_all_tags( $post->post_title ?? '' );
+        $data['caption']     = wp_strip_all_tags( $post->post_excerpt ?? '' );
+        $data['description'] = wp_strip_all_tags( $post->post_content ?? '' );
+        // alt text is stored in post meta
+        $data['alt'] = wp_strip_all_tags(
+                get_post_meta( $attachment_id, '_wp_attachment_image_alt', true )
+        );
+        // metadata for width/height
+        $meta = wp_get_attachment_metadata( $attachment_id );
+        $data['width']  = isset($meta['width'])  ? absint($meta['width'])  : 0;
+        $data['height'] = isset($meta['height']) ? absint($meta['height']) : 0;
+        return $data;
+    }
 
-		return $data;
-	}
 
 	/**
 	 *  Google rich snippet auto category.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -844,26 +717,46 @@ class Functions {
 		if (! function_exists('rtrsp')) {
 			$pro_label = ' [Pro]'; //don't need to translate
 		}
-
 		$auto_cat = [
-			''             => esc_html__('Select', 'review-schema'),
+			''             => esc_html__('--Select Schema Type--', 'review-schema'),
 			'article'      => esc_html__('Article', 'review-schema'),
-			'news_article' => esc_html__('News article', 'review-schema'),
-			'blog_posting' => esc_html__('Blog posting', 'review-schema'),
+			'news_article' => esc_html__('Article - News Article', 'review-schema'),
+            'tech_article' => esc_html__('Tech Article', 'review-schema'),// Todo: Need Check.
+			'blog_posting' => esc_html__('Article - Blog posting', 'review-schema'),
+            'book'       => esc_html__( 'Book', 'review-schema' ),
+            'event'      => esc_html__( 'Event', 'review-schema' ),
+            'video'      => esc_html__( 'Video', 'review-schema' ), // If Page Has Video, then will add auto video schema.
+            'person'     => esc_html__( 'Person', 'review-schema' ),
+            'service'    => esc_html__( 'Service', 'review-schema' ),
+            'software_app'   => esc_html__( 'Software Application', 'review-schema' ) . $pro_label,
+            'job_posting' => esc_html__( 'Job Posting', 'review-schema' ) . $pro_label,
+            // 'recipe'     => esc_html__( 'Recipe', 'review-schema' ). $pro_label, // Is it not possible To show as auto schema. many error show.
+            'Restaurant' => esc_html__( 'Restaurant', 'review-schema' ). $pro_label,
 			'product'      => esc_html__('Product', 'review-schema') . $pro_label,
 		];
-
-		if (is_plugin_active('learnpress/learnpress.php')) {
-			$auto_cat['course'] = esc_html__('Course', 'review-schema') . $pro_label;
+        $has_course = false;
+		if ( is_plugin_active('learnpress/learnpress.php') ) {
+            $has_course = true;
 		}
-
+        if ( !$has_course &&  is_plugin_active('tutor/tutor.php')) {
+            $has_course = true;
+        }
+        if ( !$has_course &&  is_plugin_active('academy/academy.php')) {
+            $has_course = true;
+        }
+        if (!$has_course && is_plugin_active('lifterlms/lifterlms.php')){
+            $has_course = true;
+        }
+        if ($has_course){
+            $auto_cat['course'] = esc_html__('Course', 'review-schema') . $pro_label;
+        }
 		return apply_filters('rtrs_rich_snippet_auto_cats', $auto_cat);
 	}
 
 	/**
 	 *  Google rich snippet category.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -872,50 +765,46 @@ class Functions {
 		if (! function_exists('rtrsp')) {
 			$pro_label = ' [Pro]'; //don't need to translate
 		}
-
 		return apply_filters('rtrs_rich_snippet_cats', [
-            'article'              => esc_html__('Article', 'review-schema'),
-            'tech_article'         => esc_html__('TechArticle', 'review-schema'),
-            'news_article'         => esc_html__('NewsArticle', 'review-schema'),
-            'blog_posting'         => esc_html__('BlogPosting', 'review-schema'),
-            'web_page'             => esc_html__('WebPage', 'review-schema'),
-            'event'                => esc_html__('Event', 'review-schema'),
-			'local_business'       => esc_html__('LocalBusiness', 'review-schema'),
-			'faq'                  => esc_html__('FAQPage', 'review-schema'),
-			'service'              => esc_html__('Service', 'review-schema'),
-			'question_answer'      => esc_html__('QAPage (formerly Q&A) ', 'review-schema'),
-			'how_to'               => esc_html__('HowTo', 'review-schema'),
-			'about'                => esc_html__('About', 'review-schema'),
-			'contact'              => esc_html__('Contact', 'review-schema'),
-			'person'               => esc_html__('Person', 'review-schema'),
-			'movie'                => esc_html__('Movie', 'review-schema'),
-			'audio'                => esc_html__('Audio', 'review-schema'),
-			'video'                => esc_html__('Video', 'review-schema'),
-			'breadcrumb'           => esc_html__('Breadcrumb', 'review-schema'),
-			'itemlist'             => esc_html__('ItemList', 'review-schema'),
-			'product'              => esc_html__('Product', 'review-schema') . $pro_label,
-			'book'                 => esc_html__('Book', 'review-schema') . $pro_label,
-			'real_state_listing'   => esc_html__('RealEstateListing', 'review-schema') . $pro_label,
-			'course'               => esc_html__('Course', 'review-schema') . $pro_label,
-			'job_posting'          => esc_html__('JobPosting', 'review-schema') . $pro_label,
-			'recipe'               => esc_html__('Recipe', 'review-schema') . $pro_label,
-			'software_app'         => esc_html__('SoftwareApplication', 'review-schema') . $pro_label,
-			'image_license'        => esc_html__('Image License (ImageObject)', 'review-schema') . $pro_label,
-			'special_announcement' => esc_html__('SpecialAnnouncement', 'review-schema') . $pro_label,
-			'mosque'  			   => esc_html__('Mosque', 'review-schema'),
-			'church'  			   => esc_html__('Church', 'review-schema'),
-            'profile_page'  	   => esc_html__('ProfilePage', 'review-schema'),
-            'vacation_rental'  	   => esc_html__('VacationRental', 'review-schema') . $pro_label,
-            'vehicle_listing'  	   => esc_html__('Vehicle listing', 'review-schema') . $pro_label,
-			'hindutemple'  		   => esc_html__('HinduTemple', 'review-schema'),
-			'buddhisttemple'  	   => esc_html__('BuddhistTemple', 'review-schema'),
-			'medical_webpage'  	   => esc_html__('MedicalWebPage', 'review-schema'),
-			'collection_page'  	   => esc_html__('CollectionPage', 'review-schema') . $pro_label,
-            'tv_series'            => esc_html__( 'TVSeries', 'review-schema' ) . $pro_label,
-            'PodcastEpisode'       => esc_html__( 'PodcastEpisode', 'review-schema' ) . $pro_label,
-            'DiscussionForumPosting' => esc_html__( 'DiscussionForumPosting', 'review-schema' ) . $pro_label,
-            'Dataset'               => esc_html__( 'Dataset', 'review-schema' ) . $pro_label,
-            'Restaurant'               => esc_html__( 'Restaurant', 'review-schema' ) . $pro_label,
+            'article'              => esc_html__('Article', 'review-schema'), // Done
+            'tech_article'         => esc_html__('TechArticle', 'review-schema'), // Done
+            'news_article'         => esc_html__('NewsArticle', 'review-schema'), // Done
+            'blog_posting'         => esc_html__('BlogPosting', 'review-schema'), // Done
+            'event'                => esc_html__('Event', 'review-schema'), // Done
+			'faq'                  => esc_html__('FAQPage', 'review-schema'), // Done
+			'service'              => esc_html__('Service', 'review-schema'), // Done
+			'question_answer'      => esc_html__('QAPage - formerly Q&A ( Deprecated ) Use FAQPage Schema', 'review-schema'), // Done
+			'how_to'               => esc_html__('HowTo', 'review-schema'), // Done
+			'about'                => esc_html__('About', 'review-schema'),  // Done
+			'contact'              => esc_html__('Contact', 'review-schema'), // Done
+			'person'               => esc_html__('Person', 'review-schema'), // Done
+			'movie'                => esc_html__('Movie', 'review-schema'), // Done
+			'audio'                => esc_html__('Audio', 'review-schema'), // Done
+			'video'                => esc_html__('Video', 'review-schema'), // Done
+			'breadcrumb'           => esc_html__('Breadcrumb', 'review-schema'), // Done
+            'mosque'  			   => esc_html__('Mosque', 'review-schema'), // Done
+            'church'  			   => esc_html__('Church', 'review-schema'), // Done
+            'hindutemple'  		   => esc_html__('HinduTemple', 'review-schema'), // Done
+            'buddhisttemple'  	   => esc_html__('BuddhistTemple', 'review-schema'), // Done
+            'profile_page'  	   => esc_html__('ProfilePage', 'review-schema'), // Done
+            'medical_webpage'  	   => esc_html__('MedicalWebPage', 'review-schema'), // Done
+			'product'              => esc_html__('Product', 'review-schema') . $pro_label, // Done
+			'book'                 => esc_html__('Book', 'review-schema') . $pro_label, // Done
+			'real_state_listing'   => esc_html__('RealEstateListing', 'review-schema') . $pro_label, // Done
+			'course'               => esc_html__('Course', 'review-schema') . $pro_label, // Done
+			'job_posting'          => esc_html__('JobPosting', 'review-schema') . $pro_label, // Done
+			'recipe'               => esc_html__('Recipe', 'review-schema') . $pro_label, // Done
+			'software_app'         => esc_html__('SoftwareApplication', 'review-schema') . $pro_label, // Done
+			'image_license'        => esc_html__('Image License (ImageObject)', 'review-schema') . $pro_label, // Done
+            'Restaurant'           => esc_html__( 'Restaurant', 'review-schema' ) . $pro_label, // Done
+			'special_announcement' => esc_html__('SpecialAnnouncement ( Deprecated )', 'review-schema') . $pro_label, // Done
+            'vacation_rental'  	   => esc_html__('VacationRental', 'review-schema') . $pro_label, // Done
+            'vehicle_listing'  	   => esc_html__('Vehicle listing', 'review-schema') . $pro_label, // Done
+            'tv_series'            => esc_html__( 'TVSeries', 'review-schema' ) . $pro_label, // Done
+            'PodcastEpisode'       => esc_html__( 'PodcastEpisode', 'review-schema' ) . $pro_label, // Done
+            'DiscussionForumPosting' => esc_html__( 'DiscussionForumPosting', 'review-schema' ) . $pro_label, // Done
+            'Dataset'               => esc_html__( 'Dataset ( Deprecated )', 'review-schema' ) . $pro_label,  // Done
+            'TaxiService'           => esc_html__( 'TaxiService', 'review-schema' ) . $pro_label,  // Done
         ]);
 	}
 
@@ -926,64 +815,120 @@ class Functions {
 	 *
 	 * @return array
 	 */
-	public static function getPostTypes($key_only = false, $select_option = true) {
-		global $wp_post_types;
+    /**
+     * Get all custom post types.
+     *
+     * @param bool $key_only
+     * @param bool $select_option
+     *
+     * @return array
+     */
+    public static function getPostTypes($key_only = false, $select_option = true)
+    {
+        global $wp_post_types;
+        // Handle case where $wp_post_types is not available
+        if (empty($wp_post_types) || !is_array($wp_post_types)) {
+            return [];
+        }
+        $pre_post_types = $data = [];
+        if ($select_option) {
+            $data[] = esc_html__('Select', 'review-schema');
+        }
+        foreach ($wp_post_types as $key => $post_type) {
+            // Skip if post type object is invalid
+            if (!is_object($post_type) || !isset($post_type->label)) {
+                continue;
+            }
+            // Skip if key is not a valid string
+            if (empty($key) || !is_string($key)) {
+                continue;
+            }
+            $pre_post_types[$key] = $post_type->label;
+        }
+        // Remove some post types
+        $post_type_remove = [
+                'rtrs',
+                'rtrs_affiliate',
+                'attachment',
+                'nav_menu_item',
+                'customize_changeset',
+                'revision',
+                'custom_css',
+                'oembed_cache',
+                'user_request',
+                'wp_block',
+                'product_variation',
+                'shop_order',
+                'shop_order_refund',
+                'shop_coupon',
+                'edd_log',
+                'edd_payment',
+                'edd_discount',
+                'rtcl_cfg',
+                'rtcl_cf',
+                'rtcl_payment',
+                'rtcl_pricing',
+                'rtsb_builder',
+                'acf-taxonomy',
+                'acf-post-type',
+                'acf-field-group',
+                'acf-field',
+                'elementor_library',
+                'elementor_component',
+                'e-landing-page',
+                'wp_template',
+                'lp_order',
+                'wp_template_part',
+                'wp_global_styles',
+                'wp_navigation',
+                'wp_font_family',
+                'wp_font_face',
+                'e-floating-buttons',
+                'shop_order_placehold',
+                'rm_content_editor',
+                'rank_math_schema'
+        ];
 
-		$pre_post_types = $data = [];
-		if ($select_option) {
-			$data[] = esc_html__('Select', 'review-schema');
-		}
-		foreach ($wp_post_types as $key => $post_type) {
-			$pre_post_types[$key] = $post_type->label;
-		}
-
-		// Remove some post type
-		$post_type_remove = [
-			'rtrs',
-			'rtrs_affiliate',
-			//'page',
-			'attachment',
-			'nav_menu_item',
-			'customize_changeset',
-			'revision',
-			'custom_css',
-			'oembed_cache',
-			'user_request',
-			'wp_block',
-			'product_variation',
-			'shop_order',
-			'shop_order_refund',
-			'shop_coupon',
-			//extra
-			'edd_log',
-			'edd_payment',
-			'edd_discount',
-			//tlp
-			'rtcl_cfg',
-			'rtcl_cf',
-			'rtcl_payment',
-			'rtcl_pricing',
-			//elementor
-			'elementor_library',
-			'e-landing-page',
-			'wp_template',
-			//lp
-			'lp_order',
-		];
-
-		foreach ($pre_post_types as $key => $posttype):
-			if (in_array($key, $post_type_remove)) {
-				continue;
-			}
-		if ($key_only) {
-				$data[] = $key;
-		} else {
-				$data[$key] = $posttype;
-		}
-		endforeach;
-
-		return apply_filters('rtrs_post_type', $data);
-	}
+        // Ensure filter returns an array
+        $post_type_remove = apply_filters('rtrs_post_type_remove', $post_type_remove);
+        if (!is_array($post_type_remove)) {
+            $post_type_remove = [];
+        }
+        foreach ($pre_post_types as $key => $posttype) {
+            // Skip blacklisted post types
+            if (in_array($key, $post_type_remove, true)) {
+                continue;
+            }
+            // Skip if post type object is missing or public property is not set
+            if (!isset($wp_post_types[$key]) || !is_object($wp_post_types[$key])) {
+                continue;
+            }
+            // Skip non-public post types.
+            if (empty($wp_post_types[$key]->public)) {
+                continue;
+            }
+            // Skip post types hidden from menu (allow string values like submenu slugs)
+            $show_in_menu = $wp_post_types[$key]->show_in_menu ?? null;
+            if ($show_in_menu === false || $show_in_menu === null) {
+                continue;
+            }
+            // Skip if label is not a valid string
+            if (empty($posttype) || !is_string($posttype)) {
+                continue;
+            }
+            if ($key_only) {
+                $data[] = sanitize_key($key);
+            } else {
+                $data[sanitize_key($key)] = esc_html($posttype);
+            }
+        }
+        // Ensure filter returns an array
+        $result = apply_filters('rtrs_post_type', $data);
+        if (!is_array($result)) {
+            return $data; // Fall back to unfiltered data if filter breaks it
+        }
+        return $result;
+    }
 
 	/**
 	 * Check purchased user.
@@ -1013,80 +958,33 @@ class Functions {
 		return $varified;
 	}
 
-	/**
-	 *  Review Schema Star Icon.
-	 *
-	 * @package Review Schema
-	 *
-	 * @since 1.0
-	 */
-	public static function review_stars($rating, $dash_icon = false) {
-		ob_start();
-		for ($x = 0; $x < 5; $x++) {
-			if (floor($rating) - $x >= 1) {
-				if ($dash_icon) {
-					echo '<i class="dashicons dashicons-star-filled"></i>';
-				} else {
-					echo '<i class="rtrs-star"></i>';
-				}
-			} elseif ($rating - $x > 0) {
-				if ($dash_icon) {
-					echo '<i class="dashicons dashicons-star-half"></i>';
-				} else {
-					echo '<i class="rtrs-star-half-alt"></i>';
-				}
-			} else {
-				if ($dash_icon) {
-					echo '<i class="dashicons dashicons-star-empty"></i>';
-				} else {
-					echo '<i class="rtrs-star-empty"></i>';
-				}
-			}
-		}
+    /**
+     * Returns cleaned sameAs values as array or string.
+     *
+     * Removes whitespace from each URL and supports multi-line input.
+     *
+     * @param string $value Newline-separated URLs.
+     * @return array|string|null
+     */
+    public static function get_same_as( $value ) {
+        $sameAs = null;
+        if ( $value ) {
+            $lines = preg_split( '/\r\n|\r|\n/', $value );
+            $lines = ! empty( $lines ) ? array_filter( $lines ) : [];
+            $cleaned = [];
+            foreach ( $lines as $line ) {
+                $trimmed = esc_url_raw( trim( $line ) );
+                if ( $trimmed !== '' ) {
+                    $cleaned[] = $trimmed;
+                }
+            }
+            if ( ! empty( $cleaned ) ) {
+                $sameAs = count( $cleaned ) > 1 ? $cleaned : $cleaned[0];
+            }
+        }
+        return $sameAs;
+    }
 
-		return ob_get_clean();
-	}
-
-	/**
-	 *  Review Schema Entity Star Icon.
-	 *
-	 * @package Review Schema
-	 *
-	 * @since 1.0
-	 */
-	public static function review_entity_stars($rating) {
-		ob_start();
-		foreach ([1, 2, 3, 4, 5] as $val) {
-			$score = $rating - $val;
-			if ($score >= 0) {
-				echo '&#9733;';
-			} elseif ($score > -1 && $score < 0) {
-				// half star will show full star in url
-				echo '&#9733;';
-			} else {
-				echo '&#9734;';
-			}
-		}
-
-		return ob_get_clean();
-	}
-
-	public static function get_same_as($value) {
-		$sameAs = null;
-		if ($value) {
-			$sameAsRaw = preg_split('/\r\n|\r|\n/', $value);
-			$sameAsRaw = ! empty($sameAsRaw) ? array_filter($sameAsRaw) : [];
-			if (! empty($sameAsRaw) && is_array($sameAsRaw)) {
-				if (1 < count($sameAsRaw)) {
-					$sameAs = $sameAsRaw;
-				} else {
-					$sameAs = $sameAsRaw[0];
-				}
-			}
-		}
-
-		return $sameAs;
-	}
 
 	public static function filter_content($content, $limit = 0) {
 		$content = preg_replace('#\[[^\]]+\]#', '', wp_strip_all_tags($content));
@@ -1137,7 +1035,7 @@ class Functions {
 	/**
 	 *  Format bye.
 	 *
-	 * @package Review Schema
+	 * @package SchemaEngine AI
 	 *
 	 * @since 1.0
 	 */
@@ -1180,7 +1078,7 @@ class Functions {
 				$wp_filesystem->mkdir( $upload_basedir_trailingslashit. 'review-schema' );
 			}
 			if( ! $wp_filesystem->put_contents( $cssFile, $css  ) ){
-				error_log(print_r('Review Schema: Error Generated css file ',true));
+				error_log(print_r('SchemaEngine AI: Error Generated css file ',true));
 			}
 		} 
 	}
@@ -1210,174 +1108,361 @@ class Functions {
 
 			$wp_filesystem->put_contents($cssFile, $css);
 		}
-	} 
+	}
+    /*
+     * All Pages
+     */
+    public static function allPages() {
+        $page_array    = [];
+        $page_array[0] = esc_html__( 'Select', 'review-schema' );
+        $all_pages     = get_pages();
+        foreach ( $all_pages as $page ) {
+            $page_array[ $page->ID ] = $page->post_title;
+        }
 
-	public static function getSiteTypes() {
-		$siteTypes = [
-			'Organization',
-			'LocalBusiness'  => [
-				'AnimalShelter',
-				'AutomotiveBusiness' => [
-					'AutoBodyShop',
-					'AutoDealer',
-					'AutoPartsStore',
-					'AutoRental',
-					'AutoRepair',
-					'AutoWash',
-					'GasStation',
-					'MotorcycleDealer',
-					'MotorcycleRepair',
-				],
-				'ChildCare',
-				'DryCleaningOrLaundry',
-				'EmergencyService',
-				'EmploymentAgency',
-				'EntertainmentBusiness' => [
-					'AdultEntertainment',
-					'AmusementPark',
-					'ArtGallery',
-					'Casino',
-					'ComedyClub',
-					'MovieTheater',
-					'NightClub',
+        return apply_filters( 'rtrs_pages', $page_array );
+    }
 
-				],
-				'FinancialService'    => [
-					'AccountingService',
-					'AutomatedTeller',
-					'BankOrCreditUnion',
-					'InsuranceAgency',
-				],
-				'FoodEstablishment'   => [
-					'Bakery',
-					'BarOrPub',
-					'Brewery',
-					'CafeOrCoffeeShop',
-					'FastFoodRestaurant',
-					'IceCreamShop',
-					'Restaurant',
-					'Winery',
-				],
-				'GovernmentOffice',
-				'HealthAndBeautyBusiness' => [
-					'BeautySalon',
-					'DaySpa',
-					'HairSalon',
-					'HealthClub',
-					'NailSalon',
-					'TattooParlor',
-				],
-				'HomeAndConstructionBusiness' => [
-					'Electrician',
-					'GeneralContractor',
-					'HVACBusiness',
-					'HousePainter',
-					'Locksmith',
-					'MovingCompany',
-					'Plumber',
-					'RoofingContractor',
-				],
-				'InternetCafe',
-				'LegalService'    => [
-					'Attorney',
-					'Notary',
-				],
-				'Library',
-				'MedicalBusiness'   => [
-					// 'CommunityHealth',
-					'Dentist',
-					// 'Dermatology',
-					// 'DietNutrition',
-					// 'Emergency',
-					// 'Geriatric',
-					// 'Gynecologic',
-					'MedicalClinic',
-					// 'Midwifery',
-					// 'Nursing',
-					// 'Obstetric',
-					// 'Oncologic',
-					'Optician',
-					// 'Optometric',
-					// 'Otolaryngologic',
-					// 'Pediatric',
-					'Pharmacy',
-					'Physician',
-					// 'Physiotherapy',
-					// 'PlasticSurgery',
-					// 'Podiatric',
-					// 'PrimaryCare',
-					// 'Psychiatric',
-					// 'PublicHealth',
-				],
-				'LodgingBusiness'  => [
-					'BedAndBreakfast',
-					'Campground',
-					'Hostel',
-					'Hotel',
-					'Motel',
-					'Resort',
-				],
-				'ProfessionalService',
-				'RadioStation',
-				'RealEstateAgent',
-				'RecyclingCenter',
-				'SelfStorage',
-				'ShoppingCenter',
-				'SportsActivityLocation' => [
-					'BowlingAlley',
-					'ExerciseGym',
-					'GolfCourse',
-					'HealthClub',
-					'PublicSwimmingPool',
-					'SkiResort',
-					'SportsClub',
-					'StadiumOrArena',
-					'TennisComplex',
-				],
-				'Store'   => [
-					'AutoPartsStore',
-					'BikeStore',
-					'BookStore',
-					'ClothingStore',
-					'ComputerStore',
-					'ConvenienceStore',
-					'DepartmentStore',
-					'ElectronicsStore',
-					'Florist',
-					'FurnitureStore',
-					'GardenStore',
-					'GroceryStore',
-					'HardwareStore',
-					'HobbyShop',
-					'HomeGoodsStore',
-					'JewelryStore',
-					'LiquorStore',
-					'MensClothingStore',
-					'MobilePhoneStore',
-					'MovieRentalStore',
-					'MusicStore',
-					'OfficeEquipmentStore',
-					'OutletStore',
-					'PawnShop',
-					'PetStore',
-					'ShoeStore',
-					'SportingGoodsStore',
-					'TireShop',
-					'ToyStore',
-					'WholesaleStore',
-				],
-				'TelevisionStation',
-				'TouristInformationCenter',
-				'TravelAgency',
-				'TaxiService',
-			],
-			'NGO',
-			'CivicStructure' => [
-				'Museum',
-			],
+    /**
+     * Get site types for per-post local business schema.
+     *
+     * @return array
+     */
+    public static function getSiteTypes() {
+        $siteTypes = [
+            'Organization'   => 'Organization',
+            'LocalBusiness'  => self::getSiteSubTypesLocalBusiness(),
+            'NGO'            => 'NGO',
+            'CivicStructure' => [
+                'Museum' => 'Museum',
+            ],
+        ];
+
+        return apply_filters( 'rtseo_site_types', $siteTypes );
+    }
+    /**
+     * Get site sub-types for Organization.
+     *
+     * @return array
+     */
+    public static function getSiteSubTypesOrganization() {
+        $siteTypes = [
+            'Organization'           => [
+                'Corporation'            => 'Corporation',
+                'OnlineBusiness'         => 'OnlineBusiness',
+                'Consortium'             => 'Consortium',
+                'Airline'                => 'Airline',
+                'GovernmentOrganization' => 'GovernmentOrganization',
+                'NGO'                    => 'NGO',
+                'NewsMediaOrganization'  => 'NewsMediaOrganization',
+                'PoliticalParty'         => 'PoliticalParty',
+                'ResearchOrganization'   => 'ResearchOrganization',
+                'SportsOrganization'     => [
+                    'SportsTeam' => 'SportsTeam',
+                ],
+                'WorkersUnion'           => 'WorkersUnion',
+                'CivicStructure'         => [
+                    'Museum' => 'Museum',
+                ],
+                'MedicalOrganization'    => [
+                    'Hospital'       => 'Hospital',
+                    'VeterinaryCare' => 'VeterinaryCare',
+                ],
+                'PerformingGroup'        => [
+                    'DanceGroup'   => 'DanceGroup',
+                    'MusicGroup'   => 'MusicGroup',
+                    'TheaterGroup' => 'TheaterGroup',
+                ],
+                'Project'                => [
+                    'FundingScheme'  => 'FundingScheme',
+                    'ResearchProject' => 'ResearchProject',
+                ],
+                'EducationalOrganization' => [
+                    'CollegeOrUniversity' => 'CollegeOrUniversity',
+                    'School'              => [
+                        'ElementarySchool' => 'ElementarySchool',
+                        'HighSchool'       => 'HighSchool',
+                        'MiddleSchool'     => 'MiddleSchool',
+                        'Preschool'        => 'Preschool',
+                    ],
+                ],
+                'LocalBusiness' => Functions::getSiteSubTypesLocalBusiness(),
+            ],
+
+        ];
+        return apply_filters( 'rtrs_sub_types_organization', $siteTypes );
+    }
+    /**
+     * Get site sub-types for Local Business.
+     *
+     * @return array
+     */
+    public static function getSiteSubTypesLocalBusiness() {
+        $siteTypes = [
+            'AnimalShelter'               => 'AnimalShelter',
+            'ArchiveOrganization'         => 'ArchiveOrganization',
+            'ChildCare'                   => 'ChildCare',
+            'DryCleaningOrLaundry'        => 'DryCleaningOrLaundry',
+            'EmploymentAgency'            => 'EmploymentAgency',
+            'InternetCafe'                => 'InternetCafe',
+            'Library'                     => 'Library',
+            'RecyclingCenter'             => 'RecyclingCenter',
+            'SelfStorage'                 => 'SelfStorage',
+            'TaxiService' => 'TaxiService',
+            'AutomotiveBusiness'          => [
+                'AutoBodyShop'     => 'AutoBodyShop',
+                'AutoDealer'       => 'AutoDealer',
+                'AutoPartsStore'   => 'AutoPartsStore',
+                'AutoRental'       => 'AutoRental',
+                'AutoRepair'       => 'AutoRepair',
+                'AutoWash'         => 'AutoWash',
+                'GasStation'       => 'GasStation',
+                'MotorcycleDealer' => 'MotorcycleDealer',
+                'MotorcycleRepair' => 'MotorcycleRepair',
+            ],
+            'FinancialService'            => [
+                'AccountingService' => 'AccountingService',
+                'AutomatedTeller'   => 'AutomatedTeller',
+                'BankOrCreditUnion' => 'BankOrCreditUnion',
+                'InsuranceAgency'   => 'InsuranceAgency',
+            ],
+            'FoodEstablishment'           => [
+                'Bakery'             => 'Bakery',
+                'BarOrPub'           => 'BarOrPub',
+                'Brewery'            => 'Brewery',
+                'CafeOrCoffeeShop'   => 'CafeOrCoffeeShop',
+                'Distillery'         => 'Distillery',
+                'FastFoodRestaurant' => 'FastFoodRestaurant',
+                'IceCreamShop'       => 'IceCreamShop',
+                'Restaurant'         => 'Restaurant',
+                'Winery'             => 'Winery',
+            ],
+            'GovernmentOffice'            => [
+                'FireStation'   => 'FireStation',
+                'PoliceStation' => 'PoliceStation',
+                'PostOffice'    => 'PostOffice',
+            ],
+            'HealthAndBeautyBusiness'     => [
+                'BeautySalon'  => 'BeautySalon',
+                'DaySpa'       => 'DaySpa',
+                'HairSalon'    => 'HairSalon',
+                'HealthClub'   => 'HealthClub',
+                'NailSalon'    => 'NailSalon',
+                'TattooParlor' => 'TattooParlor',
+            ],
+            'HomeAndConstructionBusiness' => [
+                'Electrician'       => 'Electrician',
+                'GeneralContractor' => 'GeneralContractor',
+                'HVACBusiness'      => 'HVACBusiness',
+                'HousePainter'      => 'HousePainter',
+                'Locksmith'         => 'Locksmith',
+                'MovingCompany'     => 'MovingCompany',
+                'Plumber'           => 'Plumber',
+                'RoofingContractor' => 'RoofingContractor',
+            ],
+            'LegalService'                => [
+                'Attorney' => 'Attorney',
+                'Notary'   => 'Notary',
+            ],
+            'LodgingBusiness'             => [
+                'BedAndBreakfast' => 'BedAndBreakfast',
+                'Campground'      => 'Campground',
+                'Hostel'          => 'Hostel',
+                'Hotel'           => 'Hotel',
+                'Motel'           => 'Motel',
+                'Resort'          => 'Resort',
+                'RVPark'          => 'RVPark',
+            ],
+            'MedicalBusiness'             => [
+                'CommunityHealth'  => 'CommunityHealth',
+                'DiagnosticLab'    => 'DiagnosticLab',
+                'Dentist'          => 'Dentist',
+                'Dermatology'      => 'Dermatology',
+                'DietNutrition'    => 'DietNutrition',
+                'EmergencyService' => 'EmergencyService',
+                'Geriatric'        => 'Geriatric',
+                'Gynecologic'      => 'Gynecologic',
+                'MedicalClinic'    => 'MedicalClinic',
+                'Midwifery'        => 'Midwifery',
+                'Nursing'          => 'Nursing',
+                'Obstetric'        => 'Obstetric',
+                'Oncologic'        => 'Oncologic',
+                'Optician'         => 'Optician',
+                'Optometric'       => 'Optometric',
+                'Otolaryngologic'  => 'Otolaryngologic',
+                'Pediatric'        => 'Pediatric',
+                'Pharmacy'         => 'Pharmacy',
+                'Physician'        => 'Physician',
+                'Physiotherapy'    => 'Physiotherapy',
+                'PlasticSurgery'   => 'PlasticSurgery',
+                'Podiatric'        => 'Podiatric',
+                'PrimaryCare'      => 'PrimaryCare',
+                'Psychiatric'      => 'Psychiatric',
+                'PublicHealth'     => 'PublicHealth',
+            ],
+            'ProfessionalService'         => [
+                'RealEstateAgent'          => 'RealEstateAgent',
+                'TouristInformationCenter' => 'TouristInformationCenter',
+                'TravelAgency'             => 'TravelAgency',
+            ],
+            'Store'                       => [
+                'BikeStore'            => 'BikeStore',
+                'BookStore'            => 'BookStore',
+                'ClothingStore'        => 'ClothingStore',
+                'ComputerStore'        => 'ComputerStore',
+                'ConvenienceStore'     => 'ConvenienceStore',
+                'DepartmentStore'      => 'DepartmentStore',
+                'ElectronicsStore'     => 'ElectronicsStore',
+                'Florist'              => 'Florist',
+                'FurnitureStore'       => 'FurnitureStore',
+                'GardenStore'          => 'GardenStore',
+                'GroceryStore'         => 'GroceryStore',
+                'HardwareStore'        => 'HardwareStore',
+                'HobbyShop'            => 'HobbyShop',
+                'HomeGoodsStore'       => 'HomeGoodsStore',
+                'JewelryStore'         => 'JewelryStore',
+                'LiquorStore'          => 'LiquorStore',
+                'MensClothingStore'    => 'MensClothingStore',
+                'MobilePhoneStore'     => 'MobilePhoneStore',
+                'MovieRentalStore'     => 'MovieRentalStore',
+                'MusicStore'           => 'MusicStore',
+                'OfficeEquipmentStore' => 'OfficeEquipmentStore',
+                'OutletStore'          => 'OutletStore',
+                'PawnShop'             => 'PawnShop',
+                'PetStore'             => 'PetStore',
+                'ShoeStore'            => 'ShoeStore',
+                'SportingGoodsStore'   => 'SportingGoodsStore',
+                'TireShop'             => 'TireShop',
+                'ToyStore'             => 'ToyStore',
+                'WholesaleStore'       => 'WholesaleStore',
+            ],
+            'SportsActivityLocation'      => [
+                'BowlingAlley'       => 'BowlingAlley',
+                'ExerciseGym'        => 'ExerciseGym',
+                'GolfCourse'         => 'GolfCourse',
+                'PublicSwimmingPool'  => 'PublicSwimmingPool',
+                'SkiResort'          => 'SkiResort',
+                'SportsClub'         => 'SportsClub',
+                'StadiumOrArena'     => 'StadiumOrArena',
+                'TennisComplex'      => 'TennisComplex',
+            ],
+            'EntertainmentBusiness'       => [
+                'AdultEntertainment' => 'AdultEntertainment',
+                'AmusementPark'      => 'AmusementPark',
+                'ArtGallery'         => 'ArtGallery',
+                'Casino'             => 'Casino',
+                'ComedyClub'         => 'ComedyClub',
+                'MovieTheater'       => 'MovieTheater',
+                'NightClub'          => 'NightClub',
+            ],
+        ];
+
+        return apply_filters( 'rtrs_sub_types_local_business', $siteTypes );
+    }
+
+	/**
+	 * Check if a schema type is LocalBusiness or a subtype of LocalBusiness.
+	 *
+	 * @param string $type Schema type to check.
+	 *
+	 * @return bool
+	 */
+	public static function isLocalBusinessType( $type ) {
+		if ( 'LocalBusiness' === $type ) {
+			return true;
+		}
+
+		$local_business_types = self::getSiteSubTypesLocalBusiness();
+
+		return self::typeExistsInArray( $type, $local_business_types );
+	}
+
+	/**
+	 * Recursively check if a type key exists in a nested array.
+	 *
+	 * @param string $type  Schema type to find.
+	 * @param array  $types Nested array of types.
+	 *
+	 * @return bool
+	 */
+	private static function typeExistsInArray( $type, $types ) {
+		foreach ( $types as $key => $value ) {
+			if ( $key === $type ) {
+				return true;
+			}
+			if ( is_array( $value ) && self::typeExistsInArray( $type, $value ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the @type value for schema output.
+	 *
+	 * LocalBusiness subtypes include 'LocalBusiness' and Organization subtypes
+	 * include 'Organization' in the @type array so properties like priceRange,
+	 * contactPoint remain valid for all sub-categories.
+	 *
+	 * @param string $category Schema category.
+	 *
+	 * @return string|array
+	 */
+	public static function getSchemaType( $category ) {
+		if ( in_array( $category, [ 'Organization', 'Person', 'LocalBusiness' ], true ) ) {
+			return $category;
+		}
+
+		if ( self::isLocalBusinessType( $category ) ) {
+			return [ $category, 'LocalBusiness' ];
+		}
+
+		return [ $category, 'Organization' ];
+	}
+
+	/**
+	 * Check if the given type is a FoodEstablishment or its subtype.
+	 *
+	 * @param string $type Schema type to check.
+	 *
+	 * @return bool
+	 */
+	public static function isFoodEstablishmentType( $type ) {
+		$food_types = [
+			'FoodEstablishment',
+			'Bakery',
+			'BarOrPub',
+			'Brewery',
+			'CafeOrCoffeeShop',
+			'Distillery',
+			'FastFoodRestaurant',
+			'IceCreamShop',
+			'Restaurant',
+			'Winery',
 		];
 
-		return apply_filters('rtseo_site_types', $siteTypes);
+		return in_array( $type, $food_types, true );
+	}
+
+	/**
+	 * Check if the given type is a MedicalOrganization subtype.
+	 *
+	 * These types also inherit from LocalBusiness in Schema.org
+	 * and support the priceRange property.
+	 *
+	 * @param string $type Schema type to check.
+	 *
+	 * @return bool
+	 */
+	public static function isMedicalOrgType( $type ) {
+		$medical_types = [
+			'Hospital',
+			'Pharmacy',
+			'Physician',
+		];
+
+		return in_array( $type, $medical_types, true );
 	}
 
 	public static function getCountryList() {
@@ -1748,6 +1833,30 @@ class Functions {
 		return apply_filters('rtseo_language_list', $language_with_key);
 	}
 
+	/**
+	 * Render the SchemaEngine AI logo icon block.
+	 *
+	 * Outputs a div with classes `aise-header__icon rtrs-logo` containing
+	 * the plugin logo image. Suitable for use inside any admin view or template.
+	 *
+	 * @param bool $echo Whether to echo the HTML. Default true. Pass false to return.
+	 * @return string|void HTML string when $echo is false, void otherwise.
+	 */
+	public static function get_logo_html( $echo = true ) {
+		$html = sprintf(
+			'<div class="aise-php aise-header__icon rtrs-logo"><img alt="%s" src="%s" width="40" height="40" /></div>',
+			esc_attr__( 'SchemaEngine AI', 'review-schema' ),
+			esc_url( rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ) )
+		);
+
+		if ( $echo ) {
+			echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML built with esc_attr__ and esc_url.
+			return;
+		}
+
+		return $html;
+	}
+
     /* Get plugin install button
      *
      * @param $slug
@@ -1759,19 +1868,23 @@ class Functions {
         if ( is_plugin_active( $plugin_file ) ) {
             $label = 'Activated';
             $class = 'success-class';
+            $icon  = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
         } elseif ( file_exists( $plugin_path ) ) {
-            $label = 'Activate Now';
+            $label = 'Activate';
             $class = 'not-activated';
+            $icon  = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
         } else {
-            $label = 'Install Now';
+            $label = 'Install';
             $class = 'install-plugins';
+            $icon  = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
         }
         ?>
         <a data-slug="<?php echo esc_attr( $slug ); ?>"
            href="https://wordpress.org/plugins/<?php echo esc_attr( $slug ); ?>/"
            target="_blank"
-           class="rtrs-admin-btn <?php echo esc_attr( $class ) ?>">
-            <?php echo esc_html( $label ) ?>
+           class="rtrs-admin-btn <?php echo esc_attr( $class ); ?>">
+            <?php echo $icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG is hardcoded. ?>
+            <?php echo esc_html( $label ); ?>
         </a>
         <?php
     }

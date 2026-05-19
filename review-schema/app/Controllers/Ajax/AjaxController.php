@@ -2,12 +2,27 @@
 
 namespace Rtrs\Controllers\Ajax;
 
-class AjaxController {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+/**
+ * Controller class for handling AJAX-related operations.
+ *
+ * This class is responsible for initializing required components
+ * related to shortcode handling, reviews, migrations, plugin details,
+ * and AJAX settings.
+ */
+class AjaxController {
+	/**
+	 * Constructor method.
+	 *
+	 * Initializes the necessary components by creating instances of Shortcode, Review, Migration, and OurPluginsController classes.
+	 *
+	 * @return void
+	 */
 	public function __construct() {
-		new Shortcode();
-		new Review();
-		new Migration();
 		new OurPluginsController();
+		new FinishWizard();
 	}
 }

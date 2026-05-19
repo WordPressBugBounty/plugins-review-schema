@@ -1,6 +1,11 @@
 <?php
  
-$helper = new Rtrs\Helpers\Functions;
-$meta_options = new Rtrs\Controllers\Admin\Meta\MetaOptions;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-echo $helper->fieldGenerator($meta_options->sectionSettingFields(), true);
+$rtrs_helper = new Rtrs\Helpers\Functions;
+$rtrs_meta_options = new \Rtrs\Modules\Review\Admin\Meta\MetaOptions;
+
+// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fieldGenerator() returns plugin-built HTML form fields with internal esc_attr/esc_html on dynamic values.
+echo $rtrs_helper->fieldGenerator($rtrs_meta_options->sectionSettingFields(), true);

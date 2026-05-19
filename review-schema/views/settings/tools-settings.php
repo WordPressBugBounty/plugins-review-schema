@@ -8,7 +8,7 @@ use Rtrs\Helpers\Functions;
  * Tools Settings
  */
 
-$options = array(
+$rtrs_options = array(
     'site_section' => array(
         'title'       => esc_html__('Licensing', 'review-schema'),
         'type'        => 'title',
@@ -20,4 +20,4 @@ $options = array(
     ),   
 );
 
-return apply_filters('rtrs_tools_settings_options', $options);
+return apply_filters('rtrs_tools_settings_options', $rtrs_options);

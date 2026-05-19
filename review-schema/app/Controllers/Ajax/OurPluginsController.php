@@ -5,6 +5,11 @@ namespace Rtrs\Controllers\Ajax;
 use WP_Query;
 use Plugin_Upgrader;
 use WP_Ajax_Upgrader_Skin;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Handles AJAX actions for installing and activating plugins
  * inside the RTRS admin interface.

@@ -1,44 +1,48 @@
-<?php 
+<?php
 
-namespace Rtrs\Traits; 
+namespace Rtrs\Traits;
 
-trait SingletonTrait
-{
-    /**
-     * Store the singleton object.
-     */
-    private static $singleton = false;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-    /**
-     * Create an inaccessible constructor.
-     */
-    private function __construct() {
-        $this->__instance();
-    }
+trait SingletonTrait {
 
-    private function __instance() {
-    }
+	/**
+	 * Store the singleton object.
+	 */
+	private static $singleton = false;
 
-    /**
-     * Fetch an instance of the class.
-     */
-    public static function getInstance() {
-        if (self::$singleton === false) {
-            self::$singleton = new self();
-        }
+	/**
+	 * Create an inaccessible constructor.
+	 */
+	private function __construct() {
+		$this->__instance();
+	}
 
-        return self::$singleton;
-    }
+	private function __instance() {
+	}
 
-    /**
-     * Prevent cloning.
-     */
-    private function __clone() {
-    }
+	/**
+	 * Fetch an instance of the class.
+	 */
+	public static function getInstance() {
+		if ( self::$singleton === false ) {
+			self::$singleton = new self();
+		}
 
-    /**
-     * Prevent unserializing.
-     */
-    public function __wakeup() {
-    }
+		return self::$singleton;
+	}
+
+	/**
+	 * Prevent cloning.
+	 */
+	private function __clone() {
+	}
+
+	/**
+	 * Prevent unserializing.
+	 */
+	public function __wakeup() {
+	}
 }

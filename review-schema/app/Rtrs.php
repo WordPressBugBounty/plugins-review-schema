@@ -1,20 +1,19 @@
 <?php
 
-require_once RTRS_PATH . 'vendor/autoload.php';
+namespace Rtrs;
 
-use Rtrs\Controllers\Marketing\BlackFridayV2;
-use Rtrs\Hooks\Backend;
-use Rtrs\Hooks\Frontend;
-use Rtrs\Hooks\SeoHooks;
-use Rtrs\Widgets\Widget;
-use Rtrs\Helpers\Functions;
-use Rtrs\Traits\SingletonTrait;
-use Rtrs\Controllers\Shortcodes;
-use Rtrs\Controllers\Marketing\Offer;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+
 use Rtrs\Controllers\Admin\Activation;
-use Rtrs\Controllers\Marketing\Review;
-use Rtrs\Controllers\Ajax\AjaxController;
 use Rtrs\Controllers\Admin\AdminController;
+use Rtrs\Controllers\Ajax\AjaxController;
+use Rtrs\Controllers\MigrationV3;
+use Rtrs\Helpers\Functions;
+use Rtrs\Modules\ModulesInit;
+use Rtrs\Traits\SingletonTrait;
 
 /**
  * Class Rtrs.
@@ -35,35 +34,58 @@ final class Rtrs {
 	 */
 	public function __construct() {
 		$this->define_constants();
-
-		new Widget();
-
 		$this->init_hooks();
 		new Activation();
+		ModulesInit::getInstance();
 	}
 
 	private function init_hooks() {
 		add_action( 'plugins_loaded', [ $this, 'on_plugins_loaded' ], -1 );
-
 		add_action( 'init', [ $this, 'init' ], 1 );
-		add_action( 'init', [ Shortcodes::class, 'init_short_code' ] ); // Init ShortCode
 	}
 
 	public function init() {
 		do_action( 'rtrs_before_init' );
+		$this->maybe_auto_enable_review();
 		new AdminController();
 		new AjaxController();
-		// Review::init();
-		// new Offer();
-        new BlackFridayV2();
-		new Backend();
-		new Frontend();
+		new MigrationV3();
+
 		do_action( 'rtrs_init' );
 	}
 
+	/**
+	 * Auto-enable review when rtrs posts exist but review_enabled is not set.
+	 *
+	 * @return void
+	 */
+	private function maybe_auto_enable_review() {
+		$general_options = get_option( 'rtrs_general_settings', [] );
+
+		if ( ! empty( $general_options['review_enabled'] ) ) {
+			return;
+		}
+
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time activation check; caching is unnecessary.
+		$has_posts = (bool) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s LIMIT 1",
+				$this->post_type
+			)
+		);
+
+		if ( $has_posts ) {
+			$general_options['review_enabled'] = 'yes';
+			update_option( 'rtrs_general_settings', $general_options );
+		}
+	}
+
+	/**
+	 * Plugin Loaded
+	 */
 	public function on_plugins_loaded() {
-		new SeoHooks();
-		do_action( 'rtrs_loaded' );
+		do_action( 'rtrs_ai_loaded' );
 	}
 
 	/**
@@ -100,6 +122,7 @@ final class Rtrs {
 	 */
 	public function define( $name, $value ) {
 		if ( ! defined( $name ) ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.VariableConstantNameFound -- Helper that defines a constant whose name is supplied by the caller (always RTRS_*).
 			define( $name, $value );
 		}
 	}
@@ -111,13 +134,6 @@ final class Rtrs {
 	 */
 	public function plugin_path() {
 		return untrailingslashit( plugin_dir_path( RTRS_PLUGIN_FILE ) );
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function version() {
-		return RTRS_VERSION;
 	}
 
 	/**
@@ -158,9 +174,14 @@ final class Rtrs {
 	}
 
 	/**
-	 * Get the template partial path.
+	 * Output a template partial.
 	 *
-	 * @return string
+	 * Loads `templates/partials/{$path}.php` and echoes it.
+	 *
+	 * @param string|null $path Partial slug relative to `partials/`.
+	 * @param array       $args Variables to extract into the partial scope.
+	 *
+	 * @return void
 	 */
 	public function get_partial_path( $path = null, $args = [] ) {
 		Functions::get_template_part( 'partials/' . $path, $args );
@@ -190,7 +211,7 @@ final class Rtrs {
 		}
 
 		if ( $args ) {
-			extract( $args );
+			extract( $args, EXTR_SKIP ); // @codingStandardsIgnoreLine
 		}
 
 		if ( $return ) {
@@ -233,13 +254,3 @@ final class Rtrs {
 		return $result;
 	}
 }
-
-/**
- * Rivew Schema
- *
- * @return bool|SingletonTrait|Rtrs
- */
-function rtrs() {
-	return Rtrs::getInstance();
-}
-rtrs(); // Run Rtrs Plugin.

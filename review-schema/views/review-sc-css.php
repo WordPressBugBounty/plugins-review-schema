@@ -3,181 +3,185 @@
 /**
  * @var integer $scID
  * @var bool    $old 
- * @var array    $metaData
+ * @var array    $rtrs_meta_data
  */
 use Rtrs\Controllers\Admin\Meta\AddMetaBox;
  
-$filter = new AddMetaBox();
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-$sc_id = $scID;
-$sc_meta = []; 
-$metaData = get_post_meta($sc_id);
+$rtrs_filter = new AddMetaBox();
 
-$sc_meta['layout'] = isset( $metaData['layout'][0] ) && !empty( $metaData['layout'][0] ) ? $filter->sanitize_field('text', $metaData['layout'][0] ) : null;
-$sc_meta['width'] = isset( $metaData['width'][0] ) && !empty( $metaData['width'][0] ) ? $filter->sanitize_field( 'text', $metaData['width'][0] ) : null; 
-$sc_meta['margin'] = isset( $metaData['margin'][0] ) && !empty( $metaData['margin'][0] ) ? $filter->sanitize_field( 'text', $metaData['margin'][0] ) : null; 
-$sc_meta['padding'] = isset( $metaData['padding'][0] ) && !empty( $metaData['padding'][0] ) ? $filter->sanitize_field( 'text', $metaData['padding'][0] ) : null; 
-$sc_meta['author_name'] = isset( $metaData['author_name'][0] ) && !empty( $metaData['author_name'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['author_name'][0]) ) : null; 
-$sc_meta['author_name_hover'] = isset( $metaData['author_name_hover'][0] ) && !empty( $metaData['author_name_hover'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['author_name_hover'][0]) ) : null;
-$sc_meta['review_title'] = isset( $metaData['review_title'][0] ) && !empty( $metaData['review_title'][0] ) ? $filter->sanitize_field('style', unserialize($metaData['review_title'][0]) ) : null;   
-$sc_meta['review_text'] = isset( $metaData['review_text'][0] ) && !empty( $metaData['review_text'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['review_text'][0]) ) : null;  
-$sc_meta['date_text'] = isset( $metaData['date_text'][0] ) && !empty( $metaData['date_text'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['date_text'][0]) ) : null;      
-$sc_meta['star_color'] = isset( $metaData['star_color'][0] ) && !empty( $metaData['star_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['star_color'][0] ) : null;   
-$sc_meta['meta_icon_color'] = isset( $metaData['meta_icon_color'][0] ) && !empty( $metaData['meta_icon_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['meta_icon_color'][0] ) : null;   
+$rtrs_sc_id = $scID;
+$rtrs_sc_meta = []; 
+$rtrs_meta_data = get_post_meta($rtrs_sc_id);
+
+$rtrs_sc_meta['layout'] = isset( $rtrs_meta_data['layout'][0] ) && !empty( $rtrs_meta_data['layout'][0] ) ? $rtrs_filter->sanitize_field('text', $rtrs_meta_data['layout'][0] ) : null;
+$rtrs_sc_meta['width'] = isset( $rtrs_meta_data['width'][0] ) && !empty( $rtrs_meta_data['width'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['width'][0] ) : null; 
+$rtrs_sc_meta['margin'] = isset( $rtrs_meta_data['margin'][0] ) && !empty( $rtrs_meta_data['margin'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['margin'][0] ) : null; 
+$rtrs_sc_meta['padding'] = isset( $rtrs_meta_data['padding'][0] ) && !empty( $rtrs_meta_data['padding'][0] ) ? $rtrs_filter->sanitize_field( 'text', $rtrs_meta_data['padding'][0] ) : null; 
+$rtrs_sc_meta['author_name'] = isset( $rtrs_meta_data['author_name'][0] ) && !empty( $rtrs_meta_data['author_name'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize($rtrs_meta_data['author_name'][0]) ) : null; 
+$rtrs_sc_meta['author_name_hover'] = isset( $rtrs_meta_data['author_name_hover'][0] ) && !empty( $rtrs_meta_data['author_name_hover'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize($rtrs_meta_data['author_name_hover'][0]) ) : null;
+$rtrs_sc_meta['review_title'] = isset( $rtrs_meta_data['review_title'][0] ) && !empty( $rtrs_meta_data['review_title'][0] ) ? $rtrs_filter->sanitize_field('style', unserialize($rtrs_meta_data['review_title'][0]) ) : null;   
+$rtrs_sc_meta['review_text'] = isset( $rtrs_meta_data['review_text'][0] ) && !empty( $rtrs_meta_data['review_text'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize($rtrs_meta_data['review_text'][0]) ) : null;  
+$rtrs_sc_meta['date_text'] = isset( $rtrs_meta_data['date_text'][0] ) && !empty( $rtrs_meta_data['date_text'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize($rtrs_meta_data['date_text'][0]) ) : null;      
+$rtrs_sc_meta['star_color'] = isset( $rtrs_meta_data['star_color'][0] ) && !empty( $rtrs_meta_data['star_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['star_color'][0] ) : null;   
+$rtrs_sc_meta['meta_icon_color'] = isset( $rtrs_meta_data['meta_icon_color'][0] ) && !empty( $rtrs_meta_data['meta_icon_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['meta_icon_color'][0] ) : null;   
  
-$sc_meta['helper_btn'] = isset( $metaData['helper_btn'][0] ) && !empty( $metaData['helper_btn'][0] ) ? $filter->sanitize_field( 'style', unserialize($metaData['helper_btn'][0]) ) : null;
-$sc_meta['helper_btn_color'] = isset( $metaData['helper_btn_color'][0] ) && !empty( $metaData['helper_btn_color'][0] ) ? $filter->sanitize_field( 'color', $metaData['helper_btn_color'][0] ) : null;
-$sc_meta['helper_btn_hover'] = isset( $metaData['helper_btn_hover'][0] ) && !empty( $metaData['helper_btn_hover'][0] ) ? $filter->sanitize_field( 'color', $metaData['helper_btn_hover'][0] ) : null; 
+$rtrs_sc_meta['helper_btn'] = isset( $rtrs_meta_data['helper_btn'][0] ) && !empty( $rtrs_meta_data['helper_btn'][0] ) ? $rtrs_filter->sanitize_field( 'style', unserialize($rtrs_meta_data['helper_btn'][0]) ) : null;
+$rtrs_sc_meta['helper_btn_color'] = isset( $rtrs_meta_data['helper_btn_color'][0] ) && !empty( $rtrs_meta_data['helper_btn_color'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['helper_btn_color'][0] ) : null;
+$rtrs_sc_meta['helper_btn_hover'] = isset( $rtrs_meta_data['helper_btn_hover'][0] ) && !empty( $rtrs_meta_data['helper_btn_hover'][0] ) ? $rtrs_filter->sanitize_field( 'color', $rtrs_meta_data['helper_btn_hover'][0] ) : null; 
 
-$css  = null;
+$rtrs_css  = null;
 
-$css  .= ".rtrs-review-sc-{$sc_id} .rtrs-review-list .depth-2 .rtrs-reply-btn{display:none}";
-if ( $sc_meta['width'] || $sc_meta['margin'] || $sc_meta['padding']) { 
-    $css  .= "@media only screen and (min-width: 768px) { .rtrs-review-sc-{$sc_id}{";
+$rtrs_css  .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-list .depth-2 .rtrs-reply-btn{display:none}";
+if ( $rtrs_sc_meta['width'] || $rtrs_sc_meta['margin'] || $rtrs_sc_meta['padding']) { 
+    $rtrs_css  .= "@media only screen and (min-width: 768px) { .rtrs-review-sc-{$rtrs_sc_id}{";
 
-    if ( $value = $sc_meta['width'] ) { 
-        $css .= "width:" . $value . ";";
+    if ( $rtrs_value = $rtrs_sc_meta['width'] ) { 
+        $rtrs_css .= "width:" . $rtrs_value . ";";
     } 
-    if ( $value = $sc_meta['margin'] ) { 
-        $css .= "margin:" . $value . ";";
+    if ( $rtrs_value = $rtrs_sc_meta['margin'] ) { 
+        $rtrs_css .= "margin:" . $rtrs_value . ";";
     } 
-    if ( $value = $sc_meta['padding'] ) { 
-        $css .= "padding:" . $value . ";";
+    if ( $rtrs_value = $rtrs_sc_meta['padding'] ) { 
+        $rtrs_css .= "padding:" . $rtrs_value . ";";
     } 
 
-    $css .= "} }";
+    $rtrs_css .= "} }";
 } 
 
-$typo = ( ! empty( $sc_meta['author_name'] ) ? $sc_meta['author_name'] : array() );
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-author-link a{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['author_name'] ) ? $rtrs_sc_meta['author_name'] : array() );
+if ( ! empty( $rtrs_typo ) ) {
+    $rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+    $rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+    $rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+    $rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null ); 
+    if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+        $rtrs_css             .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-author-link{";
+        if ( $rtrs_typo_color ) {
+            $rtrs_css .= "color:" . $rtrs_typo_color . ";";
         }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
+        if ( $rtrs_typo_size ) {
+            $rtrs_css .= "font-size:" . $rtrs_typo_size . "px;";
         }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
+        if ( $rtrs_typo_weight ) {
+            $rtrs_css .= "font-weight:" . $rtrs_typo_weight . ";";
         }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
+        if ( $rtrs_typo_alignment ) {
+            $rtrs_css .= "text-align:" . $rtrs_typo_alignment . ";";
         }
-        $css .= "}";  
+        $rtrs_css .= "}";  
     }
 } 
 
-$typo = ( ! empty( $sc_meta['author_name_hover'] ) ? $sc_meta['author_name_hover'] : array() );
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-author-link a:hover{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['author_name_hover'] ) ? $rtrs_sc_meta['author_name_hover'] : array() );
+if ( ! empty( $rtrs_typo ) ) {
+    $rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+    $rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+    $rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+    $rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null ); 
+    if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+        $rtrs_css             .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-author-link:hover{";
+        if ( $rtrs_typo_color ) {
+            $rtrs_css .= "color:" . $rtrs_typo_color . ";";
         }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
+        if ( $rtrs_typo_size ) {
+            $rtrs_css .= "font-size:" . $rtrs_typo_size . "px;";
         }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
+        if ( $rtrs_typo_weight ) {
+            $rtrs_css .= "font-weight:" . $rtrs_typo_weight . ";";
         }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
+        if ( $rtrs_typo_alignment ) {
+            $rtrs_css .= "text-align:" . $rtrs_typo_alignment . ";";
         }
-        $css .= "}";  
+        $rtrs_css .= "}";  
     }
 }  
-$typo = ( ! empty( $sc_meta['review_title'] ) ? $sc_meta['review_title'] : array() );  
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-title{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['review_title'] ) ? $rtrs_sc_meta['review_title'] : array() );  
+if ( ! empty( $rtrs_typo ) ) {
+    $rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+    $rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+    $rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+    $rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null ); 
+    if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+        $rtrs_css             .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-title{";
+        if ( $rtrs_typo_color ) {
+            $rtrs_css .= "color:" . $rtrs_typo_color . ";";
         }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
+        if ( $rtrs_typo_size ) {
+            $rtrs_css .= "font-size:" . $rtrs_typo_size . "px;";
         }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
+        if ( $rtrs_typo_weight ) {
+            $rtrs_css .= "font-weight:" . $rtrs_typo_weight . ";";
         }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
+        if ( $rtrs_typo_alignment ) {
+            $rtrs_css .= "text-align:" . $rtrs_typo_alignment . ";";
         }
-        $css .= "}";  
+        $rtrs_css .= "}";  
     }
 } 
 
-$typo = ( ! empty( $sc_meta['review_text'] ) ? $sc_meta['review_text'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css             .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body p{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['review_text'] ) ? $rtrs_sc_meta['review_text'] : array() ); 
+if ( ! empty( $rtrs_typo ) ) {
+    $rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+    $rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+    $rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+    $rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null ); 
+    if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+        $rtrs_css             .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body p{";
+        if ( $rtrs_typo_color ) {
+            $rtrs_css .= "color:" . $rtrs_typo_color . ";";
         }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
+        if ( $rtrs_typo_size ) {
+            $rtrs_css .= "font-size:" . $rtrs_typo_size . "px;";
         }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
+        if ( $rtrs_typo_weight ) {
+            $rtrs_css .= "font-weight:" . $rtrs_typo_weight . ";";
         }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
+        if ( $rtrs_typo_alignment ) {
+            $rtrs_css .= "text-align:" . $rtrs_typo_alignment . ";";
         }
-        $css .= "}"; 
+        $rtrs_css .= "}"; 
     } 
 }    
 
-$typo = ( ! empty( $sc_meta['date_text'] ) ? $sc_meta['date_text'] : array() ); 
-if ( ! empty( $typo ) ) {
-    $typo_color     = ( ! empty( $typo['color'] ) ? $typo['color'] : null );
-    $typo_size      = ( ! empty( $typo['size'] ) ? absint( $typo['size'] ) : null );
-    $typo_weight    = ( ! empty( $typo['weight'] ) ? $typo['weight'] : null );
-    $typo_alignment = ( ! empty( $typo['align'] ) ? $typo['align'] : null ); 
-    if ( $typo_color || $typo_size || $typo_weight || $typo_alignment ) {
-        $css  .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-review-date{";
-        if ( $typo_color ) {
-            $css .= "color:" . $typo_color . ";";
+$rtrs_typo = ( ! empty( $rtrs_sc_meta['date_text'] ) ? $rtrs_sc_meta['date_text'] : array() ); 
+if ( ! empty( $rtrs_typo ) ) {
+    $rtrs_typo_color     = ( ! empty( $rtrs_typo['color'] ) ? $rtrs_typo['color'] : null );
+    $rtrs_typo_size      = ( ! empty( $rtrs_typo['size'] ) ? absint( $rtrs_typo['size'] ) : null );
+    $rtrs_typo_weight    = ( ! empty( $rtrs_typo['weight'] ) ? $rtrs_typo['weight'] : null );
+    $rtrs_typo_alignment = ( ! empty( $rtrs_typo['align'] ) ? $rtrs_typo['align'] : null ); 
+    if ( $rtrs_typo_color || $rtrs_typo_size || $rtrs_typo_weight || $rtrs_typo_alignment ) {
+        $rtrs_css  .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-review-date{";
+        if ( $rtrs_typo_color ) {
+            $rtrs_css .= "color:" . $rtrs_typo_color . ";";
         }
-        if ( $typo_size ) {
-            $css .= "font-size:" . $typo_size . "px;";
+        if ( $rtrs_typo_size ) {
+            $rtrs_css .= "font-size:" . $rtrs_typo_size . "px;";
         }
-        if ( $typo_weight ) {
-            $css .= "font-weight:" . $typo_weight . ";";
+        if ( $rtrs_typo_weight ) {
+            $rtrs_css .= "font-weight:" . $rtrs_typo_weight . ";";
         }
-        if ( $typo_alignment ) {
-            $css .= "text-align:" . $typo_alignment . ";";
+        if ( $rtrs_typo_alignment ) {
+            $rtrs_css .= "text-align:" . $rtrs_typo_alignment . ";";
         }
-        $css .= "}";  
+        $rtrs_css .= "}";  
     }
 }   
-if ( $value = $sc_meta['star_color'] ) {
-    $css  .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-review-rating{";
-    $css .= "color:" . $value . ";";
-    $css .= "}";
+if ( $rtrs_value = $rtrs_sc_meta['star_color'] ) {
+    $rtrs_css  .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-review-rating{";
+    $rtrs_css .= "color:" . $rtrs_value . ";";
+    $rtrs_css .= "}";
 }
 
-if ( $value = $sc_meta['meta_icon_color'] ) {
-    $css  .= ".rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-calendar:before, .rtrs-review-sc-{$sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-share:before{";
-    $css .= "color:" . $value . ";";
-    $css .= "}";
+if ( $rtrs_value = $rtrs_sc_meta['meta_icon_color'] ) {
+    $rtrs_css  .= ".rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-calendar:before, .rtrs-review-sc-{$rtrs_sc_id} .rtrs-review-box .rtrs-review-body .rtrs-review-meta .rtrs-share:before{";
+    $rtrs_css .= "color:" . $rtrs_value . ";";
+    $rtrs_css .= "}";
 } 
-$css = apply_filters( 'rtrs_review_sc_css', $css, $metaData, $sc_id, $filter );
-if ( $css ) {
-    echo esc_html( $css );
+$rtrs_css = apply_filters( 'rtrs_review_sc_css', $rtrs_css, $rtrs_meta_data, $rtrs_sc_id, $rtrs_filter );
+if ( $rtrs_css ) {
+    echo esc_html( wp_strip_all_tags( $rtrs_css ) );
 } 

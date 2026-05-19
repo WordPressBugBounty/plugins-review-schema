@@ -69,11 +69,11 @@ class BlackFridayV2 {
 		$notice_key   = 'dismiss_bf_review_schema_' . $current_year;
 
 		// Check if notice is already dismissed for this year.
-		if ( get_option( $notice_key ) === '1' || isset( $GLOBALS['woobundle_notice'] ) ) {
+		if ( get_option( $notice_key ) === '1' || isset( $GLOBALS['rtrs_woobundle_notice'] ) ) {
 			return;
 		}
 
-		$GLOBALS['woobundle_notice'] = 'woobundle_notice';
+		$GLOBALS['rtrs_woobundle_notice'] = 'rtrs_woobundle_notice';
 		self::display_notice();
 	}
 
@@ -97,7 +97,7 @@ class BlackFridayV2 {
 		add_action(
 			'admin_notices',
 			function () {
-				$plugin_name   = 'Review Schema';
+				$plugin_name   = 'SchemaEngine AI';
 				$download_link = 'https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/#pricing';
 				?>
 				<div class="notice notice-info is-dismissible rtrs-black-friday-notice"
@@ -145,7 +145,7 @@ class BlackFridayV2 {
 				// Check user permissions.
 				if ( ! current_user_can( 'manage_options' ) ) {
 					wp_send_json_error(
-						new \WP_Error( 'rtrs_block_user_permission', __( 'User permission error', 'shopbuilder' ) )
+						new \WP_Error( 'rtrs_block_user_permission', __( 'User permission error', 'review-schema' ) )
 					);
 				}
 				// Verify nonce.

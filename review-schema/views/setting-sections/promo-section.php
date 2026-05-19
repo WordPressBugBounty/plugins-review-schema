@@ -1,10 +1,21 @@
-<?php use Rtrs\Helpers\Functions;
+<?php
+/**
+ * Promo section view for non-licensed users.
+ *
+ * @package Rtrs
+ */
+
+use Rtrs\Helpers\Functions;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! Functions::has_valid_license() ) { ?>
 	<div class="rtrs-promo-container">
 		<div class="rtrs-promo-inner">
 			<div class="promo-image">
-				<img src="<?php echo esc_url( rtrs()->get_assets_uri( 'imgs/Review-Schema_Promo_thumb.webp' ) ); ?>" alt="Review Schema">
+				<img src="<?php echo esc_url( rtrs()->get_assets_uri( 'imgs/Review-Schema_Promo_thumb.webp' ) ); ?>" alt="SchemaEngine AI">
 			</div>
 			<div class="promo-features">
 				<h2 class="promo-title">

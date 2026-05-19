@@ -1,14 +1,16 @@
 <?php
 /**
  * @wordpress-plugin
- * Plugin Name:       Review Schema
- * Plugin URI:        https://wordpress.org/plugins/review-schema/
- * Description:       The most comprehensive multi-criteria Review & Rating with JSON-LD based Structure Data Schema solution for WordPress website. Support Review Rating and auto generated schema markup for page, post, WooCommerce & custom post type.
- * Version:           2.2.7
- * Author:            RadiusTheme
- * Author URI:        https://radiustheme.com
- * Text Domain:       review-schema
- * Domain Path:       /languages
+ * Plugin Name: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO
+ * Plugin URI: https://wordpress.org/plugins/review-schema/
+ * Description: The most comprehensive multi-criteria Review & Rating with JSON-LD based Structure Data Schema solution for WordPress website. Support Review Rating and auto generated schema markup for page, post, WooCommerce & custom post type.
+ * Version: 3.0.0
+ * Author: RadiusTheme
+ * Author URI: https://radiustheme.com
+ * Text Domain: review-schema
+ * Domain Path: /languages
+ * License: GPLv3
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,13 +24,31 @@ if ( ! defined( 'RTRS_PLUGIN_FILE' ) ) {
 
 // Define VERSION.
 if ( ! defined( 'RTRS_VERSION' ) ) {
-	define( 'RTRS_VERSION', '2.2.7' );
+	define( 'RTRS_VERSION', '3.0.0' );
 }
 
 if ( ! defined( 'RTRS_PATH' ) ) {
 	define( 'RTRS_PATH', plugin_dir_path( __FILE__ ) );
 }
 
-if ( ! class_exists( 'Rtrs' ) ) {
-	require_once 'app/Rtrs.php';
+require_once RTRS_PATH . 'vendor/autoload.php';
+
+// Clear AI batch cron on deactivation.
+register_deactivation_hook(
+	__FILE__,
+	function () {
+		wp_clear_scheduled_hook( 'rtrs_ai_batch_generate' );
+		delete_option( '_rtrs_ai_batch_progress' );
+		delete_option( '_rtrs_ai_batch_done' );
+	}
+);
+use Rtrs\Rtrs;
+/**
+ * Rivew Schema
+ *
+ * @return bool|SingletonTrait|Rtrs
+ */
+function rtrs() {
+	return Rtrs::getInstance();
 }
+rtrs(); // Run Rtrs Plugin.

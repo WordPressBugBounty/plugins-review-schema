@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 ob_start();
+// phpcs:disable PluginCheck.CodeAnalysis.Offloading.OffloadedContent -- Marketing screenshots hosted on vendor CDN; admin-only promotional listings, not user-facing assets.
 ?>
 <h2 style="border-bottom: 1px solid #ddd;padding-bottom: 10px;margin-bottom: 15px;"><?php esc_html_e( 'Themes', 'review-schema' ); ?></h2>
 <ul class="product_list">
@@ -33,15 +34,16 @@ ob_start();
 </ul>
 
 <?php
-$content = ob_get_clean();
+// phpcs:enable PluginCheck.CodeAnalysis.Offloading.OffloadedContent
+$rtrs_content = ob_get_clean();
 
-$options = [
+$rtrs_options = [
 	'pro_sections' => [
 		'title'        => esc_html__( 'Our Products', 'review-schema' ),
 		'type'         => 'html',
 		// 'css_style'    => $css_style,
-		'html_content' => $content,
+		'html_content' => $rtrs_content,
 	],
 ];
 
-return apply_filters( 'rtrs_tools_settings_options', $options );
+return apply_filters( 'rtrs_tools_settings_options', $rtrs_options );

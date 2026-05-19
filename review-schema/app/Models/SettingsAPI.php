@@ -4,6 +4,10 @@ namespace Rtrs\Models;
 
 use Rtrs\Helpers\Functions;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 abstract class SettingsAPI {
 	/**
 	 * The plugin ID. Used for option names.
@@ -100,7 +104,9 @@ abstract class SettingsAPI {
 	 */
 	public function admin_options() {
 		if ( ! empty( $this->get_form_fields() ) ) {
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- generate_settings_html() returns pre-escaped HTML built from internal generate_*_html() field renderers; get_form_fields() returns a class-internal config array.
 			echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields() ) . '</table>';
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -148,10 +154,12 @@ abstract class SettingsAPI {
 	 */
 	public function get_field_value( $key, $field, $post_data = [] ) {
 		$type = $this->get_field_type( $field );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce value is verified via wp_verify_nonce() immediately below.
 		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'rtrs-settings' ) ) {
 			die( esc_html__( 'Action failed. Please refresh the page and retry.', 'review-schema' ) );
 		}
 		// Note: this $_POST data satitize by following function, after the lines
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each option value is sanitized in the per-field validation loop that follows.
 		$post_data = empty( $post_data ) ? ( ! empty( $_POST[ $this->get_option_key() ] ) ? ( $_POST[ $this->get_option_key() ] ) : [] ) : $post_data;
 		$value     = isset( $post_data[ $key ] ) ? $post_data[ $key ] : null;
 
@@ -189,10 +197,12 @@ abstract class SettingsAPI {
 			return $this->data;
 		}
 
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce value is verified via wp_verify_nonce() immediately below.
 		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'rtrs-settings' ) ) {
 			return $this->data;
 		}
 
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each option value is sanitized in the per-field validation loop that follows.
 		return isset( $_POST[ $this->get_option_key() ] ) ? ( $_POST[ $this->get_option_key() ] ) : [];
 	}
 
@@ -218,7 +228,6 @@ abstract class SettingsAPI {
 				unset( $this->settings[ $key ] );
 			}
 		}
-
 		$sanitized_new_settings = apply_filters( 'rtrs_settings_api_sanitized_fields_' . $this->option, $this->settings, $this );
 		do_action( 'rtrs_admin_settings_before_ddd_' . $this->option, $sanitized_new_settings, Functions::get_option( $this->get_option_key() ), $this );
 		return update_option( $this->get_option_key(), $sanitized_new_settings );
@@ -337,6 +346,10 @@ abstract class SettingsAPI {
 	 *
 	 * Generate the HTML for the fields on the "settings" screen.
 	 *
+	 * Field renderers are dispatched dynamically based on each field's `type`
+	 * value. To add a new field type, define a method named
+	 * `generate_{type}_html( $key, $data )`.
+	 *
 	 * @param array $form_fields (default: array())
 	 * @param bool  $echo
 	 *
@@ -344,7 +357,25 @@ abstract class SettingsAPI {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @uses   method_exists()
+	 * @uses self::generate_text_html()
+	 * @uses self::generate_group_html()
+	 * @uses self::generate_auto_schema_html()
+	 * @uses self::generate_button_html()
+	 * @uses self::generate_image_size_html()
+	 * @uses self::generate_image_html()
+	 * @uses self::generate_html_html()
+	 * @uses self::generate_password_html()
+	 * @uses self::generate_color_html()
+	 * @uses self::generate_textarea_html()
+	 * @uses self::generate_wysiwyg_html()
+	 * @uses self::generate_checkbox_html()
+	 * @uses self::generate_multi_checkbox_html()
+	 * @uses self::generate_select_html()
+	 * @uses self::generate_schema_type_html()
+	 * @uses self::generate_radio_html()
+	 * @uses self::generate_multiselect_html()
+	 * @uses self::generate_title_html()
+	 * @uses method_exists()
 	 */
 	public function generate_settings_html( $form_fields = [] ) {
 		if ( empty( $form_fields ) ) {
@@ -402,7 +433,7 @@ abstract class SettingsAPI {
 			$description = '';
 		}
 
-		return $description ? '<p class="description">' . wp_kses_post( $description ) . '</p>' . "\n" : '';
+		return $description ? '<p class="description" >' . wp_kses_post( $description ) . '</p>' . "\n" : '';
 	}
 
 	/**
@@ -462,8 +493,8 @@ abstract class SettingsAPI {
 								true
 							);
 							?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?> />
-					<?php echo $this->get_description_html( $data ); ?>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?> />
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -475,12 +506,35 @@ abstract class SettingsAPI {
 	/**
 	 * Generate group Input HTML.
 	 *
+	 * Inner field renderers are dispatched dynamically based on each child
+	 * field's `type` value (same pattern as {@see self::generate_settings_html()}).
+	 *
 	 * @param mixed $key
 	 * @param mixed $data
 	 *
 	 * @return string
 	 *
 	 * @since  1.0.0
+	 *
+	 * @uses self::generate_text_html()
+	 * @uses self::generate_group_html()
+	 * @uses self::generate_auto_schema_html()
+	 * @uses self::generate_button_html()
+	 * @uses self::generate_image_size_html()
+	 * @uses self::generate_image_html()
+	 * @uses self::generate_html_html()
+	 * @uses self::generate_password_html()
+	 * @uses self::generate_color_html()
+	 * @uses self::generate_textarea_html()
+	 * @uses self::generate_wysiwyg_html()
+	 * @uses self::generate_checkbox_html()
+	 * @uses self::generate_multi_checkbox_html()
+	 * @uses self::generate_select_html()
+	 * @uses self::generate_schema_type_html()
+	 * @uses self::generate_radio_html()
+	 * @uses self::generate_multiselect_html()
+	 * @uses self::generate_title_html()
+	 * @uses method_exists()
 	 */
 	public function generate_group_html( $key, $data ) {
 		$field_key = $this->get_field_key( $key );
@@ -526,8 +580,9 @@ abstract class SettingsAPI {
 			$pro_label = apply_filters( 'rtrs_pro_label', $pro_label );
 		}
 
-		$html .= '<div class="rtrs-group-add"><a href="#" data-pro="' . esc_attr( $data_pro ) . '" data-id="' . esc_attr( $id ) . '" data-name="' . esc_attr( $group_name ) . '" class="button button-primary">' . esc_html__( 'Add New', 'review-schema' ) . ' ' . $data['title'] . '</a>' . wp_kses( $pro_label, [ 'span' => [ 'class' => [] ] ] ) . '</div><table class="form-table">';
+		$html .= '<div class="rtrs-group-add"><a href="#" data-pro="' . esc_attr( $data_pro ) . '" data-id="' . esc_attr( $id ) . '" data-name="' . esc_attr( $group_name ) . '" class="button button-primary">' . esc_html__( 'Add New', 'review-schema' ) . ' ' . esc_html( $data['title'] ) . '</a>' . wp_kses( $pro_label, [ 'span' => [ 'class' => [] ] ] ) . '</div><table class="form-table">';
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $html is built with esc_attr/esc_html/wp_kses on dynamic parts.
 		echo $html;
 
 		return ob_get_clean();
@@ -551,27 +606,13 @@ abstract class SettingsAPI {
 		$wrapper_class = implode( ' ', [ $id, $data['wrapper_class'] ] );
 		$depends       = empty( $data['dependency'] ) ? '' : "data-rt-depends='" . wp_json_encode( $data['dependency'] ) . "'";
 
+
 		if ( ! $data['label'] ) {
 			$data['label'] = $data['title'];
 		}
 
 		$values = $this->get_option( $key );
 		$values = is_array( $values ) ? $values : Functions::default_setting_schema();
-
-		$query                = new \WP_Query(
-			[
-				'posts_per_page' => -1,
-				'post_type'      => rtrs()->getPostType(),
-				'post_status'    => 'publish',
-			]
-		);
-		$custom_review_schema = [];
-		while ( $query->have_posts() ) :
-			$query->the_post();
-			$custom_review_schema[ get_the_ID() ] = get_post_meta( get_the_ID(), 'rtrs_post_type', true );
-		endwhile;
-		wp_reset_postdata();
-
 		ob_start();
 		?>
 		<tr valign="top" class="<?php echo esc_attr( $wrapper_class ); ?>" <?php echo wp_kses_post( $depends ); ?>>
@@ -581,95 +622,54 @@ abstract class SettingsAPI {
 			</th>
 			<td class="form-input">
 				<fieldset>
-					<legend class="screen-reader-text"><span><?php echo wp_kses_post( $data['title'] ); ?></span>
-					</legend>
-					<style>
-						.rtrs-auto-schema td {
-							padding: 3px 10px 5px 0px;
-						}
-					</style>
-					<table class="rtrs-auto-schema"> 
-						<tr> 
-							<td><strong><?php esc_html_e( 'Post Type', 'review-schema' ); ?></strong></td>
-							<td><strong><?php esc_html_e( 'Schema Type', 'review-schema' ); ?></strong></td>
-							<td><strong><?php esc_html_e( 'Overridden?', 'review-schema' ); ?></strong></td> 
-						</tr>
+					<legend class="screen-reader-text"><span><?php echo wp_kses_post( $data['title'] ); ?></span></legend>
+					<table class="rtrs-auto-schema" >
+						<thead>
+							<tr>
+								<th><strong><?php esc_html_e( 'Post Type', 'review-schema' ); ?></strong></th>
+								<th><strong><?php esc_html_e( 'Enable Schema Feature', 'review-schema' ); ?></strong></th>
+								<th style="text-align: center;" colspan="2"><strong><?php esc_html_e( 'Auto Generate?', 'review-schema' ); ?></strong></th>
+							</tr>
+						</thead>
 						<?php $i = 0; ?>
 						<?php
 						foreach ( (array) $data['options'] as $option_key => $option_value ) {
-							$pro_field = $disabled = false;
-
-							if ( in_array( $option_key, $custom_review_schema ) ) {
-								$disabled = true;
-							}
-
-							if ( ( $option_key == 'product' || $option_key == 'download' ) && ! function_exists( 'rtrsp' ) ) {
+							$pro_field = false;
+							$disabled  = false;
+							if ( ( 'product' == $option_key || 'download' === $option_key ) && ! function_exists( 'rtrsp' ) ) {
 								$pro_field = true;
 							}
 							?>
-							<tr class="
-							<?php
-							if ( $pro_field ) {
-								echo 'schema-pro-field';
-							}
-							?>
-							">  
-								<td>
-									<label for="<?php echo esc_attr( $id . '-' . $option_key ); ?>"> 
-										<input 
+							<tr class="<?php echo $pro_field ? 'schema-pro-field' : ''; ?>">
+								<th>
+									<label for="<?php echo esc_attr( $id . '-' . $option_key ); ?>">
 										<?php
-										if ( $pro_field || $disabled ) {
-											echo 'disabled';
-										}
-										?>
-							class="<?php echo esc_attr( $data['class'] ); ?>" type="checkbox"
-											name="<?php echo esc_attr( $field_key ); ?>[<?php echo esc_attr( $i ); ?>][post_type]"
-											id="<?php echo esc_attr( $id . '-' . $option_key ); ?>"
-											value="<?php echo esc_attr( $option_key ); ?>"
-											<?php checked( isset( $values[ $i ]['post_type'] ) ); ?> />
-										<?php
-										echo $option_value;
+										echo esc_html( $option_value );
 										if ( $pro_field ) {
 											echo ' <span class="rtrs-pro">[Pro]</span>';
 										}
 										?>
-																</label> 
-								</td> 
+									</label>
+								</th>
 								<td>
-									<select 
-									<?php
-									if ( $pro_field || $disabled ) {
-										echo 'disabled';
-									}
-									?>
-							name="<?php echo esc_attr( $field_key ); ?>[<?php echo esc_attr( $i ); ?>][schema_type]">
-										<option value=""><?php esc_html_e( 'Select', 'review-schema' ); ?></option>
-										<?php
-										foreach ( Functions::rich_snippet_cats() as $key => $value ) {
-											$selected = isset( $values[ $i ]['schema_type'] ) && $values[ $i ]['schema_type'] == $key ? 'selected' : '';
-											printf(
-												'<option value="%1$s" %3$s>%2$s</option>',
-												$key,
-												$value,
-												$selected
-											);
-										}
-										?>
-																			</select>
+									<select <?php echo ( $pro_field || $disabled ) ? 'disabled' : ''; ?> name="<?php echo esc_attr( $field_key ); ?>[<?php echo esc_attr( $option_key ); ?>][schema_type]" >
+										<?php foreach ( Functions::rich_snippet_auto_cats() as $key => $value ) : ?>
+											<?php $selected = ( isset( $values[ $option_key ]['schema_type'] ) && $values[ $option_key ]['schema_type'] == $key ) ? 'selected' : ''; ?>
+											<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_attr( $selected ); ?>>
+												<?php echo esc_html( $value ); ?>
+											</option>
+										<?php endforeach; ?>
+									</select>
 								</td>
-								<td>
-									<span title="<?php esc_attr_e( 'From Review Schema Generator', 'review-schema' ); ?>">
-									<?php
-									if ( $key = array_search( $option_key, $custom_review_schema ) ) {
-										esc_html_e( 'Yes', 'review-schema' );
-										printf(
-											'&nbsp;&nbsp;<a target="_blank" href="%s">%s</a>',
-											get_edit_post_link( $key ),
-											esc_html__( '(Edit)', 'review-schema' )
-										);
-									}
-									?>
-									</span>
+								<td style="text-align: center;" >
+									<input
+										<?php echo ( $pro_field || $disabled ) ? 'disabled' : ''; ?>
+											class="<?php echo esc_attr( $data['class'] ); ?>" type="checkbox"
+											name="<?php echo esc_attr( $field_key ); ?>[<?php echo esc_attr( $option_key ); ?>][auto_generate]"
+											id="<?php echo esc_attr( $id . '-' . $option_key ); ?>"
+											value="<?php echo esc_attr( $option_key ); ?>"
+											<?php checked( isset( $values[ $option_key ]['auto_generate'] ) ); ?>
+									/>
 								</td>
 							</tr>
 							<?php
@@ -677,7 +677,7 @@ abstract class SettingsAPI {
 						}
 						?>
 					</table>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -724,7 +724,7 @@ abstract class SettingsAPI {
 								true
 							);
 							?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?> /><span class="rtrs-import-loader"><i class="dashicons dashicons-update spin"></i></span>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?> /><span class="rtrs-import-loader"><i class="dashicons dashicons-update spin"></i></span>
 						<div class="rtrs-import-info"></div>
 				</fieldset>
 			</td>
@@ -758,10 +758,10 @@ abstract class SettingsAPI {
 							<?php
 							if ( $option_key == 'crop' ) :
 								?>
-								<label for="<?php echo esc_attr( $id ) . '-' . $option_key; ?>">
+								<label for="<?php echo esc_attr( $id . '-' . $option_key ); ?>">
 									<input type="checkbox"
 										   name="<?php echo esc_attr( $field_key ); ?>[<?php echo esc_attr( $option_key ); ?>]"
-										   id="<?php echo esc_attr( $id ) . '-' . $option_key; ?>"
+										   id="<?php echo esc_attr( $id . '-' . $option_key ); ?>"
 										   value="yes" <?php checked( isset( $size[ $option_key ] ) ? $size[ $option_key ] : null, 'yes' ); ?> />
 									<?php echo wp_kses_post( $option_value ); ?>
 								</label><br/>
@@ -769,16 +769,16 @@ abstract class SettingsAPI {
 							else :
 								$value = ! empty( $size[ $option_key ] ) ? absint( esc_attr( $size[ $option_key ] ) ) : null;
 								?>
-								<label for='<?php echo esc_attr( $id ) . '-' . $option_key; ?>'><?php echo wp_kses_post( $option_value ); ?></label>
+								<label for='<?php echo esc_attr( $id . '-' . $option_key ); ?>'><?php echo wp_kses_post( $option_value ); ?></label>
 								<input type='number'
 									   name='<?php echo esc_attr( $field_key ); ?>[<?php echo esc_attr( $option_key ); ?>]'
-									   id="<?php echo esc_attr( $id ) . '-' . $option_key; ?>"
+									   id="<?php echo esc_attr( $id . '-' . $option_key ); ?>"
 									   value="<?php echo esc_attr( $value ); ?>"
 								/>
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -824,7 +824,7 @@ abstract class SettingsAPI {
 						<?php } ?>
 
 					</div>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -927,8 +927,8 @@ abstract class SettingsAPI {
 							true
 						);
 						?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?> />
-					<?php echo $this->get_description_html( $data ); ?>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?> />
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -978,8 +978,8 @@ abstract class SettingsAPI {
 									true
 								);
 								?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?>><?php echo esc_textarea( $this->get_option( $key ) ); ?></textarea>
-					<?php echo $this->get_description_html( $data ); ?>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?>><?php echo esc_textarea( $this->get_option( $key ) ); ?></textarea>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -1020,6 +1020,7 @@ abstract class SettingsAPI {
 						]
 					);
 
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_description_html() returns wp_kses_post() escaped HTML.
 					echo '<pre>' . $this->get_description_html( $data ) . '</pre>';
 					?>
 				</fieldset>
@@ -1077,9 +1078,9 @@ abstract class SettingsAPI {
 									'yes'
 								);
 								?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?> /> <?php echo wp_kses_post( $data['label'] ); ?>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?> /> <?php echo wp_kses_post( $data['label'] ); ?>
 					</label><br/>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -1130,10 +1131,10 @@ abstract class SettingsAPI {
 								   id="<?php echo esc_attr( $id . '-' . $option_key ); ?>"
 								   value="<?php echo esc_attr( $option_key ); ?>"
 								<?php checked( in_array( $option_key, $values ) ); ?> />
-							<?php echo $option_value; ?>
+							<?php echo wp_kses_post( $option_value ); ?>
 						</label><br/>
 					<?php endforeach; ?>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -1181,7 +1182,7 @@ abstract class SettingsAPI {
 								true
 							);
 							?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?>>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?>>
 						<?php if ( ! empty( $data['blank'] ) ) : ?>
 							<option value="<?php echo esc_attr( $data['blank_value'] ); ?>"><?php echo esc_html( $data['blank_text'] ); ?></option>
 						<?php endif; ?>
@@ -1196,7 +1197,7 @@ abstract class SettingsAPI {
 		><?php echo esc_html( $option_value ); ?></option>
 						<?php endforeach; ?>
 					</select>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -1244,7 +1245,7 @@ abstract class SettingsAPI {
 								true
 							);
 							?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?>>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?>>
 						<?php if ( ! empty( $data['blank'] ) ) : ?>
 							<option value="<?php echo esc_attr( $data['blank_value'] ); ?>"><?php echo esc_html( $data['blank_text'] ); ?></option>
 						<?php endif; ?>
@@ -1283,7 +1284,7 @@ abstract class SettingsAPI {
 						}
 						?>
 					</select>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -1334,7 +1335,7 @@ abstract class SettingsAPI {
 		> <?php echo wp_kses_post( $option_value ); ?></label>
 						<br>
 					<?php endforeach; ?>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 				</fieldset>
 			</td>
 		</tr>
@@ -1383,7 +1384,7 @@ abstract class SettingsAPI {
 								true
 							);
 							?>
-		<?php echo $this->get_custom_attribute_html( $data ); ?>>
+		<?php echo $this->get_custom_attribute_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns pre-escaped HTML attributes. */ ?>>
 						<?php foreach ( (array) $data['options'] as $option_key => $option_value ) : ?>
 							<option value="<?php echo esc_attr( $option_key ); ?>" 
 							<?php
@@ -1398,7 +1399,7 @@ abstract class SettingsAPI {
 		><?php echo esc_html( $option_value ); ?></option>
 						<?php endforeach; ?>
 					</select>
-					<?php echo $this->get_description_html( $data ); ?>
+					<?php echo $this->get_description_html( $data ); /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Method returns wp_kses_post() escaped HTML. */ ?>
 					<?php if ( $data['select_buttons'] ) : ?>
 						<br/><a class="select_all button"
 								href="#"><?php esc_html_e( 'Select all', 'review-schema' ); ?></a> <a
@@ -1460,7 +1461,7 @@ abstract class SettingsAPI {
 	public function validate_text_field( $key, $value ) {
 		$value = is_null( $value ) ? '' : $value;
 		if ( is_array( $value ) ) {
-			return $value;
+			return array_map( [ $this, 'validate_text_field' ], array_keys( $value ), array_values( $value ) );
 		}
 
 		return wp_kses_post( trim( stripslashes( $value ) ) );
@@ -1477,7 +1478,7 @@ abstract class SettingsAPI {
 	public function validate_password_field( $key, $value ) {
 		$value = is_null( $value ) ? '' : $value;
 
-		return trim( stripslashes( $value ) );
+		return sanitize_text_field( trim( stripslashes( $value ) ) );
 	}
 
 	/**
