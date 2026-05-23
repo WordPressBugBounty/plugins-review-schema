@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</svg>
 						Help
 					</a>
-					<a class="doc" href="https://www.radiustheme.com/docs/review-schema/" target="_blank">
+					<a class="doc" href="https://schemaengineai.com/docs/docs/ai-settings/" target="_blank">
 						Documentation
 					</a>
 				</div><!-- .settings-menu -->

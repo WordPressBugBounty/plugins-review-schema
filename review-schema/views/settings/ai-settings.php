@@ -63,9 +63,31 @@ $rtrs_options = [
 		'html_content' => '<a style="font-size: 14px;" href="' . esc_url( wp_nonce_url( admin_url( 'admin.php?page=review-schema&tab=ai&rtrs_reset_batch=1' ), 'rtrs_reset_ai_batch' ) . '#/ai' ) . '">'
 			. esc_html__( 'Reset & Re-run Auto-Generation', 'review-schema' )
 			. '</a><p class="description" style="font-size: 14px;">'
-			. esc_html__( 'Click to clear the completion flag and re-run auto-generation for all posts.', 'review-schema' )
-			. '</p>',
+			. esc_html__( 'Re-runs AI schema generation for every eligible published post that does not yet have an AI-generated schema. This clears the batch completion flag, cancels any scheduled run, and starts a fresh background batch via WP-Cron (about one post every 30 seconds). Posts that already have a saved AI schema are skipped — delete the schema from the post first if you want to regenerate it.', 'review-schema' )
+			. '</p><p class="description" style="font-size: 14px;"><a target="_blank" rel="noopener noreferrer" href="'
+			. esc_url( 'https://schemaengineai.com/docs/docs/ai-settings/' )
+			. '">' . esc_html__( 'Learn more about AI auto-generation →', 'review-schema' ) . '</a></p>',
 		'depends'      => [
+			'relation' => 'and',
+			'on'       => [
+				[
+					'field'     => 'rtrs_general_settings.schema_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.auto_generate',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+	'auto_gen_progress'    => [
+		'title'   => esc_html__( 'Auto-Generation Progress', 'review-schema' ),
+		'type'    => 'auto_gen_progress',
+		'is_pro'  => true,
+		'depends' => [
 			'relation' => 'and',
 			'on'       => [
 				[

@@ -337,6 +337,9 @@ class AdminSettings extends SettingsAPI {
 				'hasValidLicence'    => Functions::has_valid_license(),
 				'hasPro'             => function_exists( 'rtrsp' ),
 				'promothumb'         => esc_url( rtrs()->get_assets_uri( 'imgs/Review-Schema_Promo_thumb.webp' ) ),
+				'recommendedPlugins' => $this->get_recommended_plugins(),
+				'pluginInstallNonce' => wp_create_nonce( 'updates' ),
+				'pluginActivateBase' => esc_url( admin_url( 'plugins.php' ) ),
 			]
 		);
 		?>
@@ -344,6 +347,109 @@ class AdminSettings extends SettingsAPI {
 			<div id="rtrs-settings-root"></div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Return the list of recommended companion plugins for the Power Up
+	 * wizard step, each annotated with install/active status.
+	 *
+	 * Each entry contains:
+	 *  - slug        : wp.org plugin slug (matches the directory name).
+	 *  - name        : Display name.
+	 *  - description : Short marketing description.
+	 *  - icon        : Dashicons class shown on the card.
+	 *  - installed   : Whether the plugin folder is present.
+	 *  - active      : Whether the plugin is currently active.
+	 *
+	 * @return array
+	 */
+	protected function get_recommended_plugins() {
+		$plugins = [
+			[
+				'slug'        => 'radius-booking',
+				'name'        => esc_html__( 'Radius Booking', 'review-schema' ),
+				'description' => esc_html__( 'WordPress booking plugin for appointments, staff management...', 'review-schema' ),
+				'icon'        => 'dashicons-calendar-alt',
+			],
+			[
+				'slug'        => 'classified-listing',
+				'name'        => esc_html__( 'Classified Listing', 'review-schema' ),
+				'description' => esc_html__( 'AI-powered WordPress plugin for classified listings and directories.', 'review-schema' ),
+				'icon'        => 'dashicons-star-filled',
+			],
+			[
+				'slug'        => 'shopbuilder',
+				'name'        => esc_html__( 'ShopBuilder', 'review-schema' ),
+				'description' => esc_html__( 'Build stunning WooCommerce stores with drag-and-drop builder.', 'review-schema' ),
+				'icon'        => 'dashicons-cart',
+			],
+			[
+				'slug'        => 'tlp-food-menu',
+				'name'        => esc_html__( 'Food Menu', 'review-schema' ),
+				'description' => esc_html__( 'Create beautiful restaurant menus, categories, and layouts.', 'review-schema' ),
+				'icon'        => 'dashicons-carrot',
+			],
+			[
+				'slug'        => 'tlp-team',
+				'name'        => esc_html__( 'Team Members', 'review-schema' ),
+				'description' => esc_html__( 'Showcase your team with beautiful profiles and social links.', 'review-schema' ),
+				'icon'        => 'dashicons-groups',
+			],
+			[
+				'slug'        => 'testimonial-slider-and-showcase',
+				'name'        => esc_html__( 'Testimonial Slider', 'review-schema' ),
+				'description' => esc_html__( 'Display customer testimonials with responsive slider and grid layouts.', 'review-schema' ),
+				'icon'        => 'dashicons-groups',
+			],
+			[
+				'slug'        => 'woo-product-variation-gallery',
+				'name'        => esc_html__( 'Variation Gallery', 'review-schema' ),
+				'description' => esc_html__( 'WooCommerce plugin for unlimited additional variation image galleries.', 'review-schema' ),
+				'icon'        => 'dashicons-groups',
+			],
+			[
+				'slug'        => 'woo-product-variation-swatches',
+				'name'        => esc_html__( 'Variation Swatches', 'review-schema' ),
+				'description' => esc_html__( 'WooCommerce variations into images, colors, labels, and radios.', 'review-schema' ),
+				'icon'        => 'dashicons-groups',
+			],
+		];
+
+		// Check installed/active status.
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$installed_plugins = get_plugins();
+		$active_plugins    = (array) get_option( 'active_plugins', [] );
+
+		foreach ( $plugins as $key => $plugin ) {
+			$plugin_file = $this->get_plugin_file( $plugin['slug'], $installed_plugins );
+
+			$plugins[ $key ]['installed'] = ! empty( $plugin_file );
+			$plugins[ $key ]['active']    = ! empty( $plugin_file ) && in_array( $plugin_file, $active_plugins, true );
+		}
+
+		return $plugins;
+	}
+
+	/**
+	 * Locate a plugin's main file inside the installed-plugins map by slug.
+	 *
+	 * Matches entries whose path starts with "{$slug}/".
+	 *
+	 * @param string $slug              Plugin folder slug.
+	 * @param array  $installed_plugins Result of get_plugins().
+	 *
+	 * @return string Plugin file path relative to /plugins/, or '' if not installed.
+	 */
+	protected function get_plugin_file( $slug, $installed_plugins ) {
+		foreach ( array_keys( $installed_plugins ) as $plugin_file ) {
+			if ( 0 === strpos( $plugin_file, $slug . '/' ) ) {
+				return $plugin_file;
+			}
+		}
+
+		return '';
 	}
 
 	public function set_fields() {
@@ -562,7 +668,7 @@ class AdminSettings extends SettingsAPI {
 	public function marketing_links( $links ) {
 		$new_links[] = '<a target="_blank" href="' . admin_url( 'admin.php?page=review-schema' ) . '">Settings</a>';
 		$new_links[] = '<a target="_blank" href="' . esc_url( 'https://www.radiustheme.com/demo/plugins/review-schema' ) . '">Demo</a>';
-		$new_links[] = '<a target="_blank" href="' . esc_url( 'https://www.radiustheme.com/docs/review-schema/' ) . '">Documentation</a>';
+		$new_links[] = '<a target="_blank" href="' . esc_url( 'https://schemaengineai.com/docs/docs/ai-settings/' ) . '">Documentation</a>';
 		$links       = array_merge( $new_links, $links );
 		if ( ! function_exists( 'rtrsp' ) ) {
 			$links[] = '<a target="_blank" style="color: #39b54a;font-weight: 700;" href="' . esc_url( 'https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin?utm_source=wordpress_dashboard&utm_medium=reviewschema&utm_campaign=free' ) . '">Get Pro</a>';

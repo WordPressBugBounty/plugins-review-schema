@@ -38,7 +38,7 @@ $rtrs_options = [
 		'description' => esc_html__(
 			'Choose whether your site represents an Organization, Local Business, or a Person.',
 			'review-schema'
-		) . '<a href="#" target="_blank"> ' . esc_html__( 'Learn more about the differences between Organization and Person..', 'review-schema' ) . ' </a>',
+		) . '<a href="https://schemaengineai.com/docs/docs/site-info/#3-toc-title" target="_blank"> ' . esc_html__( 'Learn more about the differences between Organization and Person..', 'review-schema' ) . ' </a>',
 		'type'        => 'radio_button',
 		'class'       => 'regular-text',
 		'default'     => 'Organization',

@@ -3,6 +3,7 @@
 namespace Rtrs\Controllers\Admin;
 
 use Rtrs\Controllers\Admin\Meta\AddMetaBox;
+use Rtrs\Controllers\Ajax\AutoGenProgress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,5 +15,6 @@ class AdminController {
 		new ScriptLoader();
 		new AdminSettings();
 		new Notifications();
+		new AutoGenProgress();
 	}
 }

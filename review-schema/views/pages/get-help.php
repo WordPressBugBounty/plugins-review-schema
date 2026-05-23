@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="rtrs-help-link-body">
 							<h4><?php esc_html_e( 'Documentation', 'review-schema' ); ?></h4>
 							<p><?php esc_html_e( 'Step-by-step guides with screenshots to help you configure every feature.', 'review-schema' ); ?></p>
-							<a href="https://www.radiustheme.com/docs/review-schema/review-schema" target="_blank" class="rtrs-help-btn">
+							<a href="https://schemaengineai.com/docs/docs/ai-settings/review-schema" target="_blank" class="rtrs-help-btn">
 								<?php esc_html_e( 'Browse Docs', 'review-schema' ); ?>
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
 							</a>

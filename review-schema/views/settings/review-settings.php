@@ -22,7 +22,7 @@ $rtrs_options = [
 		'class'       => 'regular-text',
 		'title'       => esc_html__( 'Recaptcha site key', 'review-schema' ),
 		'description' => wp_kses(
-			__( "How to get <a target='_blank' href='https://www.radiustheme.com/docs/review-schema/faq/how-to-add-google-captcha-v3-api-key/'>Recaptcha site & secret key?</a>", 'review-schema' ),
+			__( "How to get <a target='_blank' href='https://schemaengineai.com/docs/docs/ai-settings/faq/how-to-add-google-captcha-v3-api-key/'>Recaptcha site & secret key?</a>", 'review-schema' ),
 			[
 				'a' => [
 					'href'   => [],

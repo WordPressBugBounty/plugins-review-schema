@@ -24,5 +24,6 @@ class AjaxController {
 	public function __construct() {
 		new OurPluginsController();
 		new FinishWizard();
+		new InstallRecommendedPlugin();
 	}
 }

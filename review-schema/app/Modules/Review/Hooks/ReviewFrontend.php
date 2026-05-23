@@ -192,6 +192,9 @@ class ReviewFrontend {
 	 */
 	public function rtrs_set_comment_cookies() {
 		global $post;
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
 		if ( Functions::isEnableReviewByPostType( $post->post_type ) ) {
 			setcookie( 'rtrs_comment_wait_approval', '1', 0, '/' );
 		}

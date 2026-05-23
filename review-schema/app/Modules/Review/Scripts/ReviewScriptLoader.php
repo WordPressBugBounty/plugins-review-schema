@@ -35,7 +35,8 @@ class ReviewScriptLoader {
 	// Auto redirect to first review page instead of last.
 	function redirect_after_review( $location ) {
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Server HTTP_REFERER; used only to skip loading when referer matches.
-		return esc_url( $_SERVER['HTTP_REFERER'] . '#comments' );
+		$referer = isset( $_SERVER['HTTP_REFERER'] ) ? wp_unslash( $_SERVER['HTTP_REFERER'] ) : $location;
+		return esc_url( $referer . '#comments' );
 	}
 	function register_script_both_end() {
 		wp_register_style( 'rtrs-app', rtrs()->get_assets_uri( 'css/app.css' ), [], $this->version );

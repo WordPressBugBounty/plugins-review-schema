@@ -3,8 +3,8 @@
  * @wordpress-plugin
  * Plugin Name: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO
  * Plugin URI: https://wordpress.org/plugins/review-schema/
- * Description: The most comprehensive multi-criteria Review & Rating with JSON-LD based Structure Data Schema solution for WordPress website. Support Review Rating and auto generated schema markup for page, post, WooCommerce & custom post type.
- * Version: 3.0.0
+ * Description: AI-Powered schema markup plugin for WordPress. Generate JSON-LD schema and FAQs, validate Rich Results, and audit your structured data.
+ * Version: 3.0.1
  * Author: RadiusTheme
  * Author URI: https://radiustheme.com
  * Text Domain: review-schema
@@ -24,7 +24,7 @@ if ( ! defined( 'RTRS_PLUGIN_FILE' ) ) {
 
 // Define VERSION.
 if ( ! defined( 'RTRS_VERSION' ) ) {
-	define( 'RTRS_VERSION', '3.0.0' );
+	define( 'RTRS_VERSION', '3.0.1' );
 }
 
 if ( ! defined( 'RTRS_PATH' ) ) {

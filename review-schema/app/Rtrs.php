@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Rtrs\Controllers\Admin\Activation;
 use Rtrs\Controllers\Admin\AdminController;
 use Rtrs\Controllers\Ajax\AjaxController;
+use Rtrs\Controllers\Marketing\RenameNotice;
 use Rtrs\Controllers\MigrationV3;
 use Rtrs\Helpers\Functions;
 use Rtrs\Modules\ModulesInit;
@@ -50,6 +51,10 @@ final class Rtrs {
 		new AdminController();
 		new AjaxController();
 		new MigrationV3();
+
+		if ( is_admin() ) {
+			RenameNotice::init();
+		}
 
 		do_action( 'rtrs_init' );
 	}

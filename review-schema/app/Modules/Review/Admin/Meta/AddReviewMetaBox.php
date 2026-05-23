@@ -213,7 +213,7 @@ class AddReviewMetaBox {
 				<div class="rt-box-content">
 					<h3 class="rt-box-title">%1$s</h3>
 						<p>%2$s</p>
-						<a href="https://www.radiustheme.com/docs/review-schema/" target="_blank" class="rt-admin-btn">%1$s</a>
+						<a href="https://schemaengineai.com/docs/docs/ai-settings/" target="_blank" class="rt-admin-btn">%1$s</a>
 				</div>
 			</div>',
 			esc_html__( 'Documentation', 'review-schema' ),
