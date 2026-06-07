@@ -315,6 +315,7 @@ class SchemaExtractor {
 			'Church'               => $permalink . '#church',
 			'HinduTemple'          => $permalink . '#hindutemple',
 			'BuddhistTemple'       => $permalink . '#buddhisttemple',
+			'TouristAttraction'    => $permalink . '#touristattraction',
 			'ProfilePage'          => $permalink . '#profilepage',
 			'MedicalWebPage'       => $permalink . '#medicalwebpage',
 			'AboutPage'            => $permalink . '#aboutpage',

@@ -661,7 +661,9 @@ class Functions {
 	 */
 	public function sanitizeOutPut($value, $type = 'text') {
 		$newValue = null;
-		if ($value) {
+		// Allow a numeric 0 (e.g. a free price) through; a bare if ($value)
+		// check treats 0/'0' as empty and would wrongly return null.
+		if ( is_numeric( $value ) || ! empty( $value ) ) {
 			if ($type == 'text') {
 				$newValue = wp_strip_all_tags(stripslashes($value));
             } elseif ($type == 'url') {
@@ -786,6 +788,7 @@ class Functions {
             'church'  			   => esc_html__('Church', 'review-schema'), // Done
             'hindutemple'  		   => esc_html__('HinduTemple', 'review-schema'), // Done
             'buddhisttemple'  	   => esc_html__('BuddhistTemple', 'review-schema'), // Done
+            'touristattraction'    => esc_html__('TouristAttraction', 'review-schema') . $pro_label, // Done
             'profile_page'  	   => esc_html__('ProfilePage', 'review-schema'), // Done
             'medical_webpage'  	   => esc_html__('MedicalWebPage', 'review-schema'), // Done
 			'product'              => esc_html__('Product', 'review-schema') . $pro_label, // Done

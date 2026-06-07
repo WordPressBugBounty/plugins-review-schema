@@ -1549,6 +1549,7 @@ class WpSeoSchema {
 			'church'                 => 'church',
 			'hindutemple'            => 'hindutemple',
 			'buddhisttemple'         => 'buddhisttemple',
+			'touristattraction'      => 'touristattraction',
 			'profilePage'            => 'profile_page',
 			'MedicalWebPage'         => 'medical_webpage',
 			'product'                => 'product',

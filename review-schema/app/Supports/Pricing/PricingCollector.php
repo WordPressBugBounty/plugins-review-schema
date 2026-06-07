@@ -230,7 +230,9 @@ class PricingCollector {
 			return $meta;
 		}
 
-		if ( ! empty( $meta['price'] ) ) {
+		// Respect an explicitly set price (including a legitimate 0 for free items)
+		// and skip auto-injection; empty() would wrongly treat 0 as "unset".
+		if ( isset( $meta['price'] ) && '' !== $meta['price'] && is_numeric( $meta['price'] ) ) {
 			return $meta;
 		}
 

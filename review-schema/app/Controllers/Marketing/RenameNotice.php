@@ -61,6 +61,26 @@ class RenameNotice {
 	}
 
 	/**
+	 * Determine whether the Pro plugin is active with a valid license.
+	 *
+	 * The free plugin reads the shared rtrs_tools_settings option (written by
+	 * the Pro licensing controller) so no direct cross-plugin call is needed.
+	 *
+	 * @return bool True when Pro is active and the license status is valid.
+	 */
+	protected static function is_pro_licensed() {
+		if ( ! function_exists( 'rtrsp' ) ) {
+			return false;
+		}
+
+		$settings = get_option( 'rtrs_tools_settings', [] );
+
+		return is_array( $settings )
+			&& ! empty( $settings['license_status'] )
+			&& 'valid' === $settings['license_status'];
+	}
+
+	/**
 	 * Render the notice when it has not yet been dismissed.
 	 *
 	 * Skipped on a small allow-list of low-value screens to avoid clutter.
@@ -69,6 +89,11 @@ class RenameNotice {
 	 */
 	public static function maybe_render_notice() {
 		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Hide the upgrade notice for users already running Pro with a valid license.
+		if ( self::is_pro_licensed() ) {
 			return;
 		}
 

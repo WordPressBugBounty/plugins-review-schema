@@ -5,7 +5,7 @@ Tags: schema, rich snippets, review, structured data, seo
 Requires at least: 4.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -125,6 +125,7 @@ Schema Engine AI is a complete WordPress review plugin for posts, pages, custom 
 * ImageObject(Pro)
 * DiscussionForumPosting(Pro)
 * TaxiService(Pro)
+* TouristAttraction(Pro)
 
 ==Pro version adds:==
 
@@ -287,15 +288,19 @@ Yes. Every property is editable in Manual mode and editable after generation in 
 
 
 == Changelog ==
+= 3.0.2 (June 03, 2026) =
+* Fixed: Article schema `articleBody` could break out of its JSON-LD `<script>` container and render raw markup in the page header (unescaped forward slashes in the JSON-LD output).
+* Fixed: HTML/script tags are no longer included in the `articleBody` schema text.
+* Fixed: Schema Notice And Error Messages Resolved For Product, Artical, WebPage Etc schema
 
-= 3.0.1 ( May 23, 2026 ) =
+= 3.0.1 (May 23, 2026) =
 * Added: New Icon Added
 * Added: ES, FR Language Support Added
 * Deprecated: UI Improvement For Settings page
 * Fixed: Documentation URL Updated
 * Fixed: Comment submission HTTP 405 error caused by PHP warnings during comment POST request (null `$post` access and unset `HTTP_REFERER`)
 
-= 3.0.0 ( May 19, 2026 ) =
+= 3.0.0 (May 19, 2026) =
 * Added: AI-Powered Schema Generation - Automatically generate, classify, and validate structured data schemas using AI with multi-provider support for OpenAI, Anthropic Claude, and Google Gemini.
 * Added: AI Content Extraction - Intelligently extract schema-relevant content from posts and pages to auto-populate structured data fields.
 * Added: AI FAQ Generation - Generate FAQ schema content using AI directly from post content.
@@ -330,9 +335,6 @@ Yes. Every property is editable in Manual mode and editable after generation in 
 * Improvement: Internal data migration handler for v3 settings upgrade.
 * Deprecated: SpecialAnnouncement, Dataset, and QAPage (Q&A) schema types.
 * Remove: Site Links Search Box Schema.
-
-= 2.2.7 ( Feb 02, 2026 ) =
-* Fix: Auto Fill Vulnerability Resolved
 
 [See changelog for all versions.](https://raw.githubusercontent.com/radiustheme/changelog/refs/heads/main/review-schema.txt)
 

@@ -93,7 +93,9 @@ class Field {
 					$match_fields = $match[1];
 
 					foreach ( $match_fields as $arg ) {
-						if ( ! empty( $v[ $arg ] ) ) {
+						// Use isset() so a legitimate saved 0 (e.g. a free price) is
+						// preserved; empty() would incorrectly discard it.
+						if ( isset( $v[ $arg ] ) ) {
 							$v = $v[ $arg ];
 						} else {
 							$v = null;
@@ -103,7 +105,9 @@ class Field {
 					$v = get_post_meta( get_the_ID(), $this->name, true );
 				}
 			}
-			$this->value = $v ? $v : $this->default;
+			// Preserve a saved 0 / '0' value; only fall back to the default when
+			// the stored value is genuinely missing (null or empty string).
+			$this->value = ( null === $v || '' === $v ) ? $this->default : $v;
 		}
 
 		$this->label = isset( $attr['label'] ) ? ( $attr['label'] ? sanitize_text_field( $attr['label'] ) : null ) : null;

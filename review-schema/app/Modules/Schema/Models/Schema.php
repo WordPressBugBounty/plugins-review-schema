@@ -99,7 +99,11 @@ class Schema {
 	 * @return string
 	 */
 	public function get_page_description() {
-		$is_single = is_singular() || ( $this->post_id && ( wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) );
+		// When a specific post_id is set we want that post's description even
+		// outside the front-end loop — e.g. admin editor (schema/AI panel),
+		// AJAX, or REST — where is_singular() is false. Otherwise the WebPage
+		// node would fall through to the site tagline and look "missing/short".
+		$is_single = is_singular() || ( $this->post_id && ( is_admin() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) );
 
 		if ( $is_single ) {
 			$post_obj = get_post( $this->post_id );
@@ -142,13 +146,17 @@ class Schema {
 				}
 			}
 
-			// 4. Fallback to rendered post_content (covers page builders via the_content filter).
+			// 4. Fallback to raw post_content (Gutenberg blocks rendered).
+			// NOTE: We intentionally do NOT run apply_filters( 'the_content' ).
+			// Doing so makes page builders (e.g. Elementor) fully render their
+			// content here — which, when this runs early in wp_head, triggers
+			// their per-request CSS/asset dedup and strips loop grid/carousel
+			// styles from the page. do_blocks() handles Gutenberg text without
+			// those side effects; builder pages fall back to excerpt/SEO meta.
 			if ( empty( $desc ) && $post_obj ) {
-				$raw = $post_obj->post_content;
-				if ( has_filter( 'the_content' ) ) {
-					$raw = apply_filters( 'the_content', $raw );
-				}
-				$desc = wp_strip_all_tags( strip_shortcodes( $raw ) );
+				$raw  = do_blocks( $post_obj->post_content );
+				$raw  = strip_shortcodes( $raw );
+				$desc = wp_strip_all_tags( $raw );
 			}
 
 			// 5. Final fallback: post title + site tagline.
@@ -1872,7 +1880,8 @@ class Schema {
 			];
 		}
 
-		if ( ! empty( $metaData['price'] ) ) {
+		if ( isset( $metaData['price'] ) && '' !== $metaData['price'] && is_numeric( $metaData['price'] ) ) {
+			// isset()/is_numeric() so a free item priced at 0 is still output.
 			$howToSchema['estimatedCost'] = [
 				'@type' => 'MonetaryAmount',
 				'value' => $helper->sanitizeOutPut( $metaData['price'], 'number' ),
@@ -3380,7 +3389,8 @@ class Schema {
 				'address' => [ '@type' => 'PostalAddress' ] + $address,
 			];
 		}
-		if ( ! empty( $metaData['price'] ) ) {
+		if ( isset( $metaData['price'] ) && '' !== $metaData['price'] && is_numeric( $metaData['price'] ) ) {
+			// isset()/is_numeric() so a free event priced at 0 is still output.
 			$event['offers'] = [
 				'@type' => 'Offer',
 				'price' => $helper->sanitizeOutPut( $metaData['price'] ),
@@ -3926,8 +3936,8 @@ class Schema {
 	 */
 	private function clean_schema_text( $text, $max_len = 0 ) {
 		$text = strip_shortcodes( $text );
-		$text = wp_strip_all_tags( $text );
 		$text = html_entity_decode( $text, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		$text = wp_strip_all_tags( $text );
 		$text = preg_replace( '/\s+/', ' ', $text );
 		$text = trim( $text );
 

@@ -317,7 +317,12 @@ class SchemaValidator {
 
 		/** Validate each priceSpecification entry. */
 		if ( $has_price_spec ) {
-			foreach ( $offer['priceSpecification'] as $si => $spec ) {
+			$specs = $this->normalize_price_specs( $offer['priceSpecification'] );
+			foreach ( $specs as $si => $spec ) {
+				if ( ! is_array( $spec ) ) {
+					continue;
+				}
+
 				$sn = (int) $si + 1;
 
 				if ( ! isset( $spec['price'] ) || '' === $spec['price'] ) {
@@ -400,7 +405,12 @@ class SchemaValidator {
 
 		/** Validate priceSpecification entries if present. */
 		if ( ! empty( $offer['priceSpecification'] ) && is_array( $offer['priceSpecification'] ) ) {
-			foreach ( $offer['priceSpecification'] as $si => $spec ) {
+			$specs = $this->normalize_price_specs( $offer['priceSpecification'] );
+			foreach ( $specs as $si => $spec ) {
+				if ( ! is_array( $spec ) ) {
+					continue;
+				}
+
 				$sn = (int) $si + 1;
 
 				if ( ! isset( $spec['price'] ) || '' === $spec['price'] ) {
@@ -412,6 +422,34 @@ class SchemaValidator {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Normalize a priceSpecification value into a list of spec objects.
+	 *
+	 * Schema.org allows priceSpecification to be a single object or an array
+	 * of objects. A single associative object (e.g. one UnitPriceSpecification)
+	 * is wrapped in a one-element list so callers can iterate uniformly without
+	 * mistaking the object's own keys for separate specifications.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param mixed $specs priceSpecification value (object or list of objects).
+	 *
+	 * @return array List of priceSpecification objects.
+	 */
+	private function normalize_price_specs( $specs ) {
+		if ( ! is_array( $specs ) ) {
+			return [];
+		}
+
+		// A list has sequential integer keys (specs[0] exists); a single object
+		// uses string keys like '@type'/'price'. Wrap a single object as a list.
+		if ( ! isset( $specs[0] ) ) {
+			return [ $specs ];
+		}
+
+		return $specs;
 	}
 
 	/**
@@ -630,16 +668,21 @@ class SchemaValidator {
 	/**
 	 * Calculate a quality score from 0–100.
 	 *
-	 * Deducts 15 points per error and 5 points per warning.
+	 * Errors are hard failures and are penalised heavily (15 points each).
+	 * Warnings are recommendations, not failures, so each costs only 3 points
+	 * and their total impact is capped at 30 — this prevents a structurally
+	 * valid schema (zero errors) from being dragged down to a near-zero score
+	 * just because several optional fields are missing.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return int
 	 */
 	private function calculate_score() {
-		$score  = 100;
-		$score -= count( $this->errors )   * 15;
-		$score -= count( $this->warnings ) * 5;
+		$error_penalty   = count( $this->errors ) * 15;
+		$warning_penalty = min( count( $this->warnings ) * 3, 30 );
+
+		$score = 100 - $error_penalty - $warning_penalty;
 
 		return max( 0, min( 100, $score ) );
 	}

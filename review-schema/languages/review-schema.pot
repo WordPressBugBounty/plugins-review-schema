@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.1\n"
+"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/review-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-23T04:24:18+00:00\n"
+"POT-Creation-Date: 2026-06-07T08:48:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: review-schema\n"
@@ -74,7 +74,7 @@ msgstr ""
 #: app/AI/AIInit.php:1142
 #: app/Controllers/Admin/AdminSettings.php:144
 #: app/Controllers/Admin/AdminSettings.php:145
-#: app/Helpers/Functions.php:1848
+#: app/Helpers/Functions.php:1851
 #: templates/partials/attachment.php:61
 msgid "SchemaEngine AI"
 msgstr ""
@@ -248,7 +248,7 @@ msgid "Edit"
 msgstr ""
 
 #: app/AI/AIInit.php:534
-#: app/Models/Field.php:822
+#: app/Models/Field.php:826
 msgid "Pro"
 msgstr ""
 
@@ -334,7 +334,7 @@ msgid "Any"
 msgstr ""
 
 #: app/AI/ContentExtractor.php:1330
-#: app/Modules/Schema/Models/Schema.php:384
+#: app/Modules/Schema/Models/Schema.php:392
 msgid "Home"
 msgstr ""
 
@@ -661,7 +661,7 @@ msgstr ""
 msgid "Use the SchemaEngine AI panel in the right sidebar to auto-generate structured data for this post."
 msgstr ""
 
-#: app/Controllers/Admin/Meta/AddMetaBox.php:375
+#: app/Controllers/Admin/Meta/AddMetaBox.php:380
 msgid "Regular Price cannot be less than Offer Price. The values have been swapped automatically."
 msgstr ""
 
@@ -788,50 +788,50 @@ msgid "Dismiss"
 msgstr ""
 
 #. translators: 1: previous plugin name wrapped in a span, 2: new plugin name wrapped in a span
-#: app/Controllers/Marketing/RenameNotice.php:124
+#: app/Controllers/Marketing/RenameNotice.php:149
 #, php-format
 msgid "%1$s is now %2$s"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:125
+#: app/Controllers/Marketing/RenameNotice.php:150
 #: app/Modules/Review/Admin/RegisterPostType.php:84
 #: app/Modules/Review/Admin/RegisterPostType.php:85
 #: app/Modules/Review/Elementor/ElementorInit.php:35
 msgid "Review Schema"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:126
+#: app/Controllers/Marketing/RenameNotice.php:151
 msgid "Schema Engine AI"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:128
+#: app/Controllers/Marketing/RenameNotice.php:153
 msgid "Same plugin, new name — supercharged with AI"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:129
+#: app/Controllers/Marketing/RenameNotice.php:154
 msgid "Your reviews, schema settings, and data are preserved automatically. Schema Engine AI adds AI-powered schema generation, FAQ drafting, and real-time Rich Results validation on top of everything you already use."
 msgstr ""
 
 #. translators: %d: discount percentage
-#: app/Controllers/Marketing/RenameNotice.php:133
+#: app/Controllers/Marketing/RenameNotice.php:158
 #, php-format
 msgid "Get %d%% OFF Pro"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:136
+#: app/Controllers/Marketing/RenameNotice.php:161
 msgid "Learn What's New"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:137
+#: app/Controllers/Marketing/RenameNotice.php:162
 msgid "Got it, dismiss"
 msgstr ""
 
-#: app/Controllers/Marketing/RenameNotice.php:139
+#: app/Controllers/Marketing/RenameNotice.php:164
 msgid "Re-Launch deal"
 msgstr ""
 
 #. translators: %d: discount percentage
-#: app/Controllers/Marketing/RenameNotice.php:142
+#: app/Controllers/Marketing/RenameNotice.php:167
 #, php-format
 msgid "%d%% OFF Schema Engine AI Pro — limited time. Discount automatically applied at checkout."
 msgstr ""
@@ -866,250 +866,254 @@ msgstr ""
 msgid "%s does not exist."
 msgstr ""
 
-#: app/Helpers/Functions.php:721
+#: app/Helpers/Functions.php:723
 msgid "--Select Schema Type--"
 msgstr ""
 
-#: app/Helpers/Functions.php:722
-#: app/Helpers/Functions.php:769
+#: app/Helpers/Functions.php:724
+#: app/Helpers/Functions.php:771
 #: views/settings/schema-archive-settings.php:27
 msgid "Article"
 msgstr ""
 
-#: app/Helpers/Functions.php:723
+#: app/Helpers/Functions.php:725
 msgid "Article - News Article"
 msgstr ""
 
-#: app/Helpers/Functions.php:724
+#: app/Helpers/Functions.php:726
 msgid "Tech Article"
 msgstr ""
 
-#: app/Helpers/Functions.php:725
+#: app/Helpers/Functions.php:727
 msgid "Article - Blog posting"
 msgstr ""
 
-#: app/Helpers/Functions.php:726
-#: app/Helpers/Functions.php:792
+#: app/Helpers/Functions.php:728
+#: app/Helpers/Functions.php:795
 msgid "Book"
 msgstr ""
 
-#: app/Helpers/Functions.php:727
-#: app/Helpers/Functions.php:773
+#: app/Helpers/Functions.php:729
+#: app/Helpers/Functions.php:775
 msgid "Event"
 msgstr ""
 
-#: app/Helpers/Functions.php:728
-#: app/Helpers/Functions.php:783
+#: app/Helpers/Functions.php:730
+#: app/Helpers/Functions.php:785
 #: views/settings/review-settings.php:113
 msgid "Video"
 msgstr ""
 
-#: app/Helpers/Functions.php:729
-#: app/Helpers/Functions.php:780
+#: app/Helpers/Functions.php:731
+#: app/Helpers/Functions.php:782
 #: views/settings/schema-settings.php:46
 msgid "Person"
 msgstr ""
 
-#: app/Helpers/Functions.php:730
-#: app/Helpers/Functions.php:775
+#: app/Helpers/Functions.php:732
+#: app/Helpers/Functions.php:777
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:519
 msgid "Service"
 msgstr ""
 
-#: app/Helpers/Functions.php:731
+#: app/Helpers/Functions.php:733
 msgid "Software Application"
 msgstr ""
 
-#: app/Helpers/Functions.php:732
+#: app/Helpers/Functions.php:734
 msgid "Job Posting"
 msgstr ""
 
-#: app/Helpers/Functions.php:734
-#: app/Helpers/Functions.php:799
+#: app/Helpers/Functions.php:736
+#: app/Helpers/Functions.php:802
 msgid "Restaurant"
 msgstr ""
 
-#: app/Helpers/Functions.php:735
-#: app/Helpers/Functions.php:791
+#: app/Helpers/Functions.php:737
+#: app/Helpers/Functions.php:794
 msgid "Product"
 msgstr ""
 
-#: app/Helpers/Functions.php:751
-#: app/Helpers/Functions.php:794
+#: app/Helpers/Functions.php:753
+#: app/Helpers/Functions.php:797
 msgid "Course"
 msgstr ""
 
-#: app/Helpers/Functions.php:770
+#: app/Helpers/Functions.php:772
 msgid "TechArticle"
 msgstr ""
 
-#: app/Helpers/Functions.php:771
+#: app/Helpers/Functions.php:773
 msgid "NewsArticle"
 msgstr ""
 
-#: app/Helpers/Functions.php:772
+#: app/Helpers/Functions.php:774
 msgid "BlogPosting"
 msgstr ""
 
-#: app/Helpers/Functions.php:774
+#: app/Helpers/Functions.php:776
 msgid "FAQPage"
 msgstr ""
 
-#: app/Helpers/Functions.php:776
+#: app/Helpers/Functions.php:778
 msgid "QAPage - formerly Q&A ( Deprecated ) Use FAQPage Schema"
 msgstr ""
 
-#: app/Helpers/Functions.php:777
+#: app/Helpers/Functions.php:779
 msgid "HowTo"
 msgstr ""
 
-#: app/Helpers/Functions.php:778
+#: app/Helpers/Functions.php:780
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:255
 msgid "About"
 msgstr ""
 
-#: app/Helpers/Functions.php:779
+#: app/Helpers/Functions.php:781
 msgid "Contact"
 msgstr ""
 
-#: app/Helpers/Functions.php:781
+#: app/Helpers/Functions.php:783
 msgid "Movie"
 msgstr ""
 
-#: app/Helpers/Functions.php:782
+#: app/Helpers/Functions.php:784
 msgid "Audio"
 msgstr ""
 
-#: app/Helpers/Functions.php:784
+#: app/Helpers/Functions.php:786
 msgid "Breadcrumb"
 msgstr ""
 
-#: app/Helpers/Functions.php:785
+#: app/Helpers/Functions.php:787
 msgid "Mosque"
 msgstr ""
 
-#: app/Helpers/Functions.php:786
+#: app/Helpers/Functions.php:788
 msgid "Church"
 msgstr ""
 
-#: app/Helpers/Functions.php:787
+#: app/Helpers/Functions.php:789
 msgid "HinduTemple"
 msgstr ""
 
-#: app/Helpers/Functions.php:788
+#: app/Helpers/Functions.php:790
 msgid "BuddhistTemple"
 msgstr ""
 
-#: app/Helpers/Functions.php:789
+#: app/Helpers/Functions.php:791
+msgid "TouristAttraction"
+msgstr ""
+
+#: app/Helpers/Functions.php:792
 msgid "ProfilePage"
 msgstr ""
 
-#: app/Helpers/Functions.php:790
+#: app/Helpers/Functions.php:793
 msgid "MedicalWebPage"
 msgstr ""
 
-#: app/Helpers/Functions.php:793
+#: app/Helpers/Functions.php:796
 msgid "RealEstateListing"
 msgstr ""
 
-#: app/Helpers/Functions.php:795
+#: app/Helpers/Functions.php:798
 msgid "JobPosting"
 msgstr ""
 
-#: app/Helpers/Functions.php:796
+#: app/Helpers/Functions.php:799
 msgid "Recipe"
 msgstr ""
 
-#: app/Helpers/Functions.php:797
+#: app/Helpers/Functions.php:800
 msgid "SoftwareApplication"
 msgstr ""
 
-#: app/Helpers/Functions.php:798
+#: app/Helpers/Functions.php:801
 msgid "Image License (ImageObject)"
 msgstr ""
 
-#: app/Helpers/Functions.php:800
+#: app/Helpers/Functions.php:803
 msgid "SpecialAnnouncement ( Deprecated )"
 msgstr ""
 
-#: app/Helpers/Functions.php:801
+#: app/Helpers/Functions.php:804
 msgid "VacationRental"
 msgstr ""
 
-#: app/Helpers/Functions.php:802
+#: app/Helpers/Functions.php:805
 msgid "Vehicle listing"
 msgstr ""
 
-#: app/Helpers/Functions.php:803
+#: app/Helpers/Functions.php:806
 msgid "TVSeries"
 msgstr ""
 
-#: app/Helpers/Functions.php:804
+#: app/Helpers/Functions.php:807
 msgid "PodcastEpisode"
 msgstr ""
 
-#: app/Helpers/Functions.php:805
+#: app/Helpers/Functions.php:808
 msgid "DiscussionForumPosting"
 msgstr ""
 
-#: app/Helpers/Functions.php:806
+#: app/Helpers/Functions.php:809
 msgid "Dataset ( Deprecated )"
 msgstr ""
 
-#: app/Helpers/Functions.php:807
+#: app/Helpers/Functions.php:810
 msgid "TaxiService"
 msgstr ""
 
-#: app/Helpers/Functions.php:835
-#: app/Helpers/Functions.php:1117
+#: app/Helpers/Functions.php:838
+#: app/Helpers/Functions.php:1120
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:504
 #: views/widgets/review-schema.php:14
 msgid "Select"
 msgstr ""
 
-#: app/Helpers/Functions.php:1007
+#: app/Helpers/Functions.php:1010
 msgid "This function should not be called before rtrs_init."
 msgstr ""
 
-#: app/Models/Field.php:145
-#: app/Models/Field.php:642
-#: app/Models/Field.php:780
+#: app/Models/Field.php:149
+#: app/Models/Field.php:646
+#: app/Models/Field.php:784
 #: app/Models/SettingsAPI.php:579
 msgid "[Pro]"
 msgstr ""
 
-#: app/Models/Field.php:145
+#: app/Models/Field.php:149
 msgid "This is premium field"
 msgstr ""
 
-#: app/Models/Field.php:154
+#: app/Models/Field.php:158
 msgid "Required"
 msgstr ""
 
-#: app/Models/Field.php:159
+#: app/Models/Field.php:163
 #: app/Modules/Review/Shortcodes/ShortcodesInit.php:127
 #: templates/reviews.php:81
 msgid "Recommended"
 msgstr ""
 
-#: app/Models/Field.php:169
+#: app/Models/Field.php:173
 msgid "Deprecated"
 msgstr ""
 
-#: app/Models/Field.php:169
+#: app/Models/Field.php:173
 msgid "The Manual Schema field will be removed in a future update."
 msgstr ""
 
-#: app/Models/Field.php:646
-#: app/Models/Field.php:786
+#: app/Models/Field.php:650
+#: app/Models/Field.php:790
 #: app/Models/SettingsAPI.php:583
 #: app/Modules/Review/Admin/RegisterPostType.php:73
 #: app/Modules/Review/Admin/RegisterPostType.php:74
 msgid "Add New"
 msgstr ""
 
-#: app/Models/Field.php:678
-#: app/Models/Field.php:718
+#: app/Models/Field.php:682
+#: app/Models/Field.php:722
 #: app/Modules/Review/Admin/ReviewSettings.php:515
 #: app/Modules/Review/Ajax/ReviewAjax.php:720
 #: app/Modules/Review/Hooks/ReviewFrontend.php:819
@@ -1117,7 +1121,7 @@ msgstr ""
 msgid "Upload Image"
 msgstr ""
 
-#: app/Models/Field.php:944
+#: app/Models/Field.php:948
 #: app/Modules/Review/Elementor/Controls/ReviewListControls.php:169
 #: app/Modules/Review/Elementor/Controls/ReviewListControls.php:200
 #: app/Modules/Review/Elementor/WidgetBase.php:206
@@ -1126,76 +1130,76 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: app/Models/Field.php:952
+#: app/Models/Field.php:956
 msgid "Font size"
 msgstr ""
 
-#: app/Models/Field.php:955
-#: app/Models/Field.php:969
-#: app/Models/Field.php:985
+#: app/Models/Field.php:959
+#: app/Models/Field.php:973
+#: app/Models/Field.php:989
 msgid "Default"
 msgstr ""
 
-#: app/Models/Field.php:967
+#: app/Models/Field.php:971
 msgid "Weight"
 msgstr ""
 
-#: app/Models/Field.php:983
+#: app/Models/Field.php:987
 #: app/Modules/Review/Elementor/WidgetBase.php:231
 #: app/Modules/Review/Elementor/WidgetBase.php:370
 msgid "Alignment"
 msgstr ""
 
-#: app/Models/Field.php:1011
+#: app/Models/Field.php:1015
 #: app/Modules/Review/Elementor/WidgetBase.php:235
 #: app/Modules/Review/Elementor/WidgetBase.php:374
 msgid "Left"
 msgstr ""
 
-#: app/Models/Field.php:1012
+#: app/Models/Field.php:1016
 #: app/Modules/Review/Elementor/WidgetBase.php:243
 #: app/Modules/Review/Elementor/WidgetBase.php:382
 msgid "Right"
 msgstr ""
 
-#: app/Models/Field.php:1013
+#: app/Models/Field.php:1017
 #: app/Modules/Review/Elementor/WidgetBase.php:239
 #: app/Modules/Review/Elementor/WidgetBase.php:378
 msgid "Center"
 msgstr ""
 
-#: app/Models/Field.php:1014
+#: app/Models/Field.php:1018
 msgid "Justify"
 msgstr ""
 
-#: app/Models/Field.php:1020
+#: app/Models/Field.php:1024
 #: app/Modules/Review/Admin/ReviewSettings.php:422
 #: app/Modules/Review/Elementor/Controls/ReviewListControls.php:162
 #: app/Modules/Review/Elementor/WidgetBase.php:427
 msgid "Normal"
 msgstr ""
 
-#: app/Models/Field.php:1021
+#: app/Models/Field.php:1025
 msgid "Bold"
 msgstr ""
 
-#: app/Models/Field.php:1022
+#: app/Models/Field.php:1026
 msgid "Bolder"
 msgstr ""
 
-#: app/Models/Field.php:1023
+#: app/Models/Field.php:1027
 msgid "Lighter"
 msgstr ""
 
-#: app/Models/Field.php:1024
+#: app/Models/Field.php:1028
 msgid "Inherit"
 msgstr ""
 
-#: app/Models/Field.php:1025
+#: app/Models/Field.php:1029
 msgid "Initial"
 msgstr ""
 
-#: app/Models/Field.php:1026
+#: app/Models/Field.php:1030
 msgid "Unset"
 msgstr ""
 
@@ -1434,7 +1438,7 @@ msgstr ""
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:327
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:353
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:369
-#: views/settings/ai-settings.php:44
+#: views/settings/ai-settings.php:205
 #: views/settings/schema-archive-settings.php:19
 #: views/settings/schema-archive-settings.php:49
 #: views/settings/schema-archive-settings.php:58
@@ -4230,6 +4234,11 @@ msgstr ""
 msgid "Use the most appropriate schema category for local business"
 msgstr ""
 
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1680
+#: views/settings/schema-settings.php:59
+msgid "Can't find your category? Contact support"
+msgstr ""
+
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1696
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1837
 msgid "Images"
@@ -4850,13 +4859,13 @@ msgstr ""
 
 #. translators: %s: search query
 #: app/Modules/Schema/Models/Schema.php:85
-#: app/Modules/Schema/Models/Schema.php:192
+#: app/Modules/Schema/Models/Schema.php:200
 #, php-format
 msgid "Search results for \"%s\""
 msgstr ""
 
 #. translators: %s: search query
-#: app/Modules/Schema/Models/Schema.php:511
+#: app/Modules/Schema/Models/Schema.php:519
 #, php-format
 msgid "Search Results for \"%s\""
 msgstr ""
@@ -4882,17 +4891,17 @@ msgid "Worst:"
 msgstr ""
 
 #. translators: %s: plugin name
-#: app/Supports/Pricing/PricingCollector.php:531
-#: app/Supports/Pricing/PricingCollector.php:563
+#: app/Supports/Pricing/PricingCollector.php:533
+#: app/Supports/Pricing/PricingCollector.php:565
 #, php-format
 msgid "Pricing (auto-detected from %s)"
 msgstr ""
 
-#: app/Supports/Pricing/PricingCollector.php:534
+#: app/Supports/Pricing/PricingCollector.php:536
 msgid "Price and currency are fetched dynamically from the connected plugin. No manual entry required."
 msgstr ""
 
-#: app/Supports/Pricing/PricingCollector.php:566
+#: app/Supports/Pricing/PricingCollector.php:568
 msgid "Price, currency, availability and price validity are fetched dynamically from the connected plugin. No manual entry required."
 msgstr ""
 
@@ -5130,14 +5139,158 @@ msgid "Upgrade to Pro"
 msgstr ""
 
 #: views/settings/ai-settings.php:9
-msgid "General AI Settings"
+msgid "API Configuration"
 msgstr ""
 
 #: views/settings/ai-settings.php:13
+msgid "API Provider"
+msgstr ""
+
+#: views/settings/ai-settings.php:17
+msgid "OpenAI"
+msgstr ""
+
+#: views/settings/ai-settings.php:18
+msgid "Anthropic (Claude)"
+msgstr ""
+
+#: views/settings/ai-settings.php:19
+msgid "Google Gemini"
+msgstr ""
+
+#: views/settings/ai-settings.php:21
+msgid "Select the AI provider for schema generation."
+msgstr ""
+
+#: views/settings/ai-settings.php:24
+msgid "OpenAI API Key"
+msgstr ""
+
+#: views/settings/ai-settings.php:28
+msgid "Enter your OpenAI API key."
+msgstr ""
+
+#: views/settings/ai-settings.php:40
+msgid "OpenAI Model"
+msgstr ""
+
+#: views/settings/ai-settings.php:44
+msgid "GPT-4o Mini"
+msgstr ""
+
+#: views/settings/ai-settings.php:45
+msgid "GPT-4o"
+msgstr ""
+
+#: views/settings/ai-settings.php:46
+msgid "GPT-4.1 Nano"
+msgstr ""
+
+#: views/settings/ai-settings.php:47
+msgid "GPT-4.1 Mini"
+msgstr ""
+
+#: views/settings/ai-settings.php:48
+msgid "GPT-4.1 (Recommended)"
+msgstr ""
+
+#: views/settings/ai-settings.php:49
+msgid "GPT-5 Mini"
+msgstr ""
+
+#: views/settings/ai-settings.php:50
+msgid "GPT-5"
+msgstr ""
+
+#: views/settings/ai-settings.php:52
+msgid "Select the OpenAI model to use."
+msgstr ""
+
+#: views/settings/ai-settings.php:64
+msgid "Anthropic API Key"
+msgstr ""
+
+#: views/settings/ai-settings.php:68
+msgid "Enter your Anthropic API key."
+msgstr ""
+
+#: views/settings/ai-settings.php:80
+msgid "Anthropic Model"
+msgstr ""
+
+#: views/settings/ai-settings.php:84
+msgid "Claude Haiku 4.5"
+msgstr ""
+
+#: views/settings/ai-settings.php:85
+msgid "Claude Sonnet 4.5"
+msgstr ""
+
+#: views/settings/ai-settings.php:86
+msgid "Claude Sonnet 4.6"
+msgstr ""
+
+#: views/settings/ai-settings.php:87
+msgid "Claude Opus 4.6 (Recommended)"
+msgstr ""
+
+#: views/settings/ai-settings.php:89
+msgid "Select the Anthropic model to use."
+msgstr ""
+
+#: views/settings/ai-settings.php:101
+msgid "Gemini API Key"
+msgstr ""
+
+#: views/settings/ai-settings.php:105
+msgid "Enter your Google Gemini API key."
+msgstr ""
+
+#: views/settings/ai-settings.php:117
+msgid "Gemini Model"
+msgstr ""
+
+#: views/settings/ai-settings.php:121
+msgid "Gemini 2.5 Flash Lite"
+msgstr ""
+
+#: views/settings/ai-settings.php:122
+msgid "Gemini 2.5 Flash (Recommended)"
+msgstr ""
+
+#: views/settings/ai-settings.php:123
+msgid "Gemini 2.5 Pro"
+msgstr ""
+
+#: views/settings/ai-settings.php:124
+msgid "Gemini 3 Flash"
+msgstr ""
+
+#: views/settings/ai-settings.php:125
+msgid "Gemini 3.1 Pro"
+msgstr ""
+
+#: views/settings/ai-settings.php:127
+msgid "Select the Google Gemini model to use."
+msgstr ""
+
+#: views/settings/ai-settings.php:139
+msgid "Max Tokens"
+msgstr ""
+
+#: views/settings/ai-settings.php:143
+msgid "Maximum number of tokens for the AI response. Higher values allow longer/more detailed schema output but cost more. Default: 4096."
+msgstr ""
+
+#: views/settings/ai-settings.php:147
+msgid "General AI Settings"
+msgstr ""
+
+#: views/settings/ai-settings.php:151
 msgid "Enable AI"
 msgstr ""
 
-#: views/settings/ai-settings.php:14
+#: views/settings/ai-settings.php:152
 #: views/settings/general-settings.php:28
 #: views/settings/general-settings.php:35
 #: views/settings/general-settings.php:42
@@ -5148,197 +5301,53 @@ msgstr ""
 msgid "Allow"
 msgstr ""
 
-#: views/settings/ai-settings.php:17
+#: views/settings/ai-settings.php:155
 msgid "Enable AI to generate schema."
 msgstr ""
 
-#: views/settings/ai-settings.php:20
+#: views/settings/ai-settings.php:158
 msgid "Confidence Threshold"
 msgstr ""
 
-#: views/settings/ai-settings.php:24
+#: views/settings/ai-settings.php:162
 msgid "If AI confidence is below this threshold (0-100), it will fallback to generic WebPage schema."
 msgstr ""
 
-#: views/settings/ai-settings.php:36
+#: views/settings/ai-settings.php:181
 msgid "FAQ Count"
 msgstr ""
 
-#: views/settings/ai-settings.php:40
+#: views/settings/ai-settings.php:185
 msgid "Number of FAQs to auto-generate for FAQ content (also applies to FAQPage schema when enabled)."
 msgstr ""
 
-#: views/settings/ai-settings.php:43
+#: views/settings/ai-settings.php:204
 #: views/settings/schema-post_types-settings.php:75
 msgid "Auto-Generate"
 msgstr ""
 
-#: views/settings/ai-settings.php:48
+#: views/settings/ai-settings.php:209
 msgid "Automatically generate schema with AI based on site info > schema type settings."
 msgstr ""
 
-#: views/settings/ai-settings.php:60
+#: views/settings/ai-settings.php:228
 msgid "Reset Auto-Generation"
 msgstr ""
 
-#: views/settings/ai-settings.php:64
+#: views/settings/ai-settings.php:232
 msgid "Reset & Re-run Auto-Generation"
 msgstr ""
 
-#: views/settings/ai-settings.php:66
+#: views/settings/ai-settings.php:234
 msgid "Re-runs AI schema generation for every eligible published post that does not yet have an AI-generated schema. This clears the batch completion flag, cancels any scheduled run, and starts a fresh background batch via WP-Cron (about one post every 30 seconds). Posts that already have a saved AI schema are skipped — delete the schema from the post first if you want to regenerate it."
 msgstr ""
 
-#: views/settings/ai-settings.php:69
+#: views/settings/ai-settings.php:237
 msgid "Learn more about AI auto-generation →"
 msgstr ""
 
-#: views/settings/ai-settings.php:87
+#: views/settings/ai-settings.php:261
 msgid "Auto-Generation Progress"
-msgstr ""
-
-#: views/settings/ai-settings.php:107
-msgid "API Configuration"
-msgstr ""
-
-#: views/settings/ai-settings.php:111
-msgid "API Provider"
-msgstr ""
-
-#: views/settings/ai-settings.php:115
-msgid "OpenAI"
-msgstr ""
-
-#: views/settings/ai-settings.php:116
-msgid "Anthropic (Claude)"
-msgstr ""
-
-#: views/settings/ai-settings.php:117
-msgid "Google Gemini"
-msgstr ""
-
-#: views/settings/ai-settings.php:119
-msgid "Select the AI provider for schema generation."
-msgstr ""
-
-#: views/settings/ai-settings.php:122
-msgid "OpenAI API Key"
-msgstr ""
-
-#: views/settings/ai-settings.php:126
-msgid "Enter your OpenAI API key."
-msgstr ""
-
-#: views/settings/ai-settings.php:138
-msgid "OpenAI Model"
-msgstr ""
-
-#: views/settings/ai-settings.php:142
-msgid "GPT-4o Mini"
-msgstr ""
-
-#: views/settings/ai-settings.php:143
-msgid "GPT-4o"
-msgstr ""
-
-#: views/settings/ai-settings.php:144
-msgid "GPT-4.1 Nano"
-msgstr ""
-
-#: views/settings/ai-settings.php:145
-msgid "GPT-4.1 Mini"
-msgstr ""
-
-#: views/settings/ai-settings.php:146
-msgid "GPT-4.1 (Recommended)"
-msgstr ""
-
-#: views/settings/ai-settings.php:147
-msgid "GPT-5 Mini"
-msgstr ""
-
-#: views/settings/ai-settings.php:148
-msgid "GPT-5"
-msgstr ""
-
-#: views/settings/ai-settings.php:150
-msgid "Select the OpenAI model to use."
-msgstr ""
-
-#: views/settings/ai-settings.php:162
-msgid "Anthropic API Key"
-msgstr ""
-
-#: views/settings/ai-settings.php:166
-msgid "Enter your Anthropic API key."
-msgstr ""
-
-#: views/settings/ai-settings.php:178
-msgid "Anthropic Model"
-msgstr ""
-
-#: views/settings/ai-settings.php:182
-msgid "Claude Haiku 4.5"
-msgstr ""
-
-#: views/settings/ai-settings.php:183
-msgid "Claude Sonnet 4.5"
-msgstr ""
-
-#: views/settings/ai-settings.php:184
-msgid "Claude Sonnet 4.6"
-msgstr ""
-
-#: views/settings/ai-settings.php:185
-msgid "Claude Opus 4.6 (Recommended)"
-msgstr ""
-
-#: views/settings/ai-settings.php:187
-msgid "Select the Anthropic model to use."
-msgstr ""
-
-#: views/settings/ai-settings.php:199
-msgid "Gemini API Key"
-msgstr ""
-
-#: views/settings/ai-settings.php:203
-msgid "Enter your Google Gemini API key."
-msgstr ""
-
-#: views/settings/ai-settings.php:215
-msgid "Gemini Model"
-msgstr ""
-
-#: views/settings/ai-settings.php:219
-msgid "Gemini 2.5 Flash Lite"
-msgstr ""
-
-#: views/settings/ai-settings.php:220
-msgid "Gemini 2.5 Flash (Recommended)"
-msgstr ""
-
-#: views/settings/ai-settings.php:221
-msgid "Gemini 2.5 Pro"
-msgstr ""
-
-#: views/settings/ai-settings.php:222
-msgid "Gemini 3 Flash"
-msgstr ""
-
-#: views/settings/ai-settings.php:223
-msgid "Gemini 3.1 Pro"
-msgstr ""
-
-#: views/settings/ai-settings.php:225
-msgid "Select the Google Gemini model to use."
-msgstr ""
-
-#: views/settings/ai-settings.php:237
-msgid "Max Tokens"
-msgstr ""
-
-#: views/settings/ai-settings.php:241
-msgid "Maximum number of tokens for the AI response. Higher values allow longer/more detailed schema output but cost more. Default: 4096."
 msgstr ""
 
 #: views/settings/general-settings.php:23

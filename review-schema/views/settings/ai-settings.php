@@ -5,104 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $rtrs_options = [
-	'general_section'      => [
-		'title' => esc_html__( 'General AI Settings', 'review-schema' ),
-		'type'  => 'title',
-	],
-	'ai_enabled'           => [
-		'title'       => esc_html__( 'Enable AI', 'review-schema' ),
-		'label'       => esc_html__( 'Allow', 'review-schema' ),
-		'type'        => 'checkbox',
-		'default'     => '',
-		'description' => esc_html__( 'Enable AI to generate schema.', 'review-schema' ),
-	],
-	'confidence_threshold' => [
-		'title'       => esc_html__( 'Confidence Threshold', 'review-schema' ),
-		'type'        => 'number',
-		'default'     => 60,
-		'class'       => 'small-text',
-		'description' => esc_html__( 'If AI confidence is below this threshold (0-100), it will fallback to generic WebPage schema.', 'review-schema' ),
-		'depends'     => [
-			'on' => [
-				[
-					'field'     => 'rtrs_general_settings.schema_enabled',
-					'value'     => 'yes',
-					'condition' => '=',
-				],
-			],
-		],
-	],
-	'faq_count'            => [
-		'title'       => esc_html__( 'FAQ Count', 'review-schema' ),
-		'type'        => 'number',
-		'default'     => 5,
-		'class'       => 'small-text',
-		'description' => esc_html__( 'Number of FAQs to auto-generate for FAQ content (also applies to FAQPage schema when enabled).', 'review-schema' ),
-	],
-	'auto_generate'        => [
-		'title'       => esc_html__( 'Auto-Generate', 'review-schema' ),
-		'label'       => esc_html__( 'Enable', 'review-schema' ),
-		'type'        => 'checkbox',
-		'default'     => '',
-		'is_pro'      => true,
-		'description' => esc_html__( 'Automatically generate schema with AI based on site info > schema type settings.', 'review-schema' ),
-		'depends'     => [
-			'on' => [
-				[
-					'field'     => 'rtrs_general_settings.schema_enabled',
-					'value'     => 'yes',
-					'condition' => '=',
-				],
-			],
-		],
-	],
-	'reset_batch'          => [
-		'title'        => esc_html__( 'Reset Auto-Generation', 'review-schema' ),
-		'type'         => 'html',
-		'is_pro'       => true,
-		'html_content' => '<a style="font-size: 14px;" href="' . esc_url( wp_nonce_url( admin_url( 'admin.php?page=review-schema&tab=ai&rtrs_reset_batch=1' ), 'rtrs_reset_ai_batch' ) . '#/ai' ) . '">'
-			. esc_html__( 'Reset & Re-run Auto-Generation', 'review-schema' )
-			. '</a><p class="description" style="font-size: 14px;">'
-			. esc_html__( 'Re-runs AI schema generation for every eligible published post that does not yet have an AI-generated schema. This clears the batch completion flag, cancels any scheduled run, and starts a fresh background batch via WP-Cron (about one post every 30 seconds). Posts that already have a saved AI schema are skipped — delete the schema from the post first if you want to regenerate it.', 'review-schema' )
-			. '</p><p class="description" style="font-size: 14px;"><a target="_blank" rel="noopener noreferrer" href="'
-			. esc_url( 'https://schemaengineai.com/docs/docs/ai-settings/' )
-			. '">' . esc_html__( 'Learn more about AI auto-generation →', 'review-schema' ) . '</a></p>',
-		'depends'      => [
-			'relation' => 'and',
-			'on'       => [
-				[
-					'field'     => 'rtrs_general_settings.schema_enabled',
-					'value'     => 'yes',
-					'condition' => '=',
-				],
-				[
-					'field'     => 'rtrs_ai_settings.auto_generate',
-					'value'     => 'yes',
-					'condition' => '=',
-				],
-			],
-		],
-	],
-	'auto_gen_progress'    => [
-		'title'   => esc_html__( 'Auto-Generation Progress', 'review-schema' ),
-		'type'    => 'auto_gen_progress',
-		'is_pro'  => true,
-		'depends' => [
-			'relation' => 'and',
-			'on'       => [
-				[
-					'field'     => 'rtrs_general_settings.schema_enabled',
-					'value'     => 'yes',
-					'condition' => '=',
-				],
-				[
-					'field'     => 'rtrs_ai_settings.auto_generate',
-					'value'     => 'yes',
-					'condition' => '=',
-				],
-			],
-		],
-	],
 	'api_section'          => [
 		'title' => esc_html__( 'API Configuration', 'review-schema' ),
 		'type'  => 'title',
@@ -240,6 +142,148 @@ $rtrs_options = [
 		'class'       => 'small-text',
 		'description' => esc_html__( 'Maximum number of tokens for the AI response. Higher values allow longer/more detailed schema output but cost more. Default: 4096.', 'review-schema' ),
 	],
+
+	'general_section'      => [
+		'title' => esc_html__( 'General AI Settings', 'review-schema' ),
+		'type'  => 'title',
+	],
+	'ai_enabled'           => [
+		'title'       => esc_html__( 'Enable AI', 'review-schema' ),
+		'label'       => esc_html__( 'Allow', 'review-schema' ),
+		'type'        => 'checkbox',
+		'default'     => '',
+		'description' => esc_html__( 'Enable AI to generate schema.', 'review-schema' ),
+	],
+	'confidence_threshold' => [
+		'title'       => esc_html__( 'Confidence Threshold', 'review-schema' ),
+		'type'        => 'number',
+		'default'     => 60,
+		'class'       => 'small-text',
+		'description' => esc_html__( 'If AI confidence is below this threshold (0-100), it will fallback to generic WebPage schema.', 'review-schema' ),
+		// Visible only when global Schema output AND AI are both enabled.
+		'depends'     => [
+			'relation' => 'and',
+			'on'       => [
+				[
+					'field'     => 'rtrs_general_settings.schema_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.ai_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+	'faq_count'            => [
+		'title'       => esc_html__( 'FAQ Count', 'review-schema' ),
+		'type'        => 'number',
+		'default'     => 5,
+		'class'       => 'small-text',
+		'description' => esc_html__( 'Number of FAQs to auto-generate for FAQ content (also applies to FAQPage schema when enabled).', 'review-schema' ),
+		// Visible only when global Schema output AND AI are both enabled.
+		'depends'     => [
+			'relation' => 'and',
+			'on'       => [
+				[
+					'field'     => 'rtrs_general_settings.schema_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.ai_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+	'auto_generate'        => [
+		'title'       => esc_html__( 'Auto-Generate', 'review-schema' ),
+		'label'       => esc_html__( 'Enable', 'review-schema' ),
+		'type'        => 'checkbox',
+		'default'     => '',
+		'is_pro'      => true,
+		'description' => esc_html__( 'Automatically generate schema with AI based on site info > schema type settings.', 'review-schema' ),
+		// Visible only when global Schema output AND AI are both enabled.
+		'depends'     => [
+			'relation' => 'and',
+			'on'       => [
+				[
+					'field'     => 'rtrs_general_settings.schema_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.ai_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+	'reset_batch'          => [
+		'title'        => esc_html__( 'Reset Auto-Generation', 'review-schema' ),
+		'type'         => 'html',
+		'is_pro'       => true,
+		'html_content' => '<a style="font-size: 14px;" href="' . esc_url( wp_nonce_url( admin_url( 'admin.php?page=review-schema&tab=ai&rtrs_reset_batch=1' ), 'rtrs_reset_ai_batch' ) . '#/ai' ) . '">'
+			. esc_html__( 'Reset & Re-run Auto-Generation', 'review-schema' )
+			. '</a><p class="description" style="font-size: 14px;">'
+			. esc_html__( 'Re-runs AI schema generation for every eligible published post that does not yet have an AI-generated schema. This clears the batch completion flag, cancels any scheduled run, and starts a fresh background batch via WP-Cron (about one post every 30 seconds). Posts that already have a saved AI schema are skipped — delete the schema from the post first if you want to regenerate it.', 'review-schema' )
+			. '</p><p class="description" style="font-size: 14px;"><a target="_blank" rel="noopener noreferrer" href="'
+			. esc_url( 'https://schemaengineai.com/docs/docs/ai-settings/' )
+			. '">' . esc_html__( 'Learn more about AI auto-generation →', 'review-schema' ) . '</a></p>',
+		// Visible only when Schema output, AI, and Auto-Generate are all enabled.
+		'depends'      => [
+			'relation' => 'and',
+			'on'       => [
+				[
+					'field'     => 'rtrs_general_settings.schema_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.ai_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.auto_generate',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+	'auto_gen_progress'    => [
+		'title'   => esc_html__( 'Auto-Generation Progress', 'review-schema' ),
+		'type'    => 'auto_gen_progress',
+		'is_pro'  => true,
+		// Visible only when Schema output, AI, and Auto-Generate are all enabled.
+		'depends' => [
+			'relation' => 'and',
+			'on'       => [
+				[
+					'field'     => 'rtrs_general_settings.schema_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.ai_enabled',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+				[
+					'field'     => 'rtrs_ai_settings.auto_generate',
+					'value'     => 'yes',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+
 ];
 
 return apply_filters( 'rtrs_ai_settings_options', $rtrs_options );

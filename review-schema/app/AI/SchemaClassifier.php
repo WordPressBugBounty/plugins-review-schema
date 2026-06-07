@@ -42,6 +42,7 @@ class SchemaClassifier {
 		'Church',
 		'HinduTemple',
 		'BuddhistTemple',
+		'TouristAttraction',
 		'ProfilePage',
 		'MedicalWebPage',
 		'Book',

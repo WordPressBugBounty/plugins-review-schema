@@ -108,18 +108,46 @@ class AutoGenProgress {
 		$failed    = (int) ( $progress['failed'] ?? 0 );
 		$started   = (int) ( $progress['started'] ?? 0 );
 		$processed = $completed + $failed;
-		$percent   = $total > 0 ? min( 100, (int) round( ( $processed / $total ) * 100 ) ) : 0;
 		$queue     = isset( $progress['queue'] ) && is_array( $progress['queue'] ) ? count( $progress['queue'] ) : 0;
-		$status    = ( 0 === $queue && $processed >= $total && $total > 0 ) ? 'completed' : 'running';
+
+		// Overall completion drives the running/completed status.
+		$status = ( 0 === $queue && $processed >= $total && $total > 0 ) ? 'completed' : 'running';
+
+		// Display counts are scoped to the post type currently being processed,
+		// falling back to overall totals for legacy batches without per-type data.
+		$current_type = isset( $progress['current_type'] ) ? (string) $progress['current_type'] : '';
+		$type_total   = ( '' !== $current_type && isset( $progress['type_totals'][ $current_type ] ) ) ? (int) $progress['type_totals'][ $current_type ] : $total;
+		$type_done    = ( '' !== $current_type && isset( $progress['type_done'][ $current_type ] ) ) ? (int) $progress['type_done'][ $current_type ] : $processed;
+		$type_percent = $type_total > 0 ? min( 100, (int) round( ( $type_done / $type_total ) * 100 ) ) : 0;
+
+		// Summary of post types already fully processed (e.g. "10 Posts"), so
+		// finished types stay visible after the batch moves to the next type.
+		$completed_types = [];
+		$type_totals     = isset( $progress['type_totals'] ) && is_array( $progress['type_totals'] ) ? $progress['type_totals'] : [];
+		$type_done_map   = isset( $progress['type_done'] ) && is_array( $progress['type_done'] ) ? $progress['type_done'] : [];
+
+		foreach ( $type_totals as $type_slug => $type_count ) {
+			$type_count = (int) $type_count;
+			$done_count = (int) ( $type_done_map[ $type_slug ] ?? 0 );
+
+			if ( $type_count > 0 && $done_count >= $type_count ) {
+				$object = get_post_type_object( $type_slug );
+				$label  = ( $object && ! empty( $object->labels->name ) ) ? $object->labels->name : $type_slug;
+				/* translators: 1: processed count, 2: post type label */
+				$completed_types[] = sprintf( '%d %s', $done_count, $label );
+			}
+		}
 
 		wp_send_json_success(
 			[
-				'status'    => $status,
-				'processed' => $processed,
-				'total'     => $total,
-				'failed'    => $failed,
-				'percent'   => $percent,
-				'started'   => $started,
+				'status'         => $status,
+				'processed'      => $type_done,
+				'total'          => $type_total,
+				'failed'         => $failed,
+				'percent'        => $type_percent,
+				'started'        => $started,
+				'postTypeLabel'  => isset( $progress['post_type_label'] ) ? (string) $progress['post_type_label'] : '',
+				'completedTypes' => $completed_types,
 			]
 		);
 	}

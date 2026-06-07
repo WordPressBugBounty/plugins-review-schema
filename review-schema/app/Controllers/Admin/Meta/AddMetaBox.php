@@ -187,6 +187,11 @@ class AddMetaBox {
 
 			case 'float':
 				$fValue = isset( $value ) ? floatval( $value ) : null;
+				// Numeric schema fields (price, ratings, fees, counts) are never
+				// negative — clamp the minimum to 0 so a minus value can't be saved.
+				if ( is_numeric( $fValue ) && $fValue < 0 ) {
+					$fValue = 0;
+				}
 				break;
 
 			case 'gallery':

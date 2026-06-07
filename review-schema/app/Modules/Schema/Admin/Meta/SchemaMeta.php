@@ -1677,7 +1677,7 @@ class SchemaMeta {
 					'required' => true,
 					'options'  => Functions::getSiteTypes(),
 					'empty'    => esc_html__( 'Select One', 'review-schema' ),
-					'desc'     => esc_html__( 'Use the most appropriate schema category for local business', 'review-schema' ),
+					'desc'     => esc_html__( 'Use the most appropriate schema category for local business', 'review-schema' ) . ' <a href="' . esc_url( 'https://www.radiustheme.com/ticket-support/' ) . '" target="_blank">' . esc_html__( "Can't find your category? Contact support", 'review-schema' ) . '</a>',
 				],
 				[
 					'name'     => 'name',
