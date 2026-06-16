@@ -352,9 +352,13 @@ class Field {
 
 	private function url() {
 		$url = $this->value ?? ''; // Fix PHP 8.2.8 Error
+		// Rendered as text (not type='url') so the browser's native URL
+		// validation can't block saving the post — including for fields hidden
+		// by the override toggle. The value is sanitized server-side with
+		// esc_url_raw() in AddMetaBox::sanitize_field().
 		return sprintf(
 			"<input
-        type='url'
+        type='text'
         class='%s'
         id='%s'
         value='%s'
@@ -372,6 +376,7 @@ class Field {
 	private function number() {
 		$h        = null;
 		$min_attr = ! is_null( $this->min ) ? sprintf( "min='%s'", esc_attr( $this->min ) ) : '';
+		$value    = $this->constrained_value();
 		$h       .= sprintf(
 			"<input
         type='number'
@@ -384,7 +389,7 @@ class Field {
         />",
 			esc_attr( $this->class ),
 			esc_attr( $this->id ),
-			esc_attr( $this->value ),
+			esc_attr( $value ),
 			esc_attr( $this->name ),
 			esc_attr( $this->placeholder ),
 			$min_attr
@@ -396,6 +401,7 @@ class Field {
 	private function float() {
 		$h        = null;
 		$min_attr = ! is_null( $this->min ) ? sprintf( "min='%s'", esc_attr( $this->min ) ) : '';
+		$value    = $this->constrained_value();
 		$h       .= sprintf(
 			"<input
         type='number'
@@ -409,13 +415,38 @@ class Field {
         />",
 			esc_attr( $this->class ),
 			esc_attr( $this->id ),
-			esc_attr( $this->value ),
+			esc_attr( $value ),
 			esc_attr( $this->name ),
 			esc_attr( $this->placeholder ),
 			$min_attr
 		);
 
 		return $h;
+	}
+
+	/**
+	 * Resolve the value shown in a number/float input against its `min` rule.
+	 *
+	 * A stored value below `min` (typically a 0 left over from a previously
+	 * empty save) can never satisfy the native HTML5 `min` constraint, so the
+	 * browser refuses to submit the post — and if the field is hidden it fails
+	 * silently with "control is not focusable". Rendering such a value as an
+	 * empty string keeps the field valid (empty inputs are exempt from `min`)
+	 * while still guiding the user toward a valid value when they type one.
+	 *
+	 * @since 3.0.2
+	 * @return mixed Empty string when the value is below `min`, otherwise the value.
+	 */
+	private function constrained_value() {
+		$value = $this->value;
+		if ( is_null( $this->min ) ) {
+			return $value;
+		}
+		if ( '' === $value || is_null( $value ) || ( is_numeric( $value ) && floatval( $value ) < floatval( $this->min ) ) ) {
+			return '';
+		}
+
+		return $value;
 	}
 
 	private function select() {

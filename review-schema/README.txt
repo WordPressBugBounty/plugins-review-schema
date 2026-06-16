@@ -5,7 +5,7 @@ Tags: schema, rich snippets, review, structured data, seo
 Requires at least: 4.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -288,6 +288,11 @@ Yes. Every property is editable in Manual mode and editable after generation in 
 
 
 == Changelog ==
+= 3.0.3 (June 16, 2026) =
+* Fixed: Post could not be saved due to rating/number or URL field validation.
+* Fixed: "Pro field alert" popup auto-opening after the Pro plugin was deactivated.
+* Fixed: Pro-only schema no longer renders on the frontend when Pro is inactive.
+
 = 3.0.2 (June 03, 2026) =
 * Fixed: Article schema `articleBody` could break out of its JSON-LD `<script>` container and render raw markup in the page header (unescaped forward slashes in the JSON-LD output).
 * Fixed: HTML/script tags are no longer included in the `articleBody` schema text.

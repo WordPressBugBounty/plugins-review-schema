@@ -1214,7 +1214,24 @@ class Schema {
 		$all_schema_id = [];
 		if ( $custom_snippet ) {
 			$schemaCat = get_post_meta( $post_id, '_rtrs_rich_snippet_cat', false );
+
+			// Pro-only schema slugs (those flagged "[Pro]" in rich_snippet_cats()
+			// when the Pro plugin is inactive). A post that kept a Pro schema
+			// type after Pro was deactivated must not render it on the frontend.
+			$pro_cats = [];
+			if ( ! function_exists( 'rtrsp' ) ) {
+				foreach ( Functions::rich_snippet_cats() as $cat_key => $cat_label ) {
+					if ( false !== strpos( $cat_label, '[Pro]' ) ) {
+						$pro_cats[] = $cat_key;
+					}
+				}
+			}
+
 			foreach ( $schemaCat as $singleCat ) {
+				// Skip Pro-only schema types when the Pro plugin is not active.
+				if ( in_array( $singleCat, $pro_cats, true ) ) {
+					continue;
+				}
 				$metaData = get_post_meta( $post_id, $prefix . $singleCat . '_schema', true );
 				if ( empty( $metaData ) ) {
 					continue;
