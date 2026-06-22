@@ -11,6 +11,7 @@ use Rtrs\Controllers\Admin\Activation;
 use Rtrs\Controllers\Admin\AdminController;
 use Rtrs\Controllers\Ajax\AjaxController;
 use Rtrs\Controllers\Marketing\RenameNotice;
+use Rtrs\Controllers\Marketing\Review;
 use Rtrs\Controllers\MigrationV3;
 use Rtrs\Helpers\Functions;
 use Rtrs\Modules\ModulesInit;
@@ -54,6 +55,7 @@ final class Rtrs {
 
 		if ( is_admin() ) {
 			RenameNotice::init();
+			Review::init();
 		}
 
 		do_action( 'rtrs_init' );

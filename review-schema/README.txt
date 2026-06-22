@@ -5,7 +5,7 @@ Tags: schema, rich snippets, review, structured data, seo
 Requires at least: 4.5
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -288,6 +288,16 @@ Yes. Every property is editable in Manual mode and editable after generation in 
 
 
 == Changelog ==
+
+= 3.0.4 (June 22, 2026) =
+* Fixed: AI generation failing with "The response is not a valid JSON response."
+* Fixed: Errors now show the actual reason instead of a generic message.
+* Added: Truncation detection with a clear "Increase Max Tokens" message.
+* Added: "Open AI Settings" link on error messages.
+* Improved: Safer AI JSON parsing using balanced-brace matching.
+* Improved: FAQ output capped to the configured count.
+* Improved: Bounded, configurable AI request timeout.
+
 = 3.0.3 (June 16, 2026) =
 * Fixed: Post could not be saved due to rating/number or URL field validation.
 * Fixed: "Pro field alert" popup auto-opening after the Pro plugin was deactivated.

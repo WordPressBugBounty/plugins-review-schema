@@ -30,7 +30,7 @@ class Review {
         }
 
         $install_date = get_option( 'rtrs_plugin_activation_time' );
-        $past_date    = strtotime( '-10 days' );
+        $past_date    = strtotime( '-15 days' );
 
         $remind_time = get_option( 'rtrs_remind_me' );
         $remind_due  = strtotime( '+15 days', $remind_time );
@@ -71,14 +71,14 @@ class Review {
             // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- All values are pre-escaped above via esc_html__() / esc_url() before being interpolated.
             printf(
                 '<div class="notice rtrs-review-notice rtrs-review-notice--extended">
+                <a href="%7$s" class="rtrs-review-notice_dismiss" aria-label="' . esc_attr__( 'Dismiss this notice', 'review-schema' ) . '"><span class="dashicons dashicons-no-alt"></span></a>
                 <div class="rtrs-review-notice_content">
                     <h3>%1$s</h3>
                     <p>%2$s</p>
                     <div class="rtrs-review-notice_actions">
-                        <a href="%3$s" class="rtrs-review-button rtrs-review-button--cta" target="_blank"><span>%4$s</span></a>
+                        <a href="%3$s" class="rtrs-review-button rtrs-review-button-action rtrs-review-button--cta" target="_blank"><span>%4$s</span></a>
                         <a href="%5$s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--outline"><span>%6$s</span></a>
                         <a href="%7$s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--outline"><span>%8$s</span></a>
-                        <a href="%9$s" class="rtrs-review-button rtrs-review-button--cta rtrs-review-button--error rtrs-review-button--outline"><span>%10$s</span></a>
                     </div>
                 </div>
             </div>',
@@ -127,7 +127,31 @@ class Review {
             } 
             .rtrs-review-notice_content {
                 padding: 20px;
-            } 
+            }
+            .rtrs-review-notice_dismiss {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #787c82;
+                text-decoration: none !important;
+            }
+            .rtrs-review-notice_dismiss:hover,
+            .rtrs-review-notice_dismiss:focus {
+                color: #d72b3f;
+                box-shadow: none;
+                outline: none;
+            }
+            .rtrs-review-notice_dismiss .dashicons {
+                width: 20px;
+                height: 20px;
+                font-size: 20px;
+                line-height: 20px;
+            }
             .rtrs-review-notice_actions > * + * {
                 margin-inline-start: 8px;
                 -webkit-margin-start: 8px;
@@ -158,8 +182,11 @@ class Review {
                 color: #fff;
                 vertical-align: middle;
                 text-align: center;
-                text-decoration: none;
+                text-decoration: none !important;
                 white-space: nowrap; 
+            }
+            .rtrs-review-button-action{
+                color: #fff !important;
             }
             .rtrs-review-button:active {
                 background: var(--e-button-context-color-dark);

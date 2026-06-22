@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.3\n"
+"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/review-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-16T10:42:50+00:00\n"
+"POT-Creation-Date: 2026-06-22T07:24:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: review-schema\n"
@@ -39,39 +39,65 @@ msgstr ""
 msgid "https://radiustheme.com"
 msgstr ""
 
-#: app/AI/AIClient.php:96
-msgid "AI API key is not configured."
+#: app/AI/AIClient.php:119
+msgid "AI API key is not configured. Add your provider API key in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:219
-#: app/AI/AIClient.php:265
-#: app/AI/AIClient.php:350
-msgid "Unknown API error."
+#: app/AI/AIClient.php:177
+msgid "Your AI API key is invalid or expired. Update it in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:224
+#: app/AI/AIClient.php:180
+msgid "The AI provider denied access. Check your API key permissions and billing status in the AI settings."
+msgstr ""
+
+#: app/AI/AIClient.php:183
+msgid "The selected AI model was not found. Choose a valid model in the AI settings."
+msgstr ""
+
+#: app/AI/AIClient.php:186
+msgid "AI provider rate limit or quota exceeded. Check your plan/usage and try again shortly."
+msgstr ""
+
+#: app/AI/AIClient.php:190
+msgid "The AI provider rejected the request. Check the selected model and Max Tokens in the AI settings."
+msgstr ""
+
+#: app/AI/AIClient.php:196
+msgid "The AI provider is temporarily unavailable. Please try again in a moment."
+msgstr ""
+
+#. translators: %d: HTTP status code.
+#: app/AI/AIClient.php:200
+#, php-format
+msgid "The AI request failed (HTTP %d)."
+msgstr ""
+
+#: app/AI/AIClient.php:325
 msgid "Could not decode API response."
 msgstr ""
 
-#: app/AI/AIClient.php:230
-msgid "AI response was truncated. Try a simpler schema type."
+#: app/AI/AIClient.php:331
+#: app/AI/AIClient.php:371
+#: app/AI/AIClient.php:460
+msgid "AI response was truncated. Increase Max Tokens in the AI settings, or try a simpler schema type."
 msgstr ""
 
-#: app/AI/AIClient.php:241
+#: app/AI/AIClient.php:342
 msgid "AI returned an empty response."
 msgstr ""
 
 #. translators: %s: JSON error message
-#: app/AI/AIClient.php:411
+#: app/AI/AIClient.php:522
 #, php-format
-msgid "Failed to parse AI response: %s"
+msgid "The AI returned data that could not be read (%s). Click Regenerate to try again, or raise Max Tokens in the AI settings if the schema is large."
 msgstr ""
 
 #: app/AI/AIInit.php:478
-#: app/AI/AIInit.php:680
-#: app/AI/AIInit.php:803
-#: app/AI/AIInit.php:936
-#: app/AI/AIInit.php:1142
+#: app/AI/AIInit.php:682
+#: app/AI/AIInit.php:805
+#: app/AI/AIInit.php:938
+#: app/AI/AIInit.php:1145
 #: app/Controllers/Admin/AdminSettings.php:144
 #: app/Controllers/Admin/AdminSettings.php:145
 #: app/Helpers/Functions.php:1851
@@ -100,10 +126,10 @@ msgid "Schema active"
 msgstr ""
 
 #: app/AI/AIInit.php:488
-#: app/AI/AIInit.php:637
-#: app/AI/AIInit.php:1038
-#: app/AI/AIInit.php:1274
-#: app/AI/AIInit.php:1350
+#: app/AI/AIInit.php:639
+#: app/AI/AIInit.php:1041
+#: app/AI/AIInit.php:1278
+#: app/AI/AIInit.php:1355
 msgid "Auto-detect (AI)"
 msgstr ""
 
@@ -225,99 +251,103 @@ msgstr ""
 msgid "Configure now"
 msgstr ""
 
-#: app/AI/AIInit.php:530
-msgid "JSON-LD Schema"
+#: app/AI/AIInit.php:528
+msgid "Open AI Settings"
 msgstr ""
 
 #: app/AI/AIInit.php:531
+msgid "JSON-LD Schema"
+msgstr ""
+
+#: app/AI/AIInit.php:532
 #: app/Modules/Review/Ajax/ReviewAjax.php:581
 #: app/Modules/Review/Ajax/ReviewAjax.php:951
 msgid "Close"
 msgstr ""
 
-#: app/AI/AIInit.php:532
+#: app/AI/AIInit.php:533
 msgid "Preview"
 msgstr ""
 
-#: app/AI/AIInit.php:533
-#: app/AI/AIInit.php:553
+#: app/AI/AIInit.php:534
+#: app/AI/AIInit.php:554
 #: app/Modules/Review/Admin/ReviewSettings.php:208
 #: app/Modules/Review/Admin/ReviewTable.php:420
 #: app/Modules/Review/Scripts/ReviewScriptLoader.php:99
 msgid "Edit"
 msgstr ""
 
-#: app/AI/AIInit.php:534
+#: app/AI/AIInit.php:535
 #: app/Models/Field.php:857
 msgid "Pro"
 msgstr ""
 
-#: app/AI/AIInit.php:535
+#: app/AI/AIInit.php:536
 msgid "Pro feature"
 msgstr ""
 
-#: app/AI/AIInit.php:536
+#: app/AI/AIInit.php:537
 msgid "Copy"
 msgstr ""
 
-#: app/AI/AIInit.php:537
+#: app/AI/AIInit.php:538
 msgid "Test"
 msgstr ""
 
-#: app/AI/AIInit.php:538
+#: app/AI/AIInit.php:539
 #: app/Modules/Review/Helpers/ReviewFns.php:486
 msgid "Cancel"
 msgstr ""
 
-#: app/AI/AIInit.php:539
+#: app/AI/AIInit.php:540
 msgid "Save Changes"
 msgstr ""
 
-#: app/AI/AIInit.php:540
+#: app/AI/AIInit.php:541
 msgid "Save Schema"
 msgstr ""
 
-#: app/AI/AIInit.php:541
+#: app/AI/AIInit.php:542
 msgid "lines"
 msgstr ""
 
-#: app/AI/AIInit.php:542
+#: app/AI/AIInit.php:543
 msgid "schema(s)"
 msgstr ""
 
-#: app/AI/AIInit.php:545
+#: app/AI/AIInit.php:546
 msgid "AI Confidence"
 msgstr ""
 
-#: app/AI/AIInit.php:546
+#: app/AI/AIInit.php:547
 msgid "Detected Schema Types"
 msgstr ""
 
-#: app/AI/AIInit.php:547
+#: app/AI/AIInit.php:548
 msgid "Valid Schema"
 msgstr ""
 
-#: app/AI/AIInit.php:548
+#: app/AI/AIInit.php:549
 msgid "Validation Issues"
 msgstr ""
 
-#: app/AI/AIInit.php:549
+#: app/AI/AIInit.php:550
 msgid "Quality Score"
 msgstr ""
 
-#: app/AI/AIInit.php:552
+#: app/AI/AIInit.php:553
 msgid "View"
 msgstr ""
 
-#: app/AI/AIInit.php:554
+#: app/AI/AIInit.php:555
 msgid "Discard"
 msgstr ""
 
-#: app/AI/AIInit.php:555
+#: app/AI/AIInit.php:556
 msgid "Delete Schema"
 msgstr ""
 
-#: app/AI/AIInit.php:556
+#: app/AI/AIInit.php:557
 msgid "Test in Google Rich Results"
 msgstr ""
 
@@ -858,6 +888,10 @@ msgstr ""
 
 #: app/Controllers/Marketing/Review.php:69
 msgid "😐 No Thanks"
+msgstr ""
+
+#: app/Controllers/Marketing/Review.php:74
+msgid "Dismiss this notice"
 msgstr ""
 
 #. translators: %s: template file name

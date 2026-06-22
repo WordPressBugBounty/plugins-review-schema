@@ -525,6 +525,7 @@ class AIInit {
 			'schemaStoredNotice'        => __( 'AI-generated schema is stored in the database. Editing post content will not update the schema automatically. Click "Regenerate Schema" to update it.', 'review-schema' ),
 			'apiKeyNotConfigured'       => __( 'API key not configured.', 'review-schema' ),
 			'configureNow'              => __( 'Configure now', 'review-schema' ),
+			'openAiSettings'            => __( 'Open AI Settings', 'review-schema' ),
 
 			// Modal UI labels.
 			'jsonLdSchema'              => __( 'JSON-LD Schema', 'review-schema' ),
@@ -627,6 +628,7 @@ class AIInit {
 				'schemaType'     => get_post_meta( $post_id, self::TYPE_META_KEY, true ),
 				'confidence'     => get_post_meta( $post_id, self::CONFIDENCE_META_KEY, true ),
 				'hasApiKey'      => self::hasApiKey(),
+				'aiSettingsUrl'  => admin_url( 'admin.php?page=review-schema#/ai' ),
 				'logoUrl'        => rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ),
 				'validation'     => $initial_validation,
 				'evaluation'     => $initial_evaluation,
@@ -1031,6 +1033,7 @@ class AIInit {
 			'validation'     => null,
 			'evaluation'     => null,
 			'settingsUrl'    => admin_url( 'admin.php?page=review-schema&tab=ai' ),
+			'aiSettingsUrl'  => admin_url( 'admin.php?page=review-schema#/ai' ),
 			'schemaTypes'    => array_merge(
 				[
 					[
@@ -1267,6 +1270,7 @@ class AIInit {
 			'validation'     => $initial_validation,
 			'evaluation'     => $initial_evaluation,
 			'settingsUrl'    => admin_url( 'admin.php?page=review-schema&tab=ai' ),
+			'aiSettingsUrl'  => admin_url( 'admin.php?page=review-schema#/ai' ),
 			'schemaTypes'    => array_merge(
 				[
 					[
@@ -1343,6 +1347,7 @@ class AIInit {
 			'validation'     => $initial_validation,
 			'evaluation'     => $initial_evaluation,
 			'settingsUrl'    => admin_url( 'admin.php?page=review-schema&tab=ai' ),
+			'aiSettingsUrl'  => admin_url( 'admin.php?page=review-schema#/ai' ),
 			'schemaTypes'    => array_merge(
 				[
 					[

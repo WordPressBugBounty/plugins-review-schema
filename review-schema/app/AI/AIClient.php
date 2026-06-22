@@ -41,6 +41,13 @@ class AIClient {
 	private $max_tokens;
 
 	/**
+	 * HTTP request timeout, in seconds, for the outbound AI API call.
+	 *
+	 * @var int
+	 */
+	private $timeout;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -74,10 +81,26 @@ class AIClient {
 			$this->model = AIInit::getSetting( 'model', 'gpt-4o-mini' );
 		}
 
+		// Output token budget comes from the "Max Tokens" settings control.
 		$this->max_tokens = (int) AIInit::getSetting( 'max_tokens', 4096 );
 
 		if ( $this->max_tokens < 1 ) {
 			$this->max_tokens = 4096;
+		}
+
+		/**
+		 * Filter the outbound AI request timeout (seconds).
+		 *
+		 * Keeps the connection bounded so a hung provider cannot hold the
+		 * PHP worker open indefinitely. Defaults to 120s; configurable via
+		 * the 'request_timeout' setting.
+		 *
+		 * @param int $timeout Timeout in seconds.
+		 */
+		$this->timeout = (int) apply_filters( 'rtrs_ai_request_timeout', (int) AIInit::getSetting( 'request_timeout', 120 ) );
+
+		if ( $this->timeout < 30 ) {
+			$this->timeout = 120;
 		}
 	}
 
@@ -93,8 +116,10 @@ class AIClient {
 	 */
 	public function complete( $system_prompt, $user_prompt ) {
 		if ( empty( $this->api_key ) ) {
-			return new \WP_Error( 'no_api_key', __( 'AI API key is not configured.', 'review-schema' ) );
+			return new \WP_Error( 'no_api_key', __( 'AI API key is not configured. Add your provider API key in the AI settings.', 'review-schema' ) );
 		}
+
+		$this->prepare_runtime();
 
 		switch ( $this->provider ) {
 			case 'anthropic':
@@ -104,6 +129,83 @@ class AIClient {
 			default:
 				return $this->call_openai( $system_prompt, $user_prompt );
 		}
+	}
+
+	/**
+	 * Raise PHP execution time and memory limits for the long-running AI request.
+	 *
+	 * AI generation routinely exceeds PHP's default 30s max_execution_time. When
+	 * the worker is killed mid-request the server returns an HTML error page
+	 * instead of JSON, which surfaces as "The response is not a valid JSON
+	 * response" in the block editor. Extending the limit to cover the bounded
+	 * HTTP timeout (plus a parsing buffer) keeps the REST response valid.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	private function prepare_runtime() {
+		if ( function_exists( 'set_time_limit' ) ) {
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- set_time_limit may be disabled by host; failure is non-fatal.
+			@set_time_limit( $this->timeout + 30 );
+		}
+
+		if ( function_exists( 'wp_raise_memory_limit' ) ) {
+			wp_raise_memory_limit( 'admin' );
+		}
+	}
+
+	/**
+	 * Build a user-friendly, actionable error from a failed API response.
+	 *
+	 * Maps the HTTP status to a clear hint about what the user should adjust,
+	 * then appends the provider's own message for context. This ensures every
+	 * failure tells the user what to do, not just a raw provider string.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int        $code HTTP status code returned by the provider.
+	 * @param array|null $body Decoded response body (may contain error.message).
+	 *
+	 * @return \WP_Error
+	 */
+	private function build_api_error( $code, $body ) {
+		$provider_msg = isset( $body['error']['message'] ) ? trim( (string) $body['error']['message'] ) : '';
+
+		switch ( (int) $code ) {
+			case 401:
+				$hint = __( 'Your AI API key is invalid or expired. Update it in the AI settings.', 'review-schema' );
+				break;
+			case 403:
+				$hint = __( 'The AI provider denied access. Check your API key permissions and billing status in the AI settings.', 'review-schema' );
+				break;
+			case 404:
+				$hint = __( 'The selected AI model was not found. Choose a valid model in the AI settings.', 'review-schema' );
+				break;
+			case 429:
+				$hint = __( 'AI provider rate limit or quota exceeded. Check your plan/usage and try again shortly.', 'review-schema' );
+				break;
+			case 400:
+			case 422:
+				$hint = __( 'The AI provider rejected the request. Check the selected model and Max Tokens in the AI settings.', 'review-schema' );
+				break;
+			case 500:
+			case 502:
+			case 503:
+			case 529:
+				$hint = __( 'The AI provider is temporarily unavailable. Please try again in a moment.', 'review-schema' );
+				break;
+			default:
+				/* translators: %d: HTTP status code. */
+				$hint = sprintf( __( 'The AI request failed (HTTP %d).', 'review-schema' ), (int) $code );
+				break;
+		}
+
+		$message = $provider_msg
+			? sprintf( '%s (%s)', $hint, $provider_msg )
+			: $hint;
+
+		return new \WP_Error( 'api_error', $message, [ 'status' => 500 ] );
 	}
 
 	/**
@@ -146,7 +248,7 @@ class AIClient {
 		$response = wp_remote_post(
 			'https://api.openai.com/v1/chat/completions',
 			[
-				'timeout' => 5000,
+				'timeout' => $this->timeout,
 				'headers' => [
 					'Content-Type'  => 'application/json',
 					'Authorization' => 'Bearer ' . $this->api_key,
@@ -172,7 +274,7 @@ class AIClient {
 		$response = wp_remote_post(
 			'https://api.anthropic.com/v1/messages',
 			[
-				'timeout' => 5000,
+				'timeout' => $this->timeout,
 				'headers' => [
 					'Content-Type'      => 'application/json',
 					'x-api-key'         => $this->api_key,
@@ -216,8 +318,7 @@ class AIClient {
 		$body     = json_decode( $raw_body, true );
 
 		if ( $code !== 200 ) {
-			$message = $body['error']['message'] ?? __( 'Unknown API error.', 'review-schema' );
-			return new \WP_Error( 'api_error', $message );
+			return $this->build_api_error( $code, $body );
 		}
 
 		if ( null === $body ) {
@@ -227,7 +328,7 @@ class AIClient {
 		// Handle truncated responses.
 		$finish_reason = $body['choices'][0]['finish_reason'] ?? '';
 		if ( 'length' === $finish_reason ) {
-			return new \WP_Error( 'api_error', __( 'AI response was truncated. Try a simpler schema type.', 'review-schema' ) );
+			return new \WP_Error( 'api_error', __( 'AI response was truncated. Increase Max Tokens in the AI settings, or try a simpler schema type.', 'review-schema' ) );
 		}
 
 		$content = $body['choices'][0]['message']['content'] ?? '';
@@ -262,8 +363,12 @@ class AIClient {
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( $code !== 200 ) {
-			$message = $body['error']['message'] ?? __( 'Unknown API error.', 'review-schema' );
-			return new \WP_Error( 'api_error', $message );
+			return $this->build_api_error( $code, $body );
+		}
+
+		// Handle truncated responses (output hit the max_tokens limit).
+		if ( 'max_tokens' === ( $body['stop_reason'] ?? '' ) ) {
+			return new \WP_Error( 'api_error', __( 'AI response was truncated. Increase Max Tokens in the AI settings, or try a simpler schema type.', 'review-schema' ) );
 		}
 
 		$content = '';
@@ -297,7 +402,7 @@ class AIClient {
 		$response = wp_remote_post(
 			$url,
 			[
-				'timeout' => 5000,
+				'timeout' => $this->timeout,
 				'headers' => [
 					'Content-Type' => 'application/json',
 				],
@@ -347,8 +452,12 @@ class AIClient {
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( $code !== 200 ) {
-			$message = $body['error']['message'] ?? __( 'Unknown API error.', 'review-schema' );
-			return new \WP_Error( 'api_error', $message );
+			return $this->build_api_error( $code, $body );
+		}
+
+		// Handle truncated responses (output hit the max_tokens limit).
+		if ( 'MAX_TOKENS' === ( $body['candidates'][0]['finishReason'] ?? '' ) ) {
+			return new \WP_Error( 'api_error', __( 'AI response was truncated. Increase Max Tokens in the AI settings, or try a simpler schema type.', 'review-schema' ) );
 		}
 
 		$content = $body['candidates'][0]['content']['parts'][0]['text'] ?? '';
@@ -386,21 +495,23 @@ class AIClient {
 
 		/**
 		 * Fallback: extract the outermost JSON object from the response.
-		 * Handles leading/trailing text the AI may have added.
+		 * Uses string-aware balanced-brace matching so stray braces in
+		 * surrounding prose or inside string values cannot corrupt the slice.
 		 */
 		$first_brace = strpos( $text, '{' );
-		$last_brace  = strrpos( $text, '}' );
 
-		if ( false !== $first_brace && false !== $last_brace && $last_brace > $first_brace ) {
-			$json_str = substr( $text, $first_brace, $last_brace - $first_brace + 1 );
+		if ( false !== $first_brace ) {
+			$json_str = $this->slice_balanced_object( $text, $first_brace );
 
-			// Remove trailing commas before } or ] (common AI mistake).
-			$json_str = preg_replace( '/,\s*([\}\]])/', '$1', $json_str );
+			if ( null !== $json_str ) {
+				// Remove trailing commas before } or ] (common AI mistake).
+				$json_str = preg_replace( '/,\s*([\}\]])/', '$1', $json_str );
 
-			$decoded = json_decode( $json_str, true );
+				$decoded = json_decode( $json_str, true );
 
-			if ( json_last_error() === JSON_ERROR_NONE ) {
-				return $decoded;
+				if ( json_last_error() === JSON_ERROR_NONE ) {
+					return $decoded;
+				}
 			}
 		}
 
@@ -408,9 +519,59 @@ class AIClient {
 			'json_parse_error',
 			sprintf(
 				/* translators: %s: JSON error message */
-				__( 'Failed to parse AI response: %s', 'review-schema' ),
+				__( 'The AI returned data that could not be read (%s). Click Regenerate to try again, or raise Max Tokens in the AI settings if the schema is large.', 'review-schema' ),
 				json_last_error_msg()
 			)
 		);
+	}
+
+	/**
+	 * Extract a single balanced {...} object starting at the given offset.
+	 *
+	 * Walks the string tracking brace depth while respecting quoted strings
+	 * and escape sequences, so braces inside string values or trailing prose
+	 * cannot corrupt the slice. Returns null when no complete object is found
+	 * (e.g. the response was truncated mid-object).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $text  Source text.
+	 * @param int    $start Offset of the opening brace.
+	 *
+	 * @return string|null The balanced object substring, or null if incomplete.
+	 */
+	private function slice_balanced_object( $text, $start ) {
+		$depth     = 0;
+		$in_string = false;
+		$escaped   = false;
+		$length    = strlen( $text );
+
+		for ( $i = $start; $i < $length; $i++ ) {
+			$char = $text[ $i ];
+
+			if ( $in_string ) {
+				if ( $escaped ) {
+					$escaped = false;
+				} elseif ( '\\' === $char ) {
+					$escaped = true;
+				} elseif ( '"' === $char ) {
+					$in_string = false;
+				}
+				continue;
+			}
+
+			if ( '"' === $char ) {
+				$in_string = true;
+			} elseif ( '{' === $char ) {
+				++$depth;
+			} elseif ( '}' === $char ) {
+				--$depth;
+				if ( 0 === $depth ) {
+					return substr( $text, $start, $i - $start + 1 );
+				}
+			}
+		}
+
+		return null; // Unbalanced — response was truncated mid-object.
 	}
 }

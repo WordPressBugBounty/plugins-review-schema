@@ -173,13 +173,41 @@ class SchemaExtractor {
 			. "- wordCount";
 	}
 
+	/**
+	 * Cap a FAQPage's questions to the configured FAQ count.
+	 *
+	 * The model is asked for exactly N pairs but may return more; this
+	 * enforces the limit deterministically so the generated/saved schema
+	 * never exceeds the "Number of FAQs" setting.
+	 *
+	 * @param array $schema FAQPage schema, modified by reference.
+	 *
+	 * @return void
+	 */
+	private function limit_faq_questions( &$schema ) {
+		if ( empty( $schema['mainEntity'] ) || ! is_array( $schema['mainEntity'] ) ) {
+			return;
+		}
+
+		// A single Question object is already within the limit.
+		if ( isset( $schema['mainEntity']['@type'] ) ) {
+			return;
+		}
+
+		$limit = max( 1, (int) ( $this->faq_count ?? AIInit::getSetting( 'faq_count', 5 ) ) );
+
+		if ( count( $schema['mainEntity'] ) > $limit ) {
+			$schema['mainEntity'] = array_slice( array_values( $schema['mainEntity'] ), 0, $limit );
+		}
+	}
+
 	private function get_faq_template() {
 		$faq_count = max( 1, (int) ( $this->faq_count ?? AIInit::getSetting( 'faq_count', 5 ) ) );
 
 		return "Required fields for FAQPage:\n"
 			. "- mainEntity: array of Question objects\n"
 			. "- Each Question needs: name (the question text), acceptedAnswer with @type Answer and text\n"
-			. "- Generate exactly {$faq_count} relevant question/answer pairs based on the content\n"
+			. "- Generate exactly {$faq_count} relevant question/answer pairs based on the content — never more than {$faq_count}\n"
 			. "- Questions should be natural and reflect what a reader would likely ask about this topic";
 	}
 
@@ -384,6 +412,12 @@ class SchemaExtractor {
 				case 'Course':
 					// Pro fills course data (provider, offers, instructor, etc.).
 					$schema = apply_filters( 'rtrs_ai_fill_course_schema', $schema, $primary, $secondary, $permalink, $entity_id );
+					break;
+
+				case 'FAQPage':
+					// Hard-cap questions to the configured FAQ count — the model
+					// is asked for exactly N but may return more.
+					$this->limit_faq_questions( $schema );
 					break;
 			}
 
