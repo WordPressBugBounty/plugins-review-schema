@@ -118,7 +118,7 @@ $rtrs_options = [
 		'type'        => 'select',
 		'default'     => 'gemini-2.5-flash',
 		'options'     => [
-			'gemini-2.5-flash-lite'  => esc_html__( 'Gemini 2.5 Flash Lite', 'review-schema' ),
+			'gemini-3.5-flash-lite'  => esc_html__( 'Gemini 3.5 Flash Lite', 'review-schema' ),
 			'gemini-2.5-flash'       => esc_html__( 'Gemini 2.5 Flash (Recommended)', 'review-schema' ),
 			'gemini-2.5-pro'         => esc_html__( 'Gemini 2.5 Pro', 'review-schema' ),
 			'gemini-3-flash-preview' => esc_html__( 'Gemini 3 Flash', 'review-schema' ),
@@ -180,7 +180,7 @@ $rtrs_options = [
 	'faq_count'            => [
 		'title'       => esc_html__( 'FAQ Count', 'review-schema' ),
 		'type'        => 'number',
-		'default'     => 5,
+		'default'     => 8,
 		'class'       => 'small-text',
 		'description' => esc_html__( 'Number of FAQs to auto-generate for FAQ content (also applies to FAQPage schema when enabled).', 'review-schema' ),
 		// Visible only when global Schema output AND AI are both enabled.

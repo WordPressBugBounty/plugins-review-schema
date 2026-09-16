@@ -38,7 +38,7 @@ class FaqAttributes {
 
 	private static function layout_attributes(): array {
 		return [
-			'layout'       => [ 'type' => 'string',  'default' => 'accordion' ],
+			'layout'       => [ 'type' => 'string',  'default' => 'list' ],
 			'gridColumns'  => [ 'type' => 'object',  'default' => [ 'desktop' => 2, 'tablet' => 2, 'mobile' => 1 ] ],
 			'headingLevel' => [ 'type' => 'number',  'default' => 3 ],
 		];

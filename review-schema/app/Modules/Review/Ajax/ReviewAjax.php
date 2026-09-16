@@ -34,6 +34,11 @@ class ReviewAjax {
 		add_action( 'wp_ajax_rtrs_image_upload', [ $this, 'rtrs_image_upload' ] );
 		add_action( 'wp_ajax_rtrs_video_upload', [ $this, 'rtrs_video_upload' ] );
 
+		// Guest (non-logged-in) upload endpoints. The handlers self-guard on the
+		// "Allow Guest Uploads" media setting, so registration is always safe.
+		add_action( 'wp_ajax_nopriv_rtrs_image_upload', [ $this, 'rtrs_image_upload' ] );
+		add_action( 'wp_ajax_nopriv_rtrs_video_upload', [ $this, 'rtrs_video_upload' ] );
+
 		add_action( 'wp_ajax_rtrs_remove_file', [ $this, 'rtrs_remove_file' ] );
 		add_action( 'wp_ajax_nopriv_rtrs_remove_file', [ $this, 'rtrs_remove_file' ] );
 
@@ -334,11 +339,15 @@ class ReviewAjax {
 			wp_send_json_error( [ 'message' => 'Not allowed' ], 403 );
 		}
 
-		$img_max_size = rtrs()->get_options( 'rtrs_media_settings', [ 'img_max_size', 1024 ] );
+		if ( ! ReviewFns::canUploadMedia() ) {
+			wp_send_json_error( [ 'msg' => esc_html__( 'You must be logged in to upload files.', 'review-schema' ) ], 403 );
+		}
+
+		$img_max_size = ReviewFns::getMediaOption( 'img_max_size', 1024 );
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $_FILES is validated and sanitized via wp_handle_upload() downstream.
 		$file               = isset( $_FILES['rtrs-image'] ) ? $_FILES['rtrs-image'] : [];
-		$allowed_file_types = rtrs()->get_options( 'rtrs_media_settings', [ 'img_type', [ 'image/jpg', 'image/jpeg', 'image/png' ] ] );
+		$allowed_file_types = ReviewFns::getMediaOption( 'img_type', [ 'image/jpg', 'image/jpeg', 'image/png' ] );
 		// Allowed file size -> 2MB
 		$allowed_file_size = $img_max_size * 1024;
 
@@ -375,6 +384,12 @@ class ReviewAjax {
 
 			if ( ! function_exists( 'wp_handle_upload' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+			// Frontend/guest requests do not load the admin image + media helpers
+			// that wp_generate_attachment_metadata() depends on.
+			if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/image.php';
+				require_once ABSPATH . 'wp-admin/includes/media.php';
 			}
 			$upload_overrides = [ 'test_form' => false ];
 			$uploaded         = wp_handle_upload( $file, $upload_overrides );
@@ -432,11 +447,15 @@ class ReviewAjax {
 			wp_send_json_error( [ 'message' => 'Not allowed' ], 403 );
 		}
 
+		if ( ! ReviewFns::canUploadMedia() ) {
+			wp_send_json_error( [ 'msg' => esc_html__( 'You must be logged in to upload files.', 'review-schema' ) ], 403 );
+		}
+
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $_FILES is validated and sanitized via wp_handle_upload() downstream.
 		$file               = isset( $_FILES['rtrs-video'] ) ? $_FILES['rtrs-video'] : [];
-		$allowed_file_types = rtrs()->get_options( 'rtrs_media_settings', [ 'video_type', [ 'video/mp4', 'video/mov', 'video/avi' ] ] );
+		$allowed_file_types = ReviewFns::getMediaOption( 'video_type', [ 'video/mp4', 'video/mov', 'video/avi' ] );
 
-		$video_max_size    = rtrs()->get_options( 'rtrs_media_settings', [ 'video_max_size', 2048 ] );
+		$video_max_size    = ReviewFns::getMediaOption( 'video_max_size', 2048 );
 		$allowed_file_size = $video_max_size * 1024;
 
 		if ( ! empty( $file['name'] ) ) {
@@ -496,6 +515,8 @@ class ReviewAjax {
 
 				$file_info = [];
 				if ( ! is_wp_error( $attach_id ) ) {
+					update_post_meta( $attach_id, 'attach_type', 'review' );
+
 					$file_info = [
 						'id'   => $attach_id,
 						'name' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
@@ -527,7 +548,18 @@ class ReviewAjax {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$attachment_id = isset( $_REQUEST['attachment_id'] ) ? absint( $_REQUEST['attachment_id'] ) : '';
 
-		if ( ! current_user_can( 'delete_post', $attachment_id ) ) {
+		if ( ! $attachment_id ) {
+			wp_send_json_error();
+		}
+
+		// Guests may only remove an unattached review upload they just created
+		// (post_parent 0 = not yet linked to a saved review). Logged-in users
+		// fall back to the standard capability check.
+		$is_removable_guest_upload = ReviewFns::isGuestUploadEnabled()
+			&& 'review' === get_post_meta( $attachment_id, 'attach_type', true )
+			&& 0 === (int) wp_get_post_parent_id( $attachment_id );
+
+		if ( ! current_user_can( 'delete_post', $attachment_id ) && ! $is_removable_guest_upload ) {
 			return;
 		}
 

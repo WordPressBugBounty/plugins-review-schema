@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.1-rc-1\n"
+"Project-Id-Version: SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.1-rc-1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/review-schema\n"
 "Last-Translator: \n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: review-schema.php
-msgid "Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO"
-msgstr "Schema Engine AI – ترميز المخططات بالذكاء الاصطناعي والمراجعات والمقتطفات المنسّقة لتحسين محركات البحث"
+msgid "SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO"
+msgstr "SchemaEngine AI – ترميز المخططات بالذكاء الاصطناعي والمراجعات والمقتطفات المنسّقة لتحسين محركات البحث"
 
 #. Plugin URI of the plugin
 #: review-schema.php
@@ -793,16 +793,16 @@ msgid "Review Schema"
 msgstr "Review Schema"
 
 #: app/Controllers/Marketing/RenameNotice.php:126
-msgid "Schema Engine AI"
-msgstr "Schema Engine AI"
+msgid "SchemaEngine AI"
+msgstr "SchemaEngine AI"
 
 #: app/Controllers/Marketing/RenameNotice.php:128
 msgid "Same plugin, new name — supercharged with AI"
 msgstr "نفس الإضافة، باسم جديد — معزّزة بالذكاء الاصطناعي"
 
 #: app/Controllers/Marketing/RenameNotice.php:129
-msgid "Your reviews, schema settings, and data are preserved automatically. Schema Engine AI adds AI-powered schema generation, FAQ drafting, and real-time Rich Results validation on top of everything you already use."
-msgstr "يتم الحفاظ على مراجعاتك وإعدادات المخطط وبياناتك تلقائيًا. يضيف Schema Engine AI إنشاء مخططات مدعومة بالذكاء الاصطناعي وصياغة الأسئلة الشائعة والتحقق الفوري من النتائج المنسّقة فوق كل ما تستخدمه بالفعل."
+msgid "Your reviews, schema settings, and data are preserved automatically. SchemaEngine AI adds AI-powered schema generation, FAQ drafting, and real-time Rich Results validation on top of everything you already use."
+msgstr "يتم الحفاظ على مراجعاتك وإعدادات المخطط وبياناتك تلقائيًا. يضيف SchemaEngine AI إنشاء مخططات مدعومة بالذكاء الاصطناعي وصياغة الأسئلة الشائعة والتحقق الفوري من النتائج المنسّقة فوق كل ما تستخدمه بالفعل."
 
 #. translators: %d: discount percentage
 #: app/Controllers/Marketing/RenameNotice.php:133
@@ -825,8 +825,8 @@ msgstr "عرض الإطلاق"
 #. translators: %d: discount percentage
 #: app/Controllers/Marketing/RenameNotice.php:142
 #, php-format
-msgid "%d%% OFF Schema Engine AI Pro — limited time. Discount automatically applied at checkout."
-msgstr "خصم %d%% على Schema Engine AI Pro — لفترة محدودة. يُطبّق الخصم تلقائيًا عند الدفع."
+msgid "%d%% OFF SchemaEngine AI Pro — limited time. Discount automatically applied at checkout."
+msgstr "خصم %d%% على SchemaEngine AI Pro — لفترة محدودة. يُطبّق الخصم تلقائيًا عند الدفع."
 
 #: app/Controllers/Marketing/Review.php:64
 msgid "Enjoying SchemaEngine AI?"

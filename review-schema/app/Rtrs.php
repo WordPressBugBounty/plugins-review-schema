@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Rtrs\Controllers\Admin\Activation;
 use Rtrs\Controllers\Admin\AdminController;
 use Rtrs\Controllers\Ajax\AjaxController;
-use Rtrs\Controllers\Marketing\RenameNotice;
 use Rtrs\Controllers\Marketing\Review;
 use Rtrs\Controllers\MigrationV3;
 use Rtrs\Helpers\Functions;
@@ -35,7 +34,6 @@ final class Rtrs {
 	 * Review Schema Constructor.
 	 */
 	public function __construct() {
-		$this->define_constants();
 		$this->init_hooks();
 		new Activation();
 		ModulesInit::getInstance();
@@ -44,6 +42,19 @@ final class Rtrs {
 	private function init_hooks() {
 		add_action( 'plugins_loaded', [ $this, 'on_plugins_loaded' ], -1 );
 		add_action( 'init', [ $this, 'init' ], 1 );
+		add_filter( 'body_class', [ $this, 'add_body_class' ] );
+	}
+
+	/**
+	 * Append the free plugin version as a frontend body class.
+	 *
+	 * @param array $classes Existing body classes.
+	 * @return array
+	 */
+	public function add_body_class( $classes ) {
+		$classes[] = 'rtrs-v-' . esc_attr( RTRS_VERSION );
+
+		return $classes;
 	}
 
 	public function init() {
@@ -54,7 +65,6 @@ final class Rtrs {
 		new MigrationV3();
 
 		if ( is_admin() ) {
-			RenameNotice::init();
 			Review::init();
 		}
 
@@ -112,25 +122,6 @@ final class Rtrs {
 				return defined( 'DOING_CRON' );
 			case 'frontend':
 				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
-		}
-	}
-
-	private function define_constants() {
-		$this->define( 'RTRS_URL', plugins_url( '', RTRS_PLUGIN_FILE ) );
-		$this->define( 'RTRS_SLUG', basename( dirname( RTRS_PLUGIN_FILE ) ) );
-		$this->define( 'RTRS_TEMPLATE_DEBUG_MODE', false );
-	}
-
-	/**
-	 * Define constant if not already set.
-	 *
-	 * @param string      $name  Constant name.
-	 * @param string|bool $value Constant value.
-	 */
-	public function define( $name, $value ) {
-		if ( ! defined( $name ) ) {
-			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.VariableConstantNameFound -- Helper that defines a constant whose name is supplied by the caller (always RTRS_*).
-			define( $name, $value );
 		}
 	}
 
@@ -203,6 +194,24 @@ final class Rtrs {
 		$file = ltrim( $file, '/' );
 
 		return trailingslashit( RTRS_URL . '/assets' ) . $file;
+	}
+
+	/**
+	 * Cache-busting asset version: the built file's mtime, falling back to the
+	 * plugin version. Ensures rebuilt scripts/styles are picked up without a
+	 * manual cache clear.
+	 *
+	 * @param string $file Asset path relative to /assets (e.g. 'ai/js/editor-panel.js').
+	 * @return string
+	 */
+	public function get_assets_version( $file ) {
+		$path = trailingslashit( RTRS_PATH ) . 'assets/' . ltrim( $file, '/' );
+
+		if ( file_exists( $path ) ) {
+			return (string) filemtime( $path );
+		}
+
+		return RTRS_VERSION;
 	}
 
 	/**

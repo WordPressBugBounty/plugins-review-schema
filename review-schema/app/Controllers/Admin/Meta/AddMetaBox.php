@@ -77,13 +77,13 @@ class AddMetaBox {
 		if ( $is_classic_editor ) {
 			$html .= '<li class="' . esc_attr( $faqpage_tab ) . '"><a href="#sc-faqpage"><i class="dashicons dashicons-format-chat"></i>' . esc_html__( 'FAQ Content', 'review-schema' ) . '</a></li>';
 		}
-		$html .= '<li class="' . esc_attr( $schema_tab ) . '"><a href="#sc-schema"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema', 'review-schema' ) . '</a></li>';
+		$html .= '<li class="' . esc_attr( $schema_tab ) . '"><a href="#sc-schema"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema and SEO Score', 'review-schema' ) . '</a></li>';
 		if ( Functions::schema_enabled() ) {
 			$html .= '<li class="' . esc_attr( $preview_tab ) . '"><a href="#sc-schema-preview"><i class="dashicons dashicons-editor-table"></i>' . esc_html__( 'Schema Preview', 'review-schema' ) . '</a></li>';
 			$html .= '<li class="' . esc_attr( $serp_tab ) . '"><a href="#sc-serp"><i class="dashicons dashicons-search"></i>' . esc_html__( 'SERP', 'review-schema' ) . '</a></li>';
 		}
 		if ( Functions::schema_enabled() && 'yes' === \Rtrs\AI\AIInit::getSetting( 'ai_enabled', 'no' ) ) {
-			$html .= '<li><a href="#sc-generate-ai"><svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.37822 4.38293L6.95178 5.97575C7.5889 7.74356 8.98101 9.13566 10.7488 9.77279L12.3416 10.3463C12.4852 10.3985 12.4852 10.6021 12.3416 10.6535L10.7488 11.227C8.98101 11.8642 7.5889 13.2563 6.95178 15.0241L6.37822 16.6169C6.32608 16.7605 6.12252 16.7605 6.07109 16.6169L5.49753 15.0241C4.86041 13.2563 3.4683 11.8642 1.70049 11.227L0.107676 10.6535C-0.0358919 10.6013 -0.0358919 10.3978 0.107676 10.3463L1.70049 9.77279C3.4683 9.13566 4.86041 7.74356 5.49753 5.97575L6.07109 4.38293C6.12252 4.23865 6.32608 4.23865 6.37822 4.38293Z" fill="currentColor"></path><path d="M13.548 0.555177L13.8387 1.36158C14.1616 2.25656 14.8666 2.96154 15.7615 3.28439L16.568 3.5751C16.6408 3.60152 16.6408 3.70438 16.568 3.73081L15.7615 4.02151C14.8666 4.34436 14.1616 5.04934 13.8387 5.94432L13.548 6.75073C13.5216 6.82358 13.4187 6.82358 13.3923 6.75073L13.1016 5.94432C12.7788 5.04934 12.0738 4.34436 11.1788 4.02151L10.3724 3.73081C10.2995 3.70438 10.2995 3.60152 10.3724 3.5751L11.1788 3.28439C12.0738 2.96154 12.7788 2.25656 13.1016 1.36158L13.3923 0.555177C13.4187 0.481608 13.5223 0.481608 13.548 0.555177Z" fill="currentColor"></path><path d="M13.548 14.2498L13.8387 15.0562C14.1616 15.9512 14.8666 16.6562 15.7615 16.979L16.568 17.2697C16.6408 17.2962 16.6408 17.399 16.568 17.4254L15.7615 17.7161C14.8666 18.039 14.1616 18.744 13.8387 19.639L13.548 20.4454C13.5216 20.5182 13.4187 20.5182 13.3923 20.4454L13.1016 19.639C12.7788 18.744 12.0738 18.039 11.1788 17.7161L10.3724 17.4254C10.2995 17.399 10.2995 17.2962 10.3724 17.2697L11.1788 16.979C12.0738 16.6562 12.7788 15.9512 13.1016 15.0562L13.3923 14.2498C13.4187 14.177 13.5223 14.177 13.548 14.2498Z" fill="currentColor"></path></svg>' . esc_html__( 'Generate with AI', 'review-schema' ) . '</a></li>';
+			$html .= '<li><a href="#sc-generate-ai">' . Functions::aiIconSvg( 17, 21 ) . esc_html__( 'Generate with AI', 'review-schema' ) . '</a></li>';
 		}
 		$html .= '</ul>';
 
@@ -118,7 +118,9 @@ class AddMetaBox {
 				$html .= '</div>';
 				$html .= '</div>';
 			}
-			// Schema Report section.
+			// Schema Report section. Hidden when AI schema exists — the SEO/AEO/GEO
+			// analysis is shown in the AI panel in that case (matching the block
+			// editor). The metabox report is the manual-schema surface only.
 			$html .= '<div id="rtrs-schema-report" class="rtrs-schema-report' . ( $has_ai_schema ? ' rtrs-hidden' : '' ) . '">';
 			$html .= '<div class="rtrs-schema-report__inner"></div>';
 			$html .= '</div>';
@@ -176,6 +178,15 @@ class AddMetaBox {
 
 			case 'url':
 				$fValue = isset( $value ) ? esc_url_raw( $value ) : null;
+				break;
+
+			// A `multiple` select2 posts an array; a single one posts a string.
+			case 'select2':
+				if ( is_array( $value ) ) {
+					$fValue = array_values( array_filter( array_map( 'sanitize_text_field', $value ) ) );
+				} else {
+					$fValue = isset( $value ) ? sanitize_text_field( $value ) : null;
+				}
 				break;
 
 			case 'number':

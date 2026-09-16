@@ -14,6 +14,7 @@ use Rtrs\Modules\Review\Widgets\Widget;
 use Rtrs\Modules\Review\Ajax\ReviewAjax;
 use Rtrs\Modules\Review\Ajax\ShortcodeAjax;
 use Rtrs\Modules\Review\Hooks\ReviewBackend;
+use Rtrs\Modules\Review\Admin\MediaLibrary;
 use Rtrs\Modules\Review\Admin\ReviewSettings;
 use Rtrs\Modules\Review\Hooks\ReviewFrontend;
 use Rtrs\Modules\Review\Admin\RegisterPostType;
@@ -67,5 +68,6 @@ class ReviewInit {
 		ShortcodeAjax::getInstance();
 		AddReviewMetaBox::getInstance();
 		ElementorInit::getInstance();
+		MediaLibrary::getInstance();
 	}
 }

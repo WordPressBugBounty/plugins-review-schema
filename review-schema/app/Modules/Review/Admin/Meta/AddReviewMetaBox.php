@@ -255,7 +255,18 @@ class AddReviewMetaBox {
                         <h3 class="rt-box-title">' . esc_html__( 'Pro field alert!', 'review-schema' ) . '</h3>
                         <p><span></span>' . esc_html__( 'Sorry! this is a pro field. To use this field, you need to use pro plugin.', 'review-schema' ) . '</p>
                         <a href="https://www.radiustheme.com/downloads/wordpress-review-structure-data-schema-plugin/?utm_source=WordPress&utm_medium=reviewschema&utm_campaign=pro_click" target="_blank" class="rt-admin-btn">' . esc_html__( 'Upgrade to pro', 'review-schema' ) . '</a>
-                        <a href="#" target="_blank" class="rt-alert-close rtrs-pro-alert-close">x</a>
+                        <a href="#" target="_blank" class="rt-alert-close rtrs-pro-alert-close"><span class="dashicons dashicons-no-alt"></span></a>
+                    </div>
+                </div>';
+		} else {
+			$ai_settings_url = admin_url( 'admin.php?page=review-schema#/ai' );
+			$html           .= '<div class="rt-document-box rt-alert rtrs-ai-config-alert">
+                    <div class="rt-box-icon"><i class="dashicons dashicons-admin-generic"></i></div>
+                    <div class="rt-box-content">
+                        <h3 class="rt-box-title">' . esc_html__( 'Finish AI setup', 'review-schema' ) . '</h3>
+                        <p>' . esc_html__( 'Enable AI and add your API key in AI Settings to use this feature.', 'review-schema' ) . '</p>
+                        <a href="' . esc_url( $ai_settings_url ) . '" class="rt-admin-btn">' . esc_html__( 'Open AI Settings', 'review-schema' ) . '</a>
+                        <a href="#" class="rt-alert-close rtrs-ai-config-alert-close"><span class="dashicons dashicons-no-alt"></span></a>
                     </div>
                 </div>';
 		}

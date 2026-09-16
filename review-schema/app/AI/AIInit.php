@@ -13,6 +13,7 @@ namespace Rtrs\AI;
 
 use Rtrs\Helpers\Functions;
 use Rtrs\Modules\Schema\Hooks\ElementorFaq;
+use Rtrs\Modules\Seo\Analyzers\SeoAnalyzer;
 use Rtrs\Traits\SingletonTrait;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -92,6 +93,10 @@ class AIInit {
 		// SureCart product builder support.
 		add_action( 'admin_footer', [ $this, 'renderSureCartProductPanel' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSureCartProductAssets' ] );
+
+		// Elementor editor SEO report panel.
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueueElementorSeoAssets' ] );
+		add_action( 'elementor/editor/footer', [ $this, 'renderElementorSeoPanel' ] );
 	}
 
 	// -------------------------------------------------------------------------
@@ -185,10 +190,9 @@ class AIInit {
 	 * @return array List of supported post type slugs.
 	 */
 	public static function getSupportedPostTypes() {
-		$defaults = get_post_types( [ 'public' => true ], 'names' );
-
-		/** Remove the 'attachment' post type — media items don't need schemas. */
-		unset( $defaults['attachment'] );
+		// Public post types minus the globally-ignored ones (shared with the
+		// internal-linking system so both exclude the same content).
+		$defaults = \Rtrs\Helpers\ContentIgnore::allowed_post_types();
 
 		/**
 		 * Filter the list of post types that support AI schema generation.
@@ -423,7 +427,10 @@ class AIInit {
 
 		foreach ( $cats as $key => $label ) {
 			// Skip breadcrumb — it's a global schema, not content.
-			if ( 'breadcrumb' === $key ) {
+			// Skip local_business — the entity is built from site settings and
+			// SchemaExtractor strips LocalBusiness from AI output, so it is a
+			// metabox-only type.
+			if ( in_array( $key, [ 'breadcrumb', 'local_business' ], true ) ) {
 				continue;
 			}
 
@@ -456,6 +463,12 @@ class AIInit {
 		$pro  = [ 'auto_detect' ];
 
 		foreach ( $cats as $key => $label ) {
+			// Same non-AI types getSchemaTypeOptions() skips — they are never
+			// offered in the panel, so they must not gate AI generation either
+			// (local_business is Pro in the metabox, not in the AI panel).
+			if ( in_array( $key, [ 'breadcrumb', 'local_business' ], true ) ) {
+				continue;
+			}
 			if ( strpos( $label, '[Pro]' ) !== false ) {
 				$pro[] = $map[ $key ] ?? $key;
 			}
@@ -474,6 +487,13 @@ class AIInit {
 	 */
 	public static function getI18nStrings() {
 		return [
+			// Shared AI glyph (raw SVG markup) used on every "…with AI" button.
+			'aiIcon'                    => \Rtrs\Helpers\Functions::aiIconSvg(),
+
+			// Deep link to the SEO Report settings (XML sitemap URL lives there).
+			'seoReportUrl'              => admin_url( 'admin.php?page=review-schema#/seo_report' ),
+			'seoReportSettingsLabel'    => __( 'Open SEO Report settings', 'review-schema' ),
+
 			// Panel header / branding.
 			'schemaEngineAi'            => __( 'SchemaEngine AI', 'review-schema' ),
 			'structuredDataPoweredByAi' => __( 'Structured data powered by AI', 'review-schema' ),
@@ -481,6 +501,7 @@ class AIInit {
 			// Status labels.
 			'noSchemaGenerated'         => __( 'No schema generated', 'review-schema' ),
 			'analyzingContent'          => __( 'Analyzing content', 'review-schema' ),
+			'savingPage'                => __( 'Saving page', 'review-schema' ),
 			'generatedNotSavedYet'      => __( 'Generated — not saved yet', 'review-schema' ),
 			'schemaActive'              => __( 'Schema active', 'review-schema' ),
 
@@ -505,6 +526,9 @@ class AIInit {
 			'faqGenerationFailed'       => __( 'FAQ generation failed.', 'review-schema' ),
 			'reviewFaqContent'          => __( 'Review Generated FAQ', 'review-schema' ),
 			'insertFaq'                 => __( 'Insert FAQ', 'review-schema' ),
+			'faqInsertedElementor'      => __( 'FAQ added to the editor. Click Update to save the page.', 'review-schema' ),
+			'faqSectionTitle'           => __( 'Frequently Asked Questions', 'review-schema' ),
+			'faqSectionLead'            => __( 'We\'ve gathered the questions people ask most and answered them clearly below. Take a moment to browse through them to better understand how everything works and what to expect. If you still can\'t find what you\'re looking for, don\'t hesitate to reach out — our team is always happy to help.', 'review-schema' ),
 			'faqSavedToMeta'            => __( 'FAQ saved to metabox.', 'review-schema' ),
 
 			// Confirm / Error / Success messages.
@@ -534,7 +558,70 @@ class AIInit {
 			'edit'                      => __( 'Edit', 'review-schema' ),
 			'pro'                       => __( 'Pro', 'review-schema' ),
 			'proFeature'                => __( 'Pro feature', 'review-schema' ),
+			'applyWithAi'               => __( 'Generate with AI', 'review-schema' ),
+			'applyTitleWithAi'          => __( 'Apply title with AI', 'review-schema' ),
+			'applyMetaWithAi'           => __( 'Apply meta with AI', 'review-schema' ),
+			'refining'                  => __( 'Refining…', 'review-schema' ),
+			'suggestLeadWithAi'         => __( 'Improve with AI', 'review-schema' ),
+			'configure'                 => __( 'Configure', 'review-schema' ),
+			'cancel'                    => __( 'Cancel', 'review-schema' ),
+			'aiNotConfigured'           => __( 'AI is not configured', 'review-schema' ),
+			'aiNotConfiguredBody'       => __( 'Enable AI and add a provider API key in the plugin settings to use AI features.', 'review-schema' ),
+			'proRequired'               => __( 'This is a Pro feature — upgrade to use it.', 'review-schema' ),
+			'aiSetupRequired'           => __( 'Enable AI and add a provider API key in the plugin settings.', 'review-schema' ),
 			'copy'                      => __( 'Copy', 'review-schema' ),
+			'copied'                    => __( 'Copied', 'review-schema' ),
+			'verifyWithAi'              => __( 'Review with AI', 'review-schema' ),
+			'reverifyWithAi'            => __( 'Refresh AI review', 'review-schema' ),
+			'removeAiReview'            => __( 'Remove AI review', 'review-schema' ),
+			'verifying'                 => __( 'Reviewing…', 'review-schema' ),
+			'aiVerified'                => __( 'AI reviewed', 'review-schema' ),
+			'seoFieldNotFound'          => __( 'Open the "Search Engine Listing" section, then generate again.', 'review-schema' ),
+			'seoTitleLabel'             => __( 'SEO title', 'review-schema' ),
+			'metaDescLabel'             => __( 'Meta description', 'review-schema' ),
+			'aiNotesTitle'              => __( 'AI review notes', 'review-schema' ),
+			'aiReviewFailed'            => __( 'AI review failed', 'review-schema' ),
+			'saving'                    => __( 'Saving…', 'review-schema' ),
+			'saved'                     => __( 'Saved', 'review-schema' ),
+			'discard'                   => __( 'Discard', 'review-schema' ),
+			'save'                      => __( 'Save', 'review-schema' ),
+
+			// Apply-with-AI confirm modal + post-save notice.
+			'confirmChangeTitle'        => __( 'Confirm change', 'review-schema' ),
+			'confirm'                   => __( 'Confirm', 'review-schema' ),
+			'currentValue'              => __( 'Current value', 'review-schema' ),
+			'newValue'                  => __( 'New value', 'review-schema' ),
+			'savesTo'                   => __( 'Saves to', 'review-schema' ),
+			'destPostTitle'             => __( 'Post title', 'review-schema' ),
+			'destYoastTitle'            => __( 'Yoast SEO title', 'review-schema' ),
+			'destRankmathTitle'         => __( 'Rank Math SEO title', 'review-schema' ),
+			'destSeoTitle'              => __( 'SEO meta title', 'review-schema' ),
+			'destMetaDesc'              => __( 'Meta description', 'review-schema' ),
+			'destFocusKeyword'          => __( 'Focus keyword', 'review-schema' ),
+			'noticeFocusKeyword'        => __( 'Focus keyword saved.', 'review-schema' ),
+			'noticePostTitle'           => __( 'Post title updated.', 'review-schema' ),
+			'noticeYoastTitle'          => __( 'Yoast SEO title updated.', 'review-schema' ),
+			'noticeRankmathTitle'       => __( 'Rank Math SEO title updated.', 'review-schema' ),
+			'noticeSeoTitle'            => __( 'SEO meta title updated.', 'review-schema' ),
+			'noticeMetaDesc'            => __( 'Meta description updated.', 'review-schema' ),
+			'alsoUpdatePostTitle'       => __( 'Also update the post title', 'review-schema' ),
+			'noticeTitleAndPost'        => __( 'SEO title and post title updated.', 'review-schema' ),
+			'noticeFirstPara'           => __( 'First paragraph updated in the editor — click Update to save.', 'review-schema' ),
+			'noticeSubheading'          => __( 'Subheading updated in the editor — click Update to save.', 'review-schema' ),
+			'noticeKeywordDensity'      => __( 'Paragraph updated to reduce keyword repetition — click Update to save.', 'review-schema' ),
+			'applySubheadingTitle'      => __( 'Apply subheading', 'review-schema' ),
+			'newSubheading'             => __( 'New subheading', 'review-schema' ),
+			'replacesSubheading'        => __( 'Replaces this subheading', 'review-schema' ),
+			'replaceSubheading'         => __( 'Replace subheading', 'review-schema' ),
+			'noSubheadingFound'         => __( 'No subheading found in your content. Copy the text and paste it where you want a heading.', 'review-schema' ),
+			'noticeCopied'              => __( 'Copied — paste it where you need it.', 'review-schema' ),
+			'copy'                      => __( 'Copy', 'review-schema' ),
+			'aiError'                   => __( 'Something went wrong. Please try again.', 'review-schema' ),
+			/* translators: %s: qualitative impact level (High, Medium, or Low). */
+			'estImpact'                 => __( 'Estimated impact: %s', 'review-schema' ),
+			'impactHigh'                => __( 'High', 'review-schema' ),
+			'impactMedium'              => __( 'Medium', 'review-schema' ),
+			'impactLow'                 => __( 'Low', 'review-schema' ),
 			'test'                      => __( 'Test', 'review-schema' ),
 			'cancel'                    => __( 'Cancel', 'review-schema' ),
 			'saveChanges'               => __( 'Save Changes', 'review-schema' ),
@@ -555,6 +642,15 @@ class AIInit {
 			'discard'                   => __( 'Discard', 'review-schema' ),
 			'deleteSchema'              => __( 'Delete Schema', 'review-schema' ),
 			'testInGoogleRichResults'   => __( 'Test in Google Rich Results', 'review-schema' ),
+
+			// Elementor SEO report panel.
+			'seoReportTitle'            => __( 'SEO Report', 'review-schema' ),
+			'refresh'                   => __( 'Refresh', 'review-schema' ),
+			'contentAnalysis'           => __( 'Content Analysis', 'review-schema' ),
+			'seoReportEmpty'            => __( 'No SEO data available. Save the page, then refresh.', 'review-schema' ),
+			'suggestionsLabel'          => __( 'Suggestions', 'review-schema' ),
+			'issuesLabel'               => __( 'issue(s)', 'review-schema' ),
+			'setFocusKeywordHint'       => __( 'Set a focus keyword to score this dimension.', 'review-schema' ),
 		];
 	}
 
@@ -582,14 +678,14 @@ class AIInit {
 			'rtrs-ai-editor-panel',
 			rtrs()->get_assets_uri( 'ai/css/editor-panel.css' ),
 			[],
-			RTRS_VERSION
+			rtrs()->get_assets_version( 'ai/css/editor-panel.css' )
 		);
 
 		wp_enqueue_script(
 			'rtrs-ai-editor-panel',
 			rtrs()->get_assets_uri( 'ai/js/editor-panel.js' ),
 			[ 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-api-fetch', 'wp-blocks', 'wp-hooks' ],
-			RTRS_VERSION,
+			rtrs()->get_assets_version( 'ai/js/editor-panel.js' ),
 			true
 		);
 
@@ -632,6 +728,9 @@ class AIInit {
 				'logoUrl'        => rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ),
 				'validation'     => $initial_validation,
 				'evaluation'     => $initial_evaluation,
+				'seo'            => AiVerifyStore::restore( 'seo', $post_id, SeoAnalyzer::analyze( $post_id ) ),
+				'aeo'            => AiVerifyStore::restore( 'aeo', $post_id, \Rtrs\Modules\Aeo\Analyzers\AeoAnalyzer::analyze( $post_id ) ),
+				'geo'            => AiVerifyStore::restore( 'geo', $post_id, \Rtrs\Modules\Geo\Analyzers\GeoAnalyzer::analyze( $post_id ) ),
 				'schemaTypes'    => array_merge(
 					[
 						[
@@ -643,6 +742,7 @@ class AIInit {
 				),
 				'proSchemaTypes' => self::getProSchemaTypes(),
 				'isPro'              => function_exists( 'rtrsp' ),
+				'seoActivePlugin'    => self::getActiveSeoPlugin(),
 				'aiEnabled'          => 'yes' === self::getSetting( 'ai_enabled', 'no' ),
 				'schemaEnabled'      => \Rtrs\Helpers\Functions::schema_enabled(),
 				'isElementorPost'    => ElementorFaq::is_elementor_post( $post_id ),
@@ -651,6 +751,30 @@ class AIInit {
 				'i18n'               => self::getI18nStrings(),
 			]
 		);
+	}
+
+	/**
+	 * Detect the active SEO plugin for the "Apply with AI" confirm/notice UI.
+	 *
+	 * @return string 'yoast' | 'rank_math' | 'none'.
+	 */
+	private static function getActiveSeoPlugin() {
+		if ( \Rtrs\Modules\Schema\Hooks\SeoHooks::isYoastActive() ) {
+			return 'yoast';
+		}
+		if ( \Rtrs\Modules\Schema\Hooks\SeoHooks::isRankMathActive() ) {
+			return 'rank_math';
+		}
+		if ( defined( 'AIOSEO_VERSION' ) ) {
+			return 'aioseo';
+		}
+		if ( defined( 'SEOPRESS_VERSION' ) ) {
+			return 'seopress';
+		}
+		if ( function_exists( 'genesis' ) || defined( 'PARENT_THEME_VERSION' ) ) {
+			return 'genesis';
+		}
+		return 'none';
 	}
 
 	// -------------------------------------------------------------------------
@@ -748,8 +872,157 @@ class AIInit {
 		wp_localize_script(
 			'rtrs-ai-classic-editor-panel',
 			'aiseData',
-			$this->buildClassicPanelData( $post_id )
+			$this->buildBasePanelData( $post_id )
 		);
+	}
+
+	// -------------------------------------------------------------------------
+	// Elementor editor SEO report panel
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Resolve the post ID being edited in the Elementor editor.
+	 *
+	 * Returns 0 (skip) unless Elementor is active, AI is enabled, the current
+	 * user can edit the post, and the post type supports the AI panel.
+	 *
+	 * @return int Post ID, or 0 when the panel should not load.
+	 */
+	private function getElementorEditPostId() {
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+			return 0;
+		}
+
+		if ( 'yes' !== self::getSetting( 'ai_enabled', 'no' ) ) {
+			return 0;
+		}
+
+		$post_id = (int) \Elementor\Plugin::$instance->editor->get_post_id();
+
+		if ( ! $post_id || ! current_user_can( 'edit_post', $post_id ) ) {
+			return 0;
+		}
+
+		if ( ! in_array( get_post_type( $post_id ), self::getSupportedPostTypes(), true ) ) {
+			return 0;
+		}
+
+		return $post_id;
+	}
+
+	/**
+	 * Enqueue the Elementor SEO report assets.
+	 *
+	 * Hooked to: elementor/editor/after_enqueue_scripts
+	 *
+	 * @return void
+	 */
+	public function enqueueElementorSeoAssets() {
+		$post_id = $this->getElementorEditPostId();
+
+		if ( ! $post_id ) {
+			return;
+		}
+
+		wp_enqueue_style( 'dashicons' );
+
+		/** Shared generate-panel styles (aise-*) + classic panel overrides. */
+		wp_enqueue_style(
+			'rtrs-ai-editor-panel',
+			rtrs()->get_assets_uri( 'ai/css/editor-panel.css' ),
+			[],
+			RTRS_VERSION
+		);
+
+		wp_enqueue_style(
+			'rtrs-ai-classic-editor-panel',
+			rtrs()->get_assets_uri( 'ai/css/classic-editor-panel.css' ),
+			[ 'rtrs-ai-editor-panel' ],
+			RTRS_VERSION
+		);
+
+		wp_enqueue_style(
+			'rtrs-ai-elementor-panel',
+			rtrs()->get_assets_uri( 'ai/css/elementor-panel.css' ),
+			[ 'rtrs-ai-classic-editor-panel' ],
+			RTRS_VERSION
+		);
+
+		/**
+		 * The full schema generate panel (brand, schema type, FAQ settings,
+		 * action cards, Generate → preview → save) is the same vanilla-JS module
+		 * used by the classic editor, Tutor, FluentCart and SureCart. Mounting it
+		 * into the Elementor drawer gives the Elementor panel full generate parity.
+		 */
+		wp_enqueue_script(
+			'rtrs-ai-classic-editor-panel',
+			rtrs()->get_assets_uri( 'ai/js/classic-editor-panel.js' ),
+			[ 'wp-api-fetch', 'wp-hooks' ],
+			RTRS_VERSION,
+			true
+		);
+
+		wp_enqueue_script(
+			'rtrs-ai-elementor-panel',
+			rtrs()->get_assets_uri( 'ai/js/elementor-panel.js' ),
+			[ 'wp-api-fetch', 'rtrs-ai-classic-editor-panel' ],
+			RTRS_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'rtrs-ai-classic-editor-panel',
+			'aiseData',
+			array_merge(
+				$this->buildBasePanelData( $post_id ),
+				[
+					'isElementor'   => true,
+					'elementorIcon' => rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ),
+					'editPostUrl'   => get_edit_post_link( $post_id, 'raw' ),
+					'siteSchemaUrl' => admin_url( 'admin.php?page=review-schema#/schema' ),
+					// The Elementor drawer renders its own SEO/AEO/GEO report, so
+					// suppress the classic module's duplicate report inside the
+					// mounted generate panel.
+					'suppressReport' => true,
+				]
+			)
+		);
+
+		/**
+		 * Elementor V2 top bar (App Bar) launcher button.
+		 *
+		 * Registers into the LEFT tools cluster (toolsMenu), beside the Design
+		 * System button — not the right-side utilities row, which only fits four
+		 * inline icons and overflowed native controls into the "⋮" menu. When the
+		 * App Bar package is unavailable the panel falls back to its floating FAB.
+		 */
+		if ( wp_script_is( 'elementor-v2-editor-app-bar', 'registered' ) ) {
+			wp_enqueue_script(
+				'rtrs-ai-elementor-appbar',
+				rtrs()->get_assets_uri( 'ai/js/elementor-appbar.js' ),
+				[ 'react', 'elementor-v2-editor-app-bar', 'elementor-v2-icons', 'rtrs-ai-elementor-panel' ],
+				RTRS_VERSION,
+				true
+			);
+		}
+	}
+
+	/**
+	 * Render the Elementor SEO report mount container.
+	 *
+	 * The floating launcher and slide-in drawer are built by the JS into this
+	 * root, matching the plugin's other footer-panel surfaces.
+	 *
+	 * Hooked to: elementor/editor/footer
+	 *
+	 * @return void
+	 */
+	public function renderElementorSeoPanel() {
+		if ( ! $this->getElementorEditPostId() ) {
+			return;
+		}
+
+		echo '<div id="rtrs-elementor-seo"></div>';
 	}
 
 	// -------------------------------------------------------------------------
@@ -851,7 +1124,12 @@ class AIInit {
 		wp_localize_script(
 			'rtrs-ai-classic-editor-panel',
 			'aiseData',
-			$this->buildClassicPanelData( $course_id )
+			array_merge(
+				$this->buildBasePanelData( $course_id ),
+				[
+					'isTutor' => true, // Dedicated builder surface; show the SEO/AEO/GEO report.
+				]
+			)
 		);
 
 		/** Toggle script for the collapsible Tutor panel. */
@@ -1020,36 +1298,16 @@ class AIInit {
 	 * @return array Localized data for aiseData.
 	 */
 	private function buildFluentCartPanelData() {
-		return [
-			'restUrl'        => rest_url( 'rtrs-ai/v1/' ),
-			'nonce'          => wp_create_nonce( 'wp_rest' ),
-			'postId'         => 0, // Will be set by JS.
-			'schemaData'     => [],
-			'fullGraph'      => [],
-			'schemaType'     => '',
-			'confidence'     => 0,
-			'hasApiKey'      => self::hasApiKey(),
-			'logoUrl'        => rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ),
-			'validation'     => null,
-			'evaluation'     => null,
-			'settingsUrl'    => admin_url( 'admin.php?page=review-schema&tab=ai' ),
-			'aiSettingsUrl'  => admin_url( 'admin.php?page=review-schema#/ai' ),
-			'schemaTypes'    => array_merge(
-				[
-					[
-						'value' => 'auto_detect',
-						'label' => __( 'Auto-detect (AI)', 'review-schema' ),
-					],
-				],
-				self::getSchemaTypeOptions()
-			),
-			'proSchemaTypes' => self::getProSchemaTypes(),
-			'isPro'          => function_exists( 'rtrsp' ),
-			'hasFaqData'     => false,
-			'faqCount'       => (int) self::getSetting( 'faq_count', 5 ),
-			'i18n'           => self::getI18nStrings(),
-			'isFluentCart'   => true, // Flag for JS to handle specially.
-		];
+		// FluentCart is a hash-routed SPA: the product ID is unknown server-side,
+		// so start from the shared base with post ID 0 and let the JS detect the
+		// product and fetch its schema data via REST. Reuses the base payload so
+		// the panel exposes the same actions and SEO report as every other surface.
+		return array_merge(
+			$this->buildBasePanelData( 0 ),
+			[
+				'isFluentCart' => true, // Flag for JS to handle specially.
+			]
+		);
 	}
 
 	// -------------------------------------------------------------------------
@@ -1166,7 +1424,7 @@ class AIInit {
 			'rtrs-ai-editor-panel',
 			rtrs()->get_assets_uri( 'ai/css/editor-panel.css' ),
 			[],
-			RTRS_VERSION
+			self::assetVersion( 'ai/css/editor-panel.css' )
 		);
 
 		/** Classic editor metabox overrides. */
@@ -1174,7 +1432,7 @@ class AIInit {
 			'rtrs-ai-classic-editor-panel',
 			rtrs()->get_assets_uri( 'ai/css/classic-editor-panel.css' ),
 			[ 'rtrs-ai-editor-panel' ],
-			RTRS_VERSION
+			self::assetVersion( 'ai/css/classic-editor-panel.css' )
 		);
 
 		/** SureCart-specific styles. */
@@ -1182,7 +1440,7 @@ class AIInit {
 			'rtrs-ai-surecart-panel',
 			rtrs()->get_assets_uri( 'ai/css/surecart-panel.css' ),
 			[ 'rtrs-ai-classic-editor-panel' ],
-			RTRS_VERSION
+			self::assetVersion( 'ai/css/surecart-panel.css' )
 		);
 
 		/** Dashicons for icons. */
@@ -1193,7 +1451,7 @@ class AIInit {
 			'rtrs-ai-classic-editor-panel',
 			rtrs()->get_assets_uri( 'ai/js/classic-editor-panel.js' ),
 			[ 'wp-api-fetch', 'wp-hooks' ],
-			RTRS_VERSION,
+			self::assetVersion( 'ai/js/classic-editor-panel.js' ),
 			true
 		);
 
@@ -1214,9 +1472,26 @@ class AIInit {
 			'rtrs-ai-surecart-panel',
 			rtrs()->get_assets_uri( 'ai/js/surecart-panel.js' ),
 			[ 'rtrs-ai-classic-editor-panel' ],
-			RTRS_VERSION,
+			self::assetVersion( 'ai/js/surecart-panel.js' ),
 			true
 		);
+	}
+
+	/**
+	 * Cache-busting version for a built asset.
+	 *
+	 * The plugin version (RTRS_VERSION) is pinned per release, so rebuilt panel
+	 * bundles keep the same `?ver=` and browsers serve the stale cached copy.
+	 * Using the file's modification time guarantees a fresh URL whenever the
+	 * asset actually changes, falling back to the plugin version if unreadable.
+	 *
+	 * @param string $relative Asset path relative to the plugin's `assets/` dir.
+	 * @return string
+	 */
+	private static function assetVersion( $relative ) {
+		$file = RTRS_PATH . 'assets/' . ltrim( $relative, '/' );
+
+		return file_exists( $file ) ? (string) filemtime( $file ) : RTRS_VERSION;
 	}
 
 	/**
@@ -1230,63 +1505,16 @@ class AIInit {
 	 * @return array Localized data for aiseData.
 	 */
 	private function buildSureCartPanelData( $product_id = 0 ) {
-		$schema_data        = [];
-		$full_graph         = [];
-		$schema_type        = '';
-		$confidence         = 0;
-		$initial_validation = null;
-		$initial_evaluation = null;
-
-		// Load existing schema data if editing an existing product.
-		if ( $product_id ) {
-			$schema_data = self::normalizeSchemaData( get_post_meta( $product_id, self::META_KEY, true ) );
-
-			if ( ! empty( $schema_data ) ) {
-				$renderer       = new SchemaRenderer();
-				$global_schemas = $renderer->build_global_schemas( $product_id, $schema_data );
-				$full_graph     = array_merge( $schema_data, $global_schemas );
-				$full_graph     = apply_filters( 'rtrs_ai_schema_before_render', $full_graph, $product_id );
-
-				$validator          = new SchemaValidator();
-				$initial_validation = $validator->validate( $full_graph );
-
-				$initial_evaluation = apply_filters( 'rtrs_ai_schema_evaluation', RestApi::get_dummy_evaluation(), $full_graph );
-			}
-
-			$schema_type = get_post_meta( $product_id, self::TYPE_META_KEY, true );
-			$confidence  = get_post_meta( $product_id, self::CONFIDENCE_META_KEY, true );
-		}
-
-		return [
-			'restUrl'        => rest_url( 'rtrs-ai/v1/' ),
-			'nonce'          => wp_create_nonce( 'wp_rest' ),
-			'postId'         => $product_id,
-			'schemaData'     => $schema_data,
-			'fullGraph'      => $full_graph,
-			'schemaType'     => $schema_type,
-			'confidence'     => $confidence,
-			'hasApiKey'      => self::hasApiKey(),
-			'logoUrl'        => rtrs()->get_assets_uri( 'imgs/icon-128x128.gif' ),
-			'validation'     => $initial_validation,
-			'evaluation'     => $initial_evaluation,
-			'settingsUrl'    => admin_url( 'admin.php?page=review-schema&tab=ai' ),
-			'aiSettingsUrl'  => admin_url( 'admin.php?page=review-schema#/ai' ),
-			'schemaTypes'    => array_merge(
-				[
-					[
-						'value' => 'auto_detect',
-						'label' => __( 'Auto-detect (AI)', 'review-schema' ),
-					],
-				],
-				self::getSchemaTypeOptions()
-			),
-			'proSchemaTypes' => self::getProSchemaTypes(),
-			'isPro'          => function_exists( 'rtrsp' ),
-			'hasFaqData'     => false,
-			'faqCount'       => (int) self::getSetting( 'faq_count', 5 ),
-			'i18n'           => self::getI18nStrings(),
-			'isSureCart'     => true, // Flag for JS to handle specially.
-		];
+		// SureCart resolves a real WordPress post ID server-side, so the shared
+		// base builder supplies the complete payload — schema actions, FAQ and
+		// Elementor detection, plus the validation/SEO report — identical to the
+		// classic editor and FluentCart panels.
+		return array_merge(
+			$this->buildBasePanelData( $product_id ),
+			[
+				'isSureCart' => true, // Flag for JS to handle specially.
+			]
+		);
 	}
 
 	// -------------------------------------------------------------------------
@@ -1294,15 +1522,17 @@ class AIInit {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Build localized data array for the classic editor panel JS.
+	 * Build the shared, complete localized data payload for every AI panel.
 	 *
-	 * Shared by classic editor and Tutor course builder.
+	 * Single source of truth for the classic editor, Tutor course builder,
+	 * FluentCart and SureCart integrations. Guarantees every surface receives
+	 * the same schema-generation actions and SEO/validation report data.
 	 *
-	 * @param int $post_id The post ID.
+	 * @param int $post_id The post ID (0 when unknown, e.g. FluentCart SPA).
 	 *
 	 * @return array Localized data for aiseData.
 	 */
-	private function buildClassicPanelData( $post_id ) {
+	private function buildBasePanelData( $post_id ) {
 		$schema_data = self::normalizeSchemaData( get_post_meta( $post_id, self::META_KEY, true ) );
 
 		$faq_data     = get_post_meta( $post_id, '_rtrs_faqpage_data', true );

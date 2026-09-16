@@ -16,6 +16,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Functions {
+	/**
+	 * AI sparkle-cluster icon markup.
+	 *
+	 * Single source of truth for the "AI" glyph used across the settings nav,
+	 * the metabox "Generate with AI" tab and every "…with AI" action button
+	 * (rendered in JS via the localized `aiIcon` value).
+	 *
+	 * @param int $width  SVG width attribute (px).
+	 * @param int $height SVG height attribute (px).
+	 * @return string SVG markup.
+	 */
+	public static function aiIconSvg( $width = 12, $height = 14 ) {
+		$paths = [
+			'M6.37822 4.38293L6.95178 5.97575C7.5889 7.74356 8.98101 9.13566 10.7488 9.77279L12.3416 10.3463C12.4852 10.3985 12.4852 10.6021 12.3416 10.6535L10.7488 11.227C8.98101 11.8642 7.5889 13.2563 6.95178 15.0241L6.37822 16.6169C6.32608 16.7605 6.12252 16.7605 6.07109 16.6169L5.49753 15.0241C4.86041 13.2563 3.4683 11.8642 1.70049 11.227L0.107676 10.6535C-0.0358919 10.6013 -0.0358919 10.3978 0.107676 10.3463L1.70049 9.77279C3.4683 9.13566 4.86041 7.74356 5.49753 5.97575L6.07109 4.38293C6.12252 4.23865 6.32608 4.23865 6.37822 4.38293Z',
+			'M13.548 0.555177L13.8387 1.36158C14.1616 2.25656 14.8666 2.96154 15.7615 3.28439L16.568 3.5751C16.6408 3.60152 16.6408 3.70438 16.568 3.73081L15.7615 4.02151C14.8666 4.34436 14.1616 5.04934 13.8387 5.94432L13.548 6.75073C13.5216 6.82358 13.4187 6.82358 13.3923 6.75073L13.1016 5.94432C12.7788 5.04934 12.0738 4.34436 11.1788 4.02151L10.3724 3.73081C10.2995 3.70438 10.2995 3.60152 10.3724 3.5751L11.1788 3.28439C12.0738 2.96154 12.7788 2.25656 13.1016 1.36158L13.3923 0.555177C13.4187 0.481608 13.5223 0.481608 13.548 0.555177Z',
+			'M13.548 14.2498L13.8387 15.0562C14.1616 15.9512 14.8666 16.6562 15.7615 16.979L16.568 17.2697C16.6408 17.2962 16.6408 17.399 16.568 17.4254L15.7615 17.7161C14.8666 18.039 14.1616 18.744 13.8387 19.639L13.548 20.4454C13.5216 20.5182 13.4187 20.5182 13.3923 20.4454L13.1016 19.639C12.7788 18.744 12.0738 18.039 11.1788 17.7161L10.3724 17.4254C10.2995 17.399 10.2995 17.2962 10.3724 17.2697L11.1788 16.979C12.0738 16.6562 12.7788 15.9512 13.1016 15.0562L13.3923 14.2498C13.4187 14.177 13.5223 14.177 13.548 14.2498Z',
+		];
+
+		$svg = sprintf(
+			'<svg width="%d" height="%d" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
+			absint( $width ),
+			absint( $height )
+		);
+		foreach ( $paths as $d ) {
+			$svg .= '<path fill="currentColor" d="' . $d . '"></path>';
+		}
+		$svg .= '</svg>';
+
+		return $svg;
+	}
+
 	/*
 	 * Review Enabled
 	 */
@@ -517,14 +548,18 @@ class Functions {
 				],
 			],
 		];
+		// Read the matched config post directly from the query result.
+		// Do NOT use the_post()/wp_reset_postdata() here: on admin edit
+		// screens there is no main loop to restore, so it corrupts the
+		// global $post and breaks other metaboxes (e.g. featured image).
 		$query     = new \WP_Query($args);
 		$all_metas = null;
-		while ($query->have_posts()): $query->the_post();
-		$all_metas          = get_post_meta(get_the_ID());
-		$all_metas['sc_id'] =  get_the_ID();
-		self::$post_meta    = $all_metas;
-		endwhile;
-		wp_reset_postdata();
+		if (! empty($query->posts)) {
+			$sc_id              = $query->posts[0]->ID;
+			$all_metas          = get_post_meta($sc_id);
+			$all_metas['sc_id'] = $sc_id;
+			self::$post_meta    = $all_metas;
+		}
 
 		return $all_metas;
 	}
@@ -773,6 +808,7 @@ class Functions {
             'news_article'         => esc_html__('NewsArticle', 'review-schema'), // Done
             'blog_posting'         => esc_html__('BlogPosting', 'review-schema'), // Done
             'event'                => esc_html__('Event', 'review-schema'), // Done
+            'local_business'       => esc_html__('LocalBusiness', 'review-schema') . $pro_label, // Done
 			'faq'                  => esc_html__('FAQPage', 'review-schema'), // Done
 			'service'              => esc_html__('Service', 'review-schema'), // Done
 			'question_answer'      => esc_html__('QAPage - formerly Q&A ( Deprecated ) Use FAQPage Schema', 'review-schema'), // Done
@@ -1432,7 +1468,19 @@ class Functions {
 	 * @return bool
 	 */
 	public static function isFoodEstablishmentType( $type ) {
-		$food_types = [
+		return in_array( $type, self::getFoodEstablishmentTypes(), true );
+	}
+
+	/**
+	 * FoodEstablishment and its subtypes.
+	 *
+	 * These types support servesCuisine / menu / hasMenu / acceptsReservations.
+	 *
+	 * @since 3.0.3
+	 * @return array
+	 */
+	public static function getFoodEstablishmentTypes() {
+		return [
 			'FoodEstablishment',
 			'Bakery',
 			'BarOrPub',
@@ -1444,8 +1492,40 @@ class Functions {
 			'Restaurant',
 			'Winery',
 		];
+	}
 
-		return in_array( $type, $food_types, true );
+	/**
+	 * Check if the given type is a LodgingBusiness or its subtype.
+	 *
+	 * These types support the checkinTime / checkoutTime properties.
+	 *
+	 * @param string $type Schema type to check.
+	 *
+	 * @return bool
+	 */
+	public static function isLodgingBusinessType( $type ) {
+		return in_array( $type, self::getLodgingBusinessTypes(), true );
+	}
+
+	/**
+	 * LodgingBusiness and its subtypes.
+	 *
+	 * These types support the checkinTime / checkoutTime properties.
+	 *
+	 * @since 3.0.3
+	 * @return array
+	 */
+	public static function getLodgingBusinessTypes() {
+		return [
+			'LodgingBusiness',
+			'BedAndBreakfast',
+			'Campground',
+			'Hostel',
+			'Hotel',
+			'Motel',
+			'Resort',
+			'RVPark',
+		];
 	}
 
 	/**
@@ -1466,6 +1546,159 @@ class Functions {
 		];
 
 		return in_array( $type, $medical_types, true );
+	}
+
+	/**
+	 * Check if the given type is a MedicalOrganization / MedicalBusiness type.
+	 *
+	 * These types support the medicalSpecialty property.
+	 *
+	 * @param string $type Schema type to check.
+	 *
+	 * @return bool
+	 */
+	public static function isMedicalType( $type ) {
+		return in_array( $type, self::getMedicalTypes(), true );
+	}
+
+	/**
+	 * MedicalOrganization / MedicalBusiness types.
+	 *
+	 * These types support the medicalSpecialty property.
+	 *
+	 * @since 3.0.3
+	 * @return array
+	 */
+	public static function getMedicalTypes() {
+		return [
+			'MedicalOrganization',
+			'Hospital',
+			'VeterinaryCare',
+			'MedicalBusiness',
+			'CommunityHealth',
+			'DiagnosticLab',
+			'Dentist',
+			'Dermatology',
+			'DietNutrition',
+			'EmergencyService',
+			'Geriatric',
+			'Gynecologic',
+			'MedicalClinic',
+			'Midwifery',
+			'Nursing',
+			'Obstetric',
+			'Oncologic',
+			'Optician',
+			'Optometric',
+			'Otolaryngologic',
+			'Pediatric',
+			'Pharmacy',
+			'Physician',
+			'Physiotherapy',
+			'PlasticSurgery',
+			'Podiatric',
+			'PrimaryCare',
+			'Psychiatric',
+			'PublicHealth',
+		];
+	}
+
+	/**
+	 * Flat list of LocalBusiness and every subtype offered in Site Info.
+	 *
+	 * The nested tree from getSiteSubTypesLocalBusiness() is unusable in a
+	 * settings `depends` rule, which compares against a flat value list.
+	 *
+	 * @since 3.0.3
+	 * @return array
+	 */
+	public static function getLocalBusinessTypeList() {
+		$flat = [ 'LocalBusiness' ];
+
+		$collect = function ( $types ) use ( &$collect, &$flat ) {
+			foreach ( $types as $key => $value ) {
+				if ( is_array( $value ) ) {
+					$flat[] = $key;
+					$collect( $value );
+					continue;
+				}
+				$flat[] = $value;
+			}
+		};
+		$collect( self::getSiteSubTypesLocalBusiness() );
+
+		return array_values( array_unique( $flat ) );
+	}
+
+	/**
+	 * Category-conditional field groups for the per-page LocalBusiness metabox.
+	 *
+	 * Keys match the `rtrs-lb-{key}` holder classes in SchemaMeta so the metabox
+	 * JS can show/hide a field for the exact same type list the schema builder
+	 * gates its output on.
+	 *
+	 * @since 3.0.3
+	 * @return array Group key => list of schema types.
+	 */
+	public static function getLocalBusinessCondTypes() {
+		return [
+			'food'    => self::getFoodEstablishmentTypes(),
+			'lodging' => self::getLodgingBusinessTypes(),
+			'medical' => self::getMedicalTypes(),
+		];
+	}
+
+	/**
+	 * Schema.org MedicalSpecialty enumeration values.
+	 *
+	 * @return array Key => label pairs for the medicalSpecialty field.
+	 */
+	public static function getMedicalSpecialties() {
+		$specialties = [
+			'Anesthesia',
+			'Cardiovascular',
+			'CommunityHealth',
+			'Dentistry',
+			'Dermatology',
+			'DietNutrition',
+			'Emergency',
+			'Endocrine',
+			'Gastroenterologic',
+			'Genetic',
+			'Geriatric',
+			'Gynecologic',
+			'Hematologic',
+			'Infectious',
+			'LaboratoryScience',
+			'Midwifery',
+			'Musculoskeletal',
+			'Neurologic',
+			'Nursing',
+			'Obstetric',
+			'Oncologic',
+			'Optometric',
+			'Otolaryngologic',
+			'Pathology',
+			'Pediatric',
+			'PharmacySpecialty',
+			'Physiotherapy',
+			'PlasticSurgery',
+			'Podiatric',
+			'PrimaryCare',
+			'Psychiatric',
+			'PublicHealth',
+			'Pulmonary',
+			'Radiography',
+			'Renal',
+			'RespiratoryTherapy',
+			'Rheumatologic',
+			'SpeechPathology',
+			'Surgical',
+			'Toxicologic',
+			'Urologic',
+		];
+
+		return array_combine( $specialties, $specialties );
 	}
 
 	public static function getCountryList() {

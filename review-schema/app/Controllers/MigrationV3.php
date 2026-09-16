@@ -19,7 +19,9 @@ class MigrationV3 {
 		if ( ! get_option( 'rtrs_migrations_3_completed', false ) ) {
 			$this->sechemaSettings();
 		}
-		$this->commentToReview();
+		if ( ! get_option( 'rtrs_migrations_3_comment_to_review_completed', false ) ) {
+			$this->commentToReview();
+		}
 	}
 
 	/**
@@ -203,6 +205,7 @@ class MigrationV3 {
 			]
 		);
 		if ( empty( $items ) ) {
+			update_option( 'rtrs_migrations_3_comment_to_review_completed', true );
 			return;
 		}
 		foreach ( $items as $comment ) {
@@ -216,5 +219,6 @@ class MigrationV3 {
 				]
 			);
 		}
+		update_option( 'rtrs_migrations_3_comment_to_review_completed', true );
 	}
 }

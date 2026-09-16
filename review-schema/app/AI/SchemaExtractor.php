@@ -204,11 +204,28 @@ class SchemaExtractor {
 	private function get_faq_template() {
 		$faq_count = max( 1, (int) ( $this->faq_count ?? AIInit::getSetting( 'faq_count', 5 ) ) );
 
+		// Answer engines only credit "strong coverage" at 3+ pairs, so the FAQ
+		// must never come back short of that (bounded by the requested count when
+		// the user deliberately asks for fewer). Guarantees an issue-free FAQ.
+		$faq_min = min( $faq_count, 3 );
+
 		return "Required fields for FAQPage:\n"
 			. "- mainEntity: array of Question objects\n"
 			. "- Each Question needs: name (the question text), acceptedAnswer with @type Answer and text\n"
-			. "- Generate exactly {$faq_count} relevant question/answer pairs based on the content — never more than {$faq_count}\n"
-			. "- Questions should be natural and reflect what a reader would likely ask about this topic";
+			. "- Generate {$faq_count} relevant question/answer pairs grounded in the content. This is a hard requirement: always produce a complete set of at least {$faq_min} distinct pairs — never fewer — and never more than {$faq_count}. If the body is thin, cover closely related sub-questions a reader would still ask rather than returning fewer pairs\n"
+			. "- AVOID DUPLICATES: if the content data includes `structural.faq_patterns` (questions already present on the page), do NOT repeat, restate, or lightly reword any of them. Treat those as already covered and generate DISTINCT, complementary questions that address what the existing ones do not — a reader should never see the same question twice on the page\n"
+			. "- Questions should be natural and reflect what a reader would likely ask about this topic\n"
+			. "- Base the questions on the real, high-intent questions people ask about this topic on community platforms like Quora, Reddit, Google (People Also Ask), and related forums — phrase them the way real users search and ask\n"
+			. "- Phrase every question.name as an actual question that ends with a question mark '?' (or opens with who/what/when/where/why/how/which/can/does/is/are/should)\n"
+			. "- Begin with a direct answer to the question in the very first sentence.\n"
+			. "- Write each acceptedAnswer.text as a self-contained, answer-first response of about 40-60 words (never fewer than 20). Lead with the direct answer in the first sentence, then add one or two supporting details grounded in the provided content — do not pad with invented facts\n"
+			. "- Make every answer self-contained: name the subject explicitly in the first sentence. NEVER open an answer with a bare pronoun such as 'It', 'This', 'That', 'They', 'These', 'Those', 'There', 'Its' or 'Their' — the first sentence must read as a complete answer when quoted alone\n"
+			. "- Write for voice assistants: use short, plain sentences. Keep sentences under 25 words and aim for an average of about 15-18 words. Prefer active voice; avoid passive constructions\n"
+			. "- Keep each answer to a single tight paragraph (well under 90 words) so an answer engine can quote it whole\n"
+			. "- Every answer must be complete and end with a concluding sentence; never end abruptly or leave the explanation unfinished.\n"
+			. "- Do NOT copy or paraphrase the article's sentences verbatim and do NOT summarize the page; rephrase in fresh wording that directly answers the question\n"
+			. "- Each answer must cover a distinct point; never repeat the same information, phrasing, or details across multiple answers\n"
+			. "- Avoid one-line or single-sentence answers; an answer engine should be able to quote the text as a complete response";
 	}
 
 	private function get_howto_template() {
@@ -435,14 +452,14 @@ class SchemaExtractor {
 					$rating_source = $secondary['review_rating'];
 				}
 
-				if ( $rating_source ) {
+				if ( $rating_source && ! empty( $rating_source['average_rating'] ) ) {
 					$schema['aggregateRating'] = [
 						'@type'       => 'AggregateRating',
 						'ratingValue' => (float) $rating_source['average_rating'],
 						'bestRating'  => 5,
 						'worstRating' => 1,
-						'ratingCount' => $rating_source['rating_count'],
-						'reviewCount' => $rating_source['review_count'] ?? $rating_source['rating_count'],
+						'ratingCount' => $rating_source['rating_count'] ?? 0,
+						'reviewCount' => $rating_source['review_count'] ?? $rating_source['rating_count'] ?? 0,
 					];
 				}
 			}

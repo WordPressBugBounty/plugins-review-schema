@@ -262,6 +262,85 @@ class ElementorFaq {
 	}
 
 	/**
+	 * Section heading + lead paragraph placed above the FAQ accordion. Both are
+	 * native, fully-editable Elementor widgets. Mirrors the live-insert version
+	 * in classic-editor-panel.js (faqLeadWidgets).
+	 *
+	 * @return array List of widget element arrays.
+	 */
+	private static function faq_lead_widgets() {
+		$title = __( 'Frequently Asked Questions', 'review-schema' );
+		$lead  = __( 'We\'ve gathered the questions people ask most and answered them clearly below. Take a moment to browse through them to better understand how everything works and what to expect. If you still can\'t find what you\'re looking for, don\'t hesitate to reach out — our team is always happy to help.', 'review-schema' );
+
+		return [
+			[
+				'id'         => self::generate_element_id(),
+				'elType'     => 'widget',
+				'widgetType' => 'heading',
+				'settings'   => [
+					'title'       => $title,
+					'header_size' => 'h2',
+				],
+				'elements'   => [],
+			],
+			[
+				'id'         => self::generate_element_id(),
+				'elType'     => 'widget',
+				'widgetType' => 'text-editor',
+				'settings'   => [
+					'editor' => '<p>' . esc_html( $lead ) . '</p>',
+				],
+				'elements'   => [],
+			],
+		];
+	}
+
+	/**
+	 * Build nested-accordion settings for a clean "divider list" FAQ — no boxes,
+	 * a hairline separator under each item, roomy spacing, and the question +
+	 * icon turning accent on open. Keys are Elementor's native nested-accordion
+	 * control keys. Mirrors the live-insert style in classic-editor-panel.js
+	 * (faqAccordionSettings).
+	 *
+	 * @param array $items Repeater items ( item_title / _id ).
+	 *
+	 * @return array Widget settings.
+	 */
+	private static function faq_accordion_settings( $items ) {
+		$accent  = '#5D3DFD';
+		$divider = '#e6e6ef';
+
+		$settings = [
+			'items'                                      => $items,
+			'rtrs_add_faq_schema'                        => 'yes',
+			'accordion_item_title_space_between'         => [ 'unit' => 'px', 'size' => 0 ],
+			'accordion_item_title_distance_from_content' => [ 'unit' => 'px', 'size' => 8 ],
+			'accordion_border_radius'                    => [ 'unit' => 'px', 'top' => '0', 'right' => '0', 'bottom' => '0', 'left' => '0', 'isLinked' => true ],
+			'accordion_padding'                          => [ 'unit' => 'px', 'top' => '18', 'right' => '2', 'bottom' => '18', 'left' => '2', 'isLinked' => false ],
+			'title_typography_typography'                => 'custom',
+			'title_typography_font_weight'               => '600',
+			'title_typography_font_size'                 => [ 'unit' => 'px', 'size' => 17 ],
+			'normal_title_color'                         => '#111827',
+			'hover_title_color'                          => $accent,
+			'active_title_color'                         => $accent,
+			'normal_icon_color'                          => '#9ca3af',
+			'hover_icon_color'                           => $accent,
+			'active_icon_color'                          => $accent,
+			'content_border_border'                      => 'none',
+			'content_padding'                            => [ 'unit' => 'px', 'top' => '0', 'right' => '2', 'bottom' => '4', 'left' => '2', 'isLinked' => false ],
+		];
+
+		// Hairline divider under every item (bottom border only), same in all states.
+		foreach ( [ 'normal', 'hover', 'active' ] as $state ) {
+			$settings[ 'accordion_border_' . $state . '_border' ] = 'solid';
+			$settings[ 'accordion_border_' . $state . '_width' ]  = [ 'unit' => 'px', 'top' => '0', 'right' => '0', 'bottom' => '1', 'left' => '0', 'isLinked' => false ];
+			$settings[ 'accordion_border_' . $state . '_color' ]  = $divider;
+		}
+
+		return $settings;
+	}
+
+	/**
 	 * Check whether the given post is built with Elementor.
 	 *
 	 * Uses post meta check instead of Elementor's document API to ensure
@@ -361,19 +440,16 @@ class ElementorFaq {
 			'id'         => self::generate_element_id(),
 			'elType'     => 'widget',
 			'widgetType' => 'nested-accordion',
-			'settings'   => [
-				'items'              => $items,
-				'rtrs_add_faq_schema' => 'yes',
-			],
+			'settings'   => self::faq_accordion_settings( $items ),
 			'elements'   => $item_children,
 		];
 
-		// Wrap in a top-level container.
+		// Wrap in a top-level container: section heading + lead, then the FAQ.
 		$container = [
 			'id'       => self::generate_element_id(),
 			'elType'   => 'container',
 			'settings' => [],
-			'elements' => [ $accordion_widget ],
+			'elements' => array_merge( self::faq_lead_widgets(), [ $accordion_widget ] ),
 		];
 
 		$elements[] = $container;
@@ -427,7 +503,7 @@ class ElementorFaq {
 			$widget_type = $element['widgetType'] ?? '';
 			$settings    = $element['settings'] ?? [];
 
-			if ( 'nested-accordion' === $widget_type
+			if ( ( 'nested-accordion' === $widget_type || 'accordion' === $widget_type )
 				&& ! empty( $settings['rtrs_add_faq_schema'] )
 				&& 'yes' === $settings['rtrs_add_faq_schema']
 			) {
@@ -442,5 +518,71 @@ class ElementorFaq {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Question titles from every FAQ-schema-enabled accordion on the post.
+	 *
+	 * Mirrors get_accordion_faqs() but is static and title-only (no answer
+	 * rendering), so callers like the AEO FAQ-coverage report get the real Q&A
+	 * count and text instead of a nominal estimate. Only accordions with the
+	 * plugin's "Enable FAQ Schema" toggle on are counted — the same ones that
+	 * emit FAQPage structured data.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string[] Question titles, in document order.
+	 */
+	public static function get_faq_questions( $post_id ) {
+		if ( ! self::is_elementor_post( $post_id ) ) {
+			return [];
+		}
+
+		$elementor_data = get_post_meta( $post_id, '_elementor_data', true );
+		if ( empty( $elementor_data ) ) {
+			return [];
+		}
+
+		$elements = is_string( $elementor_data ) ? json_decode( $elementor_data, true ) : $elementor_data;
+		if ( empty( $elements ) || ! is_array( $elements ) ) {
+			return [];
+		}
+
+		return self::collect_faq_questions( $elements );
+	}
+
+	/**
+	 * Recursively collect FAQ question titles from the element tree.
+	 *
+	 * @param array $elements Elementor element tree.
+	 * @return string[]
+	 */
+	private static function collect_faq_questions( $elements ) {
+		$questions = [];
+
+		foreach ( $elements as $element ) {
+			$widget_type = ! empty( $element['widgetType'] ) ? $element['widgetType'] : '';
+			$settings    = ! empty( $element['settings'] ) ? $element['settings'] : [];
+			$faq_enabled = ! empty( $settings['rtrs_add_faq_schema'] ) && 'yes' === $settings['rtrs_add_faq_schema'];
+
+			if ( $faq_enabled && 'accordion' === $widget_type && ! empty( $settings['tabs'] ) ) {
+				foreach ( $settings['tabs'] as $tab ) {
+					if ( ! empty( $tab['tab_title'] ) ) {
+						$questions[] = $tab['tab_title'];
+					}
+				}
+			} elseif ( $faq_enabled && 'nested-accordion' === $widget_type && ! empty( $settings['items'] ) ) {
+				foreach ( $settings['items'] as $item ) {
+					if ( ! empty( $item['item_title'] ) ) {
+						$questions[] = $item['item_title'];
+					}
+				}
+			}
+
+			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
+				$questions = array_merge( $questions, self::collect_faq_questions( $element['elements'] ) );
+			}
+		}
+
+		return $questions;
 	}
 }

@@ -66,7 +66,10 @@ class ReviewSettings {
 				comment_footer_die( esc_html__( 'Invalid comment ID.', 'review-schema' ) . sprintf( ' <a href="%s">' . esc_html__( 'Go back', 'review-schema' ) . '</a>.', 'javascript:history.go(-1)' ) );
 			}
 
-			if ( ! current_user_can( 'edit_comment', $comment_id ) ) {
+			$can_edit_review = post_type_exists( (string) get_post_type( $comment->comment_post_ID ) )
+				? current_user_can( 'edit_comment', $comment_id )
+				: current_user_can( 'moderate_comments' );
+			if ( ! $can_edit_review ) {
 				comment_footer_die( esc_html__( 'Sorry, you are not allowed to edit this comment.', 'review-schema' ) );
 			}
 
@@ -218,7 +221,7 @@ class ReviewSettings {
 												</div>
 												<?php
 													$post_id = $comment->comment_post_ID;
-												if ( current_user_can( 'edit_post', $post_id ) ) {
+												if ( post_type_exists( (string) get_post_type( $post_id ) ) && current_user_can( 'edit_post', $post_id ) ) {
 													$post_link  = "<a href='" . esc_url( get_edit_post_link( $post_id ) ) . "'>";
 													$post_link .= esc_html( get_the_title( $post_id ) ) . '</a>';
 												} else {

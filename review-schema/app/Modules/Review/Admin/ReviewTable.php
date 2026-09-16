@@ -470,8 +470,8 @@ class ReviewTable extends \WP_List_Table {
 				break;
 
 			case 'info':
-				$h  = '';
-				$h .= '<div class="rtrs-tooltip rtrs-tooltip-review-info"><i class="dashicons dashicons-info"><span class="rtrs-tooltiptext rtrs-review-info">';
+				$edit_link = post_type_exists( (string) get_post_type( $item['post_id'] ) ) ? (string) get_edit_post_link( $item['post_id'] ) : '';
+				$h = '<div class="rtrs-tooltip rtrs-tooltip-review-info"><i class="dashicons dashicons-info"><span class="rtrs-tooltiptext rtrs-review-info">';
 				$h .= sprintf(
 					'<table>
                             <tr><th>%1$s</th><td>%2$s</td></tr>
@@ -481,8 +481,8 @@ class ReviewTable extends \WP_List_Table {
 					esc_html__( 'Title:', 'review-schema' ),
 					esc_html( $item['title'] ),
 					esc_html__( 'URL:', 'review-schema' ),
-					esc_url( get_edit_post_link( $item['post_id'] ) ),
-					esc_html( get_the_title( $item['post_id'] ) ),
+					esc_url( $edit_link ),
+					esc_html( (string) get_the_title( $item['post_id'] ) ),
 					esc_html__( 'Author:', 'review-schema' ),
 					esc_html( $item['author'] )
 				);

@@ -30,15 +30,24 @@ class Review {
         }
 
         $install_date = get_option( 'rtrs_plugin_activation_time' );
-        $past_date    = strtotime( '-15 days' );
 
+        // No activation time recorded yet — never show immediately after install.
+        if ( ! $install_date ) {
+            return;
+        }
+
+        $past_date   = strtotime( '-15 days' );
         $remind_time = get_option( 'rtrs_remind_me' );
-        $remind_due  = strtotime( '+15 days', $remind_time );
-        $now         = strtotime( "now" );
+        $now         = strtotime( 'now' );
 
-        if ( $now >= $remind_due ) {
-            add_action( 'admin_notices', [__CLASS__, 'rtrs_display_admin_notice']);
-        } else if (($past_date >= $install_date) &&  $nobug !== "2") {
+        if ( $remind_time ) {
+            // User clicked "Remind Me Later" — show again 15 days after that click.
+            $remind_due = strtotime( '+15 days', $remind_time );
+            if ( $now >= $remind_due ) {
+                add_action( 'admin_notices', [__CLASS__, 'rtrs_display_admin_notice']);
+            }
+        } else if ( ( $past_date >= $install_date ) && $nobug !== "2" ) {
+            // First-time prompt — only after 15 days since activation.
             add_action( 'admin_notices', [__CLASS__, 'rtrs_display_admin_notice']);
         }
     }

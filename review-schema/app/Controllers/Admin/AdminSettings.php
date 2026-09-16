@@ -3,13 +3,12 @@
 namespace Rtrs\Controllers\Admin;
 
 use Rtrs\Helpers\Functions;
-use Rtrs\Models\SettingsAPI;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class AdminSettings extends SettingsAPI {
+class AdminSettings {
 	protected $tabs = [];
 
 	protected $active_tab;
@@ -18,6 +17,8 @@ class AdminSettings extends SettingsAPI {
 
 	protected $subtabs;
 
+	protected $option = '';
+
 	/**
 	 * Hello.
 	 */
@@ -25,7 +26,6 @@ class AdminSettings extends SettingsAPI {
 		add_action( 'admin_head', [ $this, 'remove_admin_notices_on_settings_page' ], 99 );
 		add_action( 'init', [ $this, 'edd_comments' ], 999 );
 		add_action( 'admin_init', [ $this, 'setTabs' ] );
-		add_action( 'admin_init', [ $this, 'save' ] );
 		add_action( 'admin_menu', [ $this, 'add_rtrs_menu' ], 10 );
 		add_action( 'admin_menu', [ $this, 'add_settings_menu' ], 30 );
 		add_filter( 'plugin_action_links_' . plugin_basename( RTRS_PLUGIN_FILE ), [ $this, 'marketing_links' ] );
@@ -158,7 +158,7 @@ class AdminSettings extends SettingsAPI {
 			esc_html__( 'Settings', 'review-schema' ),
 			'manage_options',
 			'review-schema',
-			[ $this, 'display_settings_form_react' ], // [ $this, 'display_settings_form' ],.
+			[ $this, 'display_settings_form_react' ],
 			20
 		);
 
@@ -452,19 +452,6 @@ class AdminSettings extends SettingsAPI {
 		return '';
 	}
 
-	public function set_fields() {
-		$field = [];
-		if ( $this->active_tab && $this->current_section && array_key_exists( $this->active_tab, $this->tabs ) && array_key_exists( $this->current_section, $this->subtabs ) ) {
-			$file_name = RTRS_PATH . "views/settings/{$this->active_tab}-{$this->current_section}-settings.php";
-		} else {
-			$file_name = RTRS_PATH . "views/settings/{$this->active_tab}-settings.php";
-		}
-		if ( file_exists( $file_name ) ) {
-			$field = include $file_name;
-		}
-		$this->form_fields = apply_filters( 'rtrs_settings_option_fields', $field, $this->active_tab, $this->current_section );
-	}
-
 	protected function add_subsections() {
 		if ( ! $this->active_tab ) {
 			return;
@@ -562,30 +549,6 @@ class AdminSettings extends SettingsAPI {
 		return $this->subtabs;
 	}
 
-	public function save() {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- Server REQUEST_METHOD; standard PHP server variable.
-		if ( 'POST' !== $_SERVER['REQUEST_METHOD']
-			|| ! isset( $_REQUEST['page'] )
-			|| ( isset( $_REQUEST['post_type'] ) && rtrs()->getPostType() !== $_REQUEST['post_type'] )
-			|| ( isset( $_REQUEST['page'] ) && 'rtrs-settings' !== $_REQUEST['page'] )
-			|| ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'rtrs-reviews' )
-		) {
-			return;
-		}
-
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce value verified via wp_verify_nonce() immediately after.
-		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'rtrs-settings' ) ) {
-			die( esc_html__( 'Action failed. Please refresh the page and retry.', 'review-schema' ) );
-		}
-		$this->set_fields();
-		$this->process_admin_options();
-
-		self::add_message( esc_html__( 'Your settings have been saved.', 'review-schema' ) );
-		update_option( 'rtrs_queue_flush_rewrite_rules', 'yes' );
-
-		do_action( 'rtrs_admin_settings_saved', $this->option, $this );
-	}
-
 	/**
 	 * @return void
 	 */
@@ -605,14 +568,25 @@ class AdminSettings extends SettingsAPI {
 				'is_pro'   => true,
 			],
 			'ai'               => [
-				'iconHtml' => '<svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.37822 4.38293L6.95178 5.97575C7.5889 7.74356 8.98101 9.13566 10.7488 9.77279L12.3416 10.3463C12.4852 10.3985 12.4852 10.6021 12.3416 10.6535L10.7488 11.227C8.98101 11.8642 7.5889 13.2563 6.95178 15.0241L6.37822 16.6169C6.32608 16.7605 6.12252 16.7605 6.07109 16.6169L5.49753 15.0241C4.86041 13.2563 3.4683 11.8642 1.70049 11.227L0.107676 10.6535C-0.0358919 10.6013 -0.0358919 10.3978 0.107676 10.3463L1.70049 9.77279C3.4683 9.13566 4.86041 7.74356 5.49753 5.97575L6.07109 4.38293C6.12252 4.23865 6.32608 4.23865 6.37822 4.38293Z" fill="currentColor"></path><path d="M13.548 0.555177L13.8387 1.36158C14.1616 2.25656 14.8666 2.96154 15.7615 3.28439L16.568 3.5751C16.6408 3.60152 16.6408 3.70438 16.568 3.73081L15.7615 4.02151C14.8666 4.34436 14.1616 5.04934 13.8387 5.94432L13.548 6.75073C13.5216 6.82358 13.4187 6.82358 13.3923 6.75073L13.1016 5.94432C12.7788 5.04934 12.0738 4.34436 11.1788 4.02151L10.3724 3.73081C10.2995 3.70438 10.2995 3.60152 10.3724 3.5751L11.1788 3.28439C12.0738 2.96154 12.7788 2.25656 13.1016 1.36158L13.3923 0.555177C13.4187 0.481608 13.5223 0.481608 13.548 0.555177Z" fill="currentColor"></path><path d="M13.548 14.2498L13.8387 15.0562C14.1616 15.9512 14.8666 16.6562 15.7615 16.979L16.568 17.2697C16.6408 17.2962 16.6408 17.399 16.568 17.4254L15.7615 17.7161C14.8666 18.039 14.1616 18.744 13.8387 19.639L13.548 20.4454C13.5216 20.5182 13.4187 20.5182 13.3923 20.4454L13.1016 19.639C12.7788 18.744 12.0738 18.039 11.1788 17.7161L10.3724 17.4254C10.2995 17.399 10.2995 17.2962 10.3724 17.2697L11.1788 16.979C12.0738 16.6562 12.7788 15.9512 13.1016 15.0562L13.3923 14.2498C13.4187 14.177 13.5223 14.177 13.548 14.2498Z" fill="currentColor"></path></svg>',
+				'iconHtml' => \Rtrs\Helpers\Functions::aiIconSvg( 17, 21 ),
 				'label'    => esc_html__( 'AI Settings', 'review-schema' ),
 			],
 			'review'           => [
 				'iconHtml' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20l-7 4 2-8-6-5 8-.7L12 3l3 7.3 8 .7-6 5 2 8z" /> </svg>',
 				'label'    => esc_html__( 'Review', 'review-schema' ),
 			],
+			'seo_report'       => [
+				'iconHtml' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg>',
+				'label'    => esc_html__( 'SEO Report', 'review-schema' ),
+			],
 		];
+		// Licensing tab — only relevant while the pro add-on is active.
+		if ( defined( 'RTRSP_VERSION' ) ) {
+			$tabs['tools'] = [
+				'iconHtml' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>',
+				'label'    => esc_html__( 'Licensing', 'review-schema' ),
+			];
+		}
 		if ( class_exists( 'KcSeoWPSchema' ) ) {
 			$tabs['migration'] = [
 				'iconHtml' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/><path d="M7.8 7.8L5.6 5.6m12.8 12.8l-2.2-2.2m0-9l2.2-2.2M7.8 16.2l-2.2 2.2"/></svg>',

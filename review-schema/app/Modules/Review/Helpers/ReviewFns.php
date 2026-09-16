@@ -390,6 +390,63 @@ class ReviewFns {
 	}
 
 	/**
+	 * Read a single Media settings value.
+	 *
+	 * The Media subtab now persists to `rtrs_review_media_settings` (see
+	 * MigrationV3); older installs may still hold values under the legacy
+	 * `rtrs_media_settings` option. Prefer the canonical option and fall back
+	 * to the legacy one so both new and un-migrated sites resolve correctly.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $key     Field key.
+	 * @param mixed  $default Default when the key is absent/empty in both options.
+	 * @return mixed
+	 */
+	public static function getMediaOption( $key, $default = '' ) {
+		$current = get_option( 'rtrs_review_media_settings', [] );
+		if ( is_array( $current ) && isset( $current[ $key ] ) && '' !== $current[ $key ] && [] !== $current[ $key ] ) {
+			return $current[ $key ];
+		}
+
+		$legacy = get_option( 'rtrs_media_settings', [] );
+		if ( is_array( $legacy ) && isset( $legacy[ $key ] ) && '' !== $legacy[ $key ] && [] !== $legacy[ $key ] ) {
+			return $legacy[ $key ];
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Whether non-logged-in (guest) visitors are allowed to upload review media.
+	 *
+	 * Controlled by the "Allow Guest Uploads" media setting. Disabled by default
+	 * so the safe behaviour (login required) is preserved on existing sites.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	public static function isGuestUploadEnabled() {
+		return 'yes' === self::getMediaOption( 'allow_guest_upload', 'no' );
+	}
+
+	/**
+	 * Whether the current visitor may upload review media (image/video).
+	 *
+	 * Logged-in users can always upload; guests only when the setting is on.
+	 * Shared by the free image field and the Pro video field so both gate on
+	 * the same rule.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	public static function canUploadMedia() {
+		return is_user_logged_in() || self::isGuestUploadEnabled();
+	}
+
+	/**
 	 * Undocumented function
 	 *
 	 * @return void

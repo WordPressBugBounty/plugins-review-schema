@@ -1,11 +1,11 @@
-=== Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO ===
+=== SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO ===
 Contributors: techlabpro1, mamunnu
 Donate link:
 Tags: schema, rich snippets, review, structured data, seo
-Requires at least: 4.5
+Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 7.0
-Stable tag: 3.0.4
+Tested up to: 7.1
+Stable tag: 3.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,9 +13,9 @@ AI-Powered schema markup plugin for WordPress. Generate JSON-LD schema and FAQs,
 
 == Description ==
 
-[Schema Engine AI](https://schemaengineai.com/) is an AI-powered schema markup plugin for WordPress that generates valid JSON-LD based [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data), generate FAQ content from your existing pages, validates output against Google Rich Results requirements, and produces a site-wide schema audit. It is designed for editors and site owners who want clean, accurate structured data without writing JSON-LD by hand, and for SEO professionals who need a validator and a report alongside their existing workflow.
+[SchemaEngine AI](https://schemaengineai.com/) is an AI-powered schema markup plugin for WordPress that generates valid JSON-LD based [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data), generate FAQ content from your existing pages, validates output against Google Rich Results requirements, and produces a site-wide schema audit. It is designed for editors and site owners who want clean, accurate structured data without writing JSON-LD by hand, and for SEO professionals who need a validator and a report alongside their existing workflow.
 
-== 📢 Important: Review Schema is now Schema Engine AI ==
+== 📢 Important: Review Schema is now SchemaEngine AI ==
 
 Same plugin, same review and rating features, plus AI-powered schema generation for articles, FAQs, products, and more. Your existing reviews and settings are preserved automatically.
 
@@ -29,9 +29,9 @@ Same plugin, same review and rating features, plus AI-powered schema generation 
 * **Auto Mode:** Applies rule-based schema generation across post types, adapting to your content type and site structure without manual configuration.
 * **AI Mode:** Proposes a schema type and pre-fills properties from your content. Every output is checked against [Schema.org](https://schema.org/docs/schemas.html) and the public Google Rich Results documentation, and editors review the result before it is saved.
 
-== Why Schema Engine AI (Formerly Review Schema) ==
+== Why SchemaEngine AI (Formerly Review Schema) ==
 
-Most schema plugins ask you to fill in long forms or apply one-size-fits-all templates. Schema Engine AI lets you choose the level of automation that fits the page in front of you. A blog post can use Auto mode and a template. A complex landing page can use AI mode to draft a starting point, which you then edit. A product or local business page can use Manual mode for full control. The validator runs in the background in all three modes, so you see what is missing before you publish, not after.
+Most schema plugins ask you to fill in long forms or apply one-size-fits-all templates. SchemaEngine AI lets you choose the level of automation that fits the page in front of you. A blog post can use Auto mode and a template. A complex landing page can use AI mode to draft a starting point, which you then edit. A product or local business page can use Manual mode for full control. The validator runs in the background in all three modes, so you see what is missing before you publish, not after.
 
 * **AI as a drafting tool, not an autonomous publisher.** Suggestions are reviewed and edited by a human before they are saved.
 * **Rich results validator built in.** Required and recommended properties are flagged in real time, so you see what is missing before you publish.
@@ -41,12 +41,12 @@ Most schema plugins ask you to fill in long forms or apply one-size-fits-all tem
 * **Editor-friendly.** The default FAQ block renders on the front end and outputs FAQPage schema in the same step.
 
 == AI-powered Schema Markup Generator ==
-Schema Engine AI reads your page content and generates valid JSON-LD structured data in seconds. It detects the content type article, event, local business, FAQ, and more then pre-fills every required and recommended property. Review, edit, and save: clean, Google-ready rich results without writing a line of JSON-LD.
+SchemaEngine AI reads your page content and generates valid JSON-LD structured data in seconds. It detects the content type article, event, local business, FAQ, and more then pre-fills every required and recommended property. Review, edit, and save: clean, Google-ready rich results without writing a line of JSON-LD.
 
 Bring your own API key from OpenAI, Anthropic Claude, or Google Gemini to power the AI features use the provider that fits your workflow and budget.
 
 == WordPress Review Plugin ==
-Schema Engine AI is a complete WordPress review plugin for posts, pages, custom post types, and WooCommerce products. Collect single-criterion or multi-criteria ratings (quality, value, support, and more) with star or numerical scoring, pros and cons, image attachments, and GDPR consent. Aggregate ratings are output as valid structured data, so review scores can appear as star snippets in Google rich results.
+SchemaEngine AI is a complete WordPress review plugin for posts, pages, custom post types, and WooCommerce products. Collect single-criterion or multi-criteria ratings (quality, value, support, and more) with star or numerical scoring, pros and cons, image attachments, and GDPR consent. Aggregate ratings are output as valid structured data, so review scores can appear as star snippets in Google rich results.
 
 == Core features ==
 
@@ -151,7 +151,7 @@ Structured data is how search engines and AI systems read the entities, facts, a
 
 == Data Migration ==
 
-Migrate your existing structured data from the [WP SEO Structured Data Schema plugin](https://wordpress.org/plugins/wp-seo-structured-data-schema/) without losing a single entry. Schema Engine AI maps each schema type to its Schema Engine AI equivalent, and transfers all properties — including nested objects and custom fields — into the new format.
+Migrate your existing structured data from the [WP SEO Structured Data Schema plugin](https://wordpress.org/plugins/wp-seo-structured-data-schema/) without losing a single entry. SchemaEngine AI maps each schema type to its SchemaEngine AI equivalent, and transfers all properties — including nested objects and custom fields — into the new format.
 
 == External services and data handling ==
 
@@ -165,7 +165,7 @@ Manual and Auto modes do not contact any external service.
 
 == How AI is used in this plugin ==
 
-In line with Google’s public guidance on AI-generated content, AI in Schema Engine AI is a drafting tool. The model suggests a schema type and property values; an editor reviews and edits the output; the rich results validator checks the result against Google requirements before it is written to the page. AI mode can be disabled entirely — Manual and Auto modes work without any AI provider configured.
+In line with Google’s public guidance on AI-generated content, AI in SchemaEngine AI is a drafting tool. The model suggests a schema type and property values; an editor reviews and edits the output; the rich results validator checks the result against Google requirements before it is written to the page. AI mode can be disabled entirely — Manual and Auto modes work without any AI provider configured.
 
 
 == Need Any Help? ==
@@ -177,7 +177,7 @@ In line with Google’s public guidance on AI-generated content, AI in Schema En
 
 == 🔥 WHAT’S NEXT ==
 
-If you like Schema Engine AI Plugin, then consider checking out our other WordPress Plugins:
+If you like SchemaEngine AI Plugin, then consider checking out our other WordPress Plugins:
 
 * [The Post Grid](https://wordpress.org/plugins/the-post-grid/) – Shortcode, Gutenberg Blocks and Elementor Addon for Post Grid.
 
@@ -196,11 +196,11 @@ If you like Schema Engine AI Plugin, then consider checking out our other WordPr
 
 = Using The WordPress Dashboard =
 
-1. From your WordPress admin, go to **Plugins > Add New**, search for **Schema Engine AI**, and click **Install Now**, then **Activate**.
+1. From your WordPress admin, go to **Plugins > Add New**, search for **SchemaEngine AI**, and click **Install Now**, then **Activate**.
 2. Or upload the plugin folder to `/wp-content/plugins/review-schema/` and activate it from the Plugins screen.
-3. Open **Schema Engine AI** in the admin sidebar to run the setup wizard. Select which post types to enable, which schema types to map by default, and whether to enable AI mode.
+3. Open **SchemaEngine AI** in the admin sidebar to run the setup wizard. Select which post types to enable, which schema types to map by default, and whether to enable AI mode.
 4. To use AI mode, paste an API key from a supported provider (OpenAI, Anthropic, or Google). Without a key, Manual and Auto modes work fully.
-5. Open any post or page and use the Schema Engine AI panel to generate, validate, or edit structured data for that page.
+5. Open any post or page and use the SchemaEngine AI panel to generate, validate, or edit structured data for that page.
 
 = Uploading in WordPress Dashboard =
 
@@ -224,9 +224,9 @@ If you like Schema Engine AI Plugin, then consider checking out our other WordPr
 
 == Frequently Asked Questions ==
 
-= What is Schema Engine AI (formerly Review Schema)? =
+= What is SchemaEngine AI (formerly Review Schema)? =
 
-Schema Engine AI is a WordPress schema plugin that generates JSON-LD structured data, drafts FAQ content with AI FAQ generation, validates output against Google rich results requirements, and builds graph relations across your site. It supports Manual, Auto, and AI generation modes with 35+ schema types.
+SchemaEngine AI is a WordPress schema plugin that generates JSON-LD structured data, drafts FAQ content with AI FAQ generation, validates output against Google rich results requirements, and builds graph relations across your site. It supports Manual, Auto, and AI generation modes with 35+ schema types.
 
 = Does the plugin work without an AI API key? =
 
@@ -246,7 +246,7 @@ Graph relations connect your structured data entities using a shared @graph arra
 
 = Will it conflict with Yoast SEO or Rank Math? =
 
-No. Schema Engine AI detects structured data produced by Yoast SEO and Rank Math, including their FAQ blocks, and skips duplicates so you do not output two competing JSON-LD blocks for the same content. You can keep using your existing SEO plugin for titles, meta descriptions, and sitemaps.
+No. SchemaEngine AI detects structured data produced by Yoast SEO and Rank Math, including their FAQ blocks, and skips duplicates so you do not output two competing JSON-LD blocks for the same content. You can keep using your existing SEO plugin for titles, meta descriptions, and sitemaps.
 
 = Does it work with WooCommerce and Easy Digital Downloads? =
 
@@ -289,6 +289,12 @@ Yes. Every property is editable in Manual mode and editable after generation in 
 
 == Changelog ==
 
+= 3.1.0 (September 16, 2026) =
+* Added: SEO Report — an in-editor 0–100 SEO score with a pass/warn checklist for Title & Meta, Heading Hierarchy and Internal Links.
+* Added: "LocalBusiness (Location)" rich snippet type — give each location page its own LocalBusiness markup (address, geo, phone, opening hours), so multi-location sites can mark up every branch separately.
+* Added: "Allow Guest Uploads" media setting — let non-logged-in visitors attach images to their review (disabled by default; respects the configured file types and size limits).
+* Removed: One-time "Review Schema is now SchemaEngine AI" rebrand admin notice.
+
 = 3.0.4 (June 22, 2026) =
 * Fixed: AI generation failing with "The response is not a valid JSON response."
 * Fixed: Errors now show the actual reason instead of a generic message.
@@ -298,62 +304,9 @@ Yes. Every property is editable in Manual mode and editable after generation in 
 * Improved: FAQ output capped to the configured count.
 * Improved: Bounded, configurable AI request timeout.
 
-= 3.0.3 (June 16, 2026) =
-* Fixed: Post could not be saved due to rating/number or URL field validation.
-* Fixed: "Pro field alert" popup auto-opening after the Pro plugin was deactivated.
-* Fixed: Pro-only schema no longer renders on the frontend when Pro is inactive.
-
-= 3.0.2 (June 03, 2026) =
-* Fixed: Article schema `articleBody` could break out of its JSON-LD `<script>` container and render raw markup in the page header (unescaped forward slashes in the JSON-LD output).
-* Fixed: HTML/script tags are no longer included in the `articleBody` schema text.
-* Fixed: Schema Notice And Error Messages Resolved For Product, Artical, WebPage Etc schema
-
-= 3.0.1 (May 23, 2026) =
-* Added: New Icon Added
-* Added: ES, FR Language Support Added
-* Deprecated: UI Improvement For Settings page
-* Fixed: Documentation URL Updated
-* Fixed: Comment submission HTTP 405 error caused by PHP warnings during comment POST request (null `$post` access and unset `HTTP_REFERER`)
-
-= 3.0.0 (May 19, 2026) =
-* Added: AI-Powered Schema Generation - Automatically generate, classify, and validate structured data schemas using AI with multi-provider support for OpenAI, Anthropic Claude, and Google Gemini.
-* Added: AI Content Extraction - Intelligently extract schema-relevant content from posts and pages to auto-populate structured data fields.
-* Added: AI FAQ Generation - Generate FAQ schema content using AI directly from post content.
-* Added: AI Schema Validation & Quality Scoring - Validate generated schemas against Google Rich Results requirements with confidence scoring.
-* Added: AI REST API - Dedicated REST API endpoints for schema generation, preview, save, and delete operations.
-* Added: Modern Admin Settings UI - Completely rebuilt settings panel using React, TypeScript, and Tailwind CSS with dynamic form rendering and instant search.
-* Added: Setup Wizard - Multi-step guided configuration wizard for Review, Schema, AI settings, post type selection, and third-party plugin conflict prevention. Re-runnable from settings.
-* Added: FAQ Gutenberg Block - Full-featured FAQ block with accordion/tab layouts, search, animations, responsive controls, typography/spacing customization, and JSON import/export of FAQ items.
-* Added: Elementor FAQ Schema Support - Automatically generate FAQPage schema from Elementor FAQ widgets.
-* Added: SERP Preview - Google search result card preview in the post editor that dynamically renders from JSON-LD schema data.
-* Added: Schema Preview Panel - Preview the complete generated JSON-LD schema markup before publishing.
-* Added: GDPR Consent Support - GDPR consent checkbox for review submissions with forbidden review count tracking.
-* Added: Data Migration from WP SEO Structured Data Schema - Import schema data from competing plugins with background processing and progress tracking.
-* Added: SureCart Integration - Review and rating support with product schema and dynamic pricing for SureCart stores.
-* Added: FluentCart Integration - Review support and dynamic pricing provider for FluentCart.
-* Added: Academy LMS Integration - Review and rating support with pricing provider for Academy LMS courses.
-* Added: Tutor LMS Integration - Review support and dynamic pricing provider for Tutor LMS.
-* Added: LearnPress Integration - Review support and dynamic pricing provider for LearnPress courses.
-* Added: LifterLMS Integration - Review support and dynamic pricing provider for LifterLMS.
-* Added: Dynamic Pricing Provider System - Extensible pricing architecture supporting WooCommerce, EDD, SureCart, FluentCart, Academy LMS, Tutor LMS, LearnPress, LifterLMS, Classified Listing, and Download Manager.
-* Added: TaxiService Schema type.
-* Added: AboutPage and ContactPage Schema types.
-* Added: Organization Schema Settings for corporate contacts and sub-organization configuration.
-* Added: LocalBusiness Sub-Category Selection in the setup wizard.
-* Added: Third-Party Plugin Conflict Prevention - Toggles to disable default schema from WooCommerce, EDD, SureCart, Rank Math, and Yoast SEO.
-* Improvement: Implement Graph-Based Schema architecture with @graph wrapper.
-* Improvement: Modular code architecture separating Review and Schema modules.
-* Improvement: Refactored schema builder into dedicated methods.
-* Improvement: Breadcrumb schema generation improvements.
-* Improvement: Opening hours field improvements.
-* Improvement: Added articleBody field to article schemas.
-* Improvement: Internal data migration handler for v3 settings upgrade.
-* Deprecated: SpecialAnnouncement, Dataset, and QAPage (Q&A) schema types.
-* Remove: Site Links Search Box Schema.
-
 [See changelog for all versions.](https://raw.githubusercontent.com/radiustheme/changelog/refs/heads/main/review-schema.txt)
 
 == Upgrade Notice ==
 
 = 3.0.0 =
-Review Schema is now Schema Engine AI. Same plugin, expanded with AI-powered schema generation. Your reviews and settings are preserved automatically.
+Review Schema is now SchemaEngine AI. Same plugin, expanded with AI-powered schema generation. Your reviews and settings are preserved automatically.

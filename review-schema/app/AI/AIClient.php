@@ -63,7 +63,7 @@ class AIClient {
 				break;
 			case 'gemini':
 				$this->api_key = AIInit::getSetting( 'gemini_api_key', '' );
-				$this->model   = AIInit::getSetting( 'gemini_model', 'gemini-2.5-flash' );
+				$this->model   = self::map_gemini_model( AIInit::getSetting( 'gemini_model', 'gemini-2.5-flash' ) );
 				break;
 			default:
 				$this->api_key = AIInit::getSetting( 'openai_api_key', '' );
@@ -102,6 +102,30 @@ class AIClient {
 		if ( $this->timeout < 30 ) {
 			$this->timeout = 120;
 		}
+	}
+
+	/**
+	 * Remap Gemini model IDs that Google has retired to their current
+	 * replacements, so an already-saved deprecated selection keeps working
+	 * without the user having to re-pick it in the settings.
+	 *
+	 * @param string $model Saved Gemini model ID.
+	 * @return string Current model ID.
+	 */
+	private static function map_gemini_model( $model ) {
+		$replacements = [
+			'gemini-2.5-flash-lite' => 'gemini-3.5-flash-lite',
+		];
+
+		/**
+		 * Filter the map of retired Gemini model IDs to their replacements.
+		 *
+		 * @param array  $replacements old_id => new_id pairs.
+		 * @param string $model        The saved model ID being resolved.
+		 */
+		$replacements = apply_filters( 'rtrs_gemini_model_replacements', $replacements, $model );
+
+		return isset( $replacements[ $model ] ) ? $replacements[ $model ] : $model;
 	}
 
 	/**
@@ -146,7 +170,7 @@ class AIClient {
 	 */
 	private function prepare_runtime() {
 		if ( function_exists( 'set_time_limit' ) ) {
-			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- set_time_limit may be disabled by host; failure is non-fatal.
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, Squiz.PHP.DiscouragedFunctions.Discouraged -- guarded + silenced; set_time_limit may be disabled by host, failure is non-fatal.
 			@set_time_limit( $this->timeout + 30 );
 		}
 

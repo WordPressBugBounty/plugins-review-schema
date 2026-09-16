@@ -347,7 +347,7 @@ class Schema {
 	public function header_schema_data() {
 		// Bail if no valid post ID (archives, search, 404, etc).
 		$post_id             = $this->post_id;
-		$apply_custom_schema = apply_filters( 'rtrs_custom_rich_snippet_enabled', ( wp_doing_ajax() || is_singular() ), $post_id );
+		$apply_custom_schema = apply_filters( 'rtrs_custom_rich_snippet_enabled', ( wp_doing_ajax() || is_singular() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ), $post_id );
 		if ( $post_id && function_exists( 'rtrsp' ) && $apply_custom_schema ) {
 			$disable_generator = get_post_meta( $post_id, '_rtrs_disable_snippet_generator', true );
 			$custom_snippet    = get_post_meta( $post_id, '_rtrs_custom_rich_snippet', true );
@@ -831,6 +831,20 @@ class Schema {
 			'@id' => $this->get_id_with_hash( 'breadcrumb' ),
 		];
 
+		// Point the page at the business it describes. Manual local_business
+		// entries only — the first one, matching the mainEntity behaviour
+		// below. 0 === strpos() keeps this PHP 7.4 compatible.
+		if ( ! empty( $all_schema_id ) ) {
+			foreach ( $all_schema_id as $schema_id ) {
+				if ( 0 === strpos( $schema_id, 'local_business' ) ) {
+					$webpage['about'] = [
+						'@id' => $this->get_id_with_hash( $schema_id ),
+					];
+					break;
+				}
+			}
+		}
+
 		// Add mainEntity for ItemPage (product/software_app pages). 'mainEntity' Will Hide the software schema, So dont use it
 		if ( 'ItemPage' === $webpage['@type'] && ! empty( $all_schema_id ) ) {
 			foreach ( $all_schema_id as $schema_id ) {
@@ -865,6 +879,51 @@ class Schema {
 	}
 
 	/**
+	 * Normalize an opening-hours time for schema.org output.
+	 *
+	 * "24:00" is a valid clock reading but not a valid ISO 8601 time of day.
+	 * As an opening time it means midnight (00:00); as a closing time it means
+	 * the end of the day, which Google expects as 23:59. Any other value is
+	 * returned untouched.
+	 *
+	 * @param string $time      Time value as entered.
+	 * @param bool   $is_closing Whether the value is a closing time.
+	 *
+	 * @return string
+	 */
+	private function normalize_opening_time( $time, $is_closing = false ) {
+		if ( ! is_string( $time ) ) {
+			return $time;
+		}
+
+		$trimmed = trim( $time );
+		if ( '24:00' !== $trimmed && '24:00:00' !== $trimmed ) {
+			return $time;
+		}
+
+		return $is_closing ? '23:59' : '00:00';
+	}
+
+	/**
+	 * Clean a price range for schema.org output.
+	 *
+	 * A trailing full stop ("$$$.") is reported as invalid by structured-data
+	 * validators. Only trailing dots are stripped, so a decimal price such as
+	 * "$10.00" is left intact.
+	 *
+	 * @param string $price_range Price range as entered.
+	 *
+	 * @return string
+	 */
+	private function clean_price_range( $price_range ) {
+		if ( ! is_string( $price_range ) ) {
+			return $price_range;
+		}
+
+		return rtrim( trim( $price_range ), '.' );
+	}
+
+	/**
 	 * Google sitelink searchbox.
 	 *
 	 * @return mixed
@@ -892,9 +951,12 @@ class Schema {
 		$helper   = new Functions();
 		$metaData = get_option( 'rtrs_schema_settings' );
 		$person   = [
-			'@type' => 'Person',
-			'@id'   => $this->get_site_schema_id(),
-			'url'   => home_url(),
+			'@type'            => 'Person',
+			'@id'              => $this->get_site_schema_id(),
+			'url'              => home_url(),
+			'mainEntityOfPage' => [
+				'@id' => home_url( '#website' ),
+			],
 		];
 
 		if ( ! empty( $metaData['name'] ) ) {
@@ -903,6 +965,17 @@ class Schema {
 
 		if ( ! empty( $metaData['alternateName'] ) ) {
 			$person['alternateName'] = $helper->sanitizeOutPut( $metaData['alternateName'] );
+		}
+
+		if ( ! empty( $metaData['jobTitle'] ) ) {
+			$person['jobTitle'] = $helper->sanitizeOutPut( $metaData['jobTitle'] );
+		}
+
+		if ( ! empty( $metaData['worksFor'] ) ) {
+			$person['worksFor'] = [
+				'@type' => 'Organization',
+				'name'  => $helper->sanitizeOutPut( $metaData['worksFor'] ),
+			];
 		}
 
 		if ( ! empty( $metaData['description'] ) ) {
@@ -925,6 +998,29 @@ class Schema {
 
 		if ( ! empty( $metaData['telephone'] ) ) {
 			$person['telephone'] = $helper->sanitizeOutPut( $metaData['telephone'] );
+		}
+		if ( ! empty( $metaData['email'] ) ) {
+			$person['email'] = sanitize_email( $metaData['email'] );
+		}
+		if ( ! empty( $metaData['faxNumber'] ) ) {
+			$person['faxNumber'] = $helper->sanitizeOutPut( $metaData['faxNumber'] );
+		}
+		if ( ! empty( $metaData['birthDate'] ) ) {
+			$person['birthDate'] = $helper->sanitizeOutPut( $metaData['birthDate'] );
+		}
+		if ( ! empty( $metaData['alumniOf'] ) ) {
+			$person['alumniOf'] = [
+				'@type' => 'Organization',
+				'name'  => $helper->sanitizeOutPut( $metaData['alumniOf'] ),
+			];
+		}
+		$knows_about = $this->split_schema_list( $metaData['knowsAbout'] ?? '', false, true );
+		if ( $knows_about ) {
+			$person['knowsAbout'] = $knows_about;
+		}
+		$person_awards = $this->split_schema_list( $metaData['award'] ?? '', false, true );
+		if ( $person_awards ) {
+			$person['award'] = $person_awards;
 		}
 		if ( ! empty( $metaData['addresses'] ) ) {
 			$addresses = [];
@@ -981,6 +1077,12 @@ class Schema {
 		if ( ! empty( $metaData['alternateName'] ) ) {
 			$local_business['alternateName'] = $helper->sanitizeOutPut( $metaData['alternateName'] );
 		}
+		if ( ! empty( $metaData['legalName'] ) ) {
+			$local_business['legalName'] = $helper->sanitizeOutPut( $metaData['legalName'] );
+		}
+		if ( ! empty( $metaData['slogan'] ) ) {
+			$local_business['slogan'] = $helper->sanitizeOutPut( $metaData['slogan'] );
+		}
 		if ( ! empty( $metaData['description'] ) ) {
 			$local_business['description'] = $this->clean_schema_text( $metaData['description'] );
 		}
@@ -998,7 +1100,7 @@ class Schema {
 			];
 		}
 		if ( Functions::isLocalBusinessType( $category ) && ! empty( $metaData['priceRange'] ) ) {
-			$local_business['priceRange'] = $helper->sanitizeOutPut( $metaData['priceRange'] );
+			$local_business['priceRange'] = $this->clean_price_range( $helper->sanitizeOutPut( $metaData['priceRange'] ) );
 		}
 		if ( ! empty( $metaData['sameAs'] ) ) {
 			$sameAs = Functions::get_same_as( $helper->sanitizeOutPut( $metaData['sameAs'] ) );
@@ -1017,12 +1119,19 @@ class Schema {
 			$local_business['servesCuisine'] = $helper->sanitizeOutPut( $metaData['servesCuisine'] );
 		}
 
-		if ( 'Restaurant' === $category ) {
+		if ( Functions::isFoodEstablishmentType( $category ) ) {
 			if ( ! empty( $metaData['menu'] ) ) {
 				$local_business['menu'] = $helper->sanitizeOutPut( $metaData['menu'], 'url' );
-				if ( isset( $metaData['acceptsReservations'] ) && 'yes' === $metaData['acceptsReservations'] ) {
-					$local_business['acceptsReservations'] = 'True';
-				}
+			}
+			// Independent of the menu URL — a place can take bookings without
+			// publishing a menu.
+			if ( isset( $metaData['acceptsReservations'] ) && 'yes' === $metaData['acceptsReservations'] ) {
+				$local_business['acceptsReservations'] = 'True';
+			}
+			// Checkbox settings store 'yes' / 'no' — 'no' is truthy, so never
+			// test these with empty().
+			if ( isset( $metaData['hasDriveThroughService'] ) && 'yes' === $metaData['hasDriveThroughService'] ) {
+				$local_business['hasDriveThroughService'] = true;
 			}
 		}
 		if ( ! empty( $metaData['addresses'] ) ) {
@@ -1065,8 +1174,8 @@ class Schema {
 					$sub_organization[] = [
 						'@type' => 'Organization',
 						'@id'   => $local_business['@id'] . '-suborg-' . $index,
-						'name'  => $helper->sanitizeOutPut( $sub_org['name'] ),
-						'url'   => $helper->sanitizeOutPut( $sub_org['url'] ),
+						'name'  => $helper->sanitizeOutPut( $sub_org['name'] ?? '' ),
+						'url'   => $helper->sanitizeOutPut( $sub_org['url'] ?? '' ),
 					];
 				}
 			}
@@ -1082,8 +1191,8 @@ class Schema {
 				'@id'         => $local_business['@id'] . '-geocircle',
 				'geoMidpoint' => [
 					'@type'     => 'GeoCoordinates',
-					'latitude'  => $helper->sanitizeOutPut( $metaData['latitude'] ),
-					'longitude' => $helper->sanitizeOutPut( $metaData['longitude'] ),
+					'latitude'  => $helper->sanitizeOutPut( $metaData['latitude'], 'number' ),
+					'longitude' => $helper->sanitizeOutPut( $metaData['longitude'], 'number' ),
 				],
 				'geoRadius'   => ! empty( $metaData['radius'] ) ? absint( $metaData['radius'] ) : 50,
 			];
@@ -1098,8 +1207,8 @@ class Schema {
 
 			foreach ( $metaData['openingHours'] as $entry ) {
 				$day    = ! empty( $entry['day'] ) ? $helper->sanitizeOutPut( $entry['day'] ) : '';
-				$opens  = ! empty( $entry['opens'] ) ? $helper->sanitizeOutPut( $entry['opens'] ) : '';
-				$closes = ! empty( $entry['closes'] ) ? $helper->sanitizeOutPut( $entry['closes'] ) : '';
+				$opens  = ! empty( $entry['opens'] ) ? $this->normalize_opening_time( $helper->sanitizeOutPut( $entry['opens'] ) ) : '';
+				$closes = ! empty( $entry['closes'] ) ? $this->normalize_opening_time( $helper->sanitizeOutPut( $entry['closes'] ), true ) : '';
 
 				if ( $day ) {
 					$opening_hours_specs[] = [
@@ -1112,6 +1221,116 @@ class Schema {
 			}
 			if ( ! empty( $opening_hours_specs ) ) {
 				$local_business['openingHoursSpecification'] = $opening_hours_specs;
+			}
+		}
+
+		if ( Functions::isLodgingBusinessType( $category ) ) {
+			if ( ! empty( $metaData['checkinTime'] ) ) {
+				$local_business['checkinTime'] = $helper->sanitizeOutPut( $metaData['checkinTime'] );
+			}
+			if ( ! empty( $metaData['checkoutTime'] ) ) {
+				$local_business['checkoutTime'] = $helper->sanitizeOutPut( $metaData['checkoutTime'] );
+			}
+			if ( ! empty( $metaData['starRating'] ) ) {
+				$local_business['starRating'] = [
+					'@type'       => 'Rating',
+					'ratingValue' => floatval( $metaData['starRating'] ),
+				];
+			}
+			if ( ! empty( $metaData['numberOfRooms'] ) ) {
+				$local_business['numberOfRooms'] = absint( $metaData['numberOfRooms'] );
+			}
+			// Checkbox settings store 'yes' / 'no' — 'no' is truthy, so never
+			// test these with empty().
+			if ( isset( $metaData['petsAllowed'] ) && 'yes' === $metaData['petsAllowed'] ) {
+				$local_business['petsAllowed'] = true;
+			}
+			$rtrs_amenities = $this->split_schema_list( $metaData['amenityFeature'] ?? '' );
+			if ( $rtrs_amenities ) {
+				$amenity_nodes = [];
+				foreach ( (array) $rtrs_amenities as $amenity ) {
+					$amenity_nodes[] = [
+						'@type' => 'LocationFeatureSpecification',
+						'name'  => $amenity,
+						'value' => true,
+					];
+				}
+				$local_business['amenityFeature'] = $amenity_nodes;
+			}
+		}
+
+		if ( Functions::isLocalBusinessType( $category ) ) {
+			$payment = $this->split_schema_list( $metaData['paymentAccepted'] ?? '', true, true );
+			if ( $payment ) {
+				$local_business['paymentAccepted'] = $payment;
+			}
+			$currencies = $this->split_schema_list( $metaData['currenciesAccepted'] ?? '', true, true );
+			if ( $currencies ) {
+				$local_business['currenciesAccepted'] = $currencies;
+			}
+			if ( ! empty( $metaData['hasMap'] ) ) {
+				$local_business['hasMap'] = $helper->sanitizeOutPut( $metaData['hasMap'], 'url' );
+			}
+		}
+
+		if ( ! empty( $metaData['email'] ) ) {
+			$local_business['email'] = sanitize_email( $metaData['email'] );
+		}
+		if ( ! empty( $metaData['faxNumber'] ) ) {
+			$local_business['faxNumber'] = $helper->sanitizeOutPut( $metaData['faxNumber'] );
+		}
+		if ( ! empty( $metaData['foundingDate'] ) ) {
+			$local_business['foundingDate'] = $helper->sanitizeOutPut( $metaData['foundingDate'] );
+		}
+		if ( ! empty( $metaData['numberOfEmployees'] ) ) {
+			$local_business['numberOfEmployees'] = [
+				'@type' => 'QuantitativeValue',
+				'value' => absint( $metaData['numberOfEmployees'] ),
+			];
+		}
+		$areas = $this->split_schema_list( $metaData['areaServed'] ?? '', false, true );
+		if ( $areas ) {
+			$local_business['areaServed'] = $areas;
+		}
+		$awards = $this->split_schema_list( $metaData['award'] ?? '', false, true );
+		if ( $awards ) {
+			$local_business['award'] = $awards;
+		}
+
+		foreach ( [ 'vatID', 'taxID', 'duns', 'leiCode' ] as $rtrs_identifier ) {
+			if ( ! empty( $metaData[ $rtrs_identifier ] ) ) {
+				$local_business[ $rtrs_identifier ] = $helper->sanitizeOutPut( $metaData[ $rtrs_identifier ] );
+			}
+		}
+
+		// Google News reads these policy pages from a NewsMediaOrganization.
+		if ( 'NewsMediaOrganization' === $category ) {
+			$news_policies = [
+				'ethicsPolicy',
+				'correctionsPolicy',
+				'diversityPolicy',
+				'verificationFactCheckingPolicy',
+				'ownershipFundingInfo',
+				'masthead',
+			];
+			foreach ( $news_policies as $policy ) {
+				if ( ! empty( $metaData[ $policy ] ) ) {
+					$local_business[ $policy ] = $helper->sanitizeOutPut( $metaData[ $policy ], 'url' );
+				}
+			}
+		}
+
+		if ( Functions::isMedicalType( $category ) && ! empty( $metaData['medicalSpecialty'] ) && is_array( $metaData['medicalSpecialty'] ) ) {
+			$specialties = array_values( array_filter( array_map(
+				function ( $specialty ) use ( $helper ) {
+					$specialty = $helper->sanitizeOutPut( $specialty );
+					// medicalSpecialty is a schema.org enumeration; output the full IRI.
+					return $specialty ? 'https://schema.org/' . $specialty : '';
+				},
+				$metaData['medicalSpecialty']
+			) ) );
+			if ( ! empty( $specialties ) ) {
+				$local_business['medicalSpecialty'] = $specialties;
 			}
 		}
 
@@ -1144,6 +1363,33 @@ class Schema {
 
 		if ( ! empty( $contactPoints ) ) {
 			$local_business['contactPoint'] = $contactPoints;
+		}
+
+		if ( 'Person' !== ( $metaData['site_category'] ?? '' ) && ! empty( $metaData['offer_catalog'] ) && is_array( $metaData['offer_catalog'] ) ) {
+			$catalog_items = [];
+			foreach ( $metaData['offer_catalog'] as $offer ) {
+				$service_name = ! empty( $offer['name'] ) ? $helper->sanitizeOutPut( $offer['name'] ) : '';
+				if ( $service_name ) {
+					$catalog_items[] = [
+						'@type'       => 'Offer',
+						'itemOffered' => [
+							'@type' => 'Service',
+							'name'  => $service_name,
+						],
+					];
+				}
+			}
+			if ( ! empty( $catalog_items ) ) {
+				$catalog_name = ! empty( $metaData['offer_catalog_name'] )
+					? $helper->sanitizeOutPut( $metaData['offer_catalog_name'] )
+					: esc_html__( 'Services', 'review-schema' );
+
+				$local_business['hasOfferCatalog'] = [
+					'@type'           => 'OfferCatalog',
+					'name'            => $catalog_name,
+					'itemListElement' => $catalog_items,
+				];
+			}
 		}
 
 		return apply_filters( 'rtseo_local_business_and_organization_schema', $local_business );
@@ -1197,7 +1443,11 @@ class Schema {
 	 */
 	public function rich_snippet() {
 		$schema_graph_list = [];
-		if ( ! is_singular() && ! is_admin() && ! wp_doing_ajax() ) {
+		// REST_REQUEST is included so the Elementor editor's schema report (which
+		// fetches over the REST route, not admin-ajax) builds the identical graph
+		// as the metabox — otherwise the main entity is dropped and the schema
+		// quality score diverges between surfaces for the same post.
+		if ( ! is_singular() && ! is_admin() && ! wp_doing_ajax() && ! ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
 			return $schema_graph_list;
 		}
 		$prefix  = 'rtrs_';
@@ -1359,7 +1609,10 @@ class Schema {
 					$output = array_merge( $output, $this->build_movie_schema( $metaData, $helper, $schema_key_id ) );
 					break;
 				case 'music':
-					$output[] = $this->build_music_schema( $metaData, $helper );
+					$music_schema = $this->build_music_schema( $metaData, $helper );
+					if ( ! empty( $music_schema ) ) {
+						$output[] = $music_schema;
+					}
 					break;
 
 				case 'service':
@@ -1543,11 +1796,17 @@ class Schema {
 		}
 
 		if ( ( Functions::isLocalBusinessType( $category ) || Functions::isMedicalOrgType( $category ) ) && ! empty( $metaData['priceRange'] ) ) {
-			$local_business['priceRange'] = $helper->sanitizeOutPut( $metaData['priceRange'] );
+			$local_business['priceRange'] = $this->clean_price_range( $helper->sanitizeOutPut( $metaData['priceRange'] ) );
 		}
-		if ( $category == 'Restaurant' ) {
+		if ( Functions::isFoodEstablishmentType( $category ) ) {
 			if ( ! empty( $metaData['servesCuisine'] ) ) {
 				$local_business['servesCuisine'] = $helper->sanitizeOutPut( $metaData['servesCuisine'] );
+			}
+			if ( ! empty( $metaData['menu'] ) ) {
+				$local_business['menu'] = $helper->sanitizeOutPut( $metaData['menu'], 'url' );
+			}
+			if ( isset( $metaData['acceptsReservations'] ) && 'yes' === $metaData['acceptsReservations'] ) {
+				$local_business['acceptsReservations'] = 'True';
 			}
 			if ( isset( $metaData['menu_sections'] ) && is_array( $metaData['menu_sections'] ) ) {
 				$local_business_menu_sections = [];
@@ -1591,11 +1850,34 @@ class Schema {
 					if ( isset( $menu_sections_single['menu_items'] ) && is_array( $menu_sections_single['menu_items'] ) ) {
 						$local_business_menu_sections_menu_items = [];
 						foreach ( $menu_sections_single['menu_items'] as $menu_items_single ) {
-							$menu_items_single_schema              = [
+							// A nameless item is an untouched repeater row.
+							if ( empty( $menu_items_single['name'] ) ) {
+								continue;
+							}
+
+							$menu_items_single_schema = [
 								'@type'       => 'MenuItem',
-								'name'        => $menu_items_single['name'] ? $helper->sanitizeOutPut( $menu_items_single['name'] ) : null,
-								'description' => $menu_items_single['desc'] ? $helper->sanitizeOutPut( $menu_items_single['desc'] ) : null,
+								'name'        => $helper->sanitizeOutPut( $menu_items_single['name'] ),
+								'description' => ! empty( $menu_items_single['desc'] ) ? $helper->sanitizeOutPut( $menu_items_single['desc'] ) : null,
 							];
+
+							if ( ! empty( $menu_items_single['image'] ) ) {
+								$item_img = $helper->imageInfo( absint( $menu_items_single['image'] ) );
+								if ( ! empty( $item_img['url'] ) ) {
+									$menu_items_single_schema['image'] = $helper->sanitizeOutPut( $item_img['url'], 'url' );
+								}
+							}
+
+							if ( ! empty( $menu_items_single['price'] ) ) {
+								$menu_items_single_schema['offers'] = [
+									'@type' => 'Offer',
+									'price' => $helper->sanitizeOutPut( $menu_items_single['price'] ),
+								];
+								if ( ! empty( $menu_items_single['priceCurrency'] ) ) {
+									$menu_items_single_schema['offers']['priceCurrency'] = $helper->sanitizeOutPut( $menu_items_single['priceCurrency'] );
+								}
+							}
+
 							$menu_items_single_schema['nutrition'] = [
 								'@type' => 'NutritionInformation',
 							];
@@ -1613,19 +1895,33 @@ class Schema {
 								$menu_items_single_schema['nutrition']['proteinContent'] = $helper->sanitizeOutPut( $menu_items_single['proteinContent'] );
 							}
 
+							if ( count( $menu_items_single_schema['nutrition'] ) < 2 ) {
+								unset( $menu_items_single_schema['nutrition'] );
+							}
+
 							if ( $menu_items_single['suitableForDiet'] ) {
 								$menu_items_single_schema['suitableForDiet'] = $helper->sanitizeOutPut( $menu_items_single['suitableForDiet'] );
 							}
 
 							array_push( $local_business_menu_sections_menu_items, $menu_items_single_schema );
 						}
-						$menu_sections_single_schema['hasMenuItem'] = $local_business_menu_sections_menu_items;
+						if ( ! empty( $local_business_menu_sections_menu_items ) ) {
+							$menu_sections_single_schema['hasMenuItem'] = $local_business_menu_sections_menu_items;
+						}
+					}
+
+					// An untouched repeater row would otherwise emit a bare
+					// MenuSection with nothing but @type.
+					if ( count( $menu_sections_single_schema ) < 2 ) {
+						continue;
 					}
 
 					array_push( $local_business_menu_sections, $menu_sections_single_schema );
 				}
-				$local_business['hasMenu']['@type']          = 'Menu';
-				$local_business['hasMenu']['hasMenuSection'] = $local_business_menu_sections;
+				if ( ! empty( $local_business_menu_sections ) ) {
+					$local_business['hasMenu']['@type']          = 'Menu';
+					$local_business['hasMenu']['hasMenuSection'] = $local_business_menu_sections;
+				}
 			}
 		}
 
@@ -1646,8 +1942,8 @@ class Schema {
 		if ( ! empty( $metaData['geo'][0]['latitude'] ) || ! empty( $metaData['geo'][0]['longitude'] ) ) {
 			$local_business['geo'] = [
 				'@type'     => 'GeoCoordinates',
-				'latitude'  => $helper->sanitizeOutPut( $metaData['geo'][0]['latitude'] ),
-				'longitude' => $helper->sanitizeOutPut( $metaData['geo'][0]['longitude'] ),
+				'latitude'  => $helper->sanitizeOutPut( $metaData['geo'][0]['latitude'], 'number' ),
+				'longitude' => $helper->sanitizeOutPut( $metaData['geo'][0]['longitude'], 'number' ),
 			];
 		}
 
@@ -1659,14 +1955,42 @@ class Schema {
 			$local_business['url'] = $helper->sanitizeOutPut( $metaData['url'], 'url' );
 		}
 
+		if ( Functions::isLodgingBusinessType( $category ) ) {
+			if ( ! empty( $metaData['checkinTime'] ) ) {
+				$local_business['checkinTime'] = $helper->sanitizeOutPut( $metaData['checkinTime'] );
+			}
+			if ( ! empty( $metaData['checkoutTime'] ) ) {
+				$local_business['checkoutTime'] = $helper->sanitizeOutPut( $metaData['checkoutTime'] );
+			}
+		}
+
+		if ( Functions::isMedicalType( $category ) && ! empty( $metaData['medicalSpecialty'] ) && is_array( $metaData['medicalSpecialty'] ) ) {
+			$specialties = array_values(
+				array_filter(
+					array_map(
+						function ( $specialty ) use ( $helper ) {
+							$specialty = $helper->sanitizeOutPut( $specialty );
+
+							// medicalSpecialty is a schema.org enumeration; output the full IRI.
+							return $specialty ? 'https://schema.org/' . $specialty : '';
+						},
+						$metaData['medicalSpecialty']
+					)
+				)
+			);
+			if ( ! empty( $specialties ) ) {
+				$local_business['medicalSpecialty'] = $specialties;
+			}
+		}
+
 		if ( Functions::isLocalBusinessType( $category ) && isset( $metaData['opening_hours'] ) && is_array( $metaData['opening_hours'] ) ) {
 			$local_business_opening_hours = [];
 			foreach ( $metaData['opening_hours'] as $opening_hours_single ) {
 				$opening_hours_single_schema = [
 					'@type'     => 'OpeningHoursSpecification',
 					'dayOfWeek' => $opening_hours_single['day'] ? $helper->sanitizeOutPut( $opening_hours_single['day'] ) : '',
-					'opens'     => $opening_hours_single['opens'] ? $helper->sanitizeOutPut( $opening_hours_single['opens'] ) : '',
-					'closes'    => $opening_hours_single['closes'] ? $helper->sanitizeOutPut( $opening_hours_single['closes'] ) : '',
+					'opens'     => $opening_hours_single['opens'] ? $this->normalize_opening_time( $helper->sanitizeOutPut( $opening_hours_single['opens'] ) ) : '',
+					'closes'    => $opening_hours_single['closes'] ? $this->normalize_opening_time( $helper->sanitizeOutPut( $opening_hours_single['closes'] ), true ) : '',
 				];
 				array_push( $local_business_opening_hours, $opening_hours_single_schema );
 			}
@@ -2981,8 +3305,14 @@ class Schema {
 	 * @return array
 	 */
 	private function build_music_schema( $metaData, $helper ) {
+		// Without a type there is no meaningful node to emit — sanitizeOutPut()
+		// returns null for an empty value, which would produce "@type": null.
+		$music_type = $helper->sanitizeOutPut( $metaData['musicType'] ?? '' );
+		if ( empty( $music_type ) ) {
+			return [];
+		}
 		$music          = [];
-		$music['@type'] = $helper->sanitizeOutPut( $metaData['musicType'] );
+		$music['@type'] = $music_type;
 		if ( ! empty( $metaData['name'] ) ) {
 			$music['name'] = $helper->sanitizeOutPut( $metaData['name'] );
 		}
@@ -3963,6 +4293,44 @@ class Schema {
 		}
 
 		return $text;
+	}
+
+	/**
+	 * Split a multi-value settings field into a clean list.
+	 *
+	 * Accepts either one value per line (textarea fields) or a comma separated
+	 * string, so `paymentAccepted: Cash, Invoice` and a line-per-award textarea
+	 * both resolve to a flat array.
+	 *
+	 * @since 3.0.3
+	 *
+	 * @param string $value     Raw stored value.
+	 * @param bool   $csv       Also split on commas.
+	 * @param bool   $collapse  Return the single value instead of a 1-item array.
+	 *
+	 * @return array|string|null
+	 */
+	private function split_schema_list( $value, $csv = false, $collapse = false ) {
+		if ( empty( $value ) || ! is_string( $value ) ) {
+			return null;
+		}
+
+		$pattern = $csv ? '/\r\n|\r|\n|,/' : '/\r\n|\r|\n/';
+		$parts   = preg_split( $pattern, $value );
+		$clean   = [];
+
+		foreach ( (array) $parts as $part ) {
+			$part = $this->clean_schema_text( $part );
+			if ( '' !== $part ) {
+				$clean[] = $part;
+			}
+		}
+
+		if ( empty( $clean ) ) {
+			return null;
+		}
+
+		return ( $collapse && 1 === count( $clean ) ) ? $clean[0] : $clean;
 	}
 	/**
 	 * Build auto Article schema.

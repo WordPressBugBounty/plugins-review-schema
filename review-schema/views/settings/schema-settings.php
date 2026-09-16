@@ -18,6 +18,62 @@ $rtrs_arr = [
 	'strong' => [],
 ];
 
+/**
+ * Reusable `depends` rules.
+ *
+ * Every category-specific field below reuses one of these so a field is never
+ * gated on a narrower type list than the schema builder outputs it for.
+ */
+$rtrs_not_person = [
+	'on' => [
+		[
+			'field'     => 'rtrs_schema_settings.site_category',
+			'value'     => 'Person',
+			'condition' => '!=',
+		],
+	],
+];
+
+$rtrs_is_person = [
+	'on' => [
+		[
+			'field'     => 'rtrs_schema_settings.site_category',
+			'value'     => 'Person',
+			'condition' => '=',
+		],
+	],
+];
+
+/**
+ * Build an "Organization + one of these sub categories" rule.
+ *
+ * @param array $types Schema types the field applies to.
+ *
+ * @return array
+ */
+$rtrs_sub_category_is = function ( array $types ) {
+	return [
+		'relation' => 'and',
+		'on'       => [
+			[
+				'field'     => 'rtrs_schema_settings.site_category',
+				'value'     => 'Organization',
+				'condition' => '=',
+			],
+			[
+				'field'     => 'rtrs_schema_settings.organization_category',
+				'value'     => $types,
+				'condition' => 'includes',
+			],
+		],
+	];
+};
+
+$rtrs_is_local_business = $rtrs_sub_category_is( Functions::getLocalBusinessTypeList() );
+$rtrs_is_lodging        = $rtrs_sub_category_is( Functions::getLodgingBusinessTypes() );
+$rtrs_is_food           = $rtrs_sub_category_is( Functions::getFoodEstablishmentTypes() );
+$rtrs_is_news_media     = $rtrs_sub_category_is( [ 'NewsMediaOrganization' ] );
+
 $rtrs_options = [
 //	'general_section'         => [
 //		'title' => esc_html__( 'General', 'review-schema' ),
@@ -79,6 +135,63 @@ $rtrs_options = [
 		'class' => 'regular-text',
 		'title' => esc_html__( 'Alternate Name', 'review-schema' ),
 	],
+	'legalName'               => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Legal Name', 'review-schema' ),
+		'description' => esc_html__( 'The registered legal name, if it differs from the trading name.', 'review-schema' ),
+		'depends'     => $rtrs_not_person,
+	],
+	'slogan'                  => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Slogan', 'review-schema' ),
+		'description' => esc_html__( 'A short tagline for the business.', 'review-schema' ),
+		'depends'     => $rtrs_not_person,
+	],
+	'jobTitle'                => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Job Title', 'review-schema' ),
+		'description' => esc_html__( 'The job title of the person (i.e. Software Engineer).', 'review-schema' ),
+		'depends'     => [
+			'on' => [
+				[
+					'field'     => 'rtrs_schema_settings.site_category',
+					'value'     => 'Person',
+					'condition' => '=',
+				],
+			],
+		],
+	],
+	'worksFor'                => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Works For', 'review-schema' ),
+		'description' => esc_html__( 'The name of the organization the person works for.', 'review-schema' ),
+		'depends'     => $rtrs_is_person,
+	],
+	'alumniOf'                => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Alumni Of', 'review-schema' ),
+		'description' => esc_html__( 'A school or university the person attended.', 'review-schema' ),
+		'depends'     => $rtrs_is_person,
+	],
+	'birthDate'               => [
+		'type'    => 'date',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Birth Date', 'review-schema' ),
+		'depends' => $rtrs_is_person,
+	],
+	'knowsAbout'              => [
+		'type'        => 'textarea',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Knows About', 'review-schema' ),
+		'placeholder' => esc_html__( 'WordPress&#10;Structured data', 'review-schema' ),
+		'description' => esc_html__( 'Topics this person has expertise in — one per line. A strong E-E-A-T signal.', 'review-schema' ),
+		'depends'     => $rtrs_is_person,
+	],
 	'logo'                    => [
 		'type'        => 'image',
 		'required'    => true,
@@ -121,6 +234,17 @@ $rtrs_options = [
 		'required'    => true,
 		'title'       => esc_html__( 'Telephone', 'review-schema' ) . "<span class='rtrs-required'>*</span>",
 		'description' => esc_html__( 'Required For Organization And Local Business', 'review-schema' ),
+	],
+	'email'                   => [
+		'type'        => 'email',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Email', 'review-schema' ),
+		'description' => esc_html__( 'A public contact address. Part of the Google Organization rich result.', 'review-schema' ),
+	],
+	'faxNumber'               => [
+		'type'  => 'text',
+		'class' => 'regular-text',
+		'title' => esc_html__( 'Fax Number', 'review-schema' ),
 	],
 	/*
 	 * 'sameAs'                  => [
@@ -305,59 +429,259 @@ $rtrs_options = [
 		'type'    => 'textarea',
 		'class'   => 'regular-text',
 		'title'   => esc_html__( 'Serves Cuisine', 'review-schema' ),
-		'depends' => [
-			'relation' => 'and',
-			'on'       => [
-				[
-					'field'     => 'rtrs_schema_settings.site_category',
-					'value'     => 'Organization',
-					'condition' => '=',
-				],
-				[
-					'field'     => 'rtrs_schema_settings.organization_category',
-					'value'     => [ 'FoodEstablishment', 'Bakery', 'BarOrPub', 'Brewery', 'CafeOrCoffeeShop', 'Distillery', 'FastFoodRestaurant', 'IceCreamShop', 'Restaurant', 'Winery' ],
-					'condition' => 'includes',
-				],
-			],
-		],
+		'depends' => $rtrs_is_food,
 	],
 	'menu'                    => [
 		'type'    => 'url',
 		'class'   => 'regular-text',
-		'title'   => esc_html__( 'Restaurant Menu URL', 'review-schema' ),
-		'depends' => [
-			'relation' => 'and',
-			'on'       => [
-				[
-					'field'     => 'rtrs_schema_settings.site_category',
-					'value'     => 'Organization',
-					'condition' => '=',
-				],
-				[
-					'field'     => 'rtrs_schema_settings.organization_category',
-					'value'     => 'Restaurant',
-					'condition' => '=',
-				],
-			],
-		],
+		'title'   => esc_html__( 'Menu URL', 'review-schema' ),
+		'depends' => $rtrs_is_food,
 	],
 	'acceptsReservations'     => [
 		'title'   => esc_html__( 'Accepts Reservations', 'review-schema' ),
 		'type'    => 'checkbox',
 		'label'   => esc_html__( 'Accept', 'review-schema' ),
-		'depends' => [
-			'relation' => 'and',
-			'on'       => [
+		'depends' => $rtrs_is_food,
+	],
+	'hasDriveThroughService'  => [
+		'title'   => esc_html__( 'Has Drive-Through Service', 'review-schema' ),
+		'type'    => 'checkbox',
+		'label'   => esc_html__( 'Available', 'review-schema' ),
+		'depends' => $rtrs_is_food,
+	],
+	'checkinTime'             => [
+		'type'        => 'time',
+		'step'        => 1,
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Check-in Time', 'review-schema' ),
+		'description' => esc_html__( 'The earliest someone may check into a lodging establishment. Use 24:00 time, for example 3PM is 15:00:00.', 'review-schema' ),
+		'depends'     => $rtrs_is_lodging,
+	],
+	'checkoutTime'            => [
+		'type'        => 'time',
+		'step'        => 1,
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Check-out Time', 'review-schema' ),
+		'description' => esc_html__( 'The latest someone may check out of a lodging establishment. Use 24:00 time, for example 11AM is 11:00:00.', 'review-schema' ),
+		'depends'     => $rtrs_is_lodging,
+	],
+	'starRating'              => [
+		'type'        => 'number',
+		'class'       => 'regular-text',
+		'min'         => 1,
+		'max'         => 5,
+		'step'        => 0.5,
+		'title'       => esc_html__( 'Star Rating', 'review-schema' ),
+		'description' => esc_html__( 'Official rating of the property, 1 to 5. Part of Google Hotel structured data.', 'review-schema' ),
+		'depends'     => $rtrs_is_lodging,
+	],
+	'numberOfRooms'           => [
+		'type'    => 'number',
+		'class'   => 'regular-text',
+		'min'     => 0,
+		'title'   => esc_html__( 'Number Of Rooms', 'review-schema' ),
+		'depends' => $rtrs_is_lodging,
+	],
+	'petsAllowed'             => [
+		'title'   => esc_html__( 'Pets Allowed', 'review-schema' ),
+		'type'    => 'checkbox',
+		'label'   => esc_html__( 'Allowed', 'review-schema' ),
+		'depends' => $rtrs_is_lodging,
+	],
+	'amenityFeature'          => [
+		'type'        => 'textarea',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Amenity Features', 'review-schema' ),
+		'placeholder' => esc_html__( 'Free WiFi&#10;Swimming pool&#10;Airport shuttle', 'review-schema' ),
+		'description' => esc_html__( 'One amenity per line. Each becomes a LocationFeatureSpecification.', 'review-schema' ),
+		'depends'     => $rtrs_is_lodging,
+	],
+	'medicalSpecialty'        => [
+		'type'        => 'multiselect',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Medical Specialty', 'review-schema' ),
+		'options'     => Functions::getMedicalSpecialties(),
+		'description' => esc_html__( 'The medical specialties offered, for example Emergency, Cardiovascular, Neurologic.', 'review-schema' ),
+		'depends'     => $rtrs_sub_category_is( Functions::getMedicalTypes() ),
+	],
+	'business_details_section' => [
+		'title'       => esc_html__( 'Business Details', 'review-schema' ),
+		'description' => esc_html__( 'Entity details Google reads for the Organization knowledge panel.', 'review-schema' ),
+		'type'        => 'title',
+		'depends'     => $rtrs_not_person,
+	],
+	'foundingDate'            => [
+		'type'    => 'date',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Founding Date', 'review-schema' ),
+		'depends' => $rtrs_not_person,
+	],
+	'numberOfEmployees'       => [
+		'type'        => 'number',
+		'class'       => 'regular-text',
+		'min'         => 0,
+		'title'       => esc_html__( 'Number Of Employees', 'review-schema' ),
+		'description' => esc_html__( 'Output as a QuantitativeValue.', 'review-schema' ),
+		'depends'     => $rtrs_not_person,
+	],
+	'areaServed'              => [
+		'type'        => 'textarea',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Area Served', 'review-schema' ),
+		'placeholder' => esc_html__( 'California&#10;Nevada', 'review-schema' ),
+		'description' => esc_html__( 'Regions the business serves — one per line.', 'review-schema' ),
+		'depends'     => $rtrs_not_person,
+	],
+	'award'                   => [
+		'type'        => 'textarea',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Awards', 'review-schema' ),
+		'description' => esc_html__( 'One award per line.', 'review-schema' ),
+	],
+	'paymentAccepted'         => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Payment Accepted', 'review-schema' ),
+		'description' => esc_html__( 'Comma separated. Example: Cash, Credit Card, Invoice.', 'review-schema' ),
+		'depends'     => $rtrs_is_local_business,
+	],
+	'currenciesAccepted'      => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Currencies Accepted', 'review-schema' ),
+		'description' => esc_html__( 'Comma separated 3-letter currency codes. Example: USD, EUR.', 'review-schema' ),
+		'depends'     => $rtrs_is_local_business,
+	],
+	'hasMap'                  => [
+		'type'        => 'url',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Map URL', 'review-schema' ),
+		'description' => esc_html__( 'Link to the business on Google Maps.', 'review-schema' ),
+		'depends'     => $rtrs_is_local_business,
+	],
+	'identifiers_section'     => [
+		'title'       => esc_html__( 'Business Identifiers', 'review-schema' ),
+		'description' => esc_html__( 'Registration numbers that disambiguate the entity. Leave blank if not applicable.', 'review-schema' ),
+		'type'        => 'title',
+		'depends'     => $rtrs_not_person,
+	],
+	'vatID'                   => [
+		'type'    => 'text',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'VAT ID', 'review-schema' ),
+		'depends' => $rtrs_not_person,
+	],
+	'taxID'                   => [
+		'type'    => 'text',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Tax ID', 'review-schema' ),
+		'depends' => $rtrs_not_person,
+	],
+	'duns'                    => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'DUNS', 'review-schema' ),
+		'description' => esc_html__( 'Dun & Bradstreet DUNS number.', 'review-schema' ),
+		'depends'     => $rtrs_not_person,
+	],
+	'leiCode'                 => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'LEI Code', 'review-schema' ),
+		'description' => esc_html__( 'Legal Entity Identifier (ISO 17442).', 'review-schema' ),
+		'depends'     => $rtrs_not_person,
+	],
+	'news_policies_section'   => [
+		'title'       => esc_html__( 'Publisher Policies', 'review-schema' ),
+		'description' => esc_html__( 'Google News reads these policy pages from a NewsMediaOrganization.', 'review-schema' ),
+		'type'        => 'title',
+		'depends'     => $rtrs_is_news_media,
+	],
+	'ethicsPolicy'            => [
+		'type'    => 'url',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Ethics Policy URL', 'review-schema' ),
+		'depends' => $rtrs_is_news_media,
+	],
+	'correctionsPolicy'       => [
+		'type'    => 'url',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Corrections Policy URL', 'review-schema' ),
+		'depends' => $rtrs_is_news_media,
+	],
+	'diversityPolicy'         => [
+		'type'    => 'url',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Diversity Policy URL', 'review-schema' ),
+		'depends' => $rtrs_is_news_media,
+	],
+	'verificationFactCheckingPolicy' => [
+		'type'    => 'url',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Fact-Checking Policy URL', 'review-schema' ),
+		'depends' => $rtrs_is_news_media,
+	],
+	'ownershipFundingInfo'    => [
+		'type'    => 'url',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Ownership & Funding Info URL', 'review-schema' ),
+		'depends' => $rtrs_is_news_media,
+	],
+	'masthead'                => [
+		'type'    => 'url',
+		'class'   => 'regular-text',
+		'title'   => esc_html__( 'Masthead URL', 'review-schema' ),
+		'depends' => $rtrs_is_news_media,
+	],
+	'offer_catalog_section'   => [
+		'title'       => esc_html__( 'Offer Catalog', 'review-schema' ),
+		'description' => esc_html__( 'List the services this business offers. Outputs an OfferCatalog of Service items.', 'review-schema' ),
+		'type'        => 'title',
+		'depends'     => [
+			'on' => [
 				[
 					'field'     => 'rtrs_schema_settings.site_category',
-					'value'     => 'Organization',
-					'condition' => '=',
+					'value'     => 'Person',
+					'condition' => '!=',
 				],
+			],
+		],
+	],
+	'offer_catalog_name'      => [
+		'type'        => 'text',
+		'class'       => 'regular-text',
+		'title'       => esc_html__( 'Catalog Name', 'review-schema' ),
+		'placeholder' => esc_html__( 'Services', 'review-schema' ),
+		'description' => esc_html__( 'A title for the catalog, for example "Services", "Treatments", or "Menu". Defaults to "Services".', 'review-schema' ),
+		'depends'     => [
+			'on' => [
 				[
-					'field'     => 'rtrs_schema_settings.organization_category',
-					'value'     => 'Restaurant',
-					'condition' => '=',
+					'field'     => 'rtrs_schema_settings.site_category',
+					'value'     => 'Person',
+					'condition' => '!=',
 				],
+			],
+		],
+	],
+	'offer_catalog'           => [
+		'type'    => 'group',
+		'is_pro'  => true,
+		'title'   => esc_html__( 'Services', 'review-schema' ),
+		'depends' => [
+			'on' => [
+				[
+					'field'     => 'rtrs_schema_settings.site_category',
+					'value'     => 'Person',
+					'condition' => '!=',
+				],
+			],
+		],
+		'fields'  => [
+			'name' => [
+				'type'        => 'text',
+				'class'       => 'regular-text',
+				'title'       => esc_html__( 'Service Name', 'review-schema' ),
+				'placeholder' => esc_html__( 'e.g. Cardiology Consultation', 'review-schema' ),
 			],
 		],
 	],

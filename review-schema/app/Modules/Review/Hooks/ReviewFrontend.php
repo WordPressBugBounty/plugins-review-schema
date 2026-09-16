@@ -814,14 +814,15 @@ class ReviewFrontend {
 							<label class="rtrs-input-image-label"><?php esc_html_e( 'Image', 'review-schema' ); ?></label>
 						</div>
 
+					<?php $can_upload_media = ReviewFns::canUploadMedia(); ?>
 						<div class="rtrs-image-source-selector">
 							<select name="rt_image_source" id="rtrs-image-source" class="rtrs-form-control">
 								<option value="self"><?php esc_html_e( 'Upload Image', 'review-schema' ); ?></option>
-								<option value="external" <?php echo ! is_user_logged_in() ? 'selected' : ''; ?>><?php esc_html_e( 'External Image URL', 'review-schema' ); ?></option>
+								<option value="external" <?php echo ! $can_upload_media ? 'selected' : ''; ?>><?php esc_html_e( 'External Image URL', 'review-schema' ); ?></option>
 							</select>
 						</div>
 
-						<?php if ( is_user_logged_in() ) { ?>
+						<?php if ( $can_upload_media ) { ?>
 							<div class="rtrs-source-image">
 								<div class="rtrs-image-button">
 									<div class="rtrs-multimedia-upload">
@@ -851,13 +852,13 @@ class ReviewFrontend {
 						<?php } ?>
 					</div>
 
-					<?php if ( is_user_logged_in() ) { ?>
+					<?php if ( $can_upload_media ) { ?>
 						<div class="rtrs-form-group rtrs-hide-reply">
 							<div class="rtrs-preview-imgs"></div>
 						</div>
 					<?php } ?>
 
-					<div class="rtrs-form-group rtrs-source-external-image rtrs-hide-reply" <?php echo is_user_logged_in() ? 'style="display:none;"' : ''; ?>>
+					<div class="rtrs-form-group rtrs-source-external-image rtrs-hide-reply" <?php echo $can_upload_media ? 'style="display:none;"' : ''; ?>>
 						<label class="rtrs-input-label" for="rt_external_image"><?php esc_html_e( 'External Image URL', 'review-schema' ); ?></label>
 						<input id="rt_external_image" class="rtrs-form-control" placeholder="https://example.com/image.jpg" name="rt_external_image" type="url">
 						<div class="rtrs-external-image-preview"></div>

@@ -2,9 +2,9 @@
 /**
  * Dynamic AggregateRating Injector.
  *
- * Injects aggregateRating into AI-generated schemas at render time
- * using live review data, so ratings stay current even when the
- * schema was originally generated without reviews.
+ * Injects aggregateRating into AI-generated and traditional schemas at
+ * render time using live review data, so ratings stay current even when
+ * the schema was originally generated or saved without reviews.
  *
  * Supports:
  * - Review Schema plugin's own review system
@@ -30,11 +30,31 @@ class AggregateRatingInjector {
 	use SingletonTrait;
 
 	/**
+	 * Priority on the traditional graph filter.
+	 *
+	 * Schema::schema_filtered() assembles that graph at priority 10, so this
+	 * must run after it — at 8 the filter only ever saw the breadcrumb and
+	 * injected nothing. 30 is past every node-producing and linking callback
+	 * (FAQ 12-22, archive 14, media 25) and before the Pro Product/
+	 * SoftwareApplication merge at 99, which expects both nodes to be rated
+	 * so it can drop the SoftwareApplication copy.
+	 */
+	const GRAPH_PRIORITY = 30;
+
+	/**
+	 * Priority on the AI graph filter.
+	 *
+	 * The AI graph is fully assembled before the filter fires, so running
+	 * first is correct and leaves ratings settled for later callbacks.
+	 */
+	const AI_GRAPH_PRIORITY = 8;
+
+	/**
 	 * Initialize hooks.
 	 */
 	private function __instance() {
-		add_filter( 'rtrs_ai_schema_before_render', [ $this, 'inject_aggregate_rating' ], 8, 2 );
-		add_filter( 'rtrs_schema_graph_data', [ $this, 'inject_aggregate_rating' ], 8, 2 );
+		add_filter( 'rtrs_ai_schema_before_render', [ $this, 'inject_aggregate_rating' ], self::AI_GRAPH_PRIORITY, 2 );
+		add_filter( 'rtrs_schema_graph_data', [ $this, 'inject_aggregate_rating' ], self::GRAPH_PRIORITY, 2 );
 	}
 
 	/**
@@ -66,9 +86,7 @@ class AggregateRatingInjector {
 		$supported_types = SchemaExtractor::AGGREGATE_RATING_TYPES;
 
 		foreach ( $schemas as &$schema ) {
-			$type = $schema['@type'] ?? '';
-
-			if ( ! in_array( $type, $supported_types, true ) ) {
+			if ( ! is_array( $schema ) || ! self::supports_rating( $schema, $supported_types ) ) {
 				continue;
 			}
 
@@ -86,6 +104,31 @@ class AggregateRatingInjector {
 		unset( $schema );
 
 		return $schemas;
+	}
+
+	/**
+	 * Whether a node's @type is rating-eligible.
+	 *
+	 * @type may be a string or a list — Functions::getSchemaType() returns
+	 * [ 'Restaurant', 'LocalBusiness' ] for subtypes — so every declared type
+	 * is checked against the supported list. The list itself is unchanged.
+	 *
+	 * @param array $schema          Schema node.
+	 * @param array $supported_types Rating-eligible schema types.
+	 *
+	 * @return bool
+	 */
+	private static function supports_rating( $schema, $supported_types ) {
+		$types = $schema['@type'] ?? '';
+		$types = is_array( $types ) ? $types : [ $types ];
+
+		foreach ( $types as $type ) {
+			if ( is_string( $type ) && in_array( $type, $supported_types, true ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

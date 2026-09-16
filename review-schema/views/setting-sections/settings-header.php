@@ -5,11 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <!--<div class="rtrs-settings">-->
 	<?php
-	use Rtrs\Controllers\Admin\AdminSettings;
 	settings_errors();
-	if ( class_exists( AdminSettings::class ) ) {
-		AdminSettings::show_messages();
-	}
 	$rtrs_settings_url = admin_url( 'admin.php?page=review-schema' );
 	$rtrs_get_help     = admin_url( 'admin.php?page=rtrs-reviews-get-help' );
 	?>

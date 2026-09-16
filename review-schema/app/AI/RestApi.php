@@ -142,6 +142,47 @@ class RestApi {
 				],
 			]
 		);
+
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/report/(?P<post_id>\d+)',
+			[
+				'methods'             => 'GET',
+				'callback'            => [ $this, 'handle_report' ],
+				'permission_callback' => [ $this, 'check_edit_permission' ],
+				'args'                => [
+					'post_id' => [
+						'type'              => 'integer',
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+					],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Return the full analysis report (validation, evaluation, SEO/AEO/GEO).
+	 *
+	 * REST equivalent of the `rtrs_get_schema_report` admin-ajax action. Used by
+	 * the Elementor editor SEO report panel so the request rides the REST
+	 * `X-WP-Nonce` (kept fresh by WordPress heartbeat) instead of a page-load
+	 * static admin-ajax nonce that expires while the editor sits open.
+	 *
+	 * @param \WP_REST_Request $request REST request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function handle_report( $request ) {
+		$post_id = absint( $request->get_param( 'post_id' ) );
+
+		$report = \Rtrs\Modules\Schema\Ajax\SchemaReportAjax::build_report( $post_id );
+
+		if ( is_wp_error( $report ) ) {
+			return new \WP_REST_Response( [ 'message' => $report->get_error_message() ], 400 );
+		}
+
+		return new \WP_REST_Response( $report, 200 );
 	}
 
 	public function check_edit_permission( $request ) {
@@ -257,12 +298,17 @@ class RestApi {
 			);
 		}
 
-		// Include FAQPage as secondary type when requested (Pro FAQ suggestion).
-		$include_faq = $request->get_param( 'include_faq' );
-		if ( $include_faq && 'FAQPage' !== $classification['primary_type']
-			&& ! in_array( 'FAQPage', $classification['secondary_types'], true ) ) {
-			$classification['secondary_types'][] = 'FAQPage';
-		}
+		// FAQPage is generated in a SEPARATE AI call (below) rather than merged
+		// into the main schema request. Asking the model for the full schema
+		// graph AND every FAQ pair in one response overflows the output token
+		// budget and truncates — the cause of the recurring "AI response was
+		// truncated" error on the "Schema + FAQs" action. Splitting keeps each
+		// call within max_tokens on every model.
+		$include_faq  = $request->get_param( 'include_faq' );
+		$generate_faq = $include_faq
+			&& ! $has_existing_faq
+			&& 'FAQPage' !== $classification['primary_type']
+			&& ! in_array( 'FAQPage', $classification['secondary_types'], true );
 
 		$schema_extractor = new SchemaExtractor();
 		$extract_options  = [];
@@ -291,6 +337,28 @@ class RestApi {
 				),
 				[ 'status' => 422 ]
 			);
+		}
+
+		// Generate the FAQPage in its own request and append it. Keeping this
+		// separate from the main schema call is what prevents the combined
+		// output from exceeding the model's max_tokens (the "Schema + FAQs"
+		// truncation issue). A FAQ failure degrades to schema-only rather than
+		// failing the whole generation.
+		if ( $generate_faq ) {
+			$faq_extractor = new SchemaExtractor();
+			$faq_schemas   = $faq_extractor->extract( $full_payload, 'FAQPage', [], $extract_options );
+
+			if ( ! is_wp_error( $faq_schemas ) && ! empty( $faq_schemas ) ) {
+				foreach ( $faq_schemas as $faq_node ) {
+					if ( 'FAQPage' === ( $faq_node['@type'] ?? '' ) ) {
+						$schemas[] = $faq_node;
+
+						if ( ! in_array( 'FAQPage', $classification['secondary_types'], true ) ) {
+							$classification['secondary_types'][] = 'FAQPage';
+						}
+					}
+				}
+			}
 		}
 
 		// When existing FAQ meta data exists, build FAQPage schema from it

@@ -15,13 +15,18 @@ use Rtrs\Modules\Schema\Ajax\Migration;
 use Rtrs\Modules\Schema\Ajax\SchemaPreviewAjax;
 use Rtrs\Modules\Schema\Ajax\SchemaReportAjax;
 use Rtrs\Modules\Schema\Hooks\AggregateRatingInjector;
+use Rtrs\Modules\Schema\Hooks\DuplicateEntityFilter;
 use Rtrs\Modules\Schema\Hooks\ElementorFaq;
 use Rtrs\Modules\Schema\Hooks\GutenbergFaq;
 use Rtrs\Modules\Schema\Hooks\SeoHooks;
 use Rtrs\Modules\Schema\Hooks\FaqPageFrontend;
 use Rtrs\Modules\Schema\Hooks\FaqPageSchema;
 use Rtrs\Modules\Schema\Hooks\MediaSchemaLinker;
+use Rtrs\Modules\Schema\Hooks\NullValueStripper;
 use Rtrs\Modules\Schema\Hooks\SchemaFrontend;
+use Rtrs\Modules\Seo\SeoInit;
+use Rtrs\Modules\Aeo\AeoInit;
+use Rtrs\Modules\Geo\GeoInit;
 use Rtrs\Traits\SingletonTrait;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -61,8 +66,13 @@ class SchemaInit {
 		GutenbergFaq::getInstance();
 		FaqPageSchema::getInstance();
 		MediaSchemaLinker::getInstance();
+		DuplicateEntityFilter::getInstance();
+		NullValueStripper::getInstance();
 		FaqPageFrontend::getInstance();
 		Migration::getInstance();
+		SeoInit::getInstance();
+		AeoInit::getInstance();
+		GeoInit::getInstance();
 
 		if ( is_admin() ) {
 			new SerpPreview();

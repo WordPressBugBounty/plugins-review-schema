@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.1-rc-1\n"
+"Project-Id-Version: SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.1-rc-1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/review-schema\n"
 "Last-Translator: \n"
 "Language-Team: French <fr@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: review-schema.php
-msgid "Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO"
-msgstr "Schema Engine AI – Balisage de schéma IA, avis et extraits enrichis pour le SEO"
+msgid "SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO"
+msgstr "SchemaEngine AI – Balisage de schéma IA, avis et extraits enrichis pour le SEO"
 
 #. Plugin URI of the plugin
 #: review-schema.php
@@ -793,16 +793,16 @@ msgid "Review Schema"
 msgstr "Review Schema"
 
 #: app/Controllers/Marketing/RenameNotice.php:126
-msgid "Schema Engine AI"
-msgstr "Schema Engine AI"
+msgid "SchemaEngine AI"
+msgstr "SchemaEngine AI"
 
 #: app/Controllers/Marketing/RenameNotice.php:128
 msgid "Same plugin, new name — supercharged with AI"
 msgstr "Même extension, nouveau nom — boostée par l'IA"
 
 #: app/Controllers/Marketing/RenameNotice.php:129
-msgid "Your reviews, schema settings, and data are preserved automatically. Schema Engine AI adds AI-powered schema generation, FAQ drafting, and real-time Rich Results validation on top of everything you already use."
-msgstr "Vos avis, réglages de schéma et données sont préservés automatiquement. Schema Engine AI ajoute la génération de schéma par IA, la rédaction de FAQ et la validation en temps réel des résultats enrichis en plus de tout ce que vous utilisez déjà."
+msgid "Your reviews, schema settings, and data are preserved automatically. SchemaEngine AI adds AI-powered schema generation, FAQ drafting, and real-time Rich Results validation on top of everything you already use."
+msgstr "Vos avis, réglages de schéma et données sont préservés automatiquement. SchemaEngine AI ajoute la génération de schéma par IA, la rédaction de FAQ et la validation en temps réel des résultats enrichis en plus de tout ce que vous utilisez déjà."
 
 #. translators: %d: discount percentage
 #: app/Controllers/Marketing/RenameNotice.php:133
@@ -825,8 +825,8 @@ msgstr "Offre de lancement"
 #. translators: %d: discount percentage
 #: app/Controllers/Marketing/RenameNotice.php:142
 #, php-format
-msgid "%d%% OFF Schema Engine AI Pro — limited time. Discount automatically applied at checkout."
-msgstr "%d%% DE RÉDUCTION sur Schema Engine AI Pro — durée limitée. Remise appliquée automatiquement à la caisse."
+msgid "%d%% OFF SchemaEngine AI Pro — limited time. Discount automatically applied at checkout."
+msgstr "%d%% DE RÉDUCTION sur SchemaEngine AI Pro — durée limitée. Remise appliquée automatiquement à la caisse."
 
 #: app/Controllers/Marketing/Review.php:64
 msgid "Enjoying SchemaEngine AI?"

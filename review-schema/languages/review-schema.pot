@@ -2,21 +2,21 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.0.4\n"
+"Project-Id-Version: SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO 3.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/review-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-22T07:24:13+00:00\n"
+"POT-Creation-Date: 2026-09-16T06:20:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: review-schema\n"
 
 #. Plugin Name of the plugin
 #: review-schema.php
-msgid "Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO"
+msgid "SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -39,323 +39,653 @@ msgstr ""
 msgid "https://radiustheme.com"
 msgstr ""
 
-#: app/AI/AIClient.php:119
+#: app/AI/AIClient.php:143
 msgid "AI API key is not configured. Add your provider API key in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:177
+#: app/AI/AIClient.php:201
 msgid "Your AI API key is invalid or expired. Update it in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:180
+#: app/AI/AIClient.php:204
 msgid "The AI provider denied access. Check your API key permissions and billing status in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:183
+#: app/AI/AIClient.php:207
 msgid "The selected AI model was not found. Choose a valid model in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:186
+#: app/AI/AIClient.php:210
 msgid "AI provider rate limit or quota exceeded. Check your plan/usage and try again shortly."
 msgstr ""
 
-#: app/AI/AIClient.php:190
+#: app/AI/AIClient.php:214
 msgid "The AI provider rejected the request. Check the selected model and Max Tokens in the AI settings."
 msgstr ""
 
-#: app/AI/AIClient.php:196
+#: app/AI/AIClient.php:220
 msgid "The AI provider is temporarily unavailable. Please try again in a moment."
 msgstr ""
 
 #. translators: %d: HTTP status code.
-#: app/AI/AIClient.php:200
+#: app/AI/AIClient.php:224
 #, php-format
 msgid "The AI request failed (HTTP %d)."
 msgstr ""
 
-#: app/AI/AIClient.php:325
+#: app/AI/AIClient.php:349
 msgid "Could not decode API response."
 msgstr ""
 
-#: app/AI/AIClient.php:331
-#: app/AI/AIClient.php:371
-#: app/AI/AIClient.php:460
+#: app/AI/AIClient.php:355
+#: app/AI/AIClient.php:395
+#: app/AI/AIClient.php:484
 msgid "AI response was truncated. Increase Max Tokens in the AI settings, or try a simpler schema type."
 msgstr ""
 
-#: app/AI/AIClient.php:342
+#: app/AI/AIClient.php:366
 msgid "AI returned an empty response."
 msgstr ""
 
 #. translators: %s: JSON error message
-#: app/AI/AIClient.php:522
+#: app/AI/AIClient.php:546
 #, php-format
 msgid "The AI returned data that could not be read (%s). Click Regenerate to try again, or raise Max Tokens in the AI settings if the schema is large."
 msgstr ""
 
-#: app/AI/AIInit.php:478
-#: app/AI/AIInit.php:682
-#: app/AI/AIInit.php:805
-#: app/AI/AIInit.php:938
-#: app/AI/AIInit.php:1145
+#: app/AI/AIInit.php:495
+msgid "Open SEO Report settings"
+msgstr ""
+
+#: app/AI/AIInit.php:498
+#: app/AI/AIInit.php:806
+#: app/AI/AIInit.php:1078
+#: app/AI/AIInit.php:1216
+#: app/AI/AIInit.php:1403
 #: app/Controllers/Admin/AdminSettings.php:144
 #: app/Controllers/Admin/AdminSettings.php:145
-#: app/Helpers/Functions.php:1851
+#: app/Helpers/Functions.php:2084
 #: templates/partials/attachment.php:61
 msgid "SchemaEngine AI"
 msgstr ""
 
-#: app/AI/AIInit.php:479
+#: app/AI/AIInit.php:499
 msgid "Structured data powered by AI"
 msgstr ""
 
-#: app/AI/AIInit.php:482
+#: app/AI/AIInit.php:502
 msgid "No schema generated"
 msgstr ""
 
-#: app/AI/AIInit.php:483
+#: app/AI/AIInit.php:503
 msgid "Analyzing content"
 msgstr ""
 
-#: app/AI/AIInit.php:484
+#: app/AI/AIInit.php:504
+msgid "Saving page"
+msgstr ""
+
+#: app/AI/AIInit.php:505
 msgid "Generated — not saved yet"
 msgstr ""
 
-#: app/AI/AIInit.php:485
+#: app/AI/AIInit.php:506
 msgid "Schema active"
 msgstr ""
 
-#: app/AI/AIInit.php:488
-#: app/AI/AIInit.php:639
-#: app/AI/AIInit.php:1041
-#: app/AI/AIInit.php:1278
-#: app/AI/AIInit.php:1355
+#: app/AI/AIInit.php:509
+#: app/AI/AIInit.php:738
+#: app/AI/AIInit.php:1585
 msgid "Auto-detect (AI)"
 msgstr ""
 
-#: app/AI/AIInit.php:489
+#: app/AI/AIInit.php:510
 msgid "Select schema type..."
 msgstr ""
 
-#: app/AI/AIInit.php:490
+#: app/AI/AIInit.php:511
 msgid "Select at least one schema type to generate."
 msgstr ""
 
-#: app/AI/AIInit.php:491
+#: app/AI/AIInit.php:512
 msgid "Remove"
 msgstr ""
 
-#: app/AI/AIInit.php:492
+#: app/AI/AIInit.php:513
 msgid "Clear all"
 msgstr ""
 
-#: app/AI/AIInit.php:493
+#: app/AI/AIInit.php:514
 msgid "Search schema types..."
 msgstr ""
 
-#: app/AI/AIInit.php:494
+#: app/AI/AIInit.php:515
 msgid "No matching schema types"
 msgstr ""
 
-#: app/AI/AIInit.php:495
+#: app/AI/AIInit.php:516
 #: views/settings/schema-archive-settings.php:22
 #: views/settings/schema-post_types-settings.php:25
 msgid "Schema Type"
 msgstr ""
 
-#: app/AI/AIInit.php:498
+#: app/AI/AIInit.php:519
 msgid "Generate Schema"
 msgstr ""
 
-#: app/AI/AIInit.php:499
+#: app/AI/AIInit.php:520
 msgid "Regenerate Schema"
 msgstr ""
 
-#: app/AI/AIInit.php:500
+#: app/AI/AIInit.php:521
 msgid "Generating"
 msgstr ""
 
-#: app/AI/AIInit.php:503
+#: app/AI/AIInit.php:524
 msgid "Generate FAQ Content"
 msgstr ""
 
-#: app/AI/AIInit.php:504
+#: app/AI/AIInit.php:525
 msgid "FAQ content inserted into editor."
 msgstr ""
 
-#: app/AI/AIInit.php:505
+#: app/AI/AIInit.php:526
 msgid "FAQ generation failed."
 msgstr ""
 
-#: app/AI/AIInit.php:506
+#: app/AI/AIInit.php:527
 msgid "Review Generated FAQ"
 msgstr ""
 
-#: app/AI/AIInit.php:507
+#: app/AI/AIInit.php:528
 msgid "Insert FAQ"
 msgstr ""
 
-#: app/AI/AIInit.php:508
-msgid "FAQ saved to metabox."
+#: app/AI/AIInit.php:529
+msgid "FAQ added to the editor. Click Update to save the page."
 msgstr ""
 
-#: app/AI/AIInit.php:511
-msgid "This will regenerate the schema and replace the current one. Continue?"
-msgstr ""
-
-#: app/AI/AIInit.php:512
-msgid "Schema generated. Review and click \"Save Schema\"."
-msgstr ""
-
-#: app/AI/AIInit.php:513
-msgid "Generation failed."
-msgstr ""
-
-#: app/AI/AIInit.php:514
-msgid "Schema saved successfully!"
-msgstr ""
-
-#: app/AI/AIInit.php:515
-msgid "Save failed."
-msgstr ""
-
-#: app/AI/AIInit.php:516
-msgid "Delete all schema data for this post?"
-msgstr ""
-
-#: app/AI/AIInit.php:517
-msgid "Schema deleted."
-msgstr ""
-
-#: app/AI/AIInit.php:518
-msgid "Invalid JSON. Please fix syntax errors."
-msgstr ""
-
-#: app/AI/AIInit.php:519
-msgid "Schema saved!"
-msgstr ""
-
-#: app/AI/AIInit.php:522
-msgid "Copied to clipboard!"
-msgstr ""
-
-#: app/AI/AIInit.php:525
-msgid "AI-generated schema is stored in the database. Editing post content will not update the schema automatically. Click \"Regenerate Schema\" to update it."
-msgstr ""
-
-#: app/AI/AIInit.php:526
-msgid "API key not configured."
-msgstr ""
-
-#: app/AI/AIInit.php:527
-msgid "Configure now"
-msgstr ""
-
-#: app/AI/AIInit.php:528
-msgid "Open AI Settings"
+#: app/AI/AIInit.php:530
+#: app/Modules/Schema/Hooks/ElementorFaq.php:272
+#: views/metas/single/faqpage-frontend.php:28
+msgid "Frequently Asked Questions"
 msgstr ""
 
 #: app/AI/AIInit.php:531
-msgid "JSON-LD Schema"
+#: app/Modules/Schema/Hooks/ElementorFaq.php:273
+msgid "We've gathered the questions people ask most and answered them clearly below. Take a moment to browse through them to better understand how everything works and what to expect. If you still can't find what you're looking for, don't hesitate to reach out — our team is always happy to help."
 msgstr ""
 
 #: app/AI/AIInit.php:532
-#: app/Modules/Review/Ajax/ReviewAjax.php:581
-#: app/Modules/Review/Ajax/ReviewAjax.php:951
+msgid "FAQ saved to metabox."
+msgstr ""
+
+#: app/AI/AIInit.php:535
+msgid "This will regenerate the schema and replace the current one. Continue?"
+msgstr ""
+
+#: app/AI/AIInit.php:536
+msgid "Schema generated. Review and click \"Save Schema\"."
+msgstr ""
+
+#: app/AI/AIInit.php:537
+msgid "Generation failed."
+msgstr ""
+
+#: app/AI/AIInit.php:538
+msgid "Schema saved successfully!"
+msgstr ""
+
+#: app/AI/AIInit.php:539
+msgid "Save failed."
+msgstr ""
+
+#: app/AI/AIInit.php:540
+msgid "Delete all schema data for this post?"
+msgstr ""
+
+#: app/AI/AIInit.php:541
+msgid "Schema deleted."
+msgstr ""
+
+#: app/AI/AIInit.php:542
+msgid "Invalid JSON. Please fix syntax errors."
+msgstr ""
+
+#: app/AI/AIInit.php:543
+msgid "Schema saved!"
+msgstr ""
+
+#: app/AI/AIInit.php:546
+msgid "Copied to clipboard!"
+msgstr ""
+
+#: app/AI/AIInit.php:549
+msgid "AI-generated schema is stored in the database. Editing post content will not update the schema automatically. Click \"Regenerate Schema\" to update it."
+msgstr ""
+
+#: app/AI/AIInit.php:550
+msgid "API key not configured."
+msgstr ""
+
+#: app/AI/AIInit.php:551
+msgid "Configure now"
+msgstr ""
+
+#: app/AI/AIInit.php:552
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:268
+msgid "Open AI Settings"
+msgstr ""
+
+#: app/AI/AIInit.php:555
+msgid "JSON-LD Schema"
+msgstr ""
+
+#: app/AI/AIInit.php:556
+#: app/Controllers/Admin/ScriptLoader.php:86
+#: app/Modules/Review/Ajax/ReviewAjax.php:613
+#: app/Modules/Review/Ajax/ReviewAjax.php:983
 msgid "Close"
 msgstr ""
 
-#: app/AI/AIInit.php:533
+#: app/AI/AIInit.php:557
 msgid "Preview"
 msgstr ""
 
-#: app/AI/AIInit.php:534
-#: app/AI/AIInit.php:554
-#: app/Modules/Review/Admin/ReviewSettings.php:208
+#: app/AI/AIInit.php:558
+#: app/AI/AIInit.php:641
+#: app/Modules/Review/Admin/ReviewSettings.php:211
 #: app/Modules/Review/Admin/ReviewTable.php:420
 #: app/Modules/Review/Scripts/ReviewScriptLoader.php:99
 msgid "Edit"
 msgstr ""
 
-#: app/AI/AIInit.php:535
+#: app/AI/AIInit.php:559
 #: app/Models/Field.php:857
 msgid "Pro"
 msgstr ""
 
-#: app/AI/AIInit.php:536
+#: app/AI/AIInit.php:560
 msgid "Pro feature"
 msgstr ""
 
-#: app/AI/AIInit.php:537
-msgid "Copy"
+#: app/AI/AIInit.php:561
+#: app/Controllers/Admin/Meta/AddMetaBox.php:86
+#: app/Controllers/Admin/ScriptLoader.php:78
+msgid "Generate with AI"
 msgstr ""
 
-#: app/AI/AIInit.php:538
-msgid "Test"
+#: app/AI/AIInit.php:562
+msgid "Apply title with AI"
 msgstr ""
 
-#: app/AI/AIInit.php:539
-#: app/Modules/Review/Helpers/ReviewFns.php:486
+#: app/AI/AIInit.php:563
+msgid "Apply meta with AI"
+msgstr ""
+
+#: app/AI/AIInit.php:564
+msgid "Refining…"
+msgstr ""
+
+#: app/AI/AIInit.php:565
+msgid "Improve with AI"
+msgstr ""
+
+#: app/AI/AIInit.php:566
+msgid "Configure"
+msgstr ""
+
+#: app/AI/AIInit.php:567
+#: app/AI/AIInit.php:626
+#: app/Controllers/Admin/ScriptLoader.php:93
+#: app/Modules/Review/Helpers/ReviewFns.php:543
 msgid "Cancel"
 msgstr ""
 
-#: app/AI/AIInit.php:540
-msgid "Save Changes"
+#: app/AI/AIInit.php:568
+msgid "AI is not configured"
 msgstr ""
 
-#: app/AI/AIInit.php:541
-msgid "Save Schema"
+#: app/AI/AIInit.php:569
+msgid "Enable AI and add a provider API key in the plugin settings to use AI features."
 msgstr ""
 
-#: app/AI/AIInit.php:542
-msgid "lines"
+#: app/AI/AIInit.php:570
+msgid "This is a Pro feature — upgrade to use it."
 msgstr ""
 
-#: app/AI/AIInit.php:543
-msgid "schema(s)"
+#: app/AI/AIInit.php:571
+msgid "Enable AI and add a provider API key in the plugin settings."
 msgstr ""
 
-#: app/AI/AIInit.php:546
-msgid "AI Confidence"
+#: app/AI/AIInit.php:572
+#: app/AI/AIInit.php:618
+#: app/Controllers/Admin/ScriptLoader.php:119
+msgid "Copy"
 msgstr ""
 
-#: app/AI/AIInit.php:547
-msgid "Detected Schema Types"
+#: app/AI/AIInit.php:573
+msgid "Copied"
 msgstr ""
 
-#: app/AI/AIInit.php:548
-msgid "Valid Schema"
+#: app/AI/AIInit.php:574
+#: app/Controllers/Admin/ScriptLoader.php:79
+msgid "Review with AI"
 msgstr ""
 
-#: app/AI/AIInit.php:549
-msgid "Validation Issues"
+#: app/AI/AIInit.php:575
+#: app/Controllers/Admin/ScriptLoader.php:80
+msgid "Refresh AI review"
 msgstr ""
 
-#: app/AI/AIInit.php:550
-msgid "Quality Score"
+#: app/AI/AIInit.php:576
+#: app/Controllers/Admin/ScriptLoader.php:81
+msgid "Remove AI review"
 msgstr ""
 
-#: app/AI/AIInit.php:553
-msgid "View"
+#: app/AI/AIInit.php:577
+#: app/Controllers/Admin/ScriptLoader.php:82
+msgid "Reviewing…"
 msgstr ""
 
-#: app/AI/AIInit.php:555
+#: app/AI/AIInit.php:578
+#: app/Controllers/Admin/ScriptLoader.php:83
+msgid "AI reviewed"
+msgstr ""
+
+#: app/AI/AIInit.php:579
+msgid "Open the \"Search Engine Listing\" section, then generate again."
+msgstr ""
+
+#: app/AI/AIInit.php:580
+msgid "SEO title"
+msgstr ""
+
+#: app/AI/AIInit.php:581
+#: app/AI/AIInit.php:599
+#: app/Controllers/Admin/ScriptLoader.php:101
+msgid "Meta description"
+msgstr ""
+
+#: app/AI/AIInit.php:582
+#: app/Controllers/Admin/ScriptLoader.php:84
+msgid "AI review notes"
+msgstr ""
+
+#: app/AI/AIInit.php:583
+#: app/Controllers/Admin/ScriptLoader.php:85
+msgid "AI review failed"
+msgstr ""
+
+#: app/AI/AIInit.php:584
+#: app/Controllers/Admin/ScriptLoader.php:88
+msgid "Saving…"
+msgstr ""
+
+#: app/AI/AIInit.php:585
+msgid "Saved"
+msgstr ""
+
+#: app/AI/AIInit.php:586
+#: app/AI/AIInit.php:642
+#: app/Controllers/Admin/ScriptLoader.php:90
 msgid "Discard"
 msgstr ""
 
-#: app/AI/AIInit.php:556
+#: app/AI/AIInit.php:587
+#: app/Controllers/Admin/ScriptLoader.php:89
+#: app/Modules/Review/Admin/ReviewSettings.php:157
+msgid "Save"
+msgstr ""
+
+#: app/AI/AIInit.php:590
+#: app/Controllers/Admin/ScriptLoader.php:91
+msgid "Confirm change"
+msgstr ""
+
+#: app/AI/AIInit.php:591
+#: app/Controllers/Admin/ScriptLoader.php:92
+msgid "Confirm"
+msgstr ""
+
+#: app/AI/AIInit.php:592
+#: app/Controllers/Admin/ScriptLoader.php:94
+msgid "Current value"
+msgstr ""
+
+#: app/AI/AIInit.php:593
+#: app/Controllers/Admin/ScriptLoader.php:95
+msgid "New value"
+msgstr ""
+
+#: app/AI/AIInit.php:594
+#: app/Controllers/Admin/ScriptLoader.php:96
+msgid "Saves to"
+msgstr ""
+
+#: app/AI/AIInit.php:595
+#: app/Controllers/Admin/ScriptLoader.php:97
+msgid "Post title"
+msgstr ""
+
+#: app/AI/AIInit.php:596
+#: app/Controllers/Admin/ScriptLoader.php:98
+msgid "Yoast SEO title"
+msgstr ""
+
+#: app/AI/AIInit.php:597
+#: app/Controllers/Admin/ScriptLoader.php:99
+msgid "Rank Math SEO title"
+msgstr ""
+
+#: app/AI/AIInit.php:598
+#: app/Controllers/Admin/ScriptLoader.php:100
+msgid "SEO meta title"
+msgstr ""
+
+#: app/AI/AIInit.php:600
+#: app/Controllers/Admin/ScriptLoader.php:102
+msgid "Focus keyword"
+msgstr ""
+
+#: app/AI/AIInit.php:601
+#: app/Controllers/Admin/ScriptLoader.php:103
+msgid "Focus keyword saved."
+msgstr ""
+
+#: app/AI/AIInit.php:602
+#: app/Controllers/Admin/ScriptLoader.php:104
+msgid "Post title updated."
+msgstr ""
+
+#: app/AI/AIInit.php:603
+#: app/Controllers/Admin/ScriptLoader.php:105
+msgid "Yoast SEO title updated."
+msgstr ""
+
+#: app/AI/AIInit.php:604
+#: app/Controllers/Admin/ScriptLoader.php:106
+msgid "Rank Math SEO title updated."
+msgstr ""
+
+#: app/AI/AIInit.php:605
+#: app/Controllers/Admin/ScriptLoader.php:107
+msgid "SEO meta title updated."
+msgstr ""
+
+#: app/AI/AIInit.php:606
+#: app/Controllers/Admin/ScriptLoader.php:108
+msgid "Meta description updated."
+msgstr ""
+
+#: app/AI/AIInit.php:607
+#: app/Controllers/Admin/ScriptLoader.php:109
+msgid "Also update the post title"
+msgstr ""
+
+#: app/AI/AIInit.php:608
+#: app/Controllers/Admin/ScriptLoader.php:110
+msgid "SEO title and post title updated."
+msgstr ""
+
+#: app/AI/AIInit.php:609
+#: app/Controllers/Admin/ScriptLoader.php:111
+msgid "First paragraph updated in the editor — click Update to save."
+msgstr ""
+
+#: app/AI/AIInit.php:610
+#: app/Controllers/Admin/ScriptLoader.php:112
+msgid "Subheading updated in the editor — click Update to save."
+msgstr ""
+
+#: app/AI/AIInit.php:611
+#: app/Controllers/Admin/ScriptLoader.php:113
+msgid "Paragraph updated to reduce keyword repetition — click Update to save."
+msgstr ""
+
+#: app/AI/AIInit.php:612
+#: app/Controllers/Admin/ScriptLoader.php:114
+msgid "Apply subheading"
+msgstr ""
+
+#: app/AI/AIInit.php:613
+msgid "New subheading"
+msgstr ""
+
+#: app/AI/AIInit.php:614
+#: app/Controllers/Admin/ScriptLoader.php:115
+msgid "Replaces this subheading"
+msgstr ""
+
+#: app/AI/AIInit.php:615
+#: app/Controllers/Admin/ScriptLoader.php:116
+msgid "Replace subheading"
+msgstr ""
+
+#: app/AI/AIInit.php:616
+#: app/Controllers/Admin/ScriptLoader.php:117
+msgid "No subheading found in your content. Copy the text and paste it where you want a heading."
+msgstr ""
+
+#: app/AI/AIInit.php:617
+#: app/Controllers/Admin/ScriptLoader.php:118
+msgid "Copied — paste it where you need it."
+msgstr ""
+
+#: app/AI/AIInit.php:619
+#: app/Controllers/Admin/ScriptLoader.php:120
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#. translators: %s: qualitative impact level (High, Medium, or Low).
+#: app/AI/AIInit.php:621
+#: app/Controllers/Admin/ScriptLoader.php:122
+#, php-format
+msgid "Estimated impact: %s"
+msgstr ""
+
+#: app/AI/AIInit.php:622
+#: app/Controllers/Admin/ScriptLoader.php:123
+msgid "High"
+msgstr ""
+
+#: app/AI/AIInit.php:623
+#: app/Controllers/Admin/ScriptLoader.php:124
+msgid "Medium"
+msgstr ""
+
+#: app/AI/AIInit.php:624
+#: app/Controllers/Admin/ScriptLoader.php:125
+msgid "Low"
+msgstr ""
+
+#: app/AI/AIInit.php:625
+msgid "Test"
+msgstr ""
+
+#: app/AI/AIInit.php:627
+msgid "Save Changes"
+msgstr ""
+
+#: app/AI/AIInit.php:628
+msgid "Save Schema"
+msgstr ""
+
+#: app/AI/AIInit.php:629
+msgid "lines"
+msgstr ""
+
+#: app/AI/AIInit.php:630
+msgid "schema(s)"
+msgstr ""
+
+#: app/AI/AIInit.php:633
+msgid "AI Confidence"
+msgstr ""
+
+#: app/AI/AIInit.php:634
+msgid "Detected Schema Types"
+msgstr ""
+
+#: app/AI/AIInit.php:635
+msgid "Valid Schema"
+msgstr ""
+
+#: app/AI/AIInit.php:636
+msgid "Validation Issues"
+msgstr ""
+
+#: app/AI/AIInit.php:637
+msgid "Quality Score"
+msgstr ""
+
+#: app/AI/AIInit.php:640
+msgid "View"
+msgstr ""
+
+#: app/AI/AIInit.php:643
 msgid "Delete Schema"
 msgstr ""
 
-#: app/AI/AIInit.php:557
+#: app/AI/AIInit.php:644
 msgid "Test in Google Rich Results"
+msgstr ""
+
+#: app/AI/AIInit.php:647
+#: app/Controllers/Admin/AdminSettings.php:580
+#: views/settings/seo_report-settings.php:22
+msgid "SEO Report"
+msgstr ""
+
+#: app/AI/AIInit.php:648
+msgid "Refresh"
+msgstr ""
+
+#: app/AI/AIInit.php:649
+msgid "Content Analysis"
+msgstr ""
+
+#: app/AI/AIInit.php:650
+msgid "No SEO data available. Save the page, then refresh."
+msgstr ""
+
+#: app/AI/AIInit.php:651
+msgid "Suggestions"
+msgstr ""
+
+#: app/AI/AIInit.php:652
+msgid "issue(s)"
+msgstr ""
+
+#: app/AI/AIInit.php:653
+msgid "Set a focus keyword to score this dimension."
 msgstr ""
 
 #: app/AI/ContentExtractor.php:62
 #: app/AI/ContentExtractor.php:1558
 #: app/Modules/Schema/Ajax/SchemaPreviewAjax.php:69
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:68
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:104
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:71
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:134
 msgid "Post not found."
 msgstr ""
 
@@ -368,76 +698,76 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: app/AI/RestApi.php:189
+#: app/AI/RestApi.php:230
 msgid "Manually selected by user."
 msgstr ""
 
-#: app/AI/RestApi.php:197
+#: app/AI/RestApi.php:238
 msgid "Auto-detect requires Pro. Please select at least one schema type."
 msgstr ""
 
 #. translators: %s: Schema type name
-#: app/AI/RestApi.php:216
+#: app/AI/RestApi.php:257
 #, php-format
 msgid "%s schema generation requires Pro."
 msgstr ""
 
 #. translators: %s: Schema type name
-#: app/AI/RestApi.php:289
+#: app/AI/RestApi.php:335
 #, php-format
 msgid "AI could not generate %s schema from the available content. Please try again."
 msgstr ""
 
-#: app/AI/RestApi.php:337
+#: app/AI/RestApi.php:405
 msgid "Editing schema requires the Pro version."
 msgstr ""
 
-#: app/AI/RestApi.php:348
+#: app/AI/RestApi.php:416
 msgid "No schema data provided."
 msgstr ""
 
-#: app/AI/RestApi.php:482
+#: app/AI/RestApi.php:550
 msgid "Completeness"
 msgstr ""
 
-#: app/AI/RestApi.php:483
+#: app/AI/RestApi.php:551
 msgid "Rich Results"
 msgstr ""
 
-#: app/AI/RestApi.php:484
+#: app/AI/RestApi.php:552
 msgid "Cross-References"
 msgstr ""
 
-#: app/AI/RestApi.php:485
+#: app/AI/RestApi.php:553
 msgid "Content Depth"
 msgstr ""
 
-#: app/AI/RestApi.php:486
+#: app/AI/RestApi.php:554
 msgid "Identifiers"
 msgstr ""
 
-#: app/AI/RestApi.php:487
+#: app/AI/RestApi.php:555
 msgid "Graph Structure"
 msgstr ""
 
-#: app/AI/RestApi.php:509
+#: app/AI/RestApi.php:577
 msgid "No FAQ data provided."
 msgstr ""
 
-#: app/AI/RestApi.php:531
+#: app/AI/RestApi.php:599
 msgid "FAQ data is invalid or empty."
 msgstr ""
 
-#: app/AI/RestApi.php:546
+#: app/AI/RestApi.php:614
 msgid "FAQ data saved."
 msgstr ""
 
-#: app/AI/RestApi.php:597
-#: app/AI/RestApi.php:618
+#: app/AI/RestApi.php:665
+#: app/AI/RestApi.php:686
 msgid "AI could not generate FAQ content from the available content. Please try again."
 msgstr ""
 
-#: app/AI/RestApi.php:643
+#: app/AI/RestApi.php:711
 msgid "Schema data deleted."
 msgstr ""
 
@@ -478,7 +808,7 @@ msgstr ""
 
 #: app/Controllers/Admin/AdminSettings.php:157
 #: app/Controllers/Admin/AdminSettings.php:158
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:318
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:329
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:361
 #: app/Modules/Review/Elementor/WidgetBase.php:622
 #: app/Modules/Review/Elementor/Widgets/AffiliateReview.php:67
@@ -559,92 +889,86 @@ msgstr ""
 msgid "WooCommerce variations into images, colors, labels, and radios."
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:485
-#: views/settings/schema-settings.php:33
+#: app/Controllers/Admin/AdminSettings.php:472
+#: views/settings/schema-settings.php:89
 msgid "Site Info"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:491
+#: app/Controllers/Admin/AdminSettings.php:478
 #: views/settings/schema-social_profiles-settings.php:12
 msgid "Social Profiles"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:497
+#: app/Controllers/Admin/AdminSettings.php:484
 #: views/settings/schema-sub_organization-settings.php:12
 #: views/settings/schema-sub_organization-settings.php:18
 msgid "Sub Organization"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:503
+#: app/Controllers/Admin/AdminSettings.php:490
 #: views/settings/schema-corporate_contacts-settings.php:13
 msgid "Corporate Contacts"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:509
+#: app/Controllers/Admin/AdminSettings.php:496
 msgid "Post Type Mapping"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:515
+#: app/Controllers/Admin/AdminSettings.php:502
 msgid "Archive Page"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:526
+#: app/Controllers/Admin/AdminSettings.php:513
 msgid "Third Party Conflict"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:545
+#: app/Controllers/Admin/AdminSettings.php:532
 #: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:177
 #: app/Modules/Review/Admin/RegisterPostType.php:69
 msgid "Review Settings"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:550
+#: app/Controllers/Admin/AdminSettings.php:537
 msgid "Media"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:555
+#: app/Controllers/Admin/AdminSettings.php:542
 msgid "Misc"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:578
-#: app/Models/SettingsAPI.php:159
-#: app/Modules/Review/Admin/ReviewTable.php:745
-msgid "Action failed. Please refresh the page and retry."
-msgstr ""
-
-#: app/Controllers/Admin/AdminSettings.php:583
-msgid "Your settings have been saved."
-msgstr ""
-
-#: app/Controllers/Admin/AdminSettings.php:596
+#: app/Controllers/Admin/AdminSettings.php:559
 msgid "General"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:600
-#: app/Controllers/Admin/Meta/AddMetaBox.php:80
+#: app/Controllers/Admin/AdminSettings.php:563
 msgid "Schema"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:604
+#: app/Controllers/Admin/AdminSettings.php:567
 #: views/settings/schema_ecommerce-settings.php:16
 msgid "E-Commerce"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:609
+#: app/Controllers/Admin/AdminSettings.php:572
 msgid "AI Settings"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:613
+#: app/Controllers/Admin/AdminSettings.php:576
 #: app/Controllers/Admin/Meta/AddMetaBox.php:75
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:317
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:328
 #: app/Modules/Review/Admin/ReviewTable.php:23
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1592
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1926
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2951
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1969
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2994
 msgid "Review"
 msgstr ""
 
-#: app/Controllers/Admin/AdminSettings.php:619
+#: app/Controllers/Admin/AdminSettings.php:587
+#: views/settings/tools-settings.php:13
+msgid "Licensing"
+msgstr ""
+
+#: app/Controllers/Admin/AdminSettings.php:593
 #: views/settings/migration-settings.php:12
 msgid "Migration"
 msgstr ""
@@ -657,16 +981,16 @@ msgstr ""
 msgid "FAQ Content"
 msgstr ""
 
+#: app/Controllers/Admin/Meta/AddMetaBox.php:80
+msgid "Schema and SEO Score"
+msgstr ""
+
 #: app/Controllers/Admin/Meta/AddMetaBox.php:82
 msgid "Schema Preview"
 msgstr ""
 
 #: app/Controllers/Admin/Meta/AddMetaBox.php:83
 msgid "SERP"
-msgstr ""
-
-#: app/Controllers/Admin/Meta/AddMetaBox.php:86
-msgid "Generate with AI"
 msgstr ""
 
 #: app/Controllers/Admin/Meta/AddMetaBox.php:103
@@ -678,20 +1002,20 @@ msgid "Schema Is Not Enabled."
 msgstr ""
 
 #: app/Controllers/Admin/Meta/AddMetaBox.php:116
-#: app/Controllers/Admin/ScriptLoader.php:85
+#: app/Controllers/Admin/ScriptLoader.php:140
 msgid "Schema is generated by AI. Please check the AI panel to view or edit."
 msgstr ""
 
 #: app/Controllers/Admin/Meta/AddMetaBox.php:117
-#: app/Controllers/Admin/ScriptLoader.php:86
+#: app/Controllers/Admin/ScriptLoader.php:141
 msgid "After deleting AI data, manual generation fields will be visible."
 msgstr ""
 
-#: app/Controllers/Admin/Meta/AddMetaBox.php:154
+#: app/Controllers/Admin/Meta/AddMetaBox.php:156
 msgid "Use the SchemaEngine AI panel in the right sidebar to auto-generate structured data for this post."
 msgstr ""
 
-#: app/Controllers/Admin/Meta/AddMetaBox.php:380
+#: app/Controllers/Admin/Meta/AddMetaBox.php:391
 msgid "Regular Price cannot be less than Offer Price. The values have been swapped automatically."
 msgstr ""
 
@@ -703,52 +1027,55 @@ msgstr ""
 msgid "Please open a support ticket."
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:75
+#: app/Controllers/Admin/ScriptLoader.php:87
+msgid "Generating…"
+msgstr ""
+
+#: app/Controllers/Admin/ScriptLoader.php:130
 #: app/Modules/Review/Scripts/ReviewScriptLoader.php:102
 msgid "Are you sure to delete?"
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:76
+#: app/Controllers/Admin/ScriptLoader.php:131
 msgid "3 criteria field are allowed for free version."
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:77
+#: app/Controllers/Admin/ScriptLoader.php:132
 msgid "3 pros field are allowed for free version."
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:78
+#: app/Controllers/Admin/ScriptLoader.php:133
 msgid "3 cons field are allowed for free version."
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:79
+#: app/Controllers/Admin/ScriptLoader.php:134
 msgid "Multiple schema are not allowed in free version."
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:80
-#: app/Modules/Review/Ajax/ReviewAjax.php:656
-#: app/Modules/Review/Ajax/ReviewAjax.php:664
-#: app/Modules/Review/Ajax/ReviewAjax.php:682
-#: app/Modules/Review/Ajax/ReviewAjax.php:690
+#: app/Controllers/Admin/ScriptLoader.php:135
+#: app/Modules/Review/Ajax/ReviewAjax.php:688
+#: app/Modules/Review/Ajax/ReviewAjax.php:696
+#: app/Modules/Review/Ajax/ReviewAjax.php:714
+#: app/Modules/Review/Ajax/ReviewAjax.php:722
 #: app/Modules/Review/Hooks/ReviewFrontend.php:783
 #: app/Modules/Review/Hooks/ReviewFrontend.php:795
 #: app/Modules/Review/Scripts/ReviewScriptLoader.php:107
 msgid "Write here!"
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:81
+#: app/Controllers/Admin/ScriptLoader.php:136
 msgid "At least one field require"
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:82
+#: app/Controllers/Admin/ScriptLoader.php:137
 msgid "3 criteria rating field are allowed for free version."
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:83
-#: app/Models/SettingsAPI.php:823
+#: app/Controllers/Admin/ScriptLoader.php:138
 msgid "Remove Image"
 msgstr ""
 
-#: app/Controllers/Admin/ScriptLoader.php:84
+#: app/Controllers/Admin/ScriptLoader.php:139
 msgid "Analyzing schema…"
 msgstr ""
 
@@ -817,302 +1144,256 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#. translators: 1: previous plugin name wrapped in a span, 2: new plugin name wrapped in a span
-#: app/Controllers/Marketing/RenameNotice.php:149
-#, php-format
-msgid "%1$s is now %2$s"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:150
-#: app/Modules/Review/Admin/RegisterPostType.php:84
-#: app/Modules/Review/Admin/RegisterPostType.php:85
-#: app/Modules/Review/Elementor/ElementorInit.php:35
-msgid "Review Schema"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:151
-msgid "Schema Engine AI"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:153
-msgid "Same plugin, new name — supercharged with AI"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:154
-msgid "Your reviews, schema settings, and data are preserved automatically. Schema Engine AI adds AI-powered schema generation, FAQ drafting, and real-time Rich Results validation on top of everything you already use."
-msgstr ""
-
-#. translators: %d: discount percentage
-#: app/Controllers/Marketing/RenameNotice.php:158
-#, php-format
-msgid "Get %d%% OFF Pro"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:161
-msgid "Learn What's New"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:162
-msgid "Got it, dismiss"
-msgstr ""
-
-#: app/Controllers/Marketing/RenameNotice.php:164
-msgid "Re-Launch deal"
-msgstr ""
-
-#. translators: %d: discount percentage
-#: app/Controllers/Marketing/RenameNotice.php:167
-#, php-format
-msgid "%d%% OFF Schema Engine AI Pro — limited time. Discount automatically applied at checkout."
-msgstr ""
-
-#: app/Controllers/Marketing/Review.php:64
+#: app/Controllers/Marketing/Review.php:73
 msgid "Enjoying SchemaEngine AI?"
 msgstr ""
 
-#: app/Controllers/Marketing/Review.php:65
+#: app/Controllers/Marketing/Review.php:74
 msgid "Thank you for choosing SchemaEngine AI. If you have found our plugin useful and makes you smile, please consider giving us a 5-star rating on WordPress.org. It will help us to grow."
 msgstr ""
 
-#: app/Controllers/Marketing/Review.php:66
+#: app/Controllers/Marketing/Review.php:75
 msgid "⭐ Yes, You Deserve It!"
 msgstr ""
 
-#: app/Controllers/Marketing/Review.php:67
+#: app/Controllers/Marketing/Review.php:76
 msgid "😀 Already Rated!"
 msgstr ""
 
-#: app/Controllers/Marketing/Review.php:68
+#: app/Controllers/Marketing/Review.php:77
 msgid "🔔 Remind Me Later"
 msgstr ""
 
-#: app/Controllers/Marketing/Review.php:69
+#: app/Controllers/Marketing/Review.php:78
 msgid "😐 No Thanks"
 msgstr ""
 
-#: app/Controllers/Marketing/Review.php:74
+#: app/Controllers/Marketing/Review.php:83
 msgid "Dismiss this notice"
 msgstr ""
 
 #. translators: %s: template file name
-#: app/Helpers/Functions.php:255
+#: app/Helpers/Functions.php:286
 #, php-format
 msgid "%s does not exist."
 msgstr ""
 
-#: app/Helpers/Functions.php:723
+#: app/Helpers/Functions.php:758
 msgid "--Select Schema Type--"
 msgstr ""
 
-#: app/Helpers/Functions.php:724
-#: app/Helpers/Functions.php:771
+#: app/Helpers/Functions.php:759
+#: app/Helpers/Functions.php:806
 #: views/settings/schema-archive-settings.php:27
 msgid "Article"
 msgstr ""
 
-#: app/Helpers/Functions.php:725
+#: app/Helpers/Functions.php:760
 msgid "Article - News Article"
 msgstr ""
 
-#: app/Helpers/Functions.php:726
+#: app/Helpers/Functions.php:761
 msgid "Tech Article"
 msgstr ""
 
-#: app/Helpers/Functions.php:727
+#: app/Helpers/Functions.php:762
 msgid "Article - Blog posting"
 msgstr ""
 
-#: app/Helpers/Functions.php:728
-#: app/Helpers/Functions.php:795
+#: app/Helpers/Functions.php:763
+#: app/Helpers/Functions.php:831
 msgid "Book"
 msgstr ""
 
-#: app/Helpers/Functions.php:729
-#: app/Helpers/Functions.php:775
+#: app/Helpers/Functions.php:764
+#: app/Helpers/Functions.php:810
 msgid "Event"
 msgstr ""
 
-#: app/Helpers/Functions.php:730
-#: app/Helpers/Functions.php:785
+#: app/Helpers/Functions.php:765
+#: app/Helpers/Functions.php:821
 #: views/settings/review-settings.php:113
 msgid "Video"
 msgstr ""
 
-#: app/Helpers/Functions.php:731
-#: app/Helpers/Functions.php:782
-#: views/settings/schema-settings.php:46
+#: app/Helpers/Functions.php:766
+#: app/Helpers/Functions.php:818
+#: views/settings/schema-settings.php:102
 msgid "Person"
 msgstr ""
 
-#: app/Helpers/Functions.php:732
-#: app/Helpers/Functions.php:777
+#: app/Helpers/Functions.php:767
+#: app/Helpers/Functions.php:813
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:519
 msgid "Service"
 msgstr ""
 
-#: app/Helpers/Functions.php:733
+#: app/Helpers/Functions.php:768
 msgid "Software Application"
 msgstr ""
 
-#: app/Helpers/Functions.php:734
+#: app/Helpers/Functions.php:769
 msgid "Job Posting"
 msgstr ""
 
-#: app/Helpers/Functions.php:736
-#: app/Helpers/Functions.php:802
+#: app/Helpers/Functions.php:771
+#: app/Helpers/Functions.php:838
 msgid "Restaurant"
 msgstr ""
 
-#: app/Helpers/Functions.php:737
-#: app/Helpers/Functions.php:794
+#: app/Helpers/Functions.php:772
+#: app/Helpers/Functions.php:830
 msgid "Product"
 msgstr ""
 
-#: app/Helpers/Functions.php:753
-#: app/Helpers/Functions.php:797
+#: app/Helpers/Functions.php:788
+#: app/Helpers/Functions.php:833
 msgid "Course"
 msgstr ""
 
-#: app/Helpers/Functions.php:772
+#: app/Helpers/Functions.php:807
 msgid "TechArticle"
 msgstr ""
 
-#: app/Helpers/Functions.php:773
+#: app/Helpers/Functions.php:808
 msgid "NewsArticle"
 msgstr ""
 
-#: app/Helpers/Functions.php:774
+#: app/Helpers/Functions.php:809
 msgid "BlogPosting"
 msgstr ""
 
-#: app/Helpers/Functions.php:776
+#: app/Helpers/Functions.php:811
+msgid "LocalBusiness"
+msgstr ""
+
+#: app/Helpers/Functions.php:812
 msgid "FAQPage"
 msgstr ""
 
-#: app/Helpers/Functions.php:778
+#: app/Helpers/Functions.php:814
 msgid "QAPage - formerly Q&A ( Deprecated ) Use FAQPage Schema"
 msgstr ""
 
-#: app/Helpers/Functions.php:779
+#: app/Helpers/Functions.php:815
 msgid "HowTo"
 msgstr ""
 
-#: app/Helpers/Functions.php:780
+#: app/Helpers/Functions.php:816
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:255
 msgid "About"
 msgstr ""
 
-#: app/Helpers/Functions.php:781
+#: app/Helpers/Functions.php:817
 msgid "Contact"
 msgstr ""
 
-#: app/Helpers/Functions.php:783
+#: app/Helpers/Functions.php:819
 msgid "Movie"
 msgstr ""
 
-#: app/Helpers/Functions.php:784
+#: app/Helpers/Functions.php:820
 msgid "Audio"
 msgstr ""
 
-#: app/Helpers/Functions.php:786
+#: app/Helpers/Functions.php:822
 msgid "Breadcrumb"
 msgstr ""
 
-#: app/Helpers/Functions.php:787
+#: app/Helpers/Functions.php:823
 msgid "Mosque"
 msgstr ""
 
-#: app/Helpers/Functions.php:788
+#: app/Helpers/Functions.php:824
 msgid "Church"
 msgstr ""
 
-#: app/Helpers/Functions.php:789
+#: app/Helpers/Functions.php:825
 msgid "HinduTemple"
 msgstr ""
 
-#: app/Helpers/Functions.php:790
+#: app/Helpers/Functions.php:826
 msgid "BuddhistTemple"
 msgstr ""
 
-#: app/Helpers/Functions.php:791
+#: app/Helpers/Functions.php:827
 msgid "TouristAttraction"
 msgstr ""
 
-#: app/Helpers/Functions.php:792
+#: app/Helpers/Functions.php:828
 msgid "ProfilePage"
 msgstr ""
 
-#: app/Helpers/Functions.php:793
+#: app/Helpers/Functions.php:829
 msgid "MedicalWebPage"
 msgstr ""
 
-#: app/Helpers/Functions.php:796
+#: app/Helpers/Functions.php:832
 msgid "RealEstateListing"
 msgstr ""
 
-#: app/Helpers/Functions.php:798
+#: app/Helpers/Functions.php:834
 msgid "JobPosting"
 msgstr ""
 
-#: app/Helpers/Functions.php:799
+#: app/Helpers/Functions.php:835
 msgid "Recipe"
 msgstr ""
 
-#: app/Helpers/Functions.php:800
+#: app/Helpers/Functions.php:836
 msgid "SoftwareApplication"
 msgstr ""
 
-#: app/Helpers/Functions.php:801
+#: app/Helpers/Functions.php:837
 msgid "Image License (ImageObject)"
 msgstr ""
 
-#: app/Helpers/Functions.php:803
+#: app/Helpers/Functions.php:839
 msgid "SpecialAnnouncement ( Deprecated )"
 msgstr ""
 
-#: app/Helpers/Functions.php:804
+#: app/Helpers/Functions.php:840
 msgid "VacationRental"
 msgstr ""
 
-#: app/Helpers/Functions.php:805
+#: app/Helpers/Functions.php:841
 msgid "Vehicle listing"
 msgstr ""
 
-#: app/Helpers/Functions.php:806
+#: app/Helpers/Functions.php:842
 msgid "TVSeries"
 msgstr ""
 
-#: app/Helpers/Functions.php:807
+#: app/Helpers/Functions.php:843
 msgid "PodcastEpisode"
 msgstr ""
 
-#: app/Helpers/Functions.php:808
+#: app/Helpers/Functions.php:844
 msgid "DiscussionForumPosting"
 msgstr ""
 
-#: app/Helpers/Functions.php:809
+#: app/Helpers/Functions.php:845
 msgid "Dataset ( Deprecated )"
 msgstr ""
 
-#: app/Helpers/Functions.php:810
+#: app/Helpers/Functions.php:846
 msgid "TaxiService"
 msgstr ""
 
-#: app/Helpers/Functions.php:838
-#: app/Helpers/Functions.php:1120
+#: app/Helpers/Functions.php:874
+#: app/Helpers/Functions.php:1156
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:504
 #: views/widgets/review-schema.php:14
 msgid "Select"
 msgstr ""
 
-#: app/Helpers/Functions.php:1010
+#: app/Helpers/Functions.php:1046
 msgid "This function should not be called before rtrs_init."
 msgstr ""
 
 #: app/Models/Field.php:149
 #: app/Models/Field.php:677
 #: app/Models/Field.php:815
-#: app/Models/SettingsAPI.php:579
 msgid "[Pro]"
 msgstr ""
 
@@ -1140,7 +1421,6 @@ msgstr ""
 
 #: app/Models/Field.php:681
 #: app/Models/Field.php:821
-#: app/Models/SettingsAPI.php:583
 #: app/Modules/Review/Admin/RegisterPostType.php:73
 #: app/Modules/Review/Admin/RegisterPostType.php:74
 msgid "Add New"
@@ -1148,9 +1428,9 @@ msgstr ""
 
 #: app/Models/Field.php:713
 #: app/Models/Field.php:753
-#: app/Modules/Review/Admin/ReviewSettings.php:515
-#: app/Modules/Review/Ajax/ReviewAjax.php:720
-#: app/Modules/Review/Hooks/ReviewFrontend.php:819
+#: app/Modules/Review/Admin/ReviewSettings.php:518
+#: app/Modules/Review/Ajax/ReviewAjax.php:752
+#: app/Modules/Review/Hooks/ReviewFrontend.php:820
 #: app/Modules/Review/Scripts/ReviewScriptLoader.php:100
 msgid "Upload Image"
 msgstr ""
@@ -1207,7 +1487,7 @@ msgid "Justify"
 msgstr ""
 
 #: app/Models/Field.php:1055
-#: app/Modules/Review/Admin/ReviewSettings.php:422
+#: app/Modules/Review/Admin/ReviewSettings.php:425
 #: app/Modules/Review/Elementor/Controls/ReviewListControls.php:162
 #: app/Modules/Review/Elementor/WidgetBase.php:427
 msgid "Normal"
@@ -1237,48 +1517,617 @@ msgstr ""
 msgid "Unset"
 msgstr ""
 
-#: app/Models/SettingsAPI.php:629
+#: app/Modules/Aeo/Analyzers/AeoAnalyzer.php:96
+msgid "Answer Engine Optimization"
+msgstr ""
+
+#: app/Modules/Aeo/Analyzers/AeoAnalyzer.php:100
+msgid "On-page answer-readiness only — actual answer and voice selection is decided by each engine."
+msgstr ""
+
+#: app/Modules/Aeo/Analyzers/AeoAnalyzer.php:142
+msgid "Answer-first and AI-ready"
+msgstr ""
+
+#: app/Modules/Aeo/Analyzers/AeoAnalyzer.php:145
+msgid "Strong answers, a little polish left"
+msgstr ""
+
+#: app/Modules/Aeo/Analyzers/AeoAnalyzer.php:148
+msgid "Answers, but not always answer-first"
+msgstr ""
+
+#: app/Modules/Aeo/Analyzers/AeoAnalyzer.php:150
+msgid "Hard for answer engines to quote"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:43
+msgid "Answer Conciseness"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:72
+msgid "Has readable answer paragraphs"
+msgstr ""
+
+#. translators: 1: concise paragraphs, 2: total paragraphs.
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:118
+#, php-format
+msgid "Concise paragraphs (%1$d/%2$d at <=90 words)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:124
+msgid "No oversized blocks (over 120 words)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:125
+msgid "Mostly active voice (reads cleanly aloud)"
+msgstr ""
+
+#. translators: 1: paragraph preview, 2: word count.
+#. translators: 1: sentence preview, 2: word count.
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:132
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:142
+#, php-format
+msgid "\"%1$s\" — %2$d words (too long)"
+msgstr ""
+
+#. translators: 1: paragraph preview, 2: word count.
+#. translators: 1: sentence preview, 2: word count.
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:148
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:162
+#, php-format
+msgid "\"%1$s\" (%2$d words)"
+msgstr ""
+
+#. translators: %d: number of additional paragraphs.
+#. translators: %d: number of additional sections.
+#. translators: %d: number of additional sentences.
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:157
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:265
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:171
+#, php-format
+msgid "; +%d more"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:166
+msgid "Tighten these long paragraphs"
+msgstr ""
+
+#. translators: %s: list of paragraph previews with word counts.
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:169
+#, php-format
+msgid "These paragraphs exceed 90 words, so an answer engine can't cleanly quote them: %s. Split each one or lead with a 1-2 sentence summary."
+msgstr ""
+
+#. translators: %d: recoverable points.
+#. translators: %d: points gained by reaching full marks.
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:174
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:282
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:198
+#, php-format
+msgid "+%d pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:184
+msgid "Prefer active voice for spoken answers"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:185
+msgid "A large share of sentences use passive voice, which sounds clunky when read aloud by assistants. Rewrite \"X was done by Y\" as \"Y did X\"."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/AnswerConcisenessCriterion.php:186
+msgid "+10 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:57
+msgid "Direct Answer Blocks"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:98
+msgid "Has section headings to answer under"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:100
+msgid "Break the content into H2/H3 sections. Answer engines lift a heading plus the paragraph right below it, so headings give each answer a home."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:103
+msgid "Opens with a concise answer (20-75 words)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:106
+msgid "Start the page with a direct 20-75 word answer to its main question before adding background."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:107
+msgid "Optional: open with a direct 20-75 word answer to the main question. This is a suggestion and does not affect your score."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:112
+msgid "Opening answer is self-contained"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:114
+msgid "Name the subject in the first sentence (e.g. \"The plugin…\") instead of opening with \"It\", \"This\", or \"They\", so the answer still makes sense quoted on its own."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:131
+msgid "Break content into sections with answer-first paragraphs"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:132
+msgid "Add H2 sections and lead each with a 20-75 word direct answer so engines can lift a clean response."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:133
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:116
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:89
+msgid "+15 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:145
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:217
+msgid "(untitled section)"
+msgstr ""
+
+#. translators: 1: section heading, 2: word count, 3: reason (too short / too long).
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:184
+#, php-format
+msgid "%1$s — lead is %2$d words (%3$s)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:187
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:258
+msgid "too short"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:187
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:258
+msgid "too long"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:191
+msgid "Optional: expand this section's opening paragraph to a self-contained 20-75 word answer to the heading. This is a minor suggestion — worth a small amount toward a perfect 100%."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:192
+msgid "Trim this section's opening to under 75 words — give a crisp answer first, then move the extra detail into the paragraphs that follow."
+msgstr ""
+
+#. translators: %s: section heading.
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:222
+#, php-format
+msgid "%s — opening starts with a pronoun"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:226
+msgid "Restate the subject at the start of this answer (e.g. \"The plugin…\" instead of \"It…\") so it makes sense quoted on its own — this costs a few points until fixed."
+msgstr ""
+
+#. translators: 1: section heading, 2: word count, 3: reason.
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:255
+#, php-format
+msgid "\"%1$s\" (%2$d words, %3$s)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:274
+msgid "Give these sections an answer-first lead paragraph"
+msgstr ""
+
+#. translators: %s: list of section headings with their issue.
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:277
+#, php-format
+msgid "These sections don't open with a 20-75 word direct answer: %s. Lead each with a concise answer so engines can lift it."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:292
+msgid "Make answer openings self-contained"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:293
+msgid "Some sections open with a bare pronoun like \"It\" or \"This\". Answer engines quote sentences out of context, so restate the subject at the start of each answer (e.g. \"The plugin…\" instead of \"It…\")."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/DirectAnswerCriterion.php:294
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:87
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:97
+msgid "+8 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:45
+msgid "FAQ Coverage"
+msgstr ""
+
+#. translators: %d: number of Q&A pairs found.
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:84
+#, php-format
+msgid "Multiple Q&A pairs (2+) — %d found"
+msgstr ""
+
+#. translators: %d: number of additional Q&A pairs to add.
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:92
+#, php-format
+msgid "Add %d more Q&A pair to reach 2."
+msgid_plural "Add %d more Q&A pairs to reach 2."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: Q&A pairs found, 2: recommended minimum.
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:99
+#, php-format
+msgid "Strong FAQ coverage (%2$d+) — %1$d found"
+msgstr ""
+
+#. translators: 1: number of additional Q&A pairs, 2: recommended minimum.
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:108
+#, php-format
+msgid "Add %1$d more Q&A pair to reach %2$d."
+msgid_plural "Add %1$d more Q&A pairs to reach %2$d."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: index, 2: the FAQ question text.
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:121
+#, php-format
+msgid "Q%1$d: %2$s"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:134
+msgid "Cover more questions in the FAQ"
+msgstr ""
+
+#. translators: %d: recommended minimum number of Q&A pairs.
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:137
+#, php-format
+msgid "Include at least %d question/answer pairs so the FAQ covers what people actually ask. When you generate the FAQ, produce a complete set of questions rather than only one or two."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:140
+msgid "+30 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:151
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:98
+msgid "Add FAQPage schema to your FAQ"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:152
+msgid "Your FAQ is in the page content but has no FAQPage structured data, so search and answer engines cannot read it as a FAQ. Rebuild it with the SchemaEngine AI FAQ block or \"Generate with AI\" to output the schema and become eligible for rich results."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqCoverageCriterion.php:153
+msgid "Rich results"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:39
+msgid "FAQ Content & Schema"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:74
+msgid "FAQ content present (FAQ block or definition list)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:75
+msgid "FAQ content missing (add a FAQ block or definition list)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:80
+msgid "FAQPage schema present"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:81
+msgid "FAQPage schema missing"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:90
+msgid "Add a FAQ with FAQPage schema"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:91
+msgid "This page has no FAQ. Add a FAQ block (or the metabox FAQ) with real question/answer pairs — it renders the Q&A and emits the FAQPage schema answer engines lift."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:92
+msgid "+100 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:99
+msgid "The FAQ is visible but carries no FAQPage schema, so engines can't reliably lift it. Use the plugin FAQ block or metabox FAQ, which output FAQPage structured data."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:100
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:108
+msgid "+50 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:106
+msgid "Show your FAQ on the page"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/FaqPresenceCriterion.php:107
+msgid "FAQPage schema exists but the FAQ is not visible in the content. Google requires the FAQ to be shown on the page — add the FAQ block or the [rtrs_faqpage] output."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:38
+msgid "Featured Snippet Fit"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:70
+msgid "Question-style heading present"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:71
+msgid "Includes a list (bulleted or numbered)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:72
+msgid "Includes a comparison table"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:73
+msgid "Includes a numbered step-by-step list"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:85
+msgid "Add a list or table for snippet eligibility"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/SnippetFitCriterion.php:86
+msgid "Paragraph, list and table are the three snippet formats Google lifts. A bulleted list or comparison table makes the page eligible."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:43
+msgid "Voice-Search Phrasing"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:66
+msgid "Has readable sentences"
+msgstr ""
+
+#. translators: %d: average words per sentence.
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:116
+#, php-format
+msgid "Conversational sentence length (avg %d words)"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:125
+msgid "Split long sentences into shorter ones."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:127
+msgid "trim toward 15-16 words for full marks."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:132
+msgid "Includes natural question phrasing"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:155
+msgid "Voice assistants and AI answers favor short, direct sentences. Aim for ~15-20 words so a clean spoken answer can be extracted."
+msgstr ""
+
+#. translators: %s: list of long sentence previews with word counts.
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:177
+#, php-format
+msgid "Split these long sentences so the average drops toward 15-20 words: %s."
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:184
+msgid "Use shorter, conversational sentences"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:186
+msgid "+6 pts"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:194
+msgid "Tighten sentences for voice search"
+msgstr ""
+
+#: app/Modules/Aeo/Criteria/VoicePhrasingCriterion.php:195
+msgid "Sentences average 17-20 words — already conversational, but trimming them toward 15-16 words lets a voice assistant read a cleaner, quicker answer."
+msgstr ""
+
+#: app/Modules/Geo/Analyzers/GeoAnalyzer.php:114
+msgid "Generative Engine Optimization"
+msgstr ""
+
+#: app/Modules/Geo/Analyzers/GeoAnalyzer.php:118
+msgid "Content-readiness signals only — whether an AI engine actually cites you also depends on its own retrieval and ranking."
+msgstr ""
+
+#: app/Modules/Geo/Analyzers/GeoAnalyzer.php:160
+msgid "Highly citable by generative engines"
+msgstr ""
+
+#: app/Modules/Geo/Analyzers/GeoAnalyzer.php:163
+msgid "Citable, with room to sharpen"
+msgstr ""
+
+#: app/Modules/Geo/Analyzers/GeoAnalyzer.php:166
+msgid "Some citable signals, not yet authoritative"
+msgstr ""
+
+#: app/Modules/Geo/Analyzers/GeoAnalyzer.php:168
+msgid "Hard for AI engines to cite"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:44
+msgid "Citable Statistics"
+msgstr ""
+
+#. translators: 1: statistics found, 2: recommended count.
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:74
+#, php-format
+msgid "%1$d citable statistic detected (target %2$d). Concrete figures give engines quotable, evidence-backed facts."
+msgid_plural "%1$d citable statistics detected (target %2$d). Concrete figures give engines quotable, evidence-backed facts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: statistics found, 2: recommended count.
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:85
+#, php-format
+msgid "Only %1$d citable statistic detected — aim for about %2$d. Add more relevant, evidence-backed figures (percentages, prices, ratios) to strengthen your content's credibility."
+msgid_plural "Only %1$d citable statistics detected — aim for about %2$d. Add more relevant, evidence-backed figures (percentages, prices, ratios) to strengthen your content's credibility."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of additional statistics.
+#. translators: %d: number of additional entities.
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:104
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:90
+#, php-format
+msgid ", +%d more"
+msgstr ""
+
+#. translators: %s: comma-separated list of detected statistics.
+#. translators: %s: comma-separated list of detected entities.
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:111
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:97
+#, php-format
+msgid "Detected: %s"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:122
+msgid "Add concrete, quotable figures"
+msgstr ""
+
+#. translators: 1: current count, 2: target count.
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:125
+#, php-format
+msgid "You have %1$d quotable statistic(s); aim for about %2$d. Replace vague claims (\"much faster\", \"very popular\") with specific numbers (\"38%% faster\", \"rated 4.6/5 by 1,200 guests\"). The figures need not be your own — properly cited third-party statistics count too. Percentages, prices, ratios and measurements are what AI answers cite."
+msgstr ""
+
+#: app/Modules/Geo/Criteria/CitableStatisticsCriterion.php:129
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:72
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:125
+msgid "+20 pts"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:41
+msgid "High-Authority Sources"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:65
+msgid "When you state facts, linking to a recognized authority — a .gov or .edu site, an official body, a peer-reviewed journal, or a major encyclopedia — signals to AI engines that your claims are well grounded and worth citing. Optional and context-dependent: most useful on fact-heavy pages, and safe to skip where it does not apply."
+msgstr ""
+
+#. translators: %d: number of high-authority links found.
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:85
+#, php-format
+msgid "Cites %d high-authority source (.gov, .edu, or major reference)"
+msgid_plural "Cites %d high-authority sources (.gov, .edu, or major references)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:93
+msgid "No high-authority sources cited yet (.gov, .edu, or major references)"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:102
+msgid "Optional: cite a high-authority source"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:103
+msgid "Where you state facts, link a claim to a .gov, .edu, official body, peer-reviewed journal, or major encyclopedia. It strengthens how trustworthy AI engines consider the page. Optional and context-dependent — skip it where it does not apply."
+msgstr ""
+
+#: app/Modules/Geo/Criteria/HighAuthoritySourcesCriterion.php:104
+msgid "Optional"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:44
+msgid "Named Entities"
+msgstr ""
+
+#. translators: 1: distinct entity count, 2: recommended count.
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:75
+#, php-format
+msgid "Names %1$d distinct entity (target %2$d)"
+msgid_plural "Names %1$d distinct entities (target %2$d)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:108
+msgid "Name more specific entities"
+msgstr ""
+
+#. translators: 1: distinct count, 2: target count.
+#: app/Modules/Geo/Criteria/NamedEntitiesCriterion.php:111
+#, php-format
+msgid "Generative engines cite content rich in recognizable people, places, brands and organizations. You name %1$d distinct entit%3$s; aim for about %2$d. Use full proper names instead of generic nouns (\"the resort\" → \"Whispering Pines Resort\")."
+msgstr ""
+
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:44
+msgid "Source Authority"
+msgstr ""
+
+#. translators: %d: number of outbound links.
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:70
+#, php-format
+msgid "%d authoritative external source detected. Consider adding more supporting references for factual claims and statistics."
+msgid_plural "%d authoritative external sources detected. Strong sourcing helps engines trust your factual claims and statistics."
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:87
+msgid "Cite external sources"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:88
+msgid "This page has no outbound citations. Reference 2-3 reputable sources for your key claims and link to them. Engines treat well-sourced content as more trustworthy and quote it more often."
+msgstr ""
+
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:95
+msgid "Add another reputable citation"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/SourceAuthorityCriterion.php:96
+msgid "Back a second key claim with an outbound link to a credible source to strengthen the page's authority signal."
+msgstr ""
+
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:45
+msgid "Statement Density"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:66
+msgid "Body has analyzable sentences"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:70
+msgid "Add substantive body copy"
+msgstr ""
+
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:71
+msgid "There is too little prose to assess. Add fact-led sentences that state concrete details."
+msgstr ""
+
+#. translators: 1: percentage of fact-carrying sentences, 2: fact-carrying sentences, 3: total sentences.
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:97
+#, php-format
+msgid "Fact-rich prose: %1$d%% of sentences state a concrete claim (%2$d of %3$d)."
+msgstr ""
+
+#. translators: 1: current percentage, 2: fact-carrying sentences, 3: total sentences, 4: target percentage.
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:104
+#, php-format
+msgid "Only %1$d%% of sentences state a concrete claim (%2$d of %3$d) — aim for %4$d%%+. Add a number, named entity, or date to more sentences."
+msgstr ""
+
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:118
+msgid "Make sentences more fact-led"
+msgstr ""
+
+#. translators: 1: current percentage, 2: target percentage.
+#: app/Modules/Geo/Criteria/StatementDensityCriterion.php:121
+#, php-format
+msgid "Only %1$d%% of sentences assert something concrete; aim for at least %2$d%%. Trim filler and transitions, and rewrite generic statements to include a number, a named entity, or a date that an engine can quote."
+msgstr ""
+
 #: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:95
 #: app/Modules/Review/Admin/ReviewTable.php:238
 msgid "Post Type"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:630
-msgid "Enable Schema Feature"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:631
-msgid "Auto Generate?"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:720
-msgid "Import"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:819
-msgid "Add Image"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:1405
-msgid "Select all"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:1407
-msgid "Select none"
-msgstr ""
-
-#: app/Models/SettingsAPI.php:1608
-#: app/Modules/Review/Admin/Meta/AffiliateOptions.php:363
-#: app/Modules/Review/Admin/Meta/AffiliateOptions.php:381
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:150
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:667
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1775
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2100
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3101
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3111
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3174
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3226
-msgid "Select one"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:96
@@ -1360,19 +2209,27 @@ msgid "Upgrade to pro"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:266
-msgid "Already exist alert!"
+msgid "Finish AI setup"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:267
+msgid "Enable AI and add your API key in AI Settings to use this feature."
+msgstr ""
+
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:277
+msgid "Already exist alert!"
+msgstr ""
+
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:278
 msgid "Sorry! this post type already exist, you need to choose new one."
 msgstr ""
 
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:319
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:361
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:330
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:372
 msgid "Style"
 msgstr ""
 
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:360
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:371
 #: app/Modules/Review/Admin/RegisterPostType.php:111
 #: app/Modules/Review/Admin/RegisterPostType.php:126
 #: app/Modules/Review/Admin/RegisterPostType.php:127
@@ -1380,11 +2237,11 @@ msgstr ""
 msgid "Affiliate"
 msgstr ""
 
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:407
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:418
 msgid "Please choose a valid post type."
 msgstr ""
 
-#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:411
+#: app/Modules/Review/Admin/Meta/AddReviewMetaBox.php:422
 msgid "This post type already exists. Please choose a new one."
 msgstr ""
 
@@ -1393,10 +2250,10 @@ msgid "Layout"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:71
-#: app/Modules/Review/Admin/ReviewSettings.php:392
-#: app/Modules/Review/Ajax/ReviewAjax.php:792
+#: app/Modules/Review/Admin/ReviewSettings.php:395
+#: app/Modules/Review/Ajax/ReviewAjax.php:824
 #: app/Modules/Review/Elementor/Widgets/AffiliateReview.php:96
-#: app/Modules/Review/Hooks/ReviewFrontend.php:985
+#: app/Modules/Review/Hooks/ReviewFrontend.php:986
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:230
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:684
 #: views/settings/review-settings.php:110
@@ -1481,7 +2338,7 @@ msgid "Enable"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:137
-#: app/Modules/Review/Admin/ReviewSettings.php:429
+#: app/Modules/Review/Admin/ReviewSettings.php:432
 #: templates/affiliate/layout-two.php:88
 msgid "Pros"
 msgstr ""
@@ -1491,7 +2348,7 @@ msgid "Allow cons?"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:153
-#: app/Modules/Review/Admin/ReviewSettings.php:451
+#: app/Modules/Review/Admin/ReviewSettings.php:454
 #: templates/affiliate/layout-two.php:105
 msgid "Cons"
 msgstr ""
@@ -1532,8 +2389,8 @@ msgid "Disable"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:209
-#: app/Modules/Review/Admin/ReviewSettings.php:110
-#: app/Modules/Review/Hooks/ReviewFrontend.php:982
+#: app/Modules/Review/Admin/ReviewSettings.php:113
+#: app/Modules/Review/Hooks/ReviewFrontend.php:983
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:308
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:398
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:488
@@ -1546,43 +2403,43 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1285
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1336
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1398
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1685
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1827
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1868
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2065
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2185
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2212
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2225
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2238
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2290
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2344
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2403
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2450
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2497
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2740
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2835
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3043
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3159
-#: views/settings/schema-settings.php:74
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1686
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1871
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1911
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2108
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2228
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2255
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2268
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2281
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2333
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2387
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2446
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2493
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2540
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2783
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2878
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3086
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3202
+#: views/settings/schema-settings.php:130
 #: views/settings/schema-sub_organization-settings.php:23
 msgid "Name"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:216
-#: app/Modules/Review/Admin/ReviewSettings.php:476
-#: app/Modules/Review/Ajax/ReviewAjax.php:715
+#: app/Modules/Review/Admin/ReviewSettings.php:479
+#: app/Modules/Review/Ajax/ReviewAjax.php:747
 #: app/Modules/Review/Hooks/ReviewFrontend.php:814
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:708
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:713
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:993
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1144
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1295
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1873
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2248
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2302
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2797
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1916
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2291
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2345
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2840
 #: views/settings/review-settings.php:112
-#: views/settings/schema-settings.php:99
+#: views/settings/schema-settings.php:212
 msgid "Image"
 msgstr ""
 
@@ -1605,22 +2462,22 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1290
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1342
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1464
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1691
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1832
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1878
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2142
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2191
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2269
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2296
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2409
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2456
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2518
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2791
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2841
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3072
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3166
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1692
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1876
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1921
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2185
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2234
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2312
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2339
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2452
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2499
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2561
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2834
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2884
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3115
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3209
 #: views/settings/review-settings.php:109
-#: views/settings/schema-settings.php:237
+#: views/settings/schema-settings.php:361
 msgid "Description"
 msgstr ""
 
@@ -1725,22 +2582,22 @@ msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:335
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1485
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2196
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2239
 msgid "Price currency"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:336
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1486
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1889
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2197
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1932
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2240
 msgid "The 3-letter currency code. (USD)"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:342
 #: app/Modules/Review/Admin/Meta/MetaOptions.php:518
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1478
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1883
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2202
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1926
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2245
 msgid "Price"
 msgstr ""
 
@@ -1764,6 +2621,19 @@ msgstr ""
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:362
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1491
 msgid "Availability"
+msgstr ""
+
+#: app/Modules/Review/Admin/Meta/AffiliateOptions.php:363
+#: app/Modules/Review/Admin/Meta/AffiliateOptions.php:381
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:150
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:667
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1776
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2143
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3144
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3154
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3217
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3269
+msgid "Select one"
 msgstr ""
 
 #: app/Modules/Review/Admin/Meta/AffiliateOptions.php:365
@@ -2020,20 +2890,20 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1392
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1602
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1670
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1936
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2013
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2060
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2179
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2397
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2444
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2491
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2609
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2728
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2769
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2829
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2961
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3037
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3153
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1979
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2056
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2103
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2222
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2440
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2487
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2534
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2652
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2771
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2812
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2872
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3004
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3080
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3196
 msgid "Hide"
 msgstr ""
 
@@ -2267,7 +3137,7 @@ msgstr ""
 
 #: app/Modules/Review/Admin/Meta/ReviewMeta.php:46
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1572
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1981
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2024
 msgid "Best rating"
 msgstr ""
 
@@ -2277,7 +3147,7 @@ msgstr ""
 
 #: app/Modules/Review/Admin/Meta/ReviewMeta.php:52
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1579
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1988
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2031
 msgid "Worst rating"
 msgstr ""
 
@@ -2325,6 +3195,12 @@ msgstr ""
 
 #: app/Modules/Review/Admin/RegisterPostType.php:79
 msgid "No review settings found in Trash"
+msgstr ""
+
+#: app/Modules/Review/Admin/RegisterPostType.php:84
+#: app/Modules/Review/Admin/RegisterPostType.php:85
+#: app/Modules/Review/Elementor/ElementorInit.php:35
+msgid "Review Schema"
 msgstr ""
 
 #: app/Modules/Review/Admin/RegisterPostType.php:109
@@ -2379,12 +3255,12 @@ msgstr ""
 
 #: app/Modules/Review/Admin/ReviewSettings.php:36
 #: app/Modules/Review/Admin/ReviewSettings.php:37
-#: app/Modules/Review/Admin/ReviewSettings.php:575
+#: app/Modules/Review/Admin/ReviewSettings.php:578
 msgid "All Reviews"
 msgstr ""
 
 #: app/Modules/Review/Admin/ReviewSettings.php:56
-#: app/Modules/Review/Admin/ReviewSettings.php:80
+#: app/Modules/Review/Admin/ReviewSettings.php:83
 #: views/settings/review-settings.php:95
 msgid "Edit Review"
 msgstr ""
@@ -2397,195 +3273,192 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:70
+#: app/Modules/Review/Admin/ReviewSettings.php:73
 msgid "Sorry, you are not allowed to edit this comment."
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:74
+#: app/Modules/Review/Admin/ReviewSettings.php:77
 msgid "This comment is in the Trash. Please move it out of the Trash if you want to edit it."
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:93
+#: app/Modules/Review/Admin/ReviewSettings.php:96
 msgid "Permalink:"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:104
+#: app/Modules/Review/Admin/ReviewSettings.php:107
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1608
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1942
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2906
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2967
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1985
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2949
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3010
 msgid "Author"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:106
+#: app/Modules/Review/Admin/ReviewSettings.php:109
 msgid "Comment Author"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:114
-#: app/Modules/Review/Hooks/ReviewFrontend.php:983
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2508
+#: app/Modules/Review/Admin/ReviewSettings.php:117
+#: app/Modules/Review/Hooks/ReviewFrontend.php:984
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2551
 #: views/settings/schema-corporate_contacts-settings.php:50
+#: views/settings/schema-settings.php:241
 msgid "Email"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:120
+#: app/Modules/Review/Admin/ReviewSettings.php:123
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1053
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1204
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1355
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2253
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2365
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2745
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2786
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2894
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3052
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3088
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3190
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3211
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3218
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2296
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2408
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2788
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2829
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2937
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3095
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3131
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3233
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3254
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3261
 #: views/settings/schema-corporate_contacts-settings.php:43
 #: views/settings/schema-sub_organization-settings.php:28
 msgid "URL"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:132
+#: app/Modules/Review/Admin/ReviewSettings.php:135
 #: app/Modules/Review/Admin/ReviewTable.php:237
 msgid "Comment"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:154
-msgid "Save"
-msgstr ""
-
-#: app/Modules/Review/Admin/ReviewSettings.php:160
+#: app/Modules/Review/Admin/ReviewSettings.php:163
 msgid "Status:"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:165
+#: app/Modules/Review/Admin/ReviewSettings.php:168
 #: app/Modules/Review/Admin/ReviewTable.php:469
 msgid "Approved"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:168
+#: app/Modules/Review/Admin/ReviewSettings.php:171
 msgid "Pending"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:171
+#: app/Modules/Review/Admin/ReviewSettings.php:174
 msgid "Spam"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:177
+#: app/Modules/Review/Admin/ReviewSettings.php:180
 msgid "Comment status"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:178
+#: app/Modules/Review/Admin/ReviewSettings.php:181
 msgctxt "comment status"
 msgid "Approved"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:179
+#: app/Modules/Review/Admin/ReviewSettings.php:182
 msgctxt "comment status"
 msgid "Pending"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:180
+#: app/Modules/Review/Admin/ReviewSettings.php:183
 msgctxt "comment status"
 msgid "Spam"
 msgstr ""
 
 #. translators: Publish box date format, see https://www.php.net/date
-#: app/Modules/Review/Admin/ReviewSettings.php:190
+#: app/Modules/Review/Admin/ReviewSettings.php:193
 msgctxt "publish box date format"
 msgid "M j, Y"
 msgstr ""
 
 #. translators: Publish box time format, see https://www.php.net/date
-#: app/Modules/Review/Admin/ReviewSettings.php:192
+#: app/Modules/Review/Admin/ReviewSettings.php:195
 msgctxt "publish box time format"
 msgid "H:i"
 msgstr ""
 
 #. translators: %s: Comment date.
-#: app/Modules/Review/Admin/ReviewSettings.php:200
+#: app/Modules/Review/Admin/ReviewSettings.php:203
 #, php-format
 msgid "Submitted on: %s"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:209
+#: app/Modules/Review/Admin/ReviewSettings.php:212
 msgid "Edit date and time"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:212
+#: app/Modules/Review/Admin/ReviewSettings.php:215
 msgid "Date and time"
 msgstr ""
 
 #. translators: %s: Post link.
-#: app/Modules/Review/Admin/ReviewSettings.php:233
+#: app/Modules/Review/Admin/ReviewSettings.php:236
 #, php-format
 msgid "In response to: %s"
 msgstr ""
 
 #. translators: %s: Comment link.
-#: app/Modules/Review/Admin/ReviewSettings.php:255
+#: app/Modules/Review/Admin/ReviewSettings.php:258
 #, php-format
 msgid "In reply to: %s"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:294
+#: app/Modules/Review/Admin/ReviewSettings.php:297
 #: app/Modules/Review/Admin/ReviewTable.php:402
 #: app/Modules/Review/Admin/ReviewTable.php:724
 msgid "Delete Permanently"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:295
+#: app/Modules/Review/Admin/ReviewSettings.php:298
 #: app/Modules/Review/Admin/ReviewTable.php:726
 msgid "Move to Trash"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:304
+#: app/Modules/Review/Admin/ReviewSettings.php:307
 msgid "Update"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:318
+#: app/Modules/Review/Admin/ReviewSettings.php:321
 msgid "Review Options"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:334
+#: app/Modules/Review/Admin/ReviewSettings.php:337
 msgid "Multi Criteria"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:336
+#: app/Modules/Review/Admin/ReviewSettings.php:339
 #: app/Modules/Review/Admin/ReviewTable.php:240
-#: app/Modules/Review/Ajax/ReviewAjax.php:623
+#: app/Modules/Review/Ajax/ReviewAjax.php:655
 #: app/Modules/Review/Hooks/ReviewFrontend.php:751
 #: views/settings/review-settings.php:108
 msgid "Rating"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:401
+#: app/Modules/Review/Admin/ReviewSettings.php:404
 msgid "Recommendation"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:410
+#: app/Modules/Review/Admin/ReviewSettings.php:413
 msgid "Happy"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:416
+#: app/Modules/Review/Admin/ReviewSettings.php:419
 msgid "Sad"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:444
+#: app/Modules/Review/Admin/ReviewSettings.php:447
 msgid "Add Pros"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:465
+#: app/Modules/Review/Admin/ReviewSettings.php:468
 msgid "Add Cons"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:586
+#: app/Modules/Review/Admin/ReviewSettings.php:589
 msgid "Search Review"
 msgstr ""
 
-#: app/Modules/Review/Admin/ReviewSettings.php:603
+#: app/Modules/Review/Admin/ReviewSettings.php:606
 #: app/Modules/Review/Admin/ReviewTable.php:24
 #: app/Supports/TutorLms/TutorLmsReview.php:70
 msgid "Reviews"
@@ -2658,18 +3531,18 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1237
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1388
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1666
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2009
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2056
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2175
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2393
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2440
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2487
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2605
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2724
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2765
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2825
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3033
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3149
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2052
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2099
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2218
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2436
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2483
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2530
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2648
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2767
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2808
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2868
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3076
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3192
 msgid "Status"
 msgstr ""
 
@@ -2785,72 +3658,81 @@ msgctxt "comment"
 msgid "Mark as Spam"
 msgstr ""
 
+#: app/Modules/Review/Admin/ReviewTable.php:745
+msgid "Action failed. Please refresh the page and retry."
+msgstr ""
+
+#: app/Modules/Review/Ajax/ReviewAjax.php:343
+#: app/Modules/Review/Ajax/ReviewAjax.php:451
+msgid "You must be logged in to upload files."
+msgstr ""
+
 #. translators: 1: uploaded file extension, 2: comma separated list of allowed file types
-#: app/Modules/Review/Ajax/ReviewAjax.php:355
-#: app/Modules/Review/Ajax/ReviewAjax.php:452
+#: app/Modules/Review/Ajax/ReviewAjax.php:364
+#: app/Modules/Review/Ajax/ReviewAjax.php:471
 #, php-format
 msgid "Invalid file type: %1$s. Supported file types: %2$s"
 msgstr ""
 
 #. translators: %s: maximum allowed upload file size
-#: app/Modules/Review/Ajax/ReviewAjax.php:369
-#: app/Modules/Review/Ajax/ReviewAjax.php:466
+#: app/Modules/Review/Ajax/ReviewAjax.php:378
+#: app/Modules/Review/Ajax/ReviewAjax.php:485
 #, php-format
 msgid "File is too large. Max. upload file size is %s"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:560
+#: app/Modules/Review/Ajax/ReviewAjax.php:592
 msgid "Sorry! You do not have permission."
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:582
+#: app/Modules/Review/Ajax/ReviewAjax.php:614
 msgid "Edit your review"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:647
+#: app/Modules/Review/Ajax/ReviewAjax.php:679
 #: app/Modules/Review/Hooks/ReviewFrontend.php:779
 #: templates/partials/pros-cons.php:28
 msgid "PROS"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:667
-#: app/Modules/Review/Ajax/ReviewAjax.php:694
+#: app/Modules/Review/Ajax/ReviewAjax.php:699
+#: app/Modules/Review/Ajax/ReviewAjax.php:726
 #: app/Modules/Review/Hooks/ReviewFrontend.php:785
 #: app/Modules/Review/Hooks/ReviewFrontend.php:797
 msgid "Add Field"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:673
+#: app/Modules/Review/Ajax/ReviewAjax.php:705
 #: app/Modules/Review/Hooks/ReviewFrontend.php:791
 #: templates/partials/pros-cons.php:42
 msgid "CONS"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:721
-#: app/Modules/Review/Ajax/ReviewAjax.php:762
-#: app/Modules/Review/Hooks/ReviewFrontend.php:820
-#: app/Modules/Review/Hooks/ReviewFrontend.php:861
+#: app/Modules/Review/Ajax/ReviewAjax.php:753
+#: app/Modules/Review/Ajax/ReviewAjax.php:794
+#: app/Modules/Review/Hooks/ReviewFrontend.php:821
+#: app/Modules/Review/Hooks/ReviewFrontend.php:862
 msgid "External Image URL"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:730
-#: app/Modules/Review/Hooks/ReviewFrontend.php:829
+#: app/Modules/Review/Ajax/ReviewAjax.php:762
+#: app/Modules/Review/Hooks/ReviewFrontend.php:830
 msgid "Choose Image"
 msgstr ""
 
 #. translators: %s: login URL
-#: app/Modules/Review/Ajax/ReviewAjax.php:744
-#: app/Modules/Review/Hooks/ReviewFrontend.php:843
+#: app/Modules/Review/Ajax/ReviewAjax.php:776
+#: app/Modules/Review/Hooks/ReviewFrontend.php:844
 #, php-format
 msgid "Please <a href=\"%s\">log in</a> to upload images."
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:798
+#: app/Modules/Review/Ajax/ReviewAjax.php:830
 msgid "Write your review"
 msgstr ""
 
-#: app/Modules/Review/Ajax/ReviewAjax.php:806
-#: app/Modules/Review/Hooks/ReviewFrontend.php:979
+#: app/Modules/Review/Ajax/ReviewAjax.php:838
+#: app/Modules/Review/Hooks/ReviewFrontend.php:980
 msgid "Submit Review"
 msgstr ""
 
@@ -3030,11 +3912,13 @@ msgid "Hide If No Rating"
 msgstr ""
 
 #: app/Modules/Review/Elementor/WidgetBase.php:642
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1834
 #: app/Modules/Schema/Hooks/ElementorFaq.php:54
 msgid "Yes"
 msgstr ""
 
 #: app/Modules/Review/Elementor/WidgetBase.php:643
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1835
 #: app/Modules/Schema/Hooks/ElementorFaq.php:55
 msgid "No"
 msgstr ""
@@ -3106,41 +3990,41 @@ msgstr ""
 msgid "No reviews found for this post. The summary will appear once reviews are submitted."
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:404
-#: app/Modules/Review/Hooks/ReviewFrontend.php:1112
+#: app/Modules/Review/Helpers/ReviewFns.php:461
+#: app/Modules/Review/Hooks/ReviewFrontend.php:1113
 msgid "Only logged in customers who have purchased this product may leave a review."
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:440
+#: app/Modules/Review/Helpers/ReviewFns.php:497
 msgid "Month"
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:450
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1774
+#: app/Modules/Review/Helpers/ReviewFns.php:507
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1775
 msgid "Day"
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:451
+#: app/Modules/Review/Helpers/ReviewFns.php:508
 msgid "Year"
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:452
+#: app/Modules/Review/Helpers/ReviewFns.php:509
 msgid "Hour"
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:453
+#: app/Modules/Review/Helpers/ReviewFns.php:510
 msgid "Minute"
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:485
+#: app/Modules/Review/Helpers/ReviewFns.php:542
 msgid "OK"
 msgstr ""
 
-#: app/Modules/Review/Helpers/ReviewFns.php:501
+#: app/Modules/Review/Helpers/ReviewFns.php:558
 msgid "ago"
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewBackend.php:73
+#: app/Modules/Review/Hooks/ReviewBackend.php:148
 msgid "Themes And Plugins ( Pro )"
 msgstr ""
 
@@ -3168,34 +4052,34 @@ msgstr ""
 msgid "Review Submission Failed"
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewFrontend.php:899
+#: app/Modules/Review/Hooks/ReviewFrontend.php:900
 #: views/settings/review-settings.php:78
 msgid "I agree that my review and personal data may be displayed publicly in accordance with the Privacy Policy."
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewFrontend.php:972
+#: app/Modules/Review/Hooks/ReviewFrontend.php:973
 msgid "Leave feedback about this"
 msgstr ""
 
 #. translators: %s: comment author name
-#: app/Modules/Review/Hooks/ReviewFrontend.php:975
+#: app/Modules/Review/Hooks/ReviewFrontend.php:976
 #, php-format
 msgid "Leave feedback about this to %s"
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewFrontend.php:978
+#: app/Modules/Review/Hooks/ReviewFrontend.php:979
 msgid "Cancel Reply"
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewFrontend.php:984
+#: app/Modules/Review/Hooks/ReviewFrontend.php:985
 msgid "Website"
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewFrontend.php:986
+#: app/Modules/Review/Hooks/ReviewFrontend.php:987
 msgid "Write your review *"
 msgstr ""
 
-#: app/Modules/Review/Hooks/ReviewFrontend.php:1113
+#: app/Modules/Review/Hooks/ReviewFrontend.php:1114
 msgid "Reviews can only be left by \"verified owners\""
 msgstr ""
 
@@ -3329,13 +4213,13 @@ msgid "Questions & Answers"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/FaqPageMeta.php:42
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2025
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2068
 msgid "Question"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/FaqPageMeta.php:48
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2030
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2662
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2073
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2705
 msgid "Answer"
 msgstr ""
 
@@ -3398,14 +4282,14 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1232
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1383
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1661
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2051
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2170
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2388
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2435
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2482
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2820
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3028
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3144
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2094
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2213
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2431
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2478
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2525
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2863
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3071
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3187
 msgid "Auto Fill"
 msgstr ""
 
@@ -3423,20 +4307,20 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1391
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1601
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1669
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1935
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2012
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2059
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2178
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2396
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2443
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2490
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2608
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2727
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2768
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2828
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2960
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3036
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3152
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1978
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2055
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2102
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2221
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2439
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2486
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2533
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2651
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2770
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2811
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2871
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3003
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3079
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3195
 msgid "Show"
 msgstr ""
 
@@ -3456,17 +4340,17 @@ msgid "Article title"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:147
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3109
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3224
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3152
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3267
 msgid "Author Type"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:159
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:945
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1103
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2688
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3119
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3234
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2731
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3162
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3277
 msgid "Author Name"
 msgstr ""
 
@@ -3481,8 +4365,8 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:952
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1110
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1261
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2651
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2693
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2694
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2736
 msgid "Author URL"
 msgstr ""
 
@@ -3578,12 +4462,12 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:508
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:597
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1617
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1951
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2416
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2463
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2550
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2976
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3002
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1994
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2459
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2506
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2593
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3019
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3045
 msgid "A reference page that unambiguously indicates the item's identity; for example, the URL of the item's Wikipedia page, Freebase page, or official website.<br> Enter new line for every entry"
 msgstr ""
 
@@ -3600,9 +4484,9 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:607
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:874
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1435
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1741
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2582
-#: views/settings/schema-settings.php:166
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1742
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2625
+#: views/settings/schema-settings.php:290
 msgid "Country"
 msgstr ""
 
@@ -3611,9 +4495,9 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:521
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:610
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1438
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1679
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1744
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2585
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1680
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1745
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2628
 #: views/settings/review-settings.php:135
 #: views/settings/schema-archive-settings.php:31
 #: views/settings/schema-corporate_contacts-settings.php:33
@@ -3621,9 +4505,9 @@ msgstr ""
 #: views/settings/schema-corporate_contacts-settings.php:69
 #: views/settings/schema-corporate_contacts-settings.php:76
 #: views/settings/schema-post_types-settings.php:30
-#: views/settings/schema-settings.php:58
-#: views/settings/schema-settings.php:170
-#: views/settings/schema-settings.php:300
+#: views/settings/schema-settings.php:114
+#: views/settings/schema-settings.php:294
+#: views/settings/schema-settings.php:424
 msgid "Select One"
 msgstr ""
 
@@ -3647,7 +4531,7 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:536
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:625
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:868
-#: views/settings/schema-settings.php:163
+#: views/settings/schema-settings.php:287
 msgid "Postal Code"
 msgstr ""
 
@@ -3672,48 +4556,48 @@ msgid "Schema ID"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:669
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1777
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1778
 msgid "Monday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:670
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1778
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1779
 msgid "Tuesday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:671
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1779
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1780
 msgid "Wednesday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:672
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1780
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1781
 msgid "Thursday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:673
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1781
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1782
 msgid "Friday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:674
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1782
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1783
 msgid "Saturday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:675
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1783
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1784
 msgid "Sunday"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:677
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1785
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1786
 msgid "Don't add same day multiple time"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:702
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3066
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3183
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3109
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3226
 msgid "Language"
 msgstr ""
 
@@ -3750,7 +4634,7 @@ msgid "Full name of the person or organization displayed on the profile page."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:773
-#: views/settings/schema-settings.php:80
+#: views/settings/schema-settings.php:136
 msgid "Alternate Name"
 msgstr ""
 
@@ -3759,7 +4643,7 @@ msgid "An alternative or commonly known name (nickname, alias, or short name)."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:779
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2538
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2581
 msgid "Gender"
 msgstr ""
 
@@ -3780,6 +4664,7 @@ msgid "Official social profiles or reference URLs that identify this person or o
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:804
+#: views/settings/schema-settings.php:170
 msgid "Works For"
 msgstr ""
 
@@ -3838,7 +4723,7 @@ msgid "Official URL of the department."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:850
-#: views/settings/schema-settings.php:146
+#: views/settings/schema-settings.php:270
 msgid "Street Address"
 msgstr ""
 
@@ -3847,7 +4732,7 @@ msgid "Street address of the organization."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:856
-#: views/settings/schema-settings.php:151
+#: views/settings/schema-settings.php:275
 msgid "Address Locality"
 msgstr ""
 
@@ -3902,7 +4787,7 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:978
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1129
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1280
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2285
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2328
 msgid "Video Info"
 msgstr ""
 
@@ -3912,32 +4797,32 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1203
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1300
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1354
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2308
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3210
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2351
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3253
 msgid "Content URL"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1003
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1154
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1305
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2314
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3217
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2357
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3260
 msgid "Embed URL"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1004
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1155
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1306
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3212
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3255
 msgid "A URL pointing to the actual video media file. This file should be in .mpg, .mpeg, .mp4, .m4v, .mov, .wmv, .asf, .avi, .ra, .ram, .rm, .flv, or other video file format."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1009
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1160
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1311
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2320
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3059
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3197
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2363
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3102
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3240
 msgid "Upload Date"
 msgstr ""
 
@@ -3946,10 +4831,10 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1164
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1315
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1633
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1967
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2324
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2857
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2992
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2010
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2367
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2900
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3035
 #, php-format
 msgid "The date (in ISO 8601 date format), Like this: %s"
 msgstr ""
@@ -3960,18 +4845,18 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1197
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1322
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1348
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2332
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2847
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3080
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3204
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2375
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2890
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3123
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3247
 msgid "Duration"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1021
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1172
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1323
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2333
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2848
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2376
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2891
 msgid "Runtime of the movie in ISO 8601 format (for example, \"PT2H22M\" (142 minutes))."
 msgstr ""
 
@@ -3984,42 +4869,42 @@ msgstr ""
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1035
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1186
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1337
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3045
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3088
 msgid "The title of the audio"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1041
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1192
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1343
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3074
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3117
 msgid "The short description of the audio"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1047
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1198
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1349
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3081
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3124
 msgid "The duration of the audio in ISO 8601 format.(PT1M33S)"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1054
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1205
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1356
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3089
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3132
 msgid "A URL pointing to the actual audio media file. This file should be in .mp3, .wav, .mpc or other audio file format."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1059
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1210
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1361
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3094
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3137
 msgid "Encoding Format"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1060
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1211
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1362
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3095
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3138
 msgid "The encoding format of audio like: 'audio/mpeg'"
 msgstr ""
 
@@ -4052,8 +4937,8 @@ msgid "Event Location name"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1412
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1720
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2561
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1721
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2604
 msgid "Street address"
 msgstr ""
 
@@ -4062,34 +4947,34 @@ msgid "The location of for example where the event is happening, an organization
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1419
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1725
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2566
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1726
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2609
 msgid "Address locality"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1420
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1726
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2567
-#: views/settings/schema-settings.php:152
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1727
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2610
+#: views/settings/schema-settings.php:276
 msgid "City (i.e Melbourne)"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1425
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1731
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2572
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1732
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2615
 msgid "Address region"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1426
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1732
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2573
-#: views/settings/schema-settings.php:158
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1733
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2616
+#: views/settings/schema-settings.php:282
 msgid "State (i.e. Victoria)"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1431
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1737
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2578
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1738
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2621
 msgid "Postal code"
 msgstr ""
 
@@ -4172,85 +5057,85 @@ msgid "Valid From"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1560
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2919
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2962
 msgid "Aggregate Rating"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1565
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1974
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2924
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2017
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2967
 msgid "Average Rating"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1567
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1642
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1976
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2926
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3009
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2019
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2969
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3052
 msgid "Rating value. (1, 2.5, 3, 5 etc)"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1574
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1983
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2026
 msgid "The highest value allowed in this rating."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1581
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1990
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2033
 msgid "The lowest value allowed in this rating. * Required if the rating is not on a 5-point scale. If worstRating is omitted, 1 is assumed."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1586
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2945
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2988
 msgid "Rating Count"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1587
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2933
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2940
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2946
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2976
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2983
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2989
 msgid "A numerical quality rating for the item."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1593
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1927
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2952
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1970
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2995
 msgid "To add review schema for this type, complete fields below and enable, others live blank."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1598
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1932
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1975
 msgid "Review Status"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1614
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1948
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2414
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2461
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2973
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1991
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2457
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2504
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3016
 msgid "Author Same As profile link"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1622
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1956
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2981
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1999
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3024
 msgid "Review body"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1624
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1958
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2983
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2001
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3026
 msgid "The actual body of the review."
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1629
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1963
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2988
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2006
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3031
 msgid "Review published date"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1640
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3007
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3050
 msgid "Author Rating"
 msgstr ""
 
@@ -4259,569 +5144,614 @@ msgid "Local business schema"
 msgstr ""
 
 #: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1675
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2092
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2135
 msgid "Category"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1680
-#: views/settings/schema-settings.php:59
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1681
+#: views/settings/schema-settings.php:115
 msgid "Use the most appropriate schema category for local business"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1680
-#: views/settings/schema-settings.php:59
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1681
+#: views/settings/schema-settings.php:115
 msgid "Can't find your category? Contact support"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1696
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1837
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1697
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1881
 msgid "Images"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1701
-#: views/settings/schema-settings.php:85
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1702
+#: views/settings/schema-settings.php:198
 msgid "Business Logo"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1702
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1703
 msgid "This is only for Organization category and The image must be 112x112px, at minimum."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1707
-#: views/settings/schema-settings.php:105
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1708
+#: views/settings/schema-settings.php:218
 msgid "Price Range"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1709
-#: views/settings/schema-settings.php:107
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1710
+#: views/settings/schema-settings.php:220
 msgid "The price range of the business, for example $$$."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1715
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2556
-#: views/settings/schema-settings.php:135
-#: views/settings/schema-settings.php:141
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1716
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2599
+#: views/settings/schema-settings.php:259
+#: views/settings/schema-settings.php:265
 msgid "Address"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1752
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1753
 msgid "GEO"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1757
-#: views/settings/schema-settings.php:188
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1758
+#: views/settings/schema-settings.php:312
 msgid "Latitude"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1762
-#: views/settings/schema-settings.php:202
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1763
+#: views/settings/schema-settings.php:326
 msgid "Longitude"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1769
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1770
 msgid "Opening Hours By Day"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1790
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1791
 msgid "Opens Time"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1791
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1792
 msgid "Times are specified using 24:00 time. For example, 3PM is specified as 15:00."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1796
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1797
 msgid "Closes Time"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1803
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1804
 #: views/settings/schema-corporate_contacts-settings.php:38
-#: views/settings/schema-settings.php:122
-#: views/settings/schema-settings.php:284
+#: views/settings/schema-settings.php:235
+#: views/settings/schema-settings.php:408
 msgid "Telephone"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1809
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1810
 msgid "Web URL"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1815
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1816
 #: views/settings/schema-post_types-settings.php:154
-#: views/settings/schema-settings.php:307
+#: views/settings/schema-settings.php:431
 msgid "Serves Cuisine"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1816
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1822
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1863
-msgid "This is only for Restaurant category"
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1818
+msgid "Food establishment categories only (Restaurant, Bakery, Cafe, Bar, Brewery etc)."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1821
-msgid "Restaurant Menu Sections"
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1823
+#: views/settings/schema-settings.php:437
+msgid "Menu URL"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1842
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1825
+msgid "Link to the menu page. Use this instead of the menu sections below when the menu lives on its own page."
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1830
+#: views/settings/schema-settings.php:441
+msgid "Accepts Reservations"
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1841
+#: views/settings/schema-settings.php:456
+msgid "Check-in Time"
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1843
+msgid "Lodging categories only. Use 24:00 time, for example 3PM is 15:00:00."
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1848
+#: views/settings/schema-settings.php:464
+msgid "Check-out Time"
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1850
+msgid "Lodging categories only. Use 24:00 time, for example 11AM is 11:00:00."
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1856
+#: views/settings/schema-settings.php:502
+msgid "Medical Specialty"
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1859
+msgid "Medical categories only. The medical specialties offered, for example Emergency, Cardiovascular, Neurologic."
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1864
+msgid "Menu Sections"
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1866
+msgid "Food establishment categories only. Build the menu here, or link to it with the Menu URL field above."
+msgstr ""
+
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1886
 msgid "Availability Starts"
 msgstr ""
 
 #. translators: %s: example date in Y-m-d\TH:i:s format
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1845
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1855
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1889
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1899
 #, php-format
 msgid "Like: %s"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1852
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1896
 msgid "Availability Ends"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1862
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1906
 msgid "Menu Items"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1888
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1931
 msgid "Price Currency"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1894
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1937
 msgid "Calories"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1895
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1938
 msgid "Like: 170 calories"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1900
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1943
 msgid "Fat Content"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1901
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1944
 msgid "Like: 3 grams"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1906
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1949
 msgid "Fiber Content"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1911
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1954
 msgid "Protein Content"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1916
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1959
 msgid "Suitable For Diet"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1917
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:1960
 msgid "Example: https://schema.org/GlutenFreeDiet"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2004
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2047
 msgid "Faq schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2020
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2063
 msgid "Faqs"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2045
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2088
 msgid "Service schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2068
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2111
 msgid "The name of the Service."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2072
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2115
 msgid "Service type"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2075
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2118
 msgid "The type of service being offered, e.g. veterans' benefits, emergency relief, etc."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2079
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2122
 msgid "Additional type(URL)"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2081
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2124
 msgid "URL: https://schema.org/LegalService"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2082
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2125
 msgid "An additional type for the service, typically used for adding more specific types from external vocabularies in microdata syntax."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2086
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2129
 msgid "Award"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2088
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2131
 msgid "An award won by or for this service."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2094
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2137
 msgid "A category for the service."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2098
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2141
 msgid "Provider Type"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2110
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2153
 msgid "Provider Name"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2111
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2154
 msgid "Provider/Institute"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2116
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2159
 msgid "Provider Slogan"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2117
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2160
 msgid "Slogan Only For Organization."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2122
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2165
 msgid "Provider URl"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2128
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2171
 msgid "GEO Latitude"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2133
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2176
 msgid "GEO Longitude"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2138
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2181
 msgid "GEO Radius"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2145
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2188
 msgid "A short description of the service. New line is not supported."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2149
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2192
 msgid "Alternate name"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2151
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2194
 msgid "An alias for the service."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2164
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2207
 msgid "How to schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2207
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2250
 msgid "Supply"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2220
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2263
 msgid "Tool"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2233
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2276
 msgid "Step"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2243
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2286
 msgid "Text"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2258
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2301
 msgid "Video Clip ID"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2259
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2302
 msgid "Video Clip ID, this need to match with Video Info Clip ID"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2264
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2307
 msgid "Direction"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2279
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2322
 msgid "Total time"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2339
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2382
 msgid "Clip"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2349
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2392
 msgid "Clip ID"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2350
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2393
 msgid "Like: Clip1, Clip2 etc"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2355
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2398
 msgid "Start Offset"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2360
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2403
 msgid "End Offset"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2382
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2425
 msgid "About page schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2429
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2472
 msgid "Contact page schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2476
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2519
 msgid "Person page schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2503
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2546
 msgid "Phone"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2513
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2556
+#: views/settings/schema-settings.php:155
 msgid "Job Title"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2523
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2566
 msgid "Birth Place"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2528
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2571
+#: views/settings/schema-settings.php:184
 msgid "Birth Date"
 msgstr ""
 
 #. translators: %s: example date in Y-m-d format
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2531
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2574
 #, php-format
 msgid "Example: %s"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2543
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2586
 msgid "Nationality"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2548
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2591
 msgid "Same As profile link"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2600
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2643
 msgid "Q&A schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2615
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2658
 msgid "Question title"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2620
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2663
 msgid "Question description"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2625
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2668
 msgid "Question total answer"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2630
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2673
 msgid "Question total votes"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2635
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2678
 msgid "Question created Date"
 msgstr ""
 
 #. translators: %s: example date in ISO 8601 (Y-m-d\TH:i:sP) format
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2639
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2671
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2682
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2714
 #, php-format
 msgid "ISO 8601 format. Ex: %s"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2646
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2689
 msgid "Question author"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2657
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2700
 msgid "Answers"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2667
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2710
 msgid "Published Date"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2678
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2721
 msgid "Total votes"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2698
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2741
 msgid "Answer type"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2699
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2742
 msgid "Only one accepted answer will be in this list."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2702
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2745
 msgid "Suggested Answer"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2703
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2746
 msgid "Accepted Answer"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2719
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2762
 msgid "Breadcrumb schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2735
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2776
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2778
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2819
 msgid "Items"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2760
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2803
 msgid "Itemlist schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2781
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2824
 msgid "Title/Name"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2814
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2857
 msgid "Movie schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2853
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2896
 msgid "Created Date"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2863
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3124
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3239
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2906
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3167
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3282
 msgid "Genre"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2869
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2912
 msgid "Trailer Embed URL"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2870
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2913
 msgid "https://www.youtube.com/embed/ABC123"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2871
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2914
 msgid "Enter a video link to the official movie trailer."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2876
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2919
 msgid "Trailer Title"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2881
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2924
 msgid "Trailer Description"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2886
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2929
 msgid "Trailer Upload Date"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2893
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2936
 msgid "Trailer Thumbnail URL"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2896
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2939
 msgid "A URL pointing to the Trailer Thumbnail URL thumbnail image file."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2901
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2944
 msgid "Director"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2907
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2914
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2950
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2957
 msgid "One item per line like bellow"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2908
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2951
 msgid "Ted Elliott<br>Terry Rossio"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2913
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2956
 msgid "Actor"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2915
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2958
 msgid "Johnny Depp<br>Penelope Cruz<br>Ian McShane"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2931
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2974
 msgid "Best rating Best rating ( Rating Scale Maximum)"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2938
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2981
 msgid "Worst rating ( Rating Scale minimum)"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2957
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3000
 msgid "Review status"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:2999
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3042
 msgid "Reviewer same as link"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3022
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3065
 msgid "Audio schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3051
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3189
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3094
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3232
 msgid "Thumbnail URL"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3054
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3192
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3097
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3235
 msgid "A URL pointing to the video thumbnail image file. Images must be at least 160x90 pixels and at most 1920x1080 pixels."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3067
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3184
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3110
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3227
 msgid "Example: en"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3087
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3130
 msgid "Audio URL"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3099
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3172
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3142
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3215
 msgid "Is Family Friendly"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3138
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3181
 msgid "Video schema"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3161
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3204
 msgid "The title of the video"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3168
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3211
 msgid "The description of the video"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3205
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3248
 msgid "The duration of the video in ISO 8601 format.(PT1M33S)"
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3219
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3262
 msgid "A URL pointing to a player for the specific video. Usually this is the information in the src element of an &lt;embed> tag.Example: Dailymotion: http://www.dailymotion.com/swf/x1o2g."
 msgstr ""
 
-#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3241
+#: app/Modules/Schema/Admin/Meta/SchemaMeta.php:3284
 msgid "Example: \"Tutorial, Education, How-to\""
 msgstr ""
 
@@ -4839,9 +5769,9 @@ msgstr ""
 
 #: app/Modules/Schema/Ajax/Migration.php:102
 #: app/Modules/Schema/Ajax/SchemaPreviewAjax.php:55
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:58
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:90
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:99
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:61
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:93
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:102
 msgid "Permission denied."
 msgstr ""
 
@@ -4850,14 +5780,15 @@ msgid "Invalid migration source."
 msgstr ""
 
 #: app/Modules/Schema/Ajax/SchemaPreviewAjax.php:51
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:54
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:86
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:57
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:89
 msgid "Invalid nonce."
 msgstr ""
 
 #: app/Modules/Schema/Ajax/SchemaPreviewAjax.php:60
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:63
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:95
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:66
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:98
+#: app/Modules/Schema/Ajax/SchemaReportAjax.php:129
 msgid "Invalid post ID."
 msgstr ""
 
@@ -4867,14 +5798,6 @@ msgstr ""
 
 #: app/Modules/Schema/Ajax/SchemaPreviewAjax.php:87
 msgid "No schema data generated."
-msgstr ""
-
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:119
-msgid "No schema data generated. Please configure schema fields first."
-msgstr ""
-
-#: app/Modules/Schema/Ajax/SchemaReportAjax.php:125
-msgid "Failed to parse schema data."
 msgstr ""
 
 #: app/Modules/Schema/Hooks/ElementorFaq.php:52
@@ -4902,6 +5825,326 @@ msgstr ""
 #: app/Modules/Schema/Models/Schema.php:519
 #, php-format
 msgid "Search Results for \"%s\""
+msgstr ""
+
+#: app/Modules/Schema/Models/Schema.php:1385
+#: views/settings/schema-settings.php:654
+#: views/settings/schema-settings.php:669
+msgid "Services"
+msgstr ""
+
+#: app/Modules/Seo/Analysis/Grade.php:57
+msgid "Add an AI review and apply its suggested fixes — it is deeper and more analytical, and boosts your score."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:123
+msgid "Missing H1 tag (add a single H1 heading to the page)."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:131
+msgid "Multiple H1 tags detected (a page should have exactly one H1)."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:141
+msgid "No H2 subheadings found."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:152
+msgid "Heading levels are skipped (e.g. H2 followed by H4)."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:193
+msgid "One or more headings are empty."
+msgstr ""
+
+#. translators: %d: maximum recommended heading length in characters.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:206
+#, php-format
+msgid "One or more headings are longer than %d characters."
+msgstr ""
+
+#. translators: %s: focus keyword.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:220
+#, php-format
+msgid "Focus keyword \"%s\" is not used in any subheading."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:235
+msgid "Single H1 (the page title)"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:237
+msgid "Missing H1 tag"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:239
+msgid "Multiple H1 tags detected"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:248
+msgid "H2 subheadings present"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:248
+msgid "No H2 subheadings found"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:252
+msgid "Heading levels are not skipped"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:252
+msgid "Heading levels are skipped"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:260
+msgid "No empty headings"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:260
+msgid "Empty headings found"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:265
+msgid "Heading lengths are concise"
+msgstr ""
+
+#. translators: %d: maximum recommended heading length in characters.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:267
+#, php-format
+msgid "Some headings exceed %d characters"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:275
+msgid "Focus keyword used in a subheading"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:275
+msgid "Focus keyword not in any subheading"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:390
+msgid "(untitled)"
+msgstr ""
+
+#. translators: 1: previous heading level, 2: previous heading text, 3: skipped-to heading level, 4: skipped-to heading text.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:398
+#, php-format
+msgid "• H%1$d “%2$s” → H%3$d “%4$s”"
+msgstr ""
+
+#. translators: %d: number of additional level skips not listed.
+#. translators: %d: number of additional empty headings not listed.
+#. translators: %d: number of additional over-long headings not listed.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:409
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:448
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:621
+#, php-format
+msgid "+%d more"
+msgid_plural "+%d more"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: empty heading level, 2: the heading it follows.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:432
+#, php-format
+msgid "• Empty H%1$d after “%2$s”"
+msgstr ""
+
+#. translators: %d: empty heading level.
+#: app/Modules/Seo/Analyzers/HeadingHierarchyAnalyzer.php:439
+#, php-format
+msgid "• Empty H%d at the top of the page"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:75
+msgid "No internal links found."
+msgstr ""
+
+#. translators: 1: current internal link count, 2: recommended count.
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:85
+#, php-format
+msgid "Only %1$d internal link(s); aim for around %2$d for this length."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:97
+msgid "Very high internal link density; may dilute link value."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:109
+msgid "Some internal links use generic anchor text such as \"click here\" or \"read more\". Use descriptive, keyword-rich anchors."
+msgstr ""
+
+#. translators: %d: recommended internal link count.
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:125
+#, php-format
+msgid "No internal links found. Aim for about %d."
+msgstr ""
+
+#. translators: 1: current internal link count, 2: recommended count.
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:128
+#, php-format
+msgid "Only %1$d internal link(s) found. Aim for about %2$d."
+msgstr ""
+
+#. translators: %d: recommended internal link count.
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:131
+#, php-format
+msgid "Enough internal links for the length (≥%d)"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:142
+msgid "Link density is healthy"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:142
+msgid "Very high internal link density"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:146
+msgid "Internal link anchors are descriptive"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/InternalLinksAnalyzer.php:146
+msgid "Some internal links use generic anchor text"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/SeoAnalyzer.php:118
+msgid "Search Engine Optimization"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/SeoAnalyzer.php:122
+msgid "On-page signals only — real ranking also depends on backlinks, site authority, and search intent."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/SeoAnalyzer.php:201
+msgid "Excellent on-page SEO"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/SeoAnalyzer.php:204
+msgid "Ranking-ready, with room to grow"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/SeoAnalyzer.php:207
+msgid "Solid foundation, a few fixes needed"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/SeoAnalyzer.php:209
+msgid "Several on-page issues to address"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:97
+msgid "No SEO title is set."
+msgstr ""
+
+#. translators: %d: title length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:111
+#, php-format
+msgid "Title is %d characters; search engines truncate beyond ~60."
+msgstr ""
+
+#. translators: %d: title length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:120
+#, php-format
+msgid "Title is %d characters; aim for 30–60."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:134
+msgid "No meta description is set."
+msgstr ""
+
+#. translators: %d: description length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:148
+#, php-format
+msgid "Meta description is %d characters; it may be truncated beyond ~160."
+msgstr ""
+
+#. translators: %d: description length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:157
+#, php-format
+msgid "Meta description is %d characters; aim for 120–160."
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:177
+msgid "SEO title is set"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:177
+msgid "SEO title is missing"
+msgstr ""
+
+#. translators: %d: title length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:183
+#, php-format
+msgid "Title length is ideal (%d chars)"
+msgstr ""
+
+#. translators: %d: title length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:185
+#, php-format
+msgid "Title length is %d chars; aim for 30–60"
+msgstr ""
+
+#. translators: %d: title length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:185
+msgid "Title length: aim for 30–60 chars"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:189
+msgid "Meta description is set"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:189
+msgid "Meta description is missing"
+msgstr ""
+
+#. translators: %d: description length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:195
+#, php-format
+msgid "Description length is ideal (%d chars)"
+msgstr ""
+
+#. translators: %d: description length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:197
+#, php-format
+msgid "Description length is %d chars; aim for 120–160"
+msgstr ""
+
+#. translators: %d: description length in characters.
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:197
+msgid "Description length: aim for 120–160 chars"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:208
+msgid "Title includes a number or power word (higher CTR)"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:209
+msgid "Add a number or power word to the title for higher CTR"
+msgstr ""
+
+#: app/Modules/Seo/Analyzers/TitleMetaAnalyzer.php:214
+msgid "Title is in all caps; use normal capitalization"
+msgstr ""
+
+#: app/Modules/Seo/Criteria/HeadingHierarchyCriterion.php:39
+msgid "Heading Hierarchy"
+msgstr ""
+
+#: app/Modules/Seo/Criteria/InternalLinksCriterion.php:39
+msgid "Internal Links"
+msgstr ""
+
+#: app/Modules/Seo/Criteria/KeywordCoverageCriterion.php:39
+msgid "Keyword Coverage"
+msgstr ""
+
+#: app/Modules/Seo/Criteria/PagePerformanceCriterion.php:39
+msgid "Page Performance"
+msgstr ""
+
+#: app/Modules/Seo/Criteria/TitleMetaCriterion.php:39
+msgid "Title & Meta"
 msgstr ""
 
 #: app/Supports/FluentCart/FluentCartReview.php:121
@@ -4993,10 +6236,6 @@ msgstr[1] ""
 
 #: templates/summary/layout-one.php:63
 msgid "Recommended this item"
-msgstr ""
-
-#: views/metas/single/faqpage-frontend.php:28
-msgid "Frequently Asked Questions"
 msgstr ""
 
 #. translators: %s: shortcode
@@ -5285,7 +6524,7 @@ msgid "Gemini Model"
 msgstr ""
 
 #: views/settings/ai-settings.php:121
-msgid "Gemini 2.5 Flash Lite"
+msgid "Gemini 3.5 Flash Lite"
 msgstr ""
 
 #: views/settings/ai-settings.php:122
@@ -5328,6 +6567,7 @@ msgstr ""
 #: views/settings/general-settings.php:28
 #: views/settings/general-settings.php:35
 #: views/settings/general-settings.php:42
+#: views/settings/review-media-settings.php:43
 #: views/settings/review-settings.php:45
 #: views/settings/review-settings.php:52
 #: views/settings/review-settings.php:59
@@ -5436,20 +6676,32 @@ msgstr ""
 msgid "gif"
 msgstr ""
 
-#: views/settings/review-media-settings.php:18
+#: views/settings/review-media-settings.php:14
+msgid "webp"
+msgstr ""
+
+#: views/settings/review-media-settings.php:19
 msgid "Image Upload Settings"
 msgstr ""
 
-#: views/settings/review-media-settings.php:22
+#: views/settings/review-media-settings.php:23
 msgid "Image Max Size"
 msgstr ""
 
-#: views/settings/review-media-settings.php:26
+#: views/settings/review-media-settings.php:27
 msgid "Change the value as KB, Like 1M = 1024KB"
 msgstr ""
 
-#: views/settings/review-media-settings.php:29
+#: views/settings/review-media-settings.php:30
 msgid "Supported Image Type"
+msgstr ""
+
+#: views/settings/review-media-settings.php:42
+msgid "Allow Guest Uploads"
+msgstr ""
+
+#: views/settings/review-media-settings.php:46
+msgid "Let non-logged-in visitors upload files with their review. Uploads are still restricted to the supported types and size limits above. Leave off to require login (recommended)."
 msgstr ""
 
 #: views/settings/review-misc-settings.php:10
@@ -5621,7 +6873,7 @@ msgid "E-Commerce Archive"
 msgstr ""
 
 #: views/settings/schema-corporate_contacts-settings.php:17
-#: views/settings/schema-settings.php:288
+#: views/settings/schema-settings.php:412
 msgid "Contact Type"
 msgstr ""
 
@@ -5690,11 +6942,12 @@ msgid "Hearing Impaired Supported"
 msgstr ""
 
 #: views/settings/schema-corporate_contacts-settings.php:65
+#: views/settings/schema-settings.php:530
 msgid "Area Served"
 msgstr ""
 
 #: views/settings/schema-corporate_contacts-settings.php:72
-#: views/settings/schema-settings.php:293
+#: views/settings/schema-settings.php:417
 msgid "Available Language"
 msgstr ""
 
@@ -5770,112 +7023,356 @@ msgstr ""
 msgid "Determine how your posts should be described by default in your site's Schema.org markup. You can always change the settings for individual posts in the 'Schema Settings' metabox."
 msgstr ""
 
-#: views/settings/schema-settings.php:37
+#: views/settings/schema-settings.php:93
 msgid "Site Represents Type"
 msgstr ""
 
-#: views/settings/schema-settings.php:38
+#: views/settings/schema-settings.php:94
 msgid "Choose whether your site represents an Organization, Local Business, or a Person."
 msgstr ""
 
-#: views/settings/schema-settings.php:41
+#: views/settings/schema-settings.php:97
 msgid "Learn more about the differences between Organization and Person.."
 msgstr ""
 
-#: views/settings/schema-settings.php:47
+#: views/settings/schema-settings.php:103
 msgid "Organization"
 msgstr ""
 
-#: views/settings/schema-settings.php:52
+#: views/settings/schema-settings.php:108
 msgid "Sub Category"
 msgstr ""
 
-#: views/settings/schema-settings.php:86
+#: views/settings/schema-settings.php:141
+msgid "Legal Name"
+msgstr ""
+
+#: views/settings/schema-settings.php:142
+msgid "The registered legal name, if it differs from the trading name."
+msgstr ""
+
+#: views/settings/schema-settings.php:148
+msgid "Slogan"
+msgstr ""
+
+#: views/settings/schema-settings.php:149
+msgid "A short tagline for the business."
+msgstr ""
+
+#: views/settings/schema-settings.php:156
+msgid "The job title of the person (i.e. Software Engineer)."
+msgstr ""
+
+#: views/settings/schema-settings.php:171
+msgid "The name of the organization the person works for."
+msgstr ""
+
+#: views/settings/schema-settings.php:177
+msgid "Alumni Of"
+msgstr ""
+
+#: views/settings/schema-settings.php:178
+msgid "A school or university the person attended."
+msgstr ""
+
+#: views/settings/schema-settings.php:190
+msgid "Knows About"
+msgstr ""
+
+#: views/settings/schema-settings.php:191
+msgid "WordPress&#10;Structured data"
+msgstr ""
+
+#: views/settings/schema-settings.php:192
+msgid "Topics this person has expertise in — one per line. A strong E-E-A-T signal."
+msgstr ""
+
+#: views/settings/schema-settings.php:199
 msgid "The image must be 112x112px, at minimum."
 msgstr ""
 
-#: views/settings/schema-settings.php:123
+#: views/settings/schema-settings.php:236
 msgid "Required For Organization And Local Business"
 msgstr ""
 
-#: views/settings/schema-settings.php:157
+#: views/settings/schema-settings.php:242
+msgid "A public contact address. Part of the Google Organization rich result."
+msgstr ""
+
+#: views/settings/schema-settings.php:247
+msgid "Fax Number"
+msgstr ""
+
+#: views/settings/schema-settings.php:281
 msgid "Address Region"
 msgstr ""
 
-#: views/settings/schema-settings.php:175
+#: views/settings/schema-settings.php:299
 msgid "Geo Coordinates"
 msgstr ""
 
-#: views/settings/schema-settings.php:216
+#: views/settings/schema-settings.php:340
 msgid "Radius"
 msgstr ""
 
-#: views/settings/schema-settings.php:231
+#: views/settings/schema-settings.php:355
 msgid "Site Others Info"
 msgstr ""
 
-#: views/settings/schema-settings.php:242
+#: views/settings/schema-settings.php:366
 msgid "Opening Hours"
 msgstr ""
 
-#: views/settings/schema-settings.php:243
+#: views/settings/schema-settings.php:367
 msgid "Monday 11:00-14:30&#10;Tuesday 17:00-21:30"
 msgstr ""
 
-#: views/settings/schema-settings.php:244
+#: views/settings/schema-settings.php:368
 msgid "- Days are specified with the day name. Like: Monday, Tuesday</br> - Times are specified using 24:00 time. For example, 3PM is specified as 15:00. <br> - Add Opening Hours by separate line. Like: Monday 10:00-18:00"
 msgstr ""
 
-#: views/settings/schema-settings.php:256
+#: views/settings/schema-settings.php:380
 msgid "Help Center"
 msgstr ""
 
-#: views/settings/schema-settings.php:271
+#: views/settings/schema-settings.php:395
 msgid "Contact Point ( Contact Support )"
 msgstr ""
 
-#: views/settings/schema-settings.php:294
+#: views/settings/schema-settings.php:418
 msgid "Comma Seperated. Example: en-US, bn-BD"
 msgstr ""
 
-#: views/settings/schema-settings.php:297
+#: views/settings/schema-settings.php:421
 msgid "Area Served (Country)"
 msgstr ""
 
-#: views/settings/schema-settings.php:327
-msgid "Restaurant Menu URL"
-msgstr ""
-
-#: views/settings/schema-settings.php:345
-msgid "Accepts Reservations"
-msgstr ""
-
-#: views/settings/schema-settings.php:347
+#: views/settings/schema-settings.php:443
 msgid "Accept"
 msgstr ""
 
-#: views/settings/schema-settings.php:365
+#: views/settings/schema-settings.php:447
+msgid "Has Drive-Through Service"
+msgstr ""
+
+#: views/settings/schema-settings.php:449
+msgid "Available"
+msgstr ""
+
+#: views/settings/schema-settings.php:457
+msgid "The earliest someone may check into a lodging establishment. Use 24:00 time, for example 3PM is 15:00:00."
+msgstr ""
+
+#: views/settings/schema-settings.php:465
+msgid "The latest someone may check out of a lodging establishment. Use 24:00 time, for example 11AM is 11:00:00."
+msgstr ""
+
+#: views/settings/schema-settings.php:474
+msgid "Star Rating"
+msgstr ""
+
+#: views/settings/schema-settings.php:475
+msgid "Official rating of the property, 1 to 5. Part of Google Hotel structured data."
+msgstr ""
+
+#: views/settings/schema-settings.php:482
+msgid "Number Of Rooms"
+msgstr ""
+
+#: views/settings/schema-settings.php:486
+msgid "Pets Allowed"
+msgstr ""
+
+#: views/settings/schema-settings.php:488
+msgid "Allowed"
+msgstr ""
+
+#: views/settings/schema-settings.php:494
+msgid "Amenity Features"
+msgstr ""
+
+#: views/settings/schema-settings.php:495
+msgid "Free WiFi&#10;Swimming pool&#10;Airport shuttle"
+msgstr ""
+
+#: views/settings/schema-settings.php:496
+msgid "One amenity per line. Each becomes a LocationFeatureSpecification."
+msgstr ""
+
+#: views/settings/schema-settings.php:504
+msgid "The medical specialties offered, for example Emergency, Cardiovascular, Neurologic."
+msgstr ""
+
+#: views/settings/schema-settings.php:508
+msgid "Business Details"
+msgstr ""
+
+#: views/settings/schema-settings.php:509
+msgid "Entity details Google reads for the Organization knowledge panel."
+msgstr ""
+
+#: views/settings/schema-settings.php:516
+msgid "Founding Date"
+msgstr ""
+
+#: views/settings/schema-settings.php:523
+msgid "Number Of Employees"
+msgstr ""
+
+#: views/settings/schema-settings.php:524
+msgid "Output as a QuantitativeValue."
+msgstr ""
+
+#: views/settings/schema-settings.php:531
+msgid "California&#10;Nevada"
+msgstr ""
+
+#: views/settings/schema-settings.php:532
+msgid "Regions the business serves — one per line."
+msgstr ""
+
+#: views/settings/schema-settings.php:538
+msgid "Awards"
+msgstr ""
+
+#: views/settings/schema-settings.php:539
+msgid "One award per line."
+msgstr ""
+
+#: views/settings/schema-settings.php:544
+msgid "Payment Accepted"
+msgstr ""
+
+#: views/settings/schema-settings.php:545
+msgid "Comma separated. Example: Cash, Credit Card, Invoice."
+msgstr ""
+
+#: views/settings/schema-settings.php:551
+msgid "Currencies Accepted"
+msgstr ""
+
+#: views/settings/schema-settings.php:552
+msgid "Comma separated 3-letter currency codes. Example: USD, EUR."
+msgstr ""
+
+#: views/settings/schema-settings.php:558
+msgid "Map URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:559
+msgid "Link to the business on Google Maps."
+msgstr ""
+
+#: views/settings/schema-settings.php:563
+msgid "Business Identifiers"
+msgstr ""
+
+#: views/settings/schema-settings.php:564
+msgid "Registration numbers that disambiguate the entity. Leave blank if not applicable."
+msgstr ""
+
+#: views/settings/schema-settings.php:571
+msgid "VAT ID"
+msgstr ""
+
+#: views/settings/schema-settings.php:577
+msgid "Tax ID"
+msgstr ""
+
+#: views/settings/schema-settings.php:583
+msgid "DUNS"
+msgstr ""
+
+#: views/settings/schema-settings.php:584
+msgid "Dun & Bradstreet DUNS number."
+msgstr ""
+
+#: views/settings/schema-settings.php:590
+msgid "LEI Code"
+msgstr ""
+
+#: views/settings/schema-settings.php:591
+msgid "Legal Entity Identifier (ISO 17442)."
+msgstr ""
+
+#: views/settings/schema-settings.php:595
+msgid "Publisher Policies"
+msgstr ""
+
+#: views/settings/schema-settings.php:596
+msgid "Google News reads these policy pages from a NewsMediaOrganization."
+msgstr ""
+
+#: views/settings/schema-settings.php:603
+msgid "Ethics Policy URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:609
+msgid "Corrections Policy URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:615
+msgid "Diversity Policy URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:621
+msgid "Fact-Checking Policy URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:627
+msgid "Ownership & Funding Info URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:633
+msgid "Masthead URL"
+msgstr ""
+
+#: views/settings/schema-settings.php:637
+msgid "Offer Catalog"
+msgstr ""
+
+#: views/settings/schema-settings.php:638
+msgid "List the services this business offers. Outputs an OfferCatalog of Service items."
+msgstr ""
+
+#: views/settings/schema-settings.php:653
+msgid "Catalog Name"
+msgstr ""
+
+#: views/settings/schema-settings.php:655
+msgid "A title for the catalog, for example \"Services\", \"Treatments\", or \"Menu\". Defaults to \"Services\"."
+msgstr ""
+
+#: views/settings/schema-settings.php:683
+msgid "Service Name"
+msgstr ""
+
+#: views/settings/schema-settings.php:684
+msgid "e.g. Cardiology Consultation"
+msgstr ""
+
+#: views/settings/schema-settings.php:689
 msgid "Page"
 msgstr ""
 
-#: views/settings/schema-settings.php:369
+#: views/settings/schema-settings.php:693
 msgid "About Page"
 msgstr ""
 
-#: views/settings/schema-settings.php:370
-#: views/settings/schema-settings.php:377
+#: views/settings/schema-settings.php:694
+#: views/settings/schema-settings.php:701
 msgid "Select a page on your site where you want to show the LocalBusiness meta data."
 msgstr ""
 
-#: views/settings/schema-settings.php:373
+#: views/settings/schema-settings.php:697
 msgid "Select About Page"
 msgstr ""
 
-#: views/settings/schema-settings.php:376
+#: views/settings/schema-settings.php:700
 msgid "Contact Page"
 msgstr ""
 
-#: views/settings/schema-settings.php:380
+#: views/settings/schema-settings.php:704
 msgid "Select Contact Page"
 msgstr ""
 
@@ -6092,6 +7589,27 @@ msgstr ""
 msgid "Maximum transit time in days."
 msgstr ""
 
+#: views/settings/seo_report-settings.php:26
+msgid "XML Sitemap URL"
+msgstr ""
+
+#: views/settings/seo_report-settings.php:31
+#, php-format
+msgid "Enter your site's XML sitemap URL (e.g. %s). Internal-link suggestions will use the URLs from this sitemap as link targets. Sitemap indexes are supported. Leave empty to use the built-in content scan."
+msgstr ""
+
+#: views/settings/seo_report-settings.php:36
+msgid "Ignore Content"
+msgstr ""
+
+#: views/settings/seo_report-settings.php:40
+msgid "Ignore Content Types"
+msgstr ""
+
+#: views/settings/seo_report-settings.php:44
+msgid "Select the content types that should be excluded from SEO analysis and internal-link recommendations. Ignored content will not appear in SEO reports and will not be considered as a target when generating internal-link suggestions. This is useful for excluding internal, utility, system, or other content that is not intended to be optimized for search engines or used as an internal-link destination. Note: content types that are not public are already excluded automatically."
+msgstr ""
+
 #: views/settings/themes_and_plugins-settings.php:14
 msgid "Themes"
 msgstr ""
@@ -6104,10 +7622,6 @@ msgstr ""
 
 #: views/settings/themes_and_plugins-settings.php:42
 msgid "Our Products"
-msgstr ""
-
-#: views/settings/tools-settings.php:13
-msgid "Licensing"
 msgstr ""
 
 #: views/settings/tools-settings.php:17

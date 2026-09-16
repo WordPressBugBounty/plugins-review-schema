@@ -1,10 +1,10 @@
 <?php
 /**
  * @wordpress-plugin
- * Plugin Name: Schema Engine AI – AI Schema Markup, Reviews & Rich Snippets for SEO
+ * Plugin Name: SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO
  * Plugin URI: https://wordpress.org/plugins/review-schema/
  * Description: AI-Powered schema markup plugin for WordPress. Generate JSON-LD schema and FAQs, validate Rich Results, and audit your structured data.
- * Version: 3.0.4
+ * Version: 3.1.0
  * Author: RadiusTheme
  * Author URI: https://radiustheme.com
  * Text Domain: review-schema
@@ -24,11 +24,26 @@ if ( ! defined( 'RTRS_PLUGIN_FILE' ) ) {
 
 // Define VERSION.
 if ( ! defined( 'RTRS_VERSION' ) ) {
-	define( 'RTRS_VERSION', '3.0.4' );
+	define( 'RTRS_VERSION', '3.1.0' );
 }
 
 if ( ! defined( 'RTRS_PATH' ) ) {
 	define( 'RTRS_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+// Define URL.
+if ( ! defined( 'RTRS_URL' ) ) {
+	define( 'RTRS_URL', plugins_url( '', __FILE__ ) );
+}
+
+// Define SLUG.
+if ( ! defined( 'RTRS_SLUG' ) ) {
+	define( 'RTRS_SLUG', basename( dirname( __FILE__ ) ) );
+}
+
+// Define TEMPLATE_DEBUG_MODE.
+if ( ! defined( 'RTRS_TEMPLATE_DEBUG_MODE' ) ) {
+	define( 'RTRS_TEMPLATE_DEBUG_MODE', false );
 }
 
 require_once RTRS_PATH . 'vendor/autoload.php';
